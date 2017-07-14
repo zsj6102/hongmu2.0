@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/base_header"/>
+
+    <com.property.colpencil.colpencilandroidlibrary.Ui.BaseListView
+        android:id="@+id/listview_customaction"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/btn_sumbit_height"
+        android:scrollbars="none"
+        android:layout_below="@id/header">
+
+    </com.property.colpencil.colpencilandroidlibrary.Ui.BaseListView>
+
+    <TextView
+        android:id="@+id/tv_customApply_sumbit"
+        style="@style/SumbitBtnStyleRed"
+        android:layout_alignParentBottom="true"
+        android:text="@string/sumbitCustomApply" />
+
+</RelativeLayout>

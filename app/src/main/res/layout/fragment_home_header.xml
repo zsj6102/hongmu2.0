@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+
+    <!-- 首页banner -->
+    <com.youth.banner.Banner
+        android:id="@+id/home_banner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/width_150dp"
+        android:background="@color/color_fffbfa"
+        app:indicator_drawable_selected="@drawable/point_select"
+        app:indicator_drawable_unselected="@drawable/point_unselect"
+        app:indicator_height="5dp"
+        app:indicator_margin="2dp"
+        app:indicator_width="5dp" />
+
+    <!-- 首页功能点 -->
+    <com.property.colpencil.colpencilandroidlibrary.Ui.AdapterView.MosaicGridView
+        android:id="@+id/func_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_fff5f4"
+        android:numColumns="4" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color_first" />
+
+
+    <!-- 今日推荐模块 -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/middle_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color_first" />
+
+    <com.youth.banner.Banner
+        android:id="@+id/middle_banner"
+        android:layout_width="match_parent"
+        android:layout_height="160dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/width_40dp"
+        android:background="@color/main_background"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/home_page_ivhot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/home_good_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_background"
+        android:paddingLeft="7.5dp"
+        android:paddingRight="7.5dp" />
+
+</LinearLayout>

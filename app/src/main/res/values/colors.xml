@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#af1f1f</color>
+    <color name="colorPrimaryDark">#af1f1f</color>
+    <color name="colorAccent">#af1f1f</color>
+
+    <color name="white">#fff</color>
+    <!--透明-->
+    <color name="transparent">#00000000</color>
+    <color name="red">#ff0000</color>
+
+    <!--白色头部-->
+    <color name="base_header_white_bg">#ffffff</color>
+    <!--棕色头部-->
+    <color name="base_header_brown_bg">#ffffff</color>
+
+    <color name="cyclopedia_first_text_color">#af1f1f</color>
+    <!--主红色-->
+    <color name="main_red">#af1f1f</color>
+    <!--主褐色-->
+    <color name="main_brown">#613b33</color>
+    <!--主背景-->
+    <color name="main_background">#fef5f4</color>
+    <!--LinearLayout背景颜色-->
+    <color name="main_LinearLayout_background">#fffbfa</color>
+    <!--字体颜色-->
+    <color name="text_color_first">#333333</color>
+    <color name="text_color_second">#666666</color>
+    <color name="text_color_thirst">#999999</color>
+    <!--分割 描边-->
+    <color name="line_color_first">#f1e1de</color>
+    <color name="line_color_second">#f3e8e7</color>
+    <color name="line_color_thirst">#fef5f4</color>
+
+    <color name="transparent_7f000000">#7f000000</color>
+    <color name="color_e3d1ce">#e3d1ce</color>
+    <color name="color_fffbfa">#fffbfa</color>
+    <color name="color_f1e7e5">#f1e7e5</color>
+    <color name="color_613b33">#613b33</color>
+    <color name="color_d0b4af">#d0b4af</color>
+    <color name="color_192a46">#192a46</color>
+    <color name="color_525252">#525252</color>
+    <color name="color_bf5d5d">#bf5d5d</color>
+    <color name="color_cfb2ac">#cfb2ac</color>
+    <color name="color_ecdad6">#ecdad6</color>
+    <color name="color_fff5f4">#fff5f4</color>
+
+    <color name="dividing_line">#edd8d4</color>
+
+    <color name="dividing_gary">#f6f6f6</color>
+</resources>

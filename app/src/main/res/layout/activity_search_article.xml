@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/line_color_thirst"
+    android:orientation="vertical">
+
+    <include layout="@layout/search_article_header" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/padding_0.5dp"
+        android:background="@color/color_e3d1ce" />
+
+    <ListView
+        android:id="@+id/search_article_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/line_color_thirst"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="@dimen/width_0dp"
+        android:scrollbars="none" />
+
+</LinearLayout>

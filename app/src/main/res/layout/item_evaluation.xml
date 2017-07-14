@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/main_LinearLayout_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:paddingRight="@dimen/paddingRight">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="商品名："
+            android:textColor="@color/text_color_thirst"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/comment_goodName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="iPhone 6s"
+            android:textColor="@color/text_color_thirst"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:paddingRight="@dimen/paddingRight">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="成交价：¥"
+            android:textColor="@color/text_color_thirst"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/comment_goodPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6300"
+            android:textColor="@color/text_color_thirst"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/comment_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:paddingRight="@dimen/paddingRight"
+        android:text="正品！好用，质量非常的好。"
+        android:textColor="@color/text_color_first"
+        android:textSize="@dimen/main_text_size" />
+
+    <com.property.colpencil.colpencilandroidlibrary.Ui.MosaicGridView
+        android:id="@+id/item_gridview_evaluation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:horizontalSpacing="10dp"
+        android:numColumns="5"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:paddingRight="@dimen/paddingRight"
+        android:scrollbars="none" />
+
+    <TextView
+        android:id="@+id/comment_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="right"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:paddingRight="@dimen/paddingRight"
+        android:text="2016/03/25 14:22"
+        android:textColor="@color/text_color_thirst"
+        android:textSize="11sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/line_color_first"></View>
+
+    <View
+        android:id="@+id/viewBottom_evaluation"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/main_background"
+        android:visibility="gone"></View>
+</LinearLayout>

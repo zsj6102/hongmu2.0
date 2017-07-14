@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="82dp"
+        android:layout_height="42dp"
+        android:background="#fef8f7">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_color_second" />
+
+        <View
+            android:id="@+id/view_item_hsearchlv"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line_color_second" />
+
+        <View
+
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/line_color_second" />
+
+        <TextView
+            android:id="@+id/lv_item_hSearchTile"
+            android:layout_width="82dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="搜索条件"
+            android:textColor="#613b33"
+            android:textSize="@dimen/main_text_size" />
+    </RelativeLayout>
+</LinearLayout>

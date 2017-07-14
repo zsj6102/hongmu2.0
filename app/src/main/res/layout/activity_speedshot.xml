@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/main_background"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_back"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:src="@mipmap/left_back" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <info.hoang8f.android.segmented.SegmentedGroup
+                android:id="@+id/segment"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:orientation="horizontal"
+                segmentedgroup:sc_border_width="1dp"
+                segmentedgroup:sc_checked_text_color="@color/white"
+                segmentedgroup:sc_corner_radius="5dp"
+                segmentedgroup:sc_tint_color="@color/main_red">
+
+                <RadioButton
+                    android:id="@+id/btn_speed"
+                    style="@style/myRadiobutton"
+                    android:text="速拍"
+                    android:layout_width="75dp"
+                    android:layout_height="match_parent"
+                    android:checked="true" />
+
+                <RadioButton
+                    android:id="@+id/btn_mine"
+                    style="@style/myRadiobutton"
+                    android:layout_width="75dp"
+                    android:layout_height="match_parent"
+                    android:text="我  的" />
+
+                <RadioButton
+                    android:id="@+id/btn_store"
+                    style="@style/myRadiobutton"
+                    android:layout_width="75dp"
+                    android:layout_height="match_parent"
+                    android:text="店  铺" />
+
+            </info.hoang8f.android.segmented.SegmentedGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color_first" />
+
+    <com.property.colpencil.colpencilandroidlibrary.Ui.NoScrollViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

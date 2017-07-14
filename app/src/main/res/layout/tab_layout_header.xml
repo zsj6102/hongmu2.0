@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/tab_layout_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="@dimen/width_0dp"
+            android:layout_height="@dimen/width_32dp"
+            android:layout_weight="1"
+            app:tabIndicatorColor="@color/main_red"
+            app:tabSelectedTextColor="@color/main_red"
+            app:tabTextAppearance="@style/HomeTabTextAppearance" />
+
+        <View
+            android:layout_width="@dimen/padding_0.5dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/margin_5dp"
+            android:layout_marginTop="@dimen/margin_5dp"
+            android:background="@color/color_ecdad6" />
+
+        <LinearLayout
+            android:id="@+id/ll_iv"
+            android:layout_width="@dimen/width_50dp"
+            android:layout_height="@dimen/width_32dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/tab_layout_header_addiv"
+                android:layout_width="@dimen/width_20dp"
+                android:layout_height="@dimen/width_20dp"
+                android:src="@mipmap/home_add_icon" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

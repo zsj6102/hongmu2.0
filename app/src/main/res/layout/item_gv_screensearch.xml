@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/main_background"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/item_tv_childName"
+        android:layout_width="65dp"
+        android:layout_height="28dp"
+        android:background="@drawable/tv_backstyle_unpress"
+        android:gravity="center"
+        android:text="紫檀佛珠"
+        android:textColor="#613b33"
+        android:textSize="@dimen/main_text_size" />
+
+</LinearLayout>

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    android:orientation="vertical">
+
+    <include layout="@layout/base_header" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/main_background"
+            android:orientation="vertical">
+
+            <LinearLayout style="@style/WriteLinerStyle">
+
+                <TextView
+                    style="@style/RedTextViewStyle"
+                    android:text="*" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:text="申请类型:"
+                    android:textColor="@color/text_color_first"
+                    android:textSize="@dimen/main_text_size" />
+
+                <LinearLayout
+                    android:id="@+id/ll_afterSalesTypeFirst"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/iv_afterSalesTypeFirst"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@mipmap/select_no" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="30dp"
+                        android:text="退货"
+                        android:textColor="@color/text_color_first"
+                        android:textSize="@dimen/main_text_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_afterSalesTypeSecond"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/iv_afterSalesTypeSecond"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@mipmap/select_yes_red" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="换货"
+                        android:textColor="@color/text_color_first"
+                        android:textSize="@dimen/main_text_size" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@color/line_color_second"></View>
+
+            <LinearLayout
+                android:id="@+id/select_afterSalesReason"
+                style="@style/WriteLinerStyle">
+
+                <TextView
+                    style="@style/RedTextViewStyle"
+                    android:text="*" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="申请理由:"
+                    android:textColor="@color/text_color_first"
+                    android:textSize="@dimen/main_text_size" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp">
+
+                    <TextView
+                        android:id="@+id/tv_afterSalesReason"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:hint="请选择申请理由"
+                        android:maxLength="10"
+                        android:textColor="@color/text_color_thirst"
+                        android:textColorHint="@color/text_color_thirst" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="12dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/right_icon" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@color/line_color_second"></View>
+
+            <LinearLayout style="@style/WriteLinerStyle">
+
+                <TextView
+                    style="@style/RedTextViewStyle"
+                    android:text="*" />
+
+                <TextView
+                    style="@style/WriteTextTitileStyle"
+                    android:text="补充说明:" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_LinearLayout_background"
+                android:orientation="vertical"
+                android:paddingBottom="15dp"
+                android:paddingLeft="@dimen/paddingLeft"
+                android:paddingRight="@dimen/paddingRight">
+
+                <EditText
+                    android:id="@+id/et_afterSales"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:background="@drawable/radius_splite_line"
+                    android:gravity="left|top"
+                    android:hint="请输入补充说明（100字以内）"
+                    android:maxLength="100"
+                    android:padding="15dp"
+                    android:singleLine="false"
+                    android:textColor="@color/text_color_thirst"
+                    android:textColorHint="@color/text_color_thirst"
+                    android:textCursorDrawable="@null"
+                    android:textSize="@dimen/main_text_size" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp"
+                android:text="温馨提示：最多可上传5张图片"
+                android:textColor="@color/text_color_thirst"
+                android:textSize="12sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/afterSales_gridView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_7.5dp"
+                android:layout_marginRight="@dimen/margin_7.5dp"
+                android:layout_marginTop="@dimen/margin_7.5dp"
+                android:numColumns="4" />
+
+            <LinearLayout
+                android:id="@+id/ll_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    style="@style/WriteLinerStyle"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="收款人:"
+                        android:textColor="@color/text_color_first"
+                        android:textSize="@dimen/main_text_size" />
+
+                    <EditText
+                        android:id="@+id/et_people_return"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:hint="请输入收款人"
+                        android:paddingLeft="15dp"
+                        android:textColor="@color/text_color_thirst"
+                        android:textCursorDrawable="@null"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/line_color_second" />
+
+                <LinearLayout style="@style/WriteLinerStyle">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="银行:"
+                        android:textColor="@color/text_color_first"
+                        android:textSize="@dimen/main_text_size" />
+
+                    <EditText
+                        android:id="@+id/et_people_bankname"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:hint="请输入银行"
+                        android:paddingLeft="15dp"
+                        android:textColor="@color/text_color_thirst"
+                        android:textCursorDrawable="@null"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/line_color_second" />
+
+                <LinearLayout style="@style/WriteLinerStyle">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="银行卡号:"
+                        android:textColor="@color/text_color_first"
+                        android:textSize="@dimen/main_text_size" />
+
+                    <EditText
+                        android:id="@+id/et_people_banknum"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:hint="请输入银行卡号"
+                        android:inputType="number"
+                        android:paddingLeft="15dp"
+                        android:textColor="@color/text_color_thirst"
+                        android:textCursorDrawable="@null"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

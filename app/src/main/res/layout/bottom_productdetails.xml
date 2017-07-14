@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_fff5f4"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
+
+    <TextView
+        android:id="@+id/tv_pdBiddingCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="竞拍（0人）："
+        android:textColor="@color/text_color_second"
+        android:textSize="11sp" />
+
+    <com.property.colpencil.colpencilandroidlibrary.Ui.MosaicGridView
+        android:id="@+id/gridview_bidding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="22dp"
+        android:layout_marginTop="10.5dp"
+        android:horizontalSpacing="15dp"
+        android:numColumns="6"
+        android:scrollbars="none"
+        android:verticalSpacing="5dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/radius_splite_line"
+        android:orientation="vertical"
+        android:paddingBottom="15dp"
+        android:paddingTop="14dp">
+
+        <com.property.colpencil.colpencilandroidlibrary.Ui.MosaicListView
+            android:id="@+id/listview_bidding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="#00000000"
+            android:dividerHeight="18dp"></com.property.colpencil.colpencilandroidlibrary.Ui.MosaicListView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/pd_buy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/radius_splite_line"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="15dp">
+
+        <ImageView
+            android:id="@+id/item_iv_biddingcontent"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/imgselect" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="66.5dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:text="二三四五"
+                    android:textColor="#192a46"
+                    android:textSize="@dimen/main_text_size" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="10dp"
+                    android:text="¥110"
+                    android:textColor="@color/main_red"
+                    android:textSize="11sp" />
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="30.5dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:gravity="center"
+                android:text="购买"
+                android:textColor="@color/main_red"
+                android:textSize="@dimen/main_text_size" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

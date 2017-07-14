@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    android:orientation="vertical">
+
+    <include layout="@layout/base_header" />
+
+    <TextView
+        android:id="@+id/evaluation_goodName"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/btn_sumbit_height"
+        android:background="@color/main_LinearLayout_background"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/padding_0.5dp"
+        android:background="@color/line_color_second"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_LinearLayout_background"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <EditText
+            android:id="@+id/et_evaluation"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:background="@drawable/radius_splite_line"
+            android:gravity="left|top"
+            android:hint="请输入评价的内容"
+            android:padding="10dp"
+            android:textCursorDrawable="@null"
+            android:singleLine="false"
+            android:textColor="@color/text_color_thirst"
+            android:textColorHint="@color/text_color_thirst"
+            android:textSize="@dimen/main_text_size" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/evaluation_gridView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="-7.5dp"
+            android:layout_marginRight="-7.5dp"
+            android:layout_marginTop="@dimen/margin_7.5dp"
+            android:numColumns="4" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,124 @@
+ext{
+
+    //Version
+    supportVersion = '23.2.1'
+    junitVersion = '4.12'
+    fastjsonVersion = '1.1.46.android'
+    butterknifeVersion = '7.0.1'
+    toolsfinalVersion = '1.1.5'
+    rxandroidVersion = '1.1.0'
+    rxjavaVersion = '1.1.0'
+    materializeVersion = '0.2.7@aar'
+    retrofitVersion = '2.0.2'
+    statusbaruitlVersion = '1.0.0'
+    andfixVersion = "0.4.0@aar"
+    nineoldandroidsVersion='2.4.0'
+    topsnackbarVersion='0.0.8'
+    okhttpVersion = '3.2.0'
+    leakcanaryVersion = '1.4-beta2'
+    draggerVersion = '2.4'
+    annotationVersion = '10.0-b28'
+    glideVersion='3.7.0'
+    bgaBannerVersion='2.0.4@aar'
+    bgaAdapterVersion='1.0.8@aar'
+    cardviewVersion='23.2.1'
+    greendaoVersion = '2.1.0'
+
+    //Packages
+    supportPackage = 'com.android.support'
+    junitPackage = 'junit'
+    fastjsonPackage = 'com.alibaba'
+    butterknifePackage = 'com.jakewharton'
+    toolsfinalPackage = 'cn.finalteam'
+    rxandroidPackage = 'io.reactivex'
+    rxjavaPackage = 'io.reactivex'
+    materializePackage = 'com.mikepenz'
+    retrofitPackage = 'com.squareup.retrofit2'
+    statusbaruitlPackage = 'com.jaeger.statusbaruitl'
+    andfixPackage = 'com.alipay.euler'
+    nineoldandroidsPackage='com.nineoldandroids'
+    topsnackbarPackage='com.androidadvance'
+    okhttpPackage = 'com.squareup.okhttp3'
+    leakcanaryPackage = 'com.squareup.leakcanary'
+    dragger2Package = 'com.google.dagger'
+    annotationPackage = 'org.glassfish'
+    glidePackage='com.github.bumptech.glide'
+    bgaBannerPackage='cn.bingoogolapple'
+    bgaAdapterPackage='cn.bingoogolapple'
+    cardviewPackage='com.android.support'
+    greendaoPackage = 'de.greenrobot'
+
+    supportDependencies = [
+            appCompat        : buildDependency(supportPackage, 'appcompat-v7', supportVersion),
+            design           : buildDependency(supportPackage,'design',supportVersion),
+            supportV4        : buildDependency(supportPackage,'support-v4',supportVersion),
+            recyclerviewV7   : buildDependency(supportPackage,'recyclerview-v7',supportVersion),
+
+    ]
+
+    testingDependencies = [
+            junit      : buildDependency(junitPackage, 'junit', junitVersion),
+    ]
+
+    rxDependencies = [
+            rxandroid : buildDependency(rxandroidPackage,'rxandroid',rxandroidVersion),
+            rxjava : buildDependency(rxjavaPackage,'rxjava',rxjavaVersion)
+    ]
+
+    toolDependencies = [
+            fastjson : buildDependency(fastjsonPackage,'fastjson',fastjsonVersion),
+            butterknife : buildDependency(butterknifePackage,'butterknife',butterknifeVersion),
+            toolsfinal : buildDependency(toolsfinalPackage,'toolsfinal',toolsfinalVersion),
+            materialize : buildDependency(materializePackage,'materialize',butterknifeVersion),
+            library:buildDependency(statusbaruitlPackage,'library',statusbaruitlVersion),
+            andfix:buildDependency(andfixPackage,'andfix',andfixVersion),
+            leakcanaryAndroid : buildDependency(leakcanaryPackage,'leakcanary-android',leakcanaryVersion),
+            leakcanaryAndroidNoOp : buildDependency(leakcanaryPackage,'leakcanary-android-no-op',leakcanaryVersion),
+            dragger2 : buildDependency(dragger2Package,'dagger',draggerVersion),
+            annotation : buildDependency(annotationPackage,'javax.annotation',annotationVersion),
+            greendao : buildDependency(greendaoPackage,'greendao',greendaoVersion),
+    ]
+
+    retrofitDependencies = [
+            retrofit     : buildDependency(retrofitPackage, 'retrofit', retrofitVersion),
+            adapterRxjava : buildDependency(retrofitPackage,'adapter-rxjava',retrofitVersion),
+            converterGson : buildDependency(retrofitPackage,'converter-gson',retrofitVersion),
+    ]
+
+    nineoldandroidsDependencies=[
+            library  : buildDependency(nineoldandroidsPackage,'library',nineoldandroidsVersion),
+
+    ]
+
+    okHttpDependencies = [
+            okhttp : buildDependency(okhttpPackage,'okhttp',okhttpVersion),
+            loggingInterceptor : buildDependency(okhttpPackage,'logging-interceptor',okhttpVersion),
+    ]
+
+    topsnackbarDependencies=[
+            topsnackbar: buildDependency(topsnackbarPackage,'topsnackbar',topsnackbarVersion),
+    ]
+    glideDependencies=[
+
+            glide:buildDependency(glidePackage,'glide',glideVersion),
+    ]
+    bgaBannerDependencies=[
+
+            bgaBanner:buildDependency(bgaBannerPackage,'bga-banner',bgaBannerVersion),
+    ]
+    bgaAdapterDependencies=[
+
+            bgaAdapter:buildDependency(bgaAdapterPackage,'bga-adapter',bgaAdapterVersion),
+
+    ]
+    cardviewDependencies=[
+
+            cardview:buildDependency(cardviewPackage,'cardview-v7',cardviewVersion),
+
+    ]
+}
+
+//通过 这个方法建立连接
+String buildDependency(String pack, String dependency, String version) {
+    return "${pack}:${dependency}:${version}"
+}

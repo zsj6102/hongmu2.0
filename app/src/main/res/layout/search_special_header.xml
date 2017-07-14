@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/base_header_height"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/search_all_header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="29dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/search_header_shape"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/margin_13dp"
+                android:layout_height="@dimen/margin_13dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:src="@mipmap/home_search_icon" />
+
+            <EditText
+                android:id="@+id/base_header_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/search_special_tv"
+                android:textColor="@color/text_color_thirst"
+                android:textColorHint="@color/text_color_thirst"
+                android:textCursorDrawable="@null"
+                android:textSize="@dimen/text_size_14sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/base_header_search"
+            android:layout_width="45dp"
+            android:layout_height="@dimen/width_29dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/margin_15dp"
+            android:background="@drawable/search_header_shape"
+            android:gravity="center"
+            android:text="@string/btn_search"
+            android:textColor="@color/main_brown"
+            android:textSize="@dimen/text_size_13sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

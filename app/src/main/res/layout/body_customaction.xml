@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout style="@style/WriteLinerStyle">
+
+        <TextView
+            style="@style/RedTextViewStyle"
+            android:text="*" />
+
+        <TextView
+            style="@style/WriteTextTitileStyle"
+            android:text="联系人:" />
+
+        <EditText
+            android:id="@+id/contact_name"
+            style="@style/WriteEditStyle"
+            android:hint="请输入联系人姓名"
+            android:maxLength="10"
+            android:textCursorDrawable="@null" />
+    </LinearLayout>
+
+    <View style="@style/divingStyle"></View>
+
+    <LinearLayout style="@style/WriteLinerStyle">
+
+        <TextView
+            style="@style/RedTextViewStyle"
+            android:text="*" />
+
+        <TextView
+            style="@style/WriteTextTitileStyle"
+            android:text="电话:" />
+
+        <EditText
+            android:id="@+id/contact_mobile"
+            style="@style/WriteEditStyle"
+            android:hint="请输入联系电话"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:textCursorDrawable="@null" />
+    </LinearLayout>
+
+    <View style="@style/divingStyle"></View>
+
+    <LinearLayout style="@style/WriteLinerStyle">
+
+        <TextView
+            style="@style/RedTextViewStyle"
+            android:text="*" />
+
+        <TextView
+            style="@style/WriteTextTitileStyle"
+            android:text="QQ:" />
+
+        <EditText
+            android:id="@+id/contact_qq"
+            style="@style/WriteEditStyle"
+            android:hint="请输入QQ号"
+            android:inputType="number"
+            android:maxLength="20"
+            android:textCursorDrawable="@null" />
+    </LinearLayout>
+
+    <View style="@style/divingStyle"></View>
+
+    <LinearLayout style="@style/WriteLinerStyle">
+
+        <TextView
+            style="@style/RedTextViewStyle"
+            android:text="*" />
+
+        <TextView
+            style="@style/WriteTextTitileStyle"
+            android:text="微信号:" />
+
+        <EditText
+            android:id="@+id/contact_wechat"
+            style="@style/WriteEditStyle"
+            android:hint="请输入微信号"
+            android:inputType="text"
+            android:maxLength="20"
+            android:textCursorDrawable="@null" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color_first"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_LinearLayout_background"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="15.5dp"
+        android:paddingTop="15dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="11dp"
+            android:src="@mipmap/customleft" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="定制说明"
+            android:textColor="#402020"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="11dp"
+            android:src="@mipmap/customright" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_LinearLayout_background"
+        android:orientation="vertical"
+        android:paddingBottom="15dp"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:paddingRight="@dimen/paddingRight">
+
+        <EditText
+            android:id="@+id/contact_description"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:background="@drawable/gray_border_white_solid"
+            android:gravity="left"
+            android:hint="请输入定制说明"
+            android:padding="@dimen/margin_15dp"
+            android:textColor="@color/text_color_thirst"
+            android:textColorHint="@color/text_color_thirst"
+            android:textCursorDrawable="@null"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_15dp"
+            android:background="@color/main_background"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingBottom="15dp"
+            android:paddingLeft="@dimen/margin_7.5dp"
+            android:paddingRight="@dimen/margin_7.5dp">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/custom_gridview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_7.5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="(最多上传9张图片)"
+                android:textColor="@color/text_color_thirst"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/line_color_first" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_LinearLayout_background"
+        android:orientation="horizontal"
+        android:padding="15dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:text="私人定制产品付款链接"
+            android:textColor="@color/text_color_first"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_custom_buy"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/btn_redline"
+                android:gravity="center"
+                android:text="购买"
+                android:textColor="@color/main_red"
+                android:textSize="@dimen/main_text_size" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/line_color_first"></View>
+</LinearLayout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lable_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/width_32dp"
+        android:background="@color/color_fffbfa"
+        android:visibility="gone" />
+
+    <com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/lable_recycler">
+
+        <ListView
+            android:id="@+id/common_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/main_background"
+            android:divider="@color/transparent"
+            android:dividerHeight="0dp"
+            android:scrollbars="none" />
+    </com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout>
+
+    <ImageView
+        android:id="@+id/totop_iv"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginRight="15dp" />
+
+    <ImageView
+        android:id="@+id/iv_post"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="159dp"
+        android:layout_marginRight="15dp" />
+
+    <ImageView
+        android:id="@+id/iv_home"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="80dp" />
+
+</RelativeLayout>

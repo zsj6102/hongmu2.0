@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <com.property.colpencil.colpencilandroidlibrary.Ui.SelectableRoundedImageView
+        android:id="@+id/item_iv_biddingcontent"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="9dp"
+        android:src="@mipmap/imgselect"
+        app:sriv_oval="true" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="7dp"
+        android:paddingTop="7dp">
+
+        <TextView
+            android:id="@+id/item_auction_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="二三四五"
+            android:textColor="#192a46"
+            android:textSize="@dimen/main_text_size" />
+
+        <TextView
+            android:id="@+id/item_auction_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:text="¥110"
+            android:textColor="@color/main_red"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/item_product_hasbid"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center"
+            android:text="已出价"
+            android:textColor="@color/main_red"
+            android:textSize="@dimen/main_text_size" />
+    </LinearLayout>
+</LinearLayout>

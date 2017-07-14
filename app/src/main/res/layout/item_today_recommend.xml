@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/item_home_regood_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/color_fffbfa"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/margin_5dp"
+        android:paddingRight="@dimen/margin_5dp">
+
+        <ImageView
+            android:id="@+id/today_good_iv"
+            android:layout_width="match_parent"
+            android:layout_height="105dp"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/item_good_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/width_30dp"
+            android:layout_marginTop="@dimen/margin_7dp"
+            android:lines="2"
+            android:ellipsize="end"
+            android:textColor="@color/text_color_first"
+            android:textSize="@dimen/text_size_11sp" />
+
+        <TextView
+            android:id="@+id/item_good_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_15dp"
+            android:layout_marginTop="@dimen/padding_10dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/main_red"
+            android:textSize="@dimen/text_size_12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/tv_reason_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="理由标题"
+            android:textColor="@color/text_color_first"
+            android:textSize="@dimen/main_text_size" />
+
+        <ImageView
+            android:id="@+id/iv_selectReason"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/select_no" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/reason_view"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/paddingLeft"
+        android:layout_marginRight="@dimen/paddingRight"
+        android:background="@color/line_color_second" />
+</LinearLayout>

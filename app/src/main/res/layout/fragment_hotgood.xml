@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout
+        android:id="@+id/bga_hotGoodFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.property.colpencil.colpencilandroidlibrary.Ui.BaseGridView
+            android:id="@+id/gridview_hotGoodFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:numColumns="3"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:scrollbars="none" />
+    </com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout>
+</LinearLayout>

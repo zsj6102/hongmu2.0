@@ -1,0 +1,131 @@
+<resources>
+    <string name="app_name">"顶藏网"</string>
+    <string name="btn_tab_homepage">"首页"</string>
+    <string name="btn_tab_classification">"分类"</string>
+    <string name="btn_tab_discovery">"发现"</string>
+    <string name="btn_tab_cyclopedia">"百科"</string>
+    <string name="btn_tab_me">"我的"</string>
+    <string name="home_title">首页</string>
+    <string name="cyclopedia_all">全部</string>
+    <string name="cyclopedia_clture">佛教文化</string>
+    <string name="cyclopedia_aroma">檀香</string>
+    <string name="cyclopedia_history">收藏历史</string>
+    <string name="cyclopedia_custom">自定义</string>
+    <string name="search_header_tv">搜索文章</string>
+    <string name="search_special_tv">搜索专场名称</string>
+    <string name="input_null_tips">请输入要搜索的关键字</string>
+    <string name="btn_search">搜索</string>
+    <string name="write_comment">写评论...</string>
+    <string name="cyclopedia_detail_title">百科详情</string>
+
+    <string name="applyCustom">申请定制</string>
+    <string name="sumbitCustomApply">提交申请定制</string>
+    <string name="customActivityTitle">官方推荐定制</string>
+    <string name="search_good">搜索商品</string>
+    <string name="search_history">搜索历史</string>
+    <string name="search_history_clear">清空</string>
+    <string name="search_hot">热门搜索</string>
+    <string name="good_tv">商品</string>
+    <string name="cyclopedia_tv">百科</string>
+    <string name="posts_tv">帖子</string>
+    <string name="tv_recommend">推荐</string>
+    <string name="tv_rosewood">紫檀</string>
+    <string name="tv_pear">花梨</string>
+    <string name="tv_incense">沉香</string>
+    <string name="tv_sandalwood">檀香</string>
+    <string name="tv_treasures">文房</string>
+    <string name="customActionActivity">定制</string>
+    <string name="home_sign_in">签到</string>
+    <string name="home_announce">公告</string>
+    <string name="home_cicle">藏友圈</string>
+    <string name="home_auction">周拍</string>
+    <string name="home_custom">定制</string>
+    <string name="productdetailsActivity">商品详情</string>
+    <string name="tv_posts">帖子</string>
+    <string name="tv_recommed">被评论</string>
+    <string name="tv_like">被点赞</string>
+    <string name="tv_collection">收藏</string>
+    <string name="item_num">%1$d条</string>
+    <string name="circle">圈子</string>
+    <string name="mine">我的</string>
+    <string name="comment">评论</string>
+    <string name="circle_type">圈子类别：</string>
+    <string name="circle_type_hint">请选择圈子类别</string>
+    <string name="posts_title">帖子标题：</string>
+    <string name="post_title_hint">不超过40字</string>
+    <string name="posts_content">帖子内容：</string>
+    <string name="posts_content_hint">请填写帖子内容</string>
+    <string name="video_url">视频链接：</string>
+    <string name="video_url_hint">想上传视频可以填写Url地址</string>
+    <string name="post_posts_button">发表</string>
+    <string name="post_posts">发表帖子</string>
+    <string name="photo_tv">照片</string>
+    <string name="video_tv">视频</string>
+    <string name="cancle_tv">取消</string>
+    <string name="post_types">请选帖子类型</string>
+    <string name="red_wood">红木</string>
+    <string name="tv_furniture">家具</string>
+    <string name="tv_disk">桌椅</string>
+    <string name="comment_rightnow">评论一下</string>
+    <string name="classification">分类：</string>
+    <string name="tv_color">颜色：</string>
+    <string name="tv_amount">数量：</string>
+    <string name="tv_service">服务：由顶藏网在线提供</string>
+    <string name="tv_good">商品</string>
+    <string name="tv_detail">详情</string>
+    <string name="tv_evaluation">评价</string>
+    <string name="good_recommend">商品推荐</string>
+    <string name="tv_help">关于我们</string>
+    <string name="tv_news">新闻</string>
+    <string name="tv_award">百科奖励</string>
+    <string name="tv_all">共</string>
+    <string name="tv_mycomment">条评论</string>
+    <string name="sign_in_tv1">获得：</string>
+    <string name="integral_tv"> 积 分</string>
+    <string name="integral_tv_rule">签到规则</string>
+    <string name="integral_detail">
+        1、签到一次获得2积分\n
+        2、连续签到5天额外获得10积分\n
+        3、积分可以用来兑换代金券
+    </string>
+    <string name="sign_in_success">签到成功！</string>
+    <string name="sign_in_tips">本次签到成功获得10积分</string>
+    <string name="sign_in_know">知道了</string>
+    <string name="copy">©</string>
+    <string name="tv_salenum">月销量：%1$s</string>
+    <string name="tv_news_moving">新闻动态</string>
+    <string name="post_color_hint">(添加封面)</string>
+    <string name="cyclopedia_sort">百科分类：</string>
+    <string name="cyclopedia_sort_hint">请选择百科类别</string>
+    <string name="cyclopedia_title">百科标题：</string>
+    <string name="cyclopedia_title_hint">不超过20字</string>
+    <string name="cyclopedia_content_hint">请输入百科内容</string>
+    <string name="cyclopedia_post_tips">
+        温馨提示：
+        1、百科图片最多可选择9张;\n
+        2、若您的百科较长可以尝试分为两篇来提交。或是登录电脑版官网，可以便捷发布。
+    </string>
+    <string name="tv_rule">我已阅读并接受《相关规则》</string>
+    <string name="post_cyclopedia_title">发布百科</string>
+    <string name="my_cyclopedia">我的百科</string>
+    <string name="tv_under_review">审核中</string>
+    <string name="tv_passed">已通过</string>
+    <string name="tv_publish_failed">发布失败</string>
+    <string name="message_center">消息中心</string>
+    <string name="recommend_cyclopedia">推荐百科</string>
+
+    <string-array name="jazzy_effects">
+        <item>Standard</item>
+        <item>Tablet</item>
+        <item>CubeIn</item>
+        <item>CubeOut</item>
+        <item>FlipVertical</item>
+        <item>FlipHorizontal</item>
+        <item>Stack</item>
+        <item>ZoomIn</item>
+        <item>ZoomOut</item>
+        <item>RotateUp</item>
+        <item>RotateDown</item>
+        <item>Accordion</item>
+    </string-array>
+</resources>

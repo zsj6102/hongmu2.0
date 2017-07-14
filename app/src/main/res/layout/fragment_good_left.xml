@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.colpencil.redwood.function.widgets.scroll.DoubleScrollViewWrapper
+        android:id="@+id/wrapperview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        app:doublescrollviewwrapper_padding="48">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.colpencil.redwood.function.widgets.scroll.PageOne
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/ripple_material_dark"
+                android:scrollbars="none"
+                app:pageone_padding="48">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/fragment_good_left_header" />
+
+                </LinearLayout>
+
+            </com.colpencil.redwood.function.widgets.scroll.PageOne>
+
+            <com.colpencil.redwood.function.widgets.scroll.PageTwoWebView
+                android:id="@+id/webview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+    </com.colpencil.redwood.function.widgets.scroll.DoubleScrollViewWrapper>
+
+</LinearLayout>

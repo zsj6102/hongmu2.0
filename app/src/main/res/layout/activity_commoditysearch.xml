@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_background"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_heder"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingRight="15dp">
+
+            <ImageView
+                android:id="@+id/iv_commoditySearchBack"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/padding_10dp"
+                android:scaleType="center"
+                android:src="@mipmap/left_back" />
+
+            <LinearLayout
+                android:id="@+id/ll_commoditySearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/radius_splite_line_second"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingRight="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@mipmap/home_search_icon" />
+
+                <EditText
+                    android:id="@+id/et_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:gravity="center_vertical|left"
+                    android:hint="搜索商品"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true"
+                    android:textColor="#d2b9b4"
+                    android:textColorHighlight="@color/line_color_first"
+                    android:textColorHint="#d2b9b4"
+                    android:textCursorDrawable="@null"
+                    android:textSize="@dimen/main_text_size" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/ll_heder"
+            android:background="@color/line_color_first" />
+
+        <LinearLayout
+            android:id="@+id/ll_filter"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/line"
+            android:background="@color/main_LinearLayout_background"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_defaultSearch"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_defaultSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="默认"
+                    android:textColor="@color/main_red" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_sellSearch"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_sellSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="销量优先" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_priceSearch"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_priceSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="价格"
+                    android:textColor="@color/text_color_second" />
+
+                <ImageView
+                    android:id="@+id/iv_priceSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="12dp"
+                    android:src="@mipmap/price_default" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_screenSearch"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_screenSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="筛选"
+                    android:textColor="@color/text_color_second" />
+
+                <ImageView
+                    android:id="@+id/iv_screenSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="12dp"
+                    android:src="@mipmap/screen" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_color_first" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/ll_filter"
+            android:orientation="vertical">
+
+            <com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout
+                android:id="@+id/bga_commoditySearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.property.colpencil.colpencilandroidlibrary.Ui.BaseGridView
+                    android:id="@+id/gridview_CommoditySearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:horizontalSpacing="15dp"
+                    android:numColumns="2"
+                    android:scrollbars="none" />
+
+                <!--<LinearLayout-->
+                <!--android:id="@+id/empty_view"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:gravity="center"-->
+                <!--android:orientation="vertical"-->
+                <!--android:visibility="gone">-->
+
+                <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:src="@mipmap/cart_empty" />-->
+
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="30dp"-->
+                <!--android:text="抱歉，商品正在上架中..."-->
+                <!--android:textColor="@color/text_color_thirst"-->
+                <!--android:textSize="14sp" />-->
+
+            </com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/totop_iv"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="159dp"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/totop_icon" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/menu_layout_left"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="@color/main_background" />
+
+</android.support.v4.widget.DrawerLayout>

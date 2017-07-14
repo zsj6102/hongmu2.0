@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/main_LinearLayout_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="15dp">
+
+        <ImageView
+            android:id="@+id/iv_cyclopediaCollection"
+            android:layout_width="85dp"
+            android:layout_height="85dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:layout_marginLeft="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title_cyclopediaCollection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="百科标题"
+                    android:textColor="@color/text_color_first"
+                    android:textSize="16sp" />
+
+
+                <TextView
+                    android:id="@+id/content_cyclopediaCollection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="lalalalalalalallalalalalalalalallalalalalalalallalalalalalalalallalalalalalallalal"
+                    android:textColor="@color/text_color_thirst"
+                    android:textSize="@dimen/main_text_size" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/comments_cyclopediaCollection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="25评论"
+                android:textColor="@color/text_color_thirst"
+                android:textSize="11sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color_second"></View>
+</LinearLayout>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:paddingRight="@dimen/paddingRight">
+
+        <LinearLayout
+            android:id="@+id/ll_classification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="37dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/radius_splite_line_second"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/home_search_icon" />
+
+            <TextView
+                android:id="@+id/search_tv"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
+                android:background="@null"
+                android:gravity="center_vertical|left"
+                android:hint="搜索商品"
+                android:textColor="#d2b9b4"
+                android:textColorHighlight="@color/line_color_first"
+                android:textSize="@dimen/main_text_size" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_gotoShoppingCart"
+            android:layout_width="22dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/shopping_car_icon" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/dividing_line"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/circle_hot"
+                android:layout_width="82dp"
+                android:layout_height="42dp"
+                android:background="@drawable/class_tvhot_shape"
+                android:gravity="center"
+                android:text="藏友热卖"
+                android:textColor="@color/color_bf5d5d"
+                android:textSize="14dp" />
+
+            <com.property.colpencil.colpencilandroidlibrary.Ui.BaseListView
+                android:id="@+id/listview_hSearch"
+                android:layout_width="82dp"
+                android:layout_height="match_parent"
+                android:dividerHeight="0dp"
+                android:scrollbars="none" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_hSearchChoose"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
+                android:layout_marginLeft="7dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/text_color_first"
+                android:textSize="15sp" />
+
+            <com.property.colpencil.colpencilandroidlibrary.Ui.NoScrollViewPager
+                android:id="@+id/vp_classification"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

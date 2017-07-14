@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/main_LinearLayout_background"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/select_splace_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="请选择地址"
+            android:textColor="@color/text_color_first"
+            android:textSize="@dimen/main_title_size" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color_first" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.colpencil.redwood.function.widgets.wheel.WheelView
+            android:id="@+id/id_province"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null" />
+
+
+        <com.colpencil.redwood.function.widgets.wheel.WheelView
+            android:id="@+id/id_city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null" />
+
+
+        <com.colpencil.redwood.function.widgets.wheel.WheelView
+            android:id="@+id/id_district"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color_first"></View>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/btn_sumbit_height"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <!-- 取消按钮 -->
+
+        <TextView
+            android:id="@+id/btn_place_ok"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@color/main_LinearLayout_background"
+            android:textSize="@dimen/main_title_size"
+            android:layout_weight="1"
+            android:text="确定"
+            android:textColor="@color/main_red"/>
+
+        <!-- 确认按钮 -->
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/line_color_first"></View>
+
+        <TextView
+            android:id="@+id/btn_place_cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="@dimen/main_title_size"
+            android:layout_weight="1"
+            android:text="取消"
+            android:background="@color/main_LinearLayout_background"
+            android:textColor="@color/text_color_first" />
+    </LinearLayout>
+</LinearLayout>

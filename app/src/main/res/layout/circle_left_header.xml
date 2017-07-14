@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ban="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.youth.banner.Banner
+        android:id="@+id/circle_banner"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/color_fffbfa"
+        ban:indicator_drawable_selected="@drawable/point_select"
+        ban:indicator_drawable_unselected="@drawable/point_unselect"
+        ban:indicator_height="5dp"
+        ban:indicator_margin="2dp"
+        ban:indicator_width="5dp"
+        ban:is_auto_play="true" />
+
+    <LinearLayout
+        android:id="@+id/ll_category"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/circle_banner"
+        android:background="@color/main_brown"
+        android:orientation="horizontal">
+
+        <HorizontalScrollView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" />
+
+        </HorizontalScrollView>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:background="@color/main_red" />
+
+        <ImageView
+            android:id="@+id/iv_add"
+            android:layout_width="@dimen/width_20dp"
+            android:layout_height="@dimen/width_20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/home_add_icon" />
+
+    </LinearLayout>
+
+</LinearLayout>

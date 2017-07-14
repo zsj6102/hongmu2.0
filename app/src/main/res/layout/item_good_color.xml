@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_good"
+        android:layout_width="@dimen/width_60dp"
+        android:layout_height="@dimen/width_29dp"
+        android:layout_marginLeft="@dimen/padding_10dp"
+        android:background="@drawable/category_selector">
+
+        <TextView
+            android:id="@+id/item_good_filter_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/color_613b33"
+            android:textSize="@dimen/text_size_14sp" />
+    </RelativeLayout>
+
+</LinearLayout>

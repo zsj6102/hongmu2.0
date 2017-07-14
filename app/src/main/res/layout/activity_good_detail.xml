@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_44dp"
+        android:background="@color/color_fffbfa">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/padding_10dp"
+            android:scaleType="center"
+            android:src="@mipmap/left_back"
+            android:layout_centerVertical="true"/>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/good_detail_tablayout"
+            android:layout_width="145dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            app:tabIndicatorColor="@color/main_red"
+            app:tabSelectedTextColor="@color/main_red"
+            app:tabTextAppearance="@style/GoodTabTextAppearance" />
+
+        <ImageView
+            android:id="@+id/iv_collection"
+            android:layout_width="@dimen/height_22dp"
+            android:layout_height="@dimen/height_22dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/detail_collection_icon" />
+
+        <ImageView
+            android:id="@+id/iv_share"
+            android:layout_width="@dimen/height_22dp"
+            android:layout_height="@dimen/height_22dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="52dp"
+            android:src="@mipmap/good_share_icon" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/padding_0.5dp"
+        android:layout_below="@id/header"
+        android:background="@color/line_color_first" />
+
+    <com.property.colpencil.colpencilandroidlibrary.Ui.NoScrollViewPager
+        android:id="@+id/good_detail_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/line1"
+        android:layout_marginBottom="45dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_45dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/main_LinearLayout_background"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_service"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/good_service_icon" />
+
+        <ImageView
+            android:id="@+id/iv_car"
+            android:layout_width="@dimen/height_25dp"
+            android:layout_height="@dimen/height_25dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/shopping_car_icon" />
+
+        <Button
+            android:id="@+id/btn_addtocar"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/width_30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/red_border_white_solid"
+            android:text="加入购物车"
+            android:textColor="@color/main_red"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/buy_right"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/width_30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/margin_15dp"
+            android:layout_marginRight="@dimen/margin_15dp"
+            android:layout_weight="1"
+            android:background="@drawable/red_solid_shape"
+            android:text="立即购买"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_home"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
+        android:layout_marginBottom="159dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="80dp"
+        android:src="@mipmap/home_icon" />
+
+</RelativeLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/base_header" />
+
+    <com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header">
+
+        <ListView
+            android:id="@+id/common_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/header"
+            android:background="@color/main_background"
+            android:divider="@color/transparent"
+            android:dividerHeight="@dimen/width_0dp"
+            android:scrollbars="none" />
+    </com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout>
+
+    <ImageView
+        android:id="@+id/common_float"
+        android:layout_width="@dimen/height_44dp"
+        android:layout_height="@dimen/height_44dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="159dp"
+        android:layout_marginRight="@dimen/margin_15dp"
+        android:src="@mipmap/release_icon"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/iv_totop"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/width_100dp"
+        android:layout_marginRight="@dimen/margin_15dp"
+        android:src="@mipmap/totop_icon" />
+
+</RelativeLayout>

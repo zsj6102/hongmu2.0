@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/base_header" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/main_background"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            app:tabIndicatorColor="@color/main_red"
+            app:tabSelectedTextColor="@color/main_red"
+            app:tabTextAppearance="@style/HomeTabTextAppearance" />
+
+        <View
+            android:layout_width="@dimen/padding_0.5dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/margin_5dp"
+            android:layout_marginTop="@dimen/margin_5dp"
+            android:background="@color/main_red" />
+
+        <LinearLayout
+            android:id="@+id/ll_iv"
+            android:layout_width="@dimen/width_50dp"
+            android:layout_height="@dimen/width_32dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/tab_layout_header_addiv"
+                android:layout_width="@dimen/width_20dp"
+                android:layout_height="@dimen/width_20dp"
+                android:src="@mipmap/home_add_icon" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.property.colpencil.colpencilandroidlibrary.Ui.NoScrollViewPager
+        android:id="@+id/recommend_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

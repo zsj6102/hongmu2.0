@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_LinearLayout_background"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/item_message_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:text="你那么牛，怎么不去青青草原捉羊啊！！！"
+            android:textColor="@color/text_color_first"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/item_message_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="right"
+            android:paddingRight="15dp"
+            android:text="06/03/12 15:30"
+            android:textColor="@color/text_color_thirst"
+            android:textSize="11sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/padding_0.5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/line_color_first" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/item_message_img"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:src="@mipmap/test" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="15dp">
+
+                <com.colpencil.redwood.function.widgets.ExpandTextView
+                    android:id="@+id/expandTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:paddingLeft="@dimen/paddingLeft"
+                    android:paddingRight="@dimen/paddingRight"
+                    android:textColor="@color/text_color_second"
+                    android:textSize="@dimen/main_text_size"
+                    app:maxCollapsedLines="1" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="right"
+                    android:orientation="horizontal"
+                    android:paddingRight="15dp">
+
+                    <TextView
+                        android:id="@+id/item_message_delete"
+                        android:layout_width="45dp"
+                        android:layout_height="27dp"
+                        android:background="@drawable/gray_border_white_solid"
+                        android:gravity="center"
+                        android:text="删除"
+                        android:textColor="@color/text_color_first"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/item_message_expend"
+                        android:layout_width="45dp"
+                        android:layout_height="27dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/gray_border_white_solid"
+                        android:gravity="center"
+                        android:text="展开"
+                        android:textColor="@color/text_color_first"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

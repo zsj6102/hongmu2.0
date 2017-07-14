@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <include layout="@layout/base_header"/>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/base_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/color_fffbfa"
+        app:tabIndicatorColor="@color/main_red"
+        app:tabSelectedTextColor="@color/main_red"
+        app:tabTextAppearance="@style/TabLayoutTextAppearance" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_color_second"></View>
+
+    <com.property.colpencil.colpencilandroidlibrary.Ui.NoScrollViewPager
+        android:id="@+id/nvp_base"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/myhead"
+        layout="@layout/search_header" />
+
+    <LinearLayout
+        android:id="@+id/tab_layout_header"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/myhead"
+        android:orientation="horizontal">
+
+        <HorizontalScrollView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/ll_tablayout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/ll_recommends"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_commment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:text="全部"
+                        android:textColor="@color/main_red"
+                        android:textSize="15sp" />
+
+                    <View
+                        android:layout_width="60dp"
+                        android:layout_height="2dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/main_red" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <View
+            android:layout_width="@dimen/padding_0.5dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/margin_5dp"
+            android:layout_marginTop="@dimen/margin_5dp"
+            android:background="@color/color_ecdad6" />
+
+        <LinearLayout
+            android:id="@+id/ll_iv"
+            android:layout_width="@dimen/width_50dp"
+            android:layout_height="@dimen/width_32dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/tab_layout_header_addiv"
+                android:layout_width="@dimen/width_20dp"
+                android:layout_height="@dimen/width_20dp"
+                android:src="@mipmap/home_add_icon" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tab_layout_header">
+
+        <ListView
+            android:id="@+id/home_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none" />
+    </com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout>
+
+    <ImageView
+        android:id="@+id/iv_post"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="159dp"
+        android:layout_marginRight="15dp"
+        android:src="@mipmap/home_float_service" />
+
+    <ImageView
+        android:id="@+id/totop_iv"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginRight="15dp"
+        android:src="@mipmap/totop_icon" />
+
+</RelativeLayout>

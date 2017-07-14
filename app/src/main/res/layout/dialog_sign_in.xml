@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_fffbfa"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/height_35dp"
+        android:text="@string/sign_in_success"
+        android:textColor="@color/main_red"
+        android:textSize="@dimen/text_size_18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/sign_in_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_12dp"
+        android:text="@string/sign_in_tips"
+        android:textColor="@color/text_color_second"
+        android:textSize="@dimen/text_size_14sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/padding_0.5dp"
+        android:layout_marginTop="@dimen/height_35dp"
+        android:background="@color/line_color_first" />
+
+    <TextView
+        android:id="@+id/dialog_sure"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_44dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:text="@string/sign_in_know"
+        android:textColor="@color/main_red"
+        android:textSize="@dimen/text_size_18sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

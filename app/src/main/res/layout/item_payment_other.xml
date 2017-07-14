@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/main_LinearLayout_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="15dp">
+
+        <ImageView
+            android:id="@+id/iv_item_payment_other"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/imgselect" />
+
+        <TextView
+            android:id="@+id/tvTitle_item_payment_other"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="标题"
+            android:gravity="center"
+            android:textColor="@color/text_color_first"
+            android:textSize="@dimen/main_text_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|right">
+
+            <ImageView
+                android:id="@+id/select_item_payment_other"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:src="@mipmap/select_no" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/item_payment_other"
+        android:layout_width="match_parent"
+        android:background="@drawable/dotted_line"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layerType="software"
+     ></View>
+</LinearLayout>

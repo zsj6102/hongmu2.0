@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.colpencil.redwood">
+
+    <!-- 以后每申明一个权限，都要给这个权限做说明 -->
+    <!-- 写入sd卡的权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 读取sd卡的权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--连接网络的权限-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--杀死后台进程的权限-->
+    <uses-permission android:name="permission.KILL_BACKGROUND_PROCESSES" />
+    <!--系统弹出的权限-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!--系统设置-->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!-- 申请腾讯X5所需权限 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+
+    <!-- QQ、QQ空间所需权限 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <application
+        android:name=".base.App"
+        android:allowBackup="true"
+        android:icon="@mipmap/logo"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <!--&lt;!&ndash;欢迎界面&ndash;&gt;-->
+        <activity
+            android:name=".view.activity.login.SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".view.activity.mine.StoreHomeActivity">
+
+        </activity>
+
+        <!--登录-->
+        <activity android:name=".view.activity.login.LoginActivity"></activity>
+        <!--修改密码-->
+        <activity android:name=".view.activity.login.PwdActivity"></activity>
+
+        <activity android:name=".view.activity.login.RegisterActivity"></activity>
+        <!--主界面-->
+        <activity
+            android:name=".view.activity.HomeActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan" />
+        <!--官方推荐定制界面-->
+        <activity android:name=".view.activity.discovery.CustomActivity"></activity>
+        <!--定制界面-->
+        <activity
+            android:name=".view.activity.discovery.CustomActionActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <!--商品详情-->
+        <activity android:name=".view.activity.home.ProductdetailsActivity">
+
+        </activity>
+        <!--周拍-->
+        <activity android:name=".view.activity.home.WeekShootActivity">
+
+        </activity>
+        <activity android:name=".view.activity.classification.CommoditySearchActivity" />
+        <!--筛选-->
+        <!--支付-->
+        <activity android:name=".view.activity.ShoppingCartActivitys.PaymentActivity"></activity>
+        <!--申请退款-->
+        <activity android:name=".view.activity.mine.RefundMoneyActivity"></activity>
+        <!--商品搜索-->
+        <activity android:name=".view.activity.ShoppingCartActivitys.ShoppingCartActivity"></activity>
+        <!--评价-->
+        <activity android:name=".view.activity.mine.EvaluationActivity"></activity>
+        <!--售后-->
+        <activity
+            android:name=".view.activity.mine.AfterSalesActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <!--售后中心-->
+        <activity
+            android:name=".view.activity.mine.AfterSalesCenterActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <!--填写物流-->
+        <activity android:name=".view.activity.mine.WriteLogisticsActivity"></activity>
+        <!--我的周拍-->
+        <activity android:name=".view.activity.mine.MyWeekShootActivity"></activity>
+        <!--我的优惠券-->
+        <activity android:name=".view.activity.mine.MyCouponsActivity"></activity>
+        <!--我的定制-->
+        <activity android:name=".view.activity.mine.MyCustomActivity"></activity>
+        <!--领取优惠券-->
+        <activity android:name=".view.activity.mine.GetCouponsActivity"></activity>
+        <!--我的评价-->
+        <activity android:name=".view.activity.mine.MyEvaluationActivity"></activity>
+        <!--地址管理-->
+        <activity android:name=".view.activity.mine.ReceiptAddressActivtiy"></activity>
+        <!--新增地址-->
+        <activity android:name=".view.activity.mine.AddAdressActivity"></activity>
+        <!--我的收藏-->
+        <activity android:name=".view.activity.mine.MyCollectionActivity"></activity>
+        <!--浏览记录-->
+        <activity android:name=".view.activity.mine.BrowsingHistoryActivity"></activity>
+        <!--我的积分-->
+        <activity android:name=".view.activity.mine.MyIntegralActivity"></activity>
+        <!--我的消息-->
+        <activity android:name=".view.activity.mine.MyMessageActivity"></activity>
+        <!--订单详情-->
+        <activity android:name=".view.activity.mine.OrderDetailsActivity"></activity>
+        <!--速拍-->
+        <activity android:name=".view.activity.mine.SpeedShotActivity"></activity>
+        <!--禅音-->
+        <activity android:name=".view.activity.discovery.MusicCenterActivity"></activity>
+        <activity android:name=".view.activity.mine.MyNewsActivity" />
+        <activity
+            android:name=".view.activity.cyclopedia.CyclopediaDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.home.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.home.CollectionCircleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.home.PostsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".view.activity.home.CommentDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.home.GoodDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.home.SignInActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".view.activity.home.NewListActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <!--用户个人信息-->
+        <activity
+            android:name=".view.activity.mine.UserInformationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.mine.OrderCenterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.home.PostNewsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+
+        </activity>
+        <activity
+            android:name=".view.activity.mine.WebViewActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".view.activity.mine.MineCycloActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".view.activity.home.AnnounceActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".view.activity.home.HelpActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".view.activity.discovery.ReCyclopediaActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".view.activity.home.GoodResultActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".view.activity.cyclopedia.CyclopediaResultActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".view.activity.home.PostsResultActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".view.activity.home.FameActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".view.activity.cyclopedia.CycloAwardActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".view.activity.home.CategoryActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".view.activity.home.MyWebViewActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".view.activity.commons.GalleyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.cyclopedia.PostCyclopediaActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".view.activity.mine.BusinessActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.mine.SpecialActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.classification.SearchGoodActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.discovery.CustomListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.home.CodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.mine.CustomDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.discovery.WeekSortActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.discovery.CircleSortActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.mine.PersonApplyActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".view.activity.mine.BrandApplyActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".view.activity.home.MasterCraftsmanActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".view.activity.mine.FamousApplyActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".view.activity.mine.WinworkActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.mine.BrandStoreActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".view.activity.mine.AllSpecialActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+
+
+
+        <service android:name=".view.PlayerService" />
+        <service android:name=".view.DownLoadService" />
+        <service android:name=".services.PostsService" />
+        <service android:name=".services.CyclopediaService" />
+
+        <!--预览已经选择的图片-->
+        <activity
+            android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ImagePickerThemeFullScreen" />
+
+        <!--下面是第三方登录的，分享的配置-->
+        <activity
+            android:name="com.umeng.socialize.editorpage.ShareActivity"
+            android:excludeFromRecents="true" />
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="581b32d8717c19254700356d"></meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Umeng"></meta-data>
+
+        <service
+            android:name="com.sina.weibo.sdk.net.DownloadService"
+            android:exported="false"></service>
+        <!--微信平台-->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--腾讯平台-->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter><action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1105578038" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--新浪微博 -->
+        <activity
+            android:name=".WBShareActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"></activity>
+
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Umeng"></meta-data>
+        <!-- 微信支付 -->
+        <receiver android:name="com.colpencil.redwood.function.utils.Pay.Wechat.AppRegister">
+            <intent-filter>
+                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
+            </intent-filter>
+        </receiver>
+        <!--<receiver android:name="com.welive.wx.simcpux.AppRegister" >-->
+        <!--<intent-filter>-->
+        <!--<action android:name ="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />-->
+        <!--</intent-filter>-->
+        <!--</receiver>-->
+        <!-- 回调窗口透明 -->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <!-- wechat callback-->
+
+        <!--银联支付-->
+        <activity
+            android:name="com.unionpay.uppay.PayActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.unionpay.UPPayWapActivity"
+            android:configChanges="orientation|keyboardHidden|fontScale"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+    </application>
+
+</manifest>
