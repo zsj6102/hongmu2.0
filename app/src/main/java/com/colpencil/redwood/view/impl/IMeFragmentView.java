@@ -1,5 +1,6 @@
 package com.colpencil.redwood.view.impl;
 
+import com.colpencil.redwood.bean.ApplyStatusReturn;
 import com.colpencil.redwood.bean.HomeGoodInfo;
 import com.colpencil.redwood.bean.LoginBean;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilBaseView;
@@ -25,4 +26,8 @@ public interface IMeFragmentView extends ColpencilBaseView{
     void callPhone(String phone);
 
     void fail(LoginBean loginBean);
+    //获取申请状态
+    void getStatusError(String message);
+
+    void getStatusSucess(ApplyStatusReturn applyStatusReturn);
 }

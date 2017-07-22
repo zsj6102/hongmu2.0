@@ -1,5 +1,6 @@
 package com.colpencil.redwood.view.activity.cyclopedia;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -21,7 +22,6 @@ import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.PostTypeInfo;
 import com.colpencil.redwood.configs.Constants;
 import com.colpencil.redwood.configs.StringConfig;
-import com.colpencil.redwood.function.tools.DialogTools;
 import com.colpencil.redwood.function.utils.ListUtils;
 import com.colpencil.redwood.function.widgets.dialogs.PostDialog;
 import com.colpencil.redwood.present.home.PostNewsPresenter;
@@ -38,13 +38,10 @@ import com.lzy.imagepicker.ui.ImagePreviewDelActivity;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilActivity;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
-import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ImgTool;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ToastTools;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.Bind;
 import butterknife.OnClick;
 import me.shaohui.advancedluban.Luban;
@@ -205,9 +202,9 @@ public class PostCyclopediaActivity extends ColpencilActivity
                     compress(files);
                 } else { // 手持身份证的
                     if (coverDataArray.size() != 0) {
-                        Glide.with(this).load(coverDataArray.get(0).path).into(iv_cover);
+                        imagePicker.getImageLoader().displayImage(PostCyclopediaActivity.this,coverDataArray.get(0).path,iv_cover,0,0);
                         File mfile = new File(coverDataArray.get(0).path);
-                        DialogTools.showLoding(this, "温馨提示", "获取中。。。");
+                        //                        DialogTools.showLoding(this, "温馨提示", "获取中。。。");
                         Luban.compress(this, mfile)
                                 .putGear(Luban.THIRD_GEAR)
                                 .launch(new OnCompressListener() {
@@ -218,12 +215,12 @@ public class PostCyclopediaActivity extends ColpencilActivity
                                     @Override
                                     public void onSuccess(File file) {
                                         mFile = file;
-                                        DialogTools.dissmiss();
+                                        //                                        DialogTools.dissmiss();
                                     }
 
                                     @Override
                                     public void onError(Throwable e) {
-                                        DialogTools.dissmiss();
+                                        //                                        DialogTools.dissmiss();
                                     }
                                 });
                     } else {
@@ -253,9 +250,9 @@ public class PostCyclopediaActivity extends ColpencilActivity
                     compress(files);
                 } else {
                     if (coverDataArray.size() != 0) {
-                        ImgTool.getImgToolInstance(this).loadImgByString(coverDataArray.get(0).path, iv_cover);
+                        imagePicker.getImageLoader().displayImage(PostCyclopediaActivity.this,coverDataArray.get(0).path,iv_cover,0,0);
                         File mfile = new File(coverDataArray.get(0).path);
-                        DialogTools.showLoding(this, "温馨提示", "获取中。。。");
+                        //                        DialogTools.showLoding(this, "温馨提示", "获取中。。。");
                         Luban.compress(this, mfile)
                                 .putGear(Luban.THIRD_GEAR)
                                 .launch(new OnCompressListener() {
@@ -266,12 +263,12 @@ public class PostCyclopediaActivity extends ColpencilActivity
                                     @Override
                                     public void onSuccess(File file) {
                                         mFile = file;
-                                        DialogTools.dissmiss();
+                                        //                                        DialogTools.dissmiss();
                                     }
 
                                     @Override
                                     public void onError(Throwable e) {
-                                        DialogTools.dissmiss();
+                                        //                                        DialogTools.dissmiss();
                                     }
                                 });
                     } else {
@@ -288,7 +285,7 @@ public class PostCyclopediaActivity extends ColpencilActivity
 
     public void compress(List<File> list) {
         if (list.size() > 0) {
-            DialogTools.showLoding(this, "温馨提示", "获取中。。。");
+            //            DialogTools.showLoding(this, "温馨提示", "获取中。。。");
             Luban.compress(this, list)
                     .putGear(Luban.THIRD_GEAR)
                     .launch(new OnMultiCompressListener() {
@@ -299,13 +296,13 @@ public class PostCyclopediaActivity extends ColpencilActivity
 
                         @Override
                         public void onSuccess(List<File> fileList) {
-                            DialogTools.dissmiss();
+                            //                            DialogTools.dissmiss();
                             PostCyclopediaActivity.this.fileList.addAll(fileList);
                         }
 
                         @Override
                         public void onError(Throwable e) {
-                            DialogTools.dissmiss();
+                            //                            DialogTools.dissmiss();
                         }
                     });
         }
@@ -320,6 +317,7 @@ public class PostCyclopediaActivity extends ColpencilActivity
     void coverClick() {
         isCover = true;
         if (!ListUtils.listIsNullOrEmpty(coverDataArray)) {  //预览
+
             Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);
             intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, coverDataArray);
             intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, 0);

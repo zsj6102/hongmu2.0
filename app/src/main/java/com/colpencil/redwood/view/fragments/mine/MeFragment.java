@@ -7,13 +7,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.base.App;
+import com.colpencil.redwood.bean.ApplyStatusReturn;
 import com.colpencil.redwood.bean.HomeGoodInfo;
+import com.colpencil.redwood.bean.Info.RxClickMsg;
 import com.colpencil.redwood.bean.LoginBean;
+import com.colpencil.redwood.bean.RefreshMsg;
 import com.colpencil.redwood.bean.RxBusMsg;
 import com.colpencil.redwood.bean.UserInfor;
 import com.colpencil.redwood.configs.Constants;
@@ -24,15 +27,12 @@ import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
 import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.mine.MeFragmentPresenter;
 import com.colpencil.redwood.view.activity.ShoppingCartActivitys.ShoppingCartActivity;
-import com.colpencil.redwood.view.activity.home.FameActivity;
 import com.colpencil.redwood.view.activity.home.GoodDetailActivity;
 import com.colpencil.redwood.view.activity.home.HelpActivity;
-import com.colpencil.redwood.view.activity.home.MasterCraftsmanActivity;
 import com.colpencil.redwood.view.activity.home.MyWebViewActivity;
 import com.colpencil.redwood.view.activity.login.LoginActivity;
 import com.colpencil.redwood.view.activity.mine.AfterSalesCenterActivity;
 import com.colpencil.redwood.view.activity.mine.AllSpecialActivity;
-import com.colpencil.redwood.view.activity.mine.BrandStoreActivity;
 import com.colpencil.redwood.view.activity.mine.BrowsingHistoryActivity;
 import com.colpencil.redwood.view.activity.mine.BusinessActivity;
 import com.colpencil.redwood.view.activity.mine.MineCycloActivity;
@@ -46,8 +46,6 @@ import com.colpencil.redwood.view.activity.mine.MyNewsActivity;
 import com.colpencil.redwood.view.activity.mine.MyWeekShootActivity;
 import com.colpencil.redwood.view.activity.mine.OrderCenterActivity;
 import com.colpencil.redwood.view.activity.mine.ReceiptAddressActivtiy;
-import com.colpencil.redwood.view.activity.mine.SpecialActivity;
-import com.colpencil.redwood.view.activity.mine.SpeedShotActivity;
 import com.colpencil.redwood.view.activity.mine.StoreHomeActivity;
 import com.colpencil.redwood.view.activity.mine.UserInformationActivity;
 import com.colpencil.redwood.view.activity.mine.WebViewActivity;
@@ -68,6 +66,7 @@ import com.property.colpencil.colpencilandroidlibrary.Ui.MosaicGridView;
 import com.property.colpencil.colpencilandroidlibrary.Ui.SelectableRoundedImageView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -75,7 +74,6 @@ import rx.Observable;
 import rx.Subscriber;
 
 import static com.colpencil.redwood.R.id.businessCooperation;
-import static com.colpencil.redwood.R.id.mini;
 import static com.colpencil.redwood.R.id.myEvaluation;
 import static com.colpencil.redwood.R.id.tv_noLoginState;
 
@@ -86,8 +84,7 @@ import static com.colpencil.redwood.R.id.tv_noLoginState;
  * 日期：2016/7/6 11 00
  */
 @ActivityFragmentInject(
-        contentViewId = R.layout.fragment_me
-)
+        contentViewId = R.layout.fragment_me)
 public class MeFragment extends ColpencilFragment implements IMeFragmentView, View.OnClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
     @Bind(R.id.bga_refreshLayout_me)
@@ -107,6 +104,8 @@ public class MeFragment extends ColpencilFragment implements IMeFragmentView, Vi
     private TextView tv_meUserName;
 
     private TextView tv_meUserID;
+
+    private TextView tvCop;
 
     private LinearLayout ll_loginState;
 
@@ -135,9 +134,9 @@ public class MeFragment extends ColpencilFragment implements IMeFragmentView, Vi
     private Intent mIntent;
 
     private Observable<RxBusMsg> observable;
-
+    private Observable<RxClickMsg> clickMsgObservable;
     private Subscriber subscriber;
-
+    private Observable<RefreshMsg> refreshMsgObservable;
     private boolean loginState = false;//登录状态
 
     private CommonDialog servicedialog;
@@ -157,6 +156,7 @@ public class MeFragment extends ColpencilFragment implements IMeFragmentView, Vi
         tv_meUserID = (TextView) headView.findViewById(R.id.tv_meUserID);
         ll_loginState = (LinearLayout) headView.findViewById(R.id.ll_loginState);
         ll_noLoginState = (LinearLayout) headView.findViewById(R.id.ll_noLoginState);
+        tvCop = (TextView) headView.findViewById(R.id.tv_cop);
         headView.findViewById(R.id.custom_service).setOnClickListener(this);
         headView.findViewById(tv_noLoginState).setOnClickListener(this);
         headView.findViewById(R.id.ll_meEdit).setOnClickListener(this);
@@ -244,6 +244,57 @@ public class MeFragment extends ColpencilFragment implements IMeFragmentView, Vi
             }
         };
         observable.subscribe(subscriber);
+        clickMsgObservable = RxBus.get().register("meClick", RxClickMsg.class);
+        Subscriber<RxClickMsg> subscriber1 = new Subscriber<RxClickMsg>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(RxClickMsg rxClickMsg) {
+                if (rxClickMsg.getType() == 3) {
+                    if (loginState) {    //登录就去获取状态
+                        HashMap<String, String> params = new HashMap<>();
+                        params.put("member_id", SharedPreferencesUtil.getInstance(getActivity()).getInt("member_id") + "");
+                        params.put("token", SharedPreferencesUtil.getInstance(getActivity()).getString("token"));
+                        presenter.getApplyStatus(params);
+                        showLoading("");
+                    }
+                }
+            }
+        };
+        clickMsgObservable.subscribe(subscriber1);
+        refreshMsgObservable = RxBus.get().register("refreshmsg", RefreshMsg.class);
+        Subscriber<RefreshMsg> subscriber2 = new Subscriber<RefreshMsg>() {
+
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(RefreshMsg msg) {
+                if (msg.getType() == 0) {
+                    HashMap<String, String> params = new HashMap<>();
+                    params.put("member_id", SharedPreferencesUtil.getInstance(getActivity()).getInt("member_id") + "");
+                    params.put("token", SharedPreferencesUtil.getInstance(getActivity()).getString("token"));
+                    presenter.getApplyStatus(params);
+                    showLoading("");
+                }
+            }
+        };
+        refreshMsgObservable.subscribe(subscriber2);
     }
 
     @Override
@@ -328,8 +379,8 @@ public class MeFragment extends ColpencilFragment implements IMeFragmentView, Vi
 
                 break;
             case R.id.custom_service:
-//                showLoading(Constants.progressName);
-//                presenter.getPhoneNum();
+                //                showLoading(Constants.progressName);
+                //                presenter.getPhoneNum();
                 if (SharedPreferencesUtil.getInstance(getActivity()).getBoolean(StringConfig.ISLOGIN, false)) {
                     Intent intent = new Intent();
                     intent.setClass(getActivity(), WebViewActivity.class);
@@ -368,9 +419,13 @@ public class MeFragment extends ColpencilFragment implements IMeFragmentView, Vi
                 }
                 break;
             case businessCooperation://商家合作
-                mIntent = new Intent(getActivity(), BusinessActivity.class);
-                mIntent.putExtra(StringConfig.WEBVIEWURL, UrlConfig.PHILHARMONIC_HOST + "h5_contact.html");
-                startActivity(mIntent);
+                if (loginState == false) {
+                    ColpenciSnackbarUtil.downShowing(getActivity().findViewById(android.R.id.content), "未登录");
+                } else {
+                    //                    mIntent.putExtra(StringConfig.WEBVIEWURL, UrlConfig.PHILHARMONIC_HOST + "h5_contact.html");
+                        mIntent = new Intent(getActivity(), BusinessActivity.class);
+                        startActivity(mIntent);
+                }
                 break;
             case R.id.myCoupons://优惠券
                 if (loginState == false) {
@@ -484,6 +539,11 @@ public class MeFragment extends ColpencilFragment implements IMeFragmentView, Vi
         ll_noLoginState.setVisibility(View.GONE);
         ll_loginState.setVisibility(View.VISIBLE);
         loginState = true;
+        //登录成功去获取申请状态
+        HashMap<String, String> params = new HashMap<>();
+        params.put("member_id", SharedPreferencesUtil.getInstance(getActivity()).getInt("member_id") + "");
+        params.put("token", SharedPreferencesUtil.getInstance(getActivity()).getString("token"));
+        presenter.getApplyStatus(params);
 
     }
 
@@ -511,6 +571,7 @@ public class MeFragment extends ColpencilFragment implements IMeFragmentView, Vi
         meAdapter.notifyDataSetChanged();
         bga_refreshLayout_me.endLoadingMore();
     }
+
 
     @Override
     public void fail(LoginBean loginBean) {
@@ -548,5 +609,29 @@ public class MeFragment extends ColpencilFragment implements IMeFragmentView, Vi
     public void onDestroy() {
         super.onDestroy();
         RxBus.get().unregister("rxBusMsg", observable);
+        RxBus.get().unregister("meClick", clickMsgObservable);
+        RxBus.get().unregister("refreshmsg", refreshMsgObservable);
+    }
+
+    @Override
+    public void getStatusError(String message) {
+
+    }
+
+    @Override
+    public void getStatusSucess(ApplyStatusReturn applyStatusReturn) {
+        hideLoading();
+        if (applyStatusReturn.getCode() == 0) { //成功
+            if (applyStatusReturn.getData().getDisabled() == -2) {
+                tvCop.setText("商家合作");
+            }  else {
+
+                tvCop.setText("我是商家");
+            }
+        } else if (applyStatusReturn.getCode() == 1) { //失败
+            Toast.makeText(getActivity(), "网络出错", Toast.LENGTH_SHORT).show();
+        } else if (applyStatusReturn.getCode() == 2) { //未登录
+            Toast.makeText(getActivity(), "未登录", Toast.LENGTH_SHORT).show();
+        }
     }
 }

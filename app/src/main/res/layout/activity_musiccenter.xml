@@ -26,11 +26,11 @@
 
     </com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout>
 
-    <LinearLayout
+    <com.colpencil.redwood.function.widgets.zoom.InterceptLinearLayout
         android:id="@+id/music_bottom"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/activity_bga_music"
+        android:layout_alignParentBottom="true"
         android:background="@mipmap/bottom_menu"
         android:orientation="horizontal"
         android:visibility="gone">
@@ -133,7 +133,7 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </com.colpencil.redwood.function.widgets.zoom.InterceptLinearLayout>
 
     <ImageView
         android:id="@+id/iv_home"

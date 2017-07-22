@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class ApplyStatusReturn implements Serializable {
     private int code;
-    private int data;
+    private StatusData data;
     private String message;
 
     public int getCode() {
@@ -15,11 +15,11 @@ public class ApplyStatusReturn implements Serializable {
         this.code = code;
     }
 
-    public int getData() {
+    public StatusData getData() {
         return data;
     }
 
-    public void setData(int data) {
+    public void setData(StatusData data) {
         this.data = data;
     }
 

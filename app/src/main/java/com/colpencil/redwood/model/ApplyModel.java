@@ -26,29 +26,8 @@ import rx.schedulers.Schedulers;
 import static android.R.attr.id;
 
 public class ApplyModel implements IApplyModel {
-    private Observable<ApplyReturn> observable;
     private Observable<AddresBean> rgObservable;
     private Observable<CatListBean> catObservable;
-    private Observable<ApplyStatusReturn> statusObservable;
-    @Override
-    public void applySell(HashMap<String, RequestBody> params) {
-        observable = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
-                .createApi(RedWoodApi.class)
-                .getApplyResult(params)
-                .subscribeOn(Schedulers.io())
-                .map(new Func1<ApplyReturn, ApplyReturn>() {
-                    @Override
-                    public ApplyReturn call(ApplyReturn sellApplyResultInfo) {
-                        return sellApplyResultInfo;
-                    }
-                }).observeOn(AndroidSchedulers.mainThread());
-    }
-
-    @Override
-    public void subAppley(Subscriber<ApplyReturn> subscriber) {
-        observable.subscribe(subscriber);
-    }
-
     @Override
     public void loadRegion(int id) {
         rgObservable = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
@@ -87,22 +66,5 @@ public class ApplyModel implements IApplyModel {
         catObservable.subscribe(subscriber);
     }
 
-    @Override
-    public void applyStatus(HashMap<String, String> params) {
-           statusObservable = RetrofitManager.getInstance(1,App.getInstance(),UrlConfig.PHILHARMONIC_HOST)
-                   .createApi(RedWoodApi.class)
-                   .getApplyStatus(params)
-                   .subscribeOn(Schedulers.io())
-                   .map(new Func1<ApplyStatusReturn, ApplyStatusReturn>() {
-                       @Override
-                       public ApplyStatusReturn call(ApplyStatusReturn applyStatusReturn) {
-                           return applyStatusReturn;
-                       }
-                   }).observeOn(AndroidSchedulers.mainThread());
-    }
 
-    @Override
-    public void subStauts(Subscriber<ApplyStatusReturn> subscriber) {
-          statusObservable.subscribe(subscriber);
-    }
 }

@@ -22,6 +22,7 @@ import com.property.colpencil.colpencilandroidlibrary.Ui.SwipeBack.SwipeBackActi
 import com.property.colpencil.colpencilandroidlibrary.Ui.SwipeBack.SwipeBackActivityHelper;
 import com.property.colpencil.colpencilandroidlibrary.Ui.SwipeBack.SwipeBackLayout;
 import com.property.colpencil.colpencilandroidlibrary.Ui.SwipeBack.Utils;
+import com.zhy.autolayout.AutoLayoutActivity;
 
 import butterknife.ButterKnife;
 
@@ -31,7 +32,7 @@ import butterknife.ButterKnife;
  * @Email DramaScript@outlook.com
  * @date 16/6/23
  */
-public abstract class ColpencilActivity<T extends ColpencilPresenter<ColpencilBaseView>> extends AppCompatActivity
+public abstract class ColpencilActivity<T extends ColpencilPresenter<ColpencilBaseView>> extends AutoLayoutActivity
         implements ColpencilBase, ColpencilBaseView, SwipeBackActivityBase {
 
 
@@ -199,7 +200,7 @@ public abstract class ColpencilActivity<T extends ColpencilPresenter<ColpencilBa
     @Override
     public void showLoading(String msg) {
         if (dialog == null)
-            dialog = MyProgressDialog.createDialog(this);
+            dialog = MyProgressDialog.createDialog(this,msg);
         dialog.show();
     }
 

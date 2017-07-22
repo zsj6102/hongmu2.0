@@ -1,5 +1,6 @@
 package com.colpencil.redwood.view.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,16 +8,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.configs.Constants;
+import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ================================================
+ * 作    者：ikkong （ikkong@163.com），修改 jeasonlzy（廖子尧）
+ * 版    本：1.0
+ * 创建日期：2016/5/19
+ * 描    述：
+ * 修订历史：微信图片选择的Adapter, 感谢 ikkong 的提交
+ * ================================================
+ */
 public class ImageSelectAdapter extends RecyclerView.Adapter<ImageSelectAdapter.SelectedPicViewHolder> {
-
     private int maxImgCount;
     private Context mContext;
     private List<ImageItem> mData;
@@ -90,7 +100,7 @@ public class ImageSelectAdapter extends RecyclerView.Adapter<ImageSelectAdapter.
                 iv_img.setImageResource(R.mipmap.imgselect);
                 clickPosition = Constants.IMAGE_ITEM_ADD;
             } else {
-                Glide.with(mContext).load(item.path).into(iv_img);
+                ImagePicker.getInstance().getImageLoader().displayImage((Activity) mContext, item.path, iv_img, 0, 0);
                 clickPosition = position;
             }
         }
@@ -100,5 +110,4 @@ public class ImageSelectAdapter extends RecyclerView.Adapter<ImageSelectAdapter.
             if (listener != null) listener.onItemClick(v, clickPosition);
         }
     }
-
 }

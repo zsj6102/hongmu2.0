@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -31,6 +30,7 @@ import com.colpencil.redwood.bean.RxBusMsg;
 import com.colpencil.redwood.configs.Constants;
 import com.colpencil.redwood.configs.StringConfig;
 import com.colpencil.redwood.function.tools.ImageLoaderUtils;
+import com.colpencil.redwood.function.widgets.zoom.InterceptLinearLayout;
 import com.colpencil.redwood.present.home.MusicCenterPresenter;
 import com.colpencil.redwood.view.DownLoadService;
 import com.colpencil.redwood.view.PlayerService;
@@ -54,6 +54,7 @@ import java.io.File;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -62,8 +63,7 @@ import butterknife.OnClick;
  * 日期：2016/8/29 16 46
  */
 @ActivityFragmentInject(
-        contentViewId = R.layout.activity_musiccenter
-)
+        contentViewId = R.layout.activity_musiccenter)
 public class MusicCenterActivity extends ColpencilActivity implements IMusicCenterView, BGARefreshLayout.BGARefreshLayoutDelegate {
 
     @Bind(R.id.iv_back)
@@ -74,8 +74,7 @@ public class MusicCenterActivity extends ColpencilActivity implements IMusicCent
     BGARefreshLayout activity_bga_base;
     @Bind(R.id.activity_rv_music)
     RecyclerView activity_rv_base;
-    @Bind(R.id.music_bottom)
-    LinearLayout bottom;
+
     @Bind(R.id.music_pause)
     ImageView iv_pause;
     @Bind(R.id.seekbar)
@@ -88,6 +87,8 @@ public class MusicCenterActivity extends ColpencilActivity implements IMusicCent
     TextView tv_alltime;
     @Bind(R.id.music_img)
     ImageView iv_music;
+    @Bind(R.id.music_bottom)
+    InterceptLinearLayout musicBottom;
 
     private MusicCenterPresenter presenter;
 
@@ -123,12 +124,29 @@ public class MusicCenterActivity extends ColpencilActivity implements IMusicCent
         mview = view;
         activity_bga_base.setDelegate(this);
         activity_bga_base.setRefreshViewHolder(new BGANormalRefreshViewHolder(MusicCenterActivity.this, true));
-        activity_bga_base.setSnackStyle(findViewById(android.R.id.content),
-                getResources().getColor(R.color.material_drawer_primary),
-                getResources().getColor(R.color.white));
+        activity_bga_base.setSnackStyle(findViewById(android.R.id.content), getResources().getColor(R.color.material_drawer_primary), getResources().getColor(R.color.white));
         initPlayer();
         initData();
         initReciver();
+        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+
+                if (b == true) {
+                    player.seekTo(i);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
     private void initPlayer() {
@@ -275,8 +293,7 @@ public class MusicCenterActivity extends ColpencilActivity implements IMusicCent
 
     private void showPopWindow(View view) {
         if (window == null) {
-            window = new PopupWindow(initPopWindow(),
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            window = new PopupWindow(initPopWindow(), ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         }
         window.setFocusable(true);
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -296,7 +313,7 @@ public class MusicCenterActivity extends ColpencilActivity implements IMusicCent
         view.findViewById(R.id.ll_play).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bottom.setVisibility(View.VISIBLE);
+                musicBottom.setVisibility(View.VISIBLE);
                 dismissPop();
                 play();
             }
@@ -325,7 +342,7 @@ public class MusicCenterActivity extends ColpencilActivity implements IMusicCent
 
     @OnClick(R.id.music_forword)
     void preOnClick() {
-        if (mposition < 0) {
+        if (mposition == 0) {
             ToastTools.showShort(this, "没有上一首了");
             return;
         }
@@ -350,8 +367,7 @@ public class MusicCenterActivity extends ColpencilActivity implements IMusicCent
 
     private void play() {
         String title = mAdapter.getItem(mposition).getTitle();
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC),
-                "_redwood/" + title + ".mp3");
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "_redwood/" + title + ".mp3");
         if (file.exists()) {
             player.playCurrentMusic(file.getAbsolutePath());
         } else {
@@ -367,6 +383,13 @@ public class MusicCenterActivity extends ColpencilActivity implements IMusicCent
         super.onDestroy();
         this.unbindService(conn);
         this.unregisterReceiver(reciver);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 
     class MusicInfoReciver extends BroadcastReceiver {
@@ -399,8 +422,7 @@ public class MusicCenterActivity extends ColpencilActivity implements IMusicCent
         Intent intent = new Intent(this, DownLoadService.class);
         String path = mAdapter.getItem(mposition).getUrl();
         String title = mAdapter.getItem(mposition).getTitle();
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC),
-                "_redwood/" + title + ".mp3");
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "_redwood/" + title + ".mp3");
         if (file.exists()) {
             ToastTools.showShort(this, "该音乐已经下载了");
         } else {

@@ -1,6 +1,8 @@
 package com.colpencil.redwood.view.activity.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -13,26 +15,24 @@ import com.bumptech.glide.Glide;
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.base.PhotoBaseActivity;
 import com.colpencil.redwood.bean.AddresBean;
-import com.colpencil.redwood.bean.ApplyStatusReturn;
-import com.colpencil.redwood.bean.Cat;
+
 import com.colpencil.redwood.bean.CatBean;
 import com.colpencil.redwood.bean.CatListBean;
-import com.colpencil.redwood.bean.CategoryVo;
+
+import com.colpencil.redwood.bean.PersonApplyInfo;
 import com.colpencil.redwood.bean.PostTypeInfo;
-import com.colpencil.redwood.bean.SellApply;
-import com.colpencil.redwood.bean.result.ApplyReturn;
-import com.colpencil.redwood.bean.result.ResultInfo;
-import com.colpencil.redwood.bean.result.ResultRegion;
+
 import com.colpencil.redwood.function.utils.ListUtils;
 import com.colpencil.redwood.function.widgets.dialogs.CategoryDialog;
-import com.colpencil.redwood.function.widgets.dialogs.PostDialog;
 import com.colpencil.redwood.function.widgets.dialogs.SelectPlaceDialog;
 import com.colpencil.redwood.present.mine.ApplyPresenter;
+
+import com.colpencil.redwood.services.PersonApplyService;
 import com.colpencil.redwood.view.impl.ApplayView;
 import com.jph.takephoto.model.TResult;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
-import com.property.colpencil.colpencilandroidlibrary.Function.Tools.OkhttpUtils;
+
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.TextStringUtils;
 
@@ -47,9 +47,11 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 import static android.text.TextUtils.concat;
+import static android.transition.Fade.IN;
 import static com.colpencil.redwood.R.id.tv_biz_type;
 import static com.umeng.socialize.utils.DeviceConfig.context;
 import static com.unionpay.mobile.android.global.a.C;
+import static com.unionpay.mobile.android.global.a.I;
 import static com.unionpay.mobile.android.global.a.s;
 
 @ActivityFragmentInject(
@@ -97,7 +99,6 @@ public class PersonApplyActivity extends PhotoBaseActivity implements View.OnCli
     private int type = 0;
     private String photoZ; //身份证正面
     private String photoF; //身份证反面
-    SharedPreferencesUtil sp;
     private ApplyPresenter presenter;
 
     private AddresBean bean;
@@ -134,6 +135,8 @@ public class PersonApplyActivity extends PhotoBaseActivity implements View.OnCli
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.iv_back) {
+            Intent intent = new Intent(PersonApplyActivity.this,BusinessActivity.class);
+            startActivity(intent);
             finish();
         } else if (id == R.id.iv_positive) {
             type = 0;
@@ -143,7 +146,7 @@ public class PersonApplyActivity extends PhotoBaseActivity implements View.OnCli
             openSelect(false, 1);
         } else if (id == R.id.tv_city) {
             if (bean != null && bean.getData().size() != 0) {
-                new SelectPlaceDialog(this, tv_city, bean).show();
+                new SelectPlaceDialog(this, tv_city, bean,0).show();
             } else {
                 touch = 1;
                 showLoading("加载中");
@@ -251,44 +254,40 @@ public class PersonApplyActivity extends PhotoBaseActivity implements View.OnCli
             Toast.makeText(PersonApplyActivity.this, "请填写持卡人", Toast.LENGTH_SHORT).show();
             return;
         }
-        HashMap<String, RequestBody> params = new HashMap<>();
-        params.put("store_type", OkhttpUtils.toRequestBody(1 + ""));
-        params.put("token", OkhttpUtils.toRequestBody(sp.getInstance(this).getString("token")));
-        params.put("member_id", OkhttpUtils.toRequestBody(sp.getInstance(this).getInt("member_id") + ""));
-        params.put("realname", OkhttpUtils.toRequestBody(edtName.getText().toString()));
-        params.put("id_number", OkhttpUtils.toRequestBody(idNumber.getText().toString()));
-        params.put("id_img\";filename=\"1.png", RequestBody.create(MediaType.parse("image/png"), new File(photoZ)));
-        params.put("id_img_opposite\";filename=\"2.png", RequestBody.create(MediaType.parse("image/png"), new File(photoF)));
-        params.put("region_id", OkhttpUtils.toRequestBody(sp.getInstance(this).getInt("region_id") + ""));
-        params.put("address", OkhttpUtils.toRequestBody(edtAddress.getText().toString()));
-        params.put("biz_type", OkhttpUtils.toRequestBody(sec_id));
-        params.put("card", OkhttpUtils.toRequestBody(bankcardNumber.getText().toString()));
-        params.put("card_type", OkhttpUtils.toRequestBody(bankcardType.getText().toString()));
-        params.put("cardholder", OkhttpUtils.toRequestBody(edtCardholder.getText().toString()));
-        params.put("physical_store_name", OkhttpUtils.toRequestBody(""));
-        params.put("license", OkhttpUtils.toRequestBody(""));
-        //        params.put("license_img\";filename=\"5.png", RequestBody.create(MediaType.parse("image/png"), new File("")));
-        params.put("referrer", OkhttpUtils.toRequestBody(""));
-        params.put("studio_name", OkhttpUtils.toRequestBody(""));
-        params.put("studio_region_id", OkhttpUtils.toRequestBody(""));
-        params.put("studio_address", OkhttpUtils.toRequestBody(""));
-        params.put("ps_name", OkhttpUtils.toRequestBody(""));
-        params.put("ps_region_id", OkhttpUtils.toRequestBody(""));
-        params.put("time", OkhttpUtils.toRequestBody(""));
-        //        params.put("pics\";filename=\"3.png", RequestBody.create(MediaType.parse("image/png"), new File("")));
-        //        params.put("prize_pics\";filename=\"4.png", RequestBody.create(MediaType.parse("image/png"), new File("")));
-        presenter.applySell(params);
+        showLoading("正在提交");
+        PersonApplyInfo info = new PersonApplyInfo();
+        info.setStore_type(1 + "");
+        info.setReal_name(edtName.getText().toString());
+        info.setId_img(new File(photoZ));
+        info.setId_img_opposite(new File(photoF));
+        info.setRegion_id(SharedPreferencesUtil.getInstance(this).getInt("region_id0") + "");
+        info.setAddress(edtAddress.getText().toString());
+        info.setBiz_type(sec_id);
+        info.setCard(bankcardNumber.getText().toString());
+        info.setCard_type(bankcardType.getText().toString());
+        info.setCardholder(edtCardholder.getText().toString());
+        info.setId_number(idNumber.getText().toString());
+        Intent intent = new Intent(PersonApplyActivity.this, PersonApplyService.class);
+        intent.putExtra("data", info);
+        startService(intent);
+        CountDownTimer timer = new CountDownTimer(3000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
 
+            }
+
+            @Override
+            public void onFinish() {
+                hideLoading();
+                Intent mIntent = new Intent(PersonApplyActivity.this, BusinessActivity.class);
+                startActivity(mIntent);
+                PersonApplyActivity.this.finish();
+            }
+        };
+        timer.start();
     }
 
-    @Override
-    public void applySell(ApplyReturn resultInfo) {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("member_id", sp.getInstance(this).getInt("member_id") + "");
-        params.put("token", sp.getInstance(this).getString("token"));
-        presenter.getApplyStatus(params);
-        Toast.makeText(PersonApplyActivity.this, resultInfo.getMessage(), Toast.LENGTH_SHORT).show();
-    }
+
 
     @Override
     public void applyError(String message) {
@@ -300,7 +299,7 @@ public class PersonApplyActivity extends PhotoBaseActivity implements View.OnCli
         hideLoading();
         bean = regionInfo;
         if (touch == 1) {
-            new SelectPlaceDialog(this, tv_city, bean).show();
+            new SelectPlaceDialog(this, tv_city, bean,0).show();
         }
     }
 
@@ -316,17 +315,6 @@ public class PersonApplyActivity extends PhotoBaseActivity implements View.OnCli
                 list.add(info);
             }
         }
-    }
-
-    @Override
-    public void getStatusError(String message) {
-
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void getStatusSucess(ApplyStatusReturn applyStatusReturn) {
-        Toast.makeText(this, applyStatusReturn.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
 

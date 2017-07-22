@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/base_header"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/line_color_thirst"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:id="@+id/scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+           <include layout="@layout/pubish_comm"/>
+        </ScrollView>
+    </LinearLayout>
+
+    <!--<Button-->
+    <!--android:id="@+id/btn_post"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/height_44dp"-->
+    <!--android:background="@color/main_red"-->
+    <!--android:text="@string/post_posts_button"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="@dimen/text_size_18sp"/>-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/padding_0.5dp"
+        android:background="@color/line_color_second"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90px"
+        android:background="@color/color_fffbfa"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:id="@+id/add_cangku"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/btn_selector"
+            android:gravity="center"
+            android:text="加入仓库"
+            android:textColor="@color/tv_selecter"
+            android:textSize="36px"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/line_color_second"/>
+
+        <TextView
+            android:id="@+id/up_sell"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/btn_selector"
+            android:gravity="center"
+            android:text="上架出售"
+            android:textColor="@color/tv_selecter"
+            android:textSize="36px"/>
+    </LinearLayout>
+
+</LinearLayout>

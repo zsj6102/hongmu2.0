@@ -52,6 +52,7 @@ public class CyclopediaService extends Service {
         if (!ListUtils.listIsNullOrEmpty(info.getFileList())) {
             for (int i = 0; i < info.getFileList().size(); i++) {
                 File file1 = info.getFileList().get(i);
+
                 if (file1.exists()) {
                     RequestBody body = RequestBody.create(MediaType.parse("image/png"), file1);
                     params.put("image" + (i + 1) + "\"; filename=\"avatar" + (i + 1) + ".jpg", body);
@@ -88,7 +89,7 @@ public class CyclopediaService extends Service {
 
                     @Override
                     public void onNext(EntityResult<String> result) {
-                        ToastTools.showShort(CyclopediaService.this, result.getMsg());
+                        ToastTools.showShort(CyclopediaService.this, "发布成功");
                         if (result.getCode() == 0) {
                             RefreshMsg msg = new RefreshMsg();
                             msg.setType(10);

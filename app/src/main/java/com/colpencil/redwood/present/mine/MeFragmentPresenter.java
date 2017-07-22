@@ -2,6 +2,7 @@ package com.colpencil.redwood.present.mine;
 
 import android.util.Log;
 
+import com.colpencil.redwood.bean.ApplyStatusReturn;
 import com.colpencil.redwood.bean.HomeGoodInfo;
 import com.colpencil.redwood.bean.ListResult;
 import com.colpencil.redwood.bean.LoginBean;
@@ -11,7 +12,10 @@ import com.colpencil.redwood.model.imples.IMeFragmentModel;
 import com.colpencil.redwood.view.impl.IMeFragmentView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 
+import java.util.HashMap;
+
 import rx.Observer;
+import rx.Subscriber;
 
 /**
  * 描述：MeFragment 网络请求
@@ -84,7 +88,26 @@ public class MeFragmentPresenter extends ColpencilPresenter<IMeFragmentView> {
         };
         meFragmentModel.subGoodInfor(observer);
     }
+    public void getApplyStatus(HashMap<String,String> params){
+        meFragmentModel.applyStatus(params);
+        Subscriber<ApplyStatusReturn> subscriber = new Subscriber<ApplyStatusReturn>() {
+            @Override
+            public void onCompleted() {
 
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mView.getStatusError(e.getMessage());
+            }
+
+            @Override
+            public void onNext(ApplyStatusReturn applyStatusReturn) {
+                mView.getStatusSucess(applyStatusReturn);
+            }
+        };
+        meFragmentModel.subStauts(subscriber);
+    }
     /**
      * 获取客服电话
      */

@@ -113,7 +113,7 @@
     <string name="tv_publish_failed">发布失败</string>
     <string name="message_center">消息中心</string>
     <string name="recommend_cyclopedia">推荐百科</string>
-
+    <string name="corperate_line"> 合作热线：13888999899 </string>
     <string-array name="jazzy_effects">
         <item>Standard</item>
         <item>Tablet</item>

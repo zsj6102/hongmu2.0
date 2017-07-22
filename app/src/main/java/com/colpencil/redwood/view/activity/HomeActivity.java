@@ -15,10 +15,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.colpencil.redwood.R;
+import com.colpencil.redwood.bean.ApplyStatusReturn;
 import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.HomeRecommend;
+import com.colpencil.redwood.bean.Info.RxClickMsg;
 import com.colpencil.redwood.bean.RxBusMsg;
+import com.colpencil.redwood.present.mine.ApplyStatusPresenter;
 import com.colpencil.redwood.view.fragments.FragmentFactory;
+import com.colpencil.redwood.view.impl.IBuisnessView;
 import com.jaeger.library.StatusBarUtil;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilActivity;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
@@ -42,7 +46,7 @@ import rx.Subscriber;
         contentViewId = R.layout.activity_home
 )
 
-public class HomeActivity extends ColpencilActivity implements View.OnClickListener {
+public class HomeActivity extends ColpencilActivity implements View.OnClickListener  {
 
     @Bind(R.id.iv_homepage)
     ImageView iv_homepage;
@@ -88,12 +92,9 @@ public class HomeActivity extends ColpencilActivity implements View.OnClickListe
 
     @Bind(R.id.ll_me)
     LinearLayout ll_me;
-
     @Bind(R.id.main_viewpage)
     NoScrollViewPager main_viewpage;
-
     private Observable<RxBusMsg> observable;
-
     private Subscriber subscriber;
     private boolean isExit = false;
     public static EntityResult<HomeRecommend> result;
@@ -191,6 +192,9 @@ public class HomeActivity extends ColpencilActivity implements View.OnClickListe
                 break;
             case R.id.ll_me:
                 setBottomMeunStyle();
+                RxClickMsg msg1 = new RxClickMsg();
+                msg1.setType(3);
+                RxBus.get().post("meClick",msg1);
                 iv_me.setImageResource(R.mipmap.btn_tab_me_pressure);
                 tv_me.setTextColor(this.getResources().getColor(R.color.main_red));
                 main_viewpage.setCurrentItem(4, false);
@@ -213,7 +217,6 @@ public class HomeActivity extends ColpencilActivity implements View.OnClickListe
         tv_cyclopedia.setTextColor(this.getResources().getColor(R.color.white));
         tv_me.setTextColor(this.getResources().getColor(R.color.white));
     }
-
 
     class MyViewPagerAdapter extends FragmentStatePagerAdapter {
 

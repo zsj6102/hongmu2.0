@@ -1,6 +1,7 @@
 package com.colpencil.redwood.view.activity.discovery;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;

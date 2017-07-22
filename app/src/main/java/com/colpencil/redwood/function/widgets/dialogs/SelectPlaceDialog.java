@@ -104,12 +104,13 @@ public class SelectPlaceDialog extends Dialog implements OnWheelChangedListener 
     private TextView select_splace_title;
 
     AddresBean bean;
-
-    public SelectPlaceDialog(Context context, TextView textView, AddresBean addresBean) {
+    int type = 0;
+    public SelectPlaceDialog(Context context, TextView textView, AddresBean addresBean,int type) {
         super(context, R.style.selectorDialog);
         this.context = context;
         this.textView = textView;
         this.bean = addresBean;
+        this.type = type;
         initalize();
         this.setCanceledOnTouchOutside(true);
     }
@@ -145,10 +146,18 @@ public class SelectPlaceDialog extends Dialog implements OnWheelChangedListener 
             //按钮事件
             @Override
             public void onClick(View v) {
-                SharedPreferencesUtil.getInstance(context).setString("province", mCurrentProviceName);
-                SharedPreferencesUtil.getInstance(context).setString("city", mCurrentCityName);
-                SharedPreferencesUtil.getInstance(context).setString("region", mCurrentDistrictName);
-                SharedPreferencesUtil.getInstance(context).setInt("region_id",mCurrentDisId);
+//                SharedPreferencesUtil.getInstance(context).setString("province", mCurrentProviceName);
+//                SharedPreferencesUtil.getInstance(context).setString("city", mCurrentCityName);
+//                SharedPreferencesUtil.getInstance(context).setString("region", mCurrentDistrictName);
+                if(type == 0){
+                    SharedPreferencesUtil.getInstance(context).setInt("region_id0",mCurrentDisId);
+                }
+                if(type == 1){
+                    SharedPreferencesUtil.getInstance(context).setInt("region_id1",mCurrentDisId);
+                }
+                if(type == 2){
+                    SharedPreferencesUtil.getInstance(context).setInt("region_id2",mCurrentDisId);
+                }
                 textView.setText(mCurrentProviceName + "," + mCurrentCityName + "," + mCurrentDistrictName);
                 dismiss();
 

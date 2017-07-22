@@ -2,6 +2,10 @@ package com.colpencil.redwood.bean;
 
 public class RefreshMsg {
 
+    /**
+     * 处理类型标识    0 :商家申请界面返回主界面 获取申请状态   21:名师名匠申请提交成功     22: 个人商家申请提交成功 ;23:品牌商家申请提交成功
+     *
+     */
     public RefreshMsg() {
     }
 

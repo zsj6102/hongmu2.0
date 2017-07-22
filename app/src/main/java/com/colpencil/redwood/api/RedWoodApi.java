@@ -1261,4 +1261,13 @@ public interface RedWoodApi {
         @FormUrlEncoded
     Observable<ApplyStatusReturn> getApplyStatus(@FieldMap Map<String,String> map);
 
+    /**
+     * 获取发布商品状态
+     * @param
+     * @return
+     */
+
+    @Multipart
+    @POST("MobileGoods2!add.do")
+    Observable<ApplyReturn> getPublishStataus(@PartMap HashMap<String,RequestBody> params);
 }

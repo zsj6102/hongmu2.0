@@ -87,7 +87,7 @@ public class EvaluationActivity extends ColpencilActivity
     }
 
     private void initImagePicker() {
-        imagePicker = App.getInstance().getImagePicker();
+        imagePicker = ImagePicker.getInstance();
         imagePicker.setSelectLimit(maxImgCount);              //选中数量限制
     }
 

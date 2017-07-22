@@ -190,7 +190,7 @@ public class PostsActivity extends ColpencilActivity implements IPostView, OnRec
 
     public void compress(List<File> list) {
         if (list.size() > 0) {
-            DialogTools.showLoding(this, "温馨提示", "获取中。。。");
+//            DialogTools.showLoding(this, "温馨提示", "获取中。。。");
             Luban.compress(this,list)
                     .putGear(Luban.THIRD_GEAR)
                     .launch(new OnMultiCompressListener() {
@@ -201,13 +201,13 @@ public class PostsActivity extends ColpencilActivity implements IPostView, OnRec
 
                         @Override
                         public void onSuccess(List<File> fileList) {
-                            DialogTools.dissmiss();
+//                            DialogTools.dissmiss();
                             PostsActivity.this.fileList.addAll(fileList);
                         }
 
                         @Override
                         public void onError(Throwable e) {
-                            DialogTools.dissmiss();
+//                            DialogTools.dissmiss();
                         }
                     });
         }

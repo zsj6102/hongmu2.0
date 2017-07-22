@@ -254,7 +254,7 @@ public class PostNewsActivity extends ColpencilActivity
      * @param mfile
      */
     private void compressCover(File mfile) {
-        DialogTools.showLoding(this, "温馨提示", "获取中。。。");
+//        DialogTools.showLoding(this, "温馨提示", "获取中。。。");
         Luban.compress(this,mfile)
                 .putGear(Luban.THIRD_GEAR)
                 .launch(new OnCompressListener() {
@@ -265,7 +265,7 @@ public class PostNewsActivity extends ColpencilActivity
                     @Override
                     public void onSuccess(File file) {
                         mFile = file;
-                        DialogTools.dissmiss();
+//                        DialogTools.dissmiss();
                     }
 
                     @Override
@@ -282,7 +282,7 @@ public class PostNewsActivity extends ColpencilActivity
      */
     public void compress(List<File> list) {
         if (list.size() > 0) {
-            DialogTools.showLoding(this, "温馨提示", "获取中。。。");
+//            DialogTools.showLoding(this, "温馨提示", "获取中。。。");
             Luban.compress(this,list)
                     .putGear(Luban.THIRD_GEAR)
                     .launch(new OnMultiCompressListener() {
@@ -293,7 +293,7 @@ public class PostNewsActivity extends ColpencilActivity
 
                         @Override
                         public void onSuccess(List<File> fileList) {
-                            DialogTools.dissmiss();
+//                            DialogTools.dissmiss();
                             PostNewsActivity.this.fileList.addAll(fileList);
                         }
 

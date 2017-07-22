@@ -122,7 +122,7 @@ public abstract class ColpencilFragment<T extends ColpencilPresenter<ColpencilBa
     @Override
     public void showLoading(String msg) {
         if (dialog == null)
-            dialog = MyProgressDialog.createDialog(getActivity());
+            dialog = MyProgressDialog.createDialog(getActivity(),msg);
         dialog.show();
     }
 

@@ -46,6 +46,16 @@
     <color name="color_fff5f4">#fff5f4</color>
 
     <color name="dividing_line">#edd8d4</color>
-
+    <color name = "circle_1">#314A72</color>
+    <color name = "circle_2">#AF2020</color>
+    <color name = "circle_3">#CB8F39</color>
+    <color name = "circle_4">#613B33</color>
+    <color name = "circle_5">#7D3853</color>
+    <color name = "circle_6">#273650</color>
+    <color name = "circle_7">#192A46</color>
+    <color name = "circle_8">#CB8F39</color>
     <color name="dividing_gary">#f6f6f6</color>
+    <color name="shop_text">#fefefe</color>
+
+
 </resources>

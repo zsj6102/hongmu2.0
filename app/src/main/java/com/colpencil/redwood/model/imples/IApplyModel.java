@@ -14,10 +14,6 @@ import rx.Subscriber;
 
 
 public interface IApplyModel {
-    void applySell(HashMap<String, RequestBody> params);
-
-    void subAppley(Subscriber<ApplyReturn> subscriber);
-
     void loadRegion(int id);
 
     void subRegion(Subscriber<AddresBean> subscriber);
@@ -26,7 +22,4 @@ public interface IApplyModel {
 
     void sub(Subscriber<CatListBean> subscriber);
 
-    void applyStatus(HashMap<String,String> params);
-
-    void subStauts(Subscriber<ApplyStatusReturn> subscriber);
 }

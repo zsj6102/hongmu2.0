@@ -1,12 +1,16 @@
 package com.colpencil.redwood.model.imples;
 
+import com.colpencil.redwood.bean.ApplyStatusReturn;
 import com.colpencil.redwood.bean.HomeGoodInfo;
 import com.colpencil.redwood.bean.ListResult;
 import com.colpencil.redwood.bean.LoginBean;
 import com.colpencil.redwood.bean.ResultCodeInt;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilModel;
 
+import java.util.HashMap;
+
 import rx.Observer;
+import rx.Subscriber;
 
 /**
  * 描述：MeFragment
@@ -28,4 +32,7 @@ public interface IMeFragmentModel extends ColpencilModel{
 
     //注册观察者
     void subResult(Observer<ResultCodeInt> subscriber);
+    //获取申请状态
+    void applyStatus(  HashMap<String,String> params);
+    void subStauts(Subscriber<ApplyStatusReturn> subscriber);
 }
