@@ -31,7 +31,7 @@
                     android:padding="30px">
 
                     <ImageView
-                        android:id="@+id/iv_add_cover"
+                        android:id="@+id/iv_cover_add"
                         android:layout_width="222px"
                         android:layout_height="103px"
                         android:src="@mipmap/publish_store_coveradd"/>

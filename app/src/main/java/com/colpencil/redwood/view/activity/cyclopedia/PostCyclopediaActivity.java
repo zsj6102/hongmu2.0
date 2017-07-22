@@ -1,6 +1,5 @@
 package com.colpencil.redwood.view.activity.cyclopedia;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -12,8 +11,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.CategoryVo;
@@ -105,6 +102,10 @@ public class PostCyclopediaActivity extends ColpencilActivity
 
     private void initImagePicker() {
         imagePicker = App.getInstance().getImagePicker();
+        imagePicker.setFocusWidth(800);                       //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setFocusHeight(800);                      //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setOutPutX(1000);                         //保存文件的宽度。单位像素
+        imagePicker.setOutPutY(1000);
         imagePicker.setSelectLimit(maxImgCount);              //选中数量限制
     }
 
@@ -163,6 +164,7 @@ public class PostCyclopediaActivity extends ColpencilActivity
     @Override
     public void onItemClick(View view, int position) {
         isCover = false;
+        imagePicker.setMultiMode(true);
         switch (position) {
             case Constants.IMAGE_ITEM_ADD:
                 //打开选择,本次允许选择的数量
@@ -316,6 +318,7 @@ public class PostCyclopediaActivity extends ColpencilActivity
     @OnClick(R.id.iv_add_cover)
     void coverClick() {
         isCover = true;
+        imagePicker.setMultiMode(false);
         if (!ListUtils.listIsNullOrEmpty(coverDataArray)) {  //预览
 
             Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);

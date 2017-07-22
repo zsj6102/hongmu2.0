@@ -27,7 +27,6 @@ import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Subscriber;
 
-import static android.R.attr.type;
 
 
 /**

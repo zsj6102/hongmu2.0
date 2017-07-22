@@ -23,7 +23,6 @@ import com.colpencil.redwood.configs.Constants;
 import com.colpencil.redwood.function.utils.ListUtils;
 import com.colpencil.redwood.function.widgets.dialogs.CategoryDialog;
 import com.colpencil.redwood.present.mine.ApplyPresenter;
-
 import com.colpencil.redwood.services.PublishStoreService;
 import com.colpencil.redwood.view.adapters.ImageSelectAdapter;
 import com.colpencil.redwood.view.impl.ApplayView;
@@ -47,14 +46,12 @@ import me.shaohui.advancedluban.OnCompressListener;
 import me.shaohui.advancedluban.OnMultiCompressListener;
 
 
-
 @ActivityFragmentInject(contentViewId = R.layout.activity_publish_fast)
 public class PublishStoreActivity extends ColpencilActivity implements View.OnClickListener, ImageSelectAdapter.OnRecyclerViewItemClickListener, ApplayView {
 
     @Bind(R.id.detail_recycler)
     RecyclerView recycler;
-    @Bind(R.id.iv_add_cover)
-    ImageView iv_cover;
+
     @Bind(R.id.ll_category)
     LinearLayout llCategory;
     @Bind(R.id.post_news_category)
@@ -75,6 +72,8 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
     TextView addCangku;
     @Bind(R.id.up_sell)
     TextView upSell;
+    @Bind(R.id.iv_cover_add)
+    ImageView ivCoverAdd;
 
     private ImagePicker imagePicker;
     public static final int REQUEST_CODE_SELECT = 100;
@@ -221,13 +220,13 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
         }
     }
 
-    @OnClick(R.id.iv_add_cover)
+    @OnClick(R.id.iv_cover_add)
     public void coverClick() {
         isCover = true;
-        //        imagePicker.setFocusWidth(1240);                       //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
-        //        imagePicker.setFocusHeight(780);                      //裁剪框的高度。单位像素（圆形自动取宽高最小值）
-        //        imagePicker.setOutPutX(222);                         //保存文件的宽度。单位像素
-        //        imagePicker.setOutPutY(103);
+        imagePicker.setFocusWidth(1240);                       //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setFocusHeight(780);                      //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setOutPutX(888);                         //保存文件的宽度。单位像素
+        imagePicker.setOutPutY(512);
         imagePicker.setMultiMode(false);
         if (!ListUtils.listIsNullOrEmpty(coverDataArray)) {  //预览
 
@@ -244,8 +243,8 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
     }
 
     private void commit(String s) {
-        if(mFile == null){
-            Toast.makeText(this,"请上传封面",Toast.LENGTH_SHORT).show();
+        if (mFile == null) {
+            Toast.makeText(this, "请上传封面", Toast.LENGTH_SHORT).show();
             return;
         }
         FastStoreInfo info = new FastStoreInfo();
@@ -301,7 +300,7 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
                     adapter.notifyDataSetChanged();
                 } else { // 手持身份证的
                     if (coverDataArray.size() != 0) {
-                        imagePicker.getImageLoader().displayImage(PublishStoreActivity.this, coverDataArray.get(0).path, iv_cover, iv_cover.getWidth(), iv_cover.getHeight());
+                        imagePicker.getImageLoader().displayImage(PublishStoreActivity.this, coverDataArray.get(0).path, ivCoverAdd, 0, 0);
                         File mfile = new File(coverDataArray.get(0).path);
                         //                        DialogTools.showLoding(this, "温馨提示", "获取中。。。");
                         Luban.compress(this, mfile).putGear(Luban.THIRD_GEAR).launch(new OnCompressListener() {
@@ -322,7 +321,7 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
                         });
                     } else {
                         mFile = null;
-                        iv_cover.setImageResource(R.mipmap.publish_store_coveradd);
+                        ivCoverAdd.setImageResource(R.mipmap.publish_store_coveradd);
                     }
                 }
             }
@@ -347,7 +346,7 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
                     compress(files);
                 } else {
                     if (coverDataArray.size() != 0) {
-                        imagePicker.getImageLoader().displayImage(PublishStoreActivity.this, coverDataArray.get(0).path, iv_cover, iv_cover.getWidth(), iv_cover.getHeight());
+                        imagePicker.getImageLoader().displayImage(PublishStoreActivity.this, coverDataArray.get(0).path, ivCoverAdd, 0, 0);
                         File mfile = new File(coverDataArray.get(0).path);
                         //                        DialogTools.showLoding(this, "温馨提示", "获取中。。。");
                         Luban.compress(this, mfile).putGear(Luban.THIRD_GEAR).launch(new OnCompressListener() {
@@ -368,7 +367,7 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
                         });
                     } else {
                         mFile = null;
-                        iv_cover.setImageResource(R.mipmap.publish_store_coveradd);
+                        ivCoverAdd.setImageResource(R.mipmap.publish_store_coveradd);
                     }
                 }
             }

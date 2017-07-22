@@ -155,6 +155,7 @@ public class PublishFamousActivity extends ColpencilActivity implements ImageSel
     }
     @Override
     public void onItemClick(View view, int position) {
+        imagePicker.setMultiMode(true);
         switch (position) {
             case Constants.IMAGE_ITEM_ADD:
                 //打开选择,本次允许选择的数量
@@ -189,7 +190,6 @@ public class PublishFamousActivity extends ColpencilActivity implements ImageSel
                 }
                 compress(files);
                 adapter.notifyDataSetChanged();
-
             }
         } else if (resultCode == ImagePicker.RESULT_CODE_BACK) {
             if (data != null && requestCode == REQUEST_CODE_PREVIEW) {
