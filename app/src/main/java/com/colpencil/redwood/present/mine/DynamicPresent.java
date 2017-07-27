@@ -1,5 +1,6 @@
 package com.colpencil.redwood.present.mine;
 
+import com.colpencil.redwood.bean.result.AllGoodsResult;
 import com.colpencil.redwood.bean.result.DynamicResult;
 import com.colpencil.redwood.model.DynamicModel;
 import com.colpencil.redwood.model.imples.IDynamicModel;
@@ -9,6 +10,7 @@ import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.Colpenci
 import java.util.HashMap;
 
 import okhttp3.RequestBody;
+import rx.Observable;
 import rx.Observer;
 
 public class DynamicPresent extends ColpencilPresenter<IDynamicView> {
@@ -47,4 +49,74 @@ public class DynamicPresent extends ColpencilPresenter<IDynamicView> {
         dynamicModel.subGetDynamic(observer);
 
     }
+
+
+    /**
+     * 品牌和名师我的收藏
+     * @param pageNo
+     * @param params
+     */
+    public void getCollection(final int pageNo,HashMap<String,String> params){
+        dynamicModel.getCollection(params);
+        Observer<DynamicResult> observer = new Observer<DynamicResult>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(DynamicResult dynamicResult) {
+                if(dynamicResult.getCode()==0){
+                    if(pageNo==1){
+                        mView.refresh(dynamicResult);
+                    }else{
+                        mView.loadMore(dynamicResult);
+                    }
+                }else{
+                    mView.loadFail(dynamicResult.getMessage());
+                }
+            }
+        };
+        dynamicModel.subCollection(observer);
+    }
+
+    /**
+     * 品牌和名师我的店铺动态
+     * @param pageNo
+     * @param params
+     */
+    public void getStoreDynamic(final int pageNo,HashMap<String,String> params){
+        dynamicModel.getStoreDynamic(params);
+        Observer<DynamicResult> observer = new Observer<DynamicResult>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(DynamicResult dynamicResult) {
+                if(dynamicResult.getCode()==0){
+                    if(pageNo==1){
+                        mView.refresh(dynamicResult);
+                    }else{
+                        mView.loadMore(dynamicResult);
+                    }
+                }else{
+                    mView.loadFail(dynamicResult.getMessage());
+                }
+            }
+        };
+        dynamicModel.subStoreDynamic(observer);
+    }
+
 }

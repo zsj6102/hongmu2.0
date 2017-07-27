@@ -2,22 +2,26 @@ package com.colpencil.redwood.view.activity.mine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.colpencil.redwood.R;
-import com.colpencil.redwood.bean.AddresBean;
 import com.colpencil.redwood.bean.CatBean;
 import com.colpencil.redwood.bean.CatListBean;
+import com.colpencil.redwood.bean.FastStoreInfo;
 import com.colpencil.redwood.bean.PostTypeInfo;
+import com.colpencil.redwood.bean.SizeColorInfo;
 import com.colpencil.redwood.configs.Constants;
 import com.colpencil.redwood.function.utils.ListUtils;
 import com.colpencil.redwood.function.widgets.dialogs.CategoryDialog;
-import com.colpencil.redwood.present.mine.ApplyPresenter;
+import com.colpencil.redwood.present.mine.PublishPresenter;
+import com.colpencil.redwood.services.PublishStoreService;
 import com.colpencil.redwood.view.adapters.ImageSelectAdapter;
-import com.colpencil.redwood.view.impl.ApplayView;
+import com.colpencil.redwood.view.impl.PublishView;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
@@ -38,7 +42,7 @@ import me.shaohui.advancedluban.OnMultiCompressListener;
 
 
 @ActivityFragmentInject(contentViewId = R.layout.activity_publish_zc)
-public class PublishZcActivity extends ColpencilActivity implements ImageSelectAdapter.OnRecyclerViewItemClickListener, ApplayView {
+public class PublishZcActivity extends ColpencilActivity implements ImageSelectAdapter.OnRecyclerViewItemClickListener, PublishView {
 
     @Bind(R.id.tv_main_title)
     TextView tvMainTitle;
@@ -48,8 +52,16 @@ public class PublishZcActivity extends ColpencilActivity implements ImageSelectA
     TextView tvSubmitPublish;
     @Bind(R.id.post_news_category)
     TextView postNewsCategory;
+    @Bind(R.id.post_title)
+    EditText postTitle;
+    @Bind(R.id.edt_store_price)
+    EditText edtStorePrice;
+    @Bind(R.id.edt_maket_price)
+    EditText edtMaketPrice;
+    @Bind(R.id.edt_store_left)
+    EditText edtStoreLeft;
     private ImageSelectAdapter adapter;
-    private ApplyPresenter presenter;
+    private PublishPresenter presenter;
     private ArrayList<ImageItem> defaultDataArray = new ArrayList<>();
     private List<File> fileList = new ArrayList<>();
     private ImagePicker imagePicker;
@@ -85,6 +97,7 @@ public class PublishZcActivity extends ColpencilActivity implements ImageSelectA
         tvMainTitle.setText("发布商品");
         tvSubmitPublish.setVisibility(View.VISIBLE);
         presenter.loadCatList(0);
+        presenter.loadSize(0);
         initAdapter();
         initImagePicker();
     }
@@ -107,7 +120,7 @@ public class PublishZcActivity extends ColpencilActivity implements ImageSelectA
 
     @Override
     public ColpencilPresenter getPresenter() {
-        presenter = new ApplyPresenter();
+        presenter = new PublishPresenter();
         return presenter;
     }
 
@@ -150,6 +163,36 @@ public class PublishZcActivity extends ColpencilActivity implements ImageSelectA
             }
         });
         dialog.show();
+    }
+
+    @OnClick(R.id.add_cangku)
+    void submit() {
+        FastStoreInfo info = new FastStoreInfo();
+        info.setCat_id(sec_id);      //商品分类id
+        info.setImages(fileList);     //图片
+        info.setGoods_type("zhuangchang");  //Goodstype
+        info.setWarehouseOrshelves("shelves");  //直接提交没有加入仓库
+        info.setMktprice(edtMaketPrice.getText().toString());  //市场价
+        info.setPrice(edtStorePrice.getText().toString());   //销售价
+        info.setStore(edtStoreLeft.getText().toString());    //库存
+        info.setName(postTitle.getText().toString());       //名称
+
+        Intent intent = new Intent(PublishZcActivity.this, PublishStoreService.class);
+        intent.putExtra("data", info);
+        startService(intent);
+        CountDownTimer timer = new CountDownTimer(3000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                hideLoading();
+                PublishZcActivity.this.finish();
+            }
+        };
+        timer.start();
     }
 
     @Override
@@ -231,11 +274,6 @@ public class PublishZcActivity extends ColpencilActivity implements ImageSelectA
     }
 
     @Override
-    public void load(AddresBean regionInfo) {
-
-    }
-
-    @Override
     public void loadCat(CatListBean catListBean) {
         if (!ListUtils.listIsNullOrEmpty(catListBean.getData())) {
             list.clear();
@@ -247,5 +285,10 @@ public class PublishZcActivity extends ColpencilActivity implements ImageSelectA
                 list.add(info);
             }
         }
+    }
+
+    @Override
+    public void loadSize(SizeColorInfo info) {
+
     }
 }

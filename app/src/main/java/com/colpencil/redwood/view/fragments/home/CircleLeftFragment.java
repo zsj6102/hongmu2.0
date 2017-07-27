@@ -109,8 +109,10 @@ public class CircleLeftFragment extends ColpencilFragment implements BGARefreshL
                 getResources().getColor(R.color.white));
 
         mAdapter = new CircleLeftAdapter(getActivity(), mList, R.layout.circle_left_item);
+
         header = LayoutInflater.from(getActivity()).inflate(R.layout.circle_left_header, null);
         listView.addHeaderView(header);
+
         listView.setAdapter(mAdapter);
 
         initAdapter();

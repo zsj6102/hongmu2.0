@@ -29,6 +29,7 @@ import com.colpencil.redwood.holder.home.GoodHeadViewHolder;
 import com.colpencil.redwood.holder.home.GoodViewHolder;
 import com.colpencil.redwood.holder.home.MiddleItemViewHolder;
 import com.colpencil.redwood.holder.home.TopBannerViewHolder;
+import com.colpencil.redwood.holder.home.ViewpagerGridViewHolder;
 import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.home.HomePresenter;
 import com.colpencil.redwood.view.activity.ShoppingCartActivitys.ShoppingCartActivity;
@@ -91,7 +92,7 @@ public class HomePageFragment extends ColpencilFragment implements IHomePageView
     private int page = 1;
     private int pageSize = 10;
     private TopBannerViewHolder topBanner;
-    private FuncViewHolder funcHolder;
+    private ViewpagerGridViewHolder funcHolder;
     private MiddleItemViewHolder middle1;
     private MiddleItemViewHolder middle2;
     private MiddleItemViewHolder middle3;
@@ -124,7 +125,7 @@ public class HomePageFragment extends ColpencilFragment implements IHomePageView
 
     private void initHolder() {
         topBanner = new TopBannerViewHolder(0, getActivity());
-        funcHolder = new FuncViewHolder(1, getActivity());
+        funcHolder = new ViewpagerGridViewHolder(1, getActivity());
         middle1 = HolderFactory.createHolder(0, getActivity());
         middle2 = HolderFactory.createHolder(1, getActivity());
         middle3 = HolderFactory.createHolder(2, getActivity());

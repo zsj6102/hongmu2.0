@@ -45,7 +45,6 @@ import com.colpencil.redwood.view.activity.mine.MyMessageActivity;
 import com.colpencil.redwood.view.activity.mine.MyNewsActivity;
 import com.colpencil.redwood.view.activity.mine.MyWeekShootActivity;
 import com.colpencil.redwood.view.activity.mine.OrderCenterActivity;
-import com.colpencil.redwood.view.activity.mine.PublishStoreActivity;
 import com.colpencil.redwood.view.activity.mine.ReceiptAddressActivtiy;
 import com.colpencil.redwood.view.activity.mine.StoreHomeActivity;
 import com.colpencil.redwood.view.activity.mine.UserInformationActivity;
@@ -424,7 +423,7 @@ public class MeFragment extends ColpencilFragment implements IMeFragmentView, Vi
                     ColpenciSnackbarUtil.downShowing(getActivity().findViewById(android.R.id.content), "未登录");
                 } else {
                     //                    mIntent.putExtra(StringConfig.WEBVIEWURL, UrlConfig.PHILHARMONIC_HOST + "h5_contact.html");
-                        mIntent = new Intent(getActivity(), PublishStoreActivity.class);
+                        mIntent = new Intent(getActivity(), BusinessActivity.class);
                         startActivity(mIntent);
                 }
                 break;

@@ -16,7 +16,8 @@ public class StringConfig {
     public static final String MODULE_HELP = "FUNC_FANKUI";      //帮助与反馈
     public static final String MODULE_NEWS = "FUNC_XINWEN";      //新闻
     public static final String MODULE_AWARD = "FUNC_BAIKE";      //百科奖励
-
+    public static final String MODULE_PINPAI = "FUNC_PINPAI";//品牌商区
+    public static final String MODULE_SUPAI = "FUNC_SUPAI";//速拍
     public static final String INTENT_TYPE = "intent_type";     //Intent携带的字段，表示type
 
     public static final String WEBVIEWURL = "webviewurl";     //Intent携带的字段，表示type

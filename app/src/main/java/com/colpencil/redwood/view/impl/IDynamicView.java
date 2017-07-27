@@ -11,4 +11,7 @@ public interface IDynamicView extends ColpencilBaseView {
 
     void loadMore(DynamicResult dynamicResult);
     void refresh(DynamicResult dynamicResult);
+
+
+
 }

@@ -48,7 +48,7 @@ public class SpeedFragemnt extends ColpencilFragment implements SpeedView {
         speedPresent.getAd("supai");
         adapter=new MyPageAdapter(getChildFragmentManager());
         adapter.addFragment(new AllAuctionFragment(),"所有拍品");
-        adapter.addFragment(CardWallFragment.newInstance(0),"速拍名片墙");
+        adapter.addFragment(CardWallFragment.newInstance(11),"速拍名片墙");
         speedviewpager.setAdapter(adapter);
         speedviewpager.setOffscreenPageLimit(2);
         speedtabLayout.addTab(speedtabLayout.newTab().setText("所有拍品"));

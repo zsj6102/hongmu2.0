@@ -182,6 +182,7 @@ public class BusinessActivity extends ColpencilActivity implements View.OnClickL
             case R.id.layout_store1:
                 if(store_type == 1){
                     intent = new Intent(this,PublishStoreActivity.class);
+                    intent.putExtra("type",store_type);
                     startActivity(intent);
                 }else{
                     intent = new Intent(this,PublishListActivity.class);

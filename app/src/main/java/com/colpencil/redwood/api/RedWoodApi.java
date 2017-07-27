@@ -8,6 +8,7 @@ import com.colpencil.redwood.bean.BannerVo;
 import com.colpencil.redwood.bean.BrowsingCyclopediaDate;
 import com.colpencil.redwood.bean.BrowsingGoodDate;
 import com.colpencil.redwood.bean.BrowsingPostDate;
+import com.colpencil.redwood.bean.CardWallInfo;
 import com.colpencil.redwood.bean.CatListBean;
 import com.colpencil.redwood.bean.CatReturnData;
 import com.colpencil.redwood.bean.CategoryVo;
@@ -42,6 +43,7 @@ import com.colpencil.redwood.bean.Result;
 import com.colpencil.redwood.bean.ResultCodeInt;
 import com.colpencil.redwood.bean.SellApply;
 import com.colpencil.redwood.bean.ShoppingCartReturn;
+import com.colpencil.redwood.bean.SizeColorInfo;
 import com.colpencil.redwood.bean.SortOptionsReturn;
 import com.colpencil.redwood.bean.WeekPersonList;
 import com.colpencil.redwood.bean.result.AdResult;
@@ -50,6 +52,7 @@ import com.colpencil.redwood.bean.result.AllSpecialResult;
 import com.colpencil.redwood.bean.result.AnnounceResult;
 import com.colpencil.redwood.bean.result.ApplyReturn;
 import com.colpencil.redwood.bean.result.BidderResult;
+import com.colpencil.redwood.bean.result.CareReturn;
 import com.colpencil.redwood.bean.result.CommentResult;
 import com.colpencil.redwood.bean.result.CommonResult;
 import com.colpencil.redwood.bean.result.CustomDetailResult;
@@ -93,6 +96,7 @@ import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
+import rx.Observer;
 
 /**
  * 描述： Api
@@ -1195,17 +1199,73 @@ public interface RedWoodApi {
     Observable<AllGoodsResult> getAllGoods(@PartMap Map<String, RequestBody> strparams,@PartMap Map<String, Integer> intparams);
 
     /**
+     * 速拍区我的拍品动态
+     */
+
+    @POST("mobileGoodsList!getAllGuanzhuSupai.do")
+    @FormUrlEncoded
+    Observable<AllGoodsResult> getSupaiDynamic(@FieldMap HashMap<String,String> params);
+
+    /**
+     * 店铺动态（品牌商和名师公用）
+     */
+    @POST("mobileGoodsList!getAllPinGuanzhu.do")
+    @FormUrlEncoded
+    Observable<DynamicResult> getStoreDynamics(@FieldMap Map<String,String> map);
+
+
+    /**
+     *  我的收藏(品牌和名师共用)
+     * @param map
+     * @return
+     */
+    @POST("mobileGoodsList!getAllByFavoritePinpai.do")
+    @FormUrlEncoded
+    Observable<DynamicResult> getCollection(@FieldMap Map<String,String> map);
+
+
+    /**
+     *  我的收藏(速拍)
+     * @param map
+     * @return
+     */
+    @POST("mobileGoodsList!getAllCollectSupai.do")
+    @FormUrlEncoded
+    Observable<AllGoodsResult> getCollectionSupai(@FieldMap Map<String,String> map);
+    /**
      * 获取广告
      */
     @GET("mobileStoreAdv!advType.do")
     Observable<AdResult> getAd(@Query("type") String type);
 
+
+
     /**
-     * 获取品牌/名师名匠 新品
+     * 获取品牌/名师名匠 /专场新品
      */
     @Multipart
     @POST("mobileGoodsList!getAllpinpai.do")
     Observable<DynamicResult> getDynamic(@PartMap Map<String, RequestBody> strparams, @PartMap Map<String, Integer> intparams);
+    /**
+     * 商品区名片墙
+     */
+    @POST("memberFans2!findGoodsCard.do")
+    @FormUrlEncoded
+    Observable<CardWallInfo> getCardStore(@FieldMap Map<String,String> map);
+
+    /**
+     * 我的名片墙
+     */
+    @POST("memberFans2!findMyCard.do")
+    @FormUrlEncoded
+    Observable<CardWallInfo> getCardMine(@FieldMap Map<String,String> map);
+
+    /**
+     * 关注和取消关注
+     */
+    @POST("memberFans2!update.do")
+    @FormUrlEncoded
+    Observable<CareReturn> getCareStatus(@FieldMap Map<String,String> map);
 
     /**
      * 获取专场
@@ -1270,4 +1330,14 @@ public interface RedWoodApi {
     @Multipart
     @POST("MobileGoods2!add.do")
     Observable<ApplyReturn> getPublishStataus(@PartMap HashMap<String,RequestBody> params);
+
+    /**
+     * 商品规格
+     * @param parent_id
+     * @return
+     */
+    @POST("mobileGoods2!getCatList.do")
+    @FormUrlEncoded
+    Observable<SizeColorInfo> getSize(@Field("id") int parent_id);
+
 }

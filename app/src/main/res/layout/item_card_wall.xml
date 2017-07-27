@@ -110,6 +110,7 @@
                     android:textSize="10sp" />
 
                 <TextView
+                    android:id="@+id/tv_praise_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="96%"
@@ -131,6 +132,7 @@
                     android:textSize="10sp" />
 
                 <TextView
+                    android:id="@+id/tv_follow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="266"
@@ -142,6 +144,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout_care_uncare"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="12dp"
@@ -149,8 +152,10 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/layout_care"
                 android:layout_width="60dp"
                 android:layout_height="25dp"
+                android:visibility="visible"
                 android:background="@drawable/line2_line_transparent_shape"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -170,6 +175,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_uncare"
                 android:layout_width="70dp"
                 android:layout_height="25dp"
                 android:background="@drawable/line2_line_transparent_shape"

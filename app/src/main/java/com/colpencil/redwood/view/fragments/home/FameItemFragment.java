@@ -67,7 +67,7 @@ public class FameItemFragment extends ColpencilFragment implements IDynamicView 
                 intparams.put("page",pageNo);
                 intparams.put("pageSize",pageSize);
                 HashMap<String, RequestBody> strparams=new HashMap<>();
-                strparams.put("type",RequestBody.create(null,"mingjiang"));
+                strparams.put("type",RequestBody.create(null,"pinpai"));
                 showLoading("加载中...");
                 dynamicPresent.getDynamic(pageNo,intparams,strparams);
             }
@@ -81,7 +81,7 @@ public class FameItemFragment extends ColpencilFragment implements IDynamicView 
                     intparams.put("page",pageNo);
                     intparams.put("pageSize",pageSize);
                     HashMap<String, RequestBody> strparams=new HashMap<>();
-                    strparams.put("type",RequestBody.create(null,"mingjiang"));
+                    strparams.put("type",RequestBody.create(null,"pinpai"));
                     showLoading("加载中...");
                     dynamicPresent.getDynamic(pageNo,intparams,strparams);
                 }
@@ -99,7 +99,7 @@ public class FameItemFragment extends ColpencilFragment implements IDynamicView 
         intparams.put("page",pageNo);
         intparams.put("pageSize",pageSize);
         final HashMap<String, RequestBody> strparams=new HashMap<>();
-        strparams.put("type",RequestBody.create(null,"mingjiang"));
+        strparams.put("type",RequestBody.create(null,"pinpai"));
         showLoading("加载中...");
         dynamicPresent.getDynamic(pageNo,intparams,strparams);
     }

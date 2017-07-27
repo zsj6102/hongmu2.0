@@ -42,8 +42,9 @@ public class PublishStoreService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
     private void submit(Intent intent) {
+        String type = String.valueOf(intent.getStringExtra("type"));
         FastStoreInfo info = (FastStoreInfo) intent.getSerializableExtra("data");
-      HashMap<String, RequestBody> params = new HashMap<>();
+       HashMap<String, RequestBody> params = new HashMap<>();
         if (!ListUtils.listIsNullOrEmpty(info.getImages())) {
             for (int i = 0; i < info.getImages().size(); i++) {
                 File file1 = info.getImages().get(i);
@@ -58,10 +59,14 @@ public class PublishStoreService extends Service {
         params.put("member_id", OkhttpUtils.toRequestBody(SharedPreferencesUtil.getInstance(this).getInt("member_id") + ""));
         params.put("name", OkhttpUtils.toRequestBody(info.getName()));
         params.put("price", OkhttpUtils.toRequestBody(info.getPrice()));
-        params.put("cover\";filename=\"1.png", RequestBody.create(MediaType.parse("image/png"), info.getCover()));
-
+        if(type.equals("1")){
+            params.put("cover\";filename=\"1.png", RequestBody.create(MediaType.parse("image/png"), info.getCover()));
+            params.put("intro", OkhttpUtils.toRequestBody(info.getIntro()));
+        }
+        if(!type.equals("1")){
+            params.put("mktprice",OkhttpUtils.toRequestBody(info.getMktprice()));
+        }
         params.put("store", OkhttpUtils.toRequestBody(info.getStore()));
-        params.put("intro", OkhttpUtils.toRequestBody(info.getIntro()));
         params.put("goods_type", OkhttpUtils.toRequestBody(info.getGoods_type()));
         params.put("warehouseOrshelves", OkhttpUtils.toRequestBody(info.getWarehouseOrshelves()));
         RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)

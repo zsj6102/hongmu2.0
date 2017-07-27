@@ -16,7 +16,7 @@ public class FastStoreInfo implements Serializable {
     private File cover;
     private List<File> images;
     private String warehouseOrshelves;
-    private double mktprice;
+    private String mktprice;
     private String specs;
     private int spe_section_id;
 
@@ -108,11 +108,11 @@ public class FastStoreInfo implements Serializable {
         this.warehouseOrshelves = warehouseOrshelves;
     }
 
-    public double getMktprice() {
+    public String getMktprice() {
         return mktprice;
     }
 
-    public void setMktprice(double mktprice) {
+    public void setMktprice(String mktprice) {
         this.mktprice = mktprice;
     }
 

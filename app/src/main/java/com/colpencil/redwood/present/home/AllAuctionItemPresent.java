@@ -18,7 +18,7 @@ public class AllAuctionItemPresent extends ColpencilPresenter<AllAuctionItemView
     public AllAuctionItemPresent(){
         allAuctionItemModel=new AllAuctionItemModel();
     }
-    public void getAllGoods(HashMap<String, RequestBody> strparams, HashMap<String, Integer> intparams){
+    public void getAllGoods(final int page,HashMap<String, RequestBody> strparams, HashMap<String, Integer> intparams){
         allAuctionItemModel.getAllGoods(strparams,intparams);
         Observer<AllGoodsResult> observer=new Observer<AllGoodsResult>() {
             @Override
@@ -35,7 +35,11 @@ public class AllAuctionItemPresent extends ColpencilPresenter<AllAuctionItemView
             public void onNext(AllGoodsResult allGoodsResult) {
 
                 if(allGoodsResult.getCode()==0){
-                    mView.getAllGoods(allGoodsResult);
+                    if(page == 1){
+                        mView.refresh(allGoodsResult);
+                    }else{
+                        mView.loadMore(allGoodsResult);
+                    }
                 }else{
                     mView.loadFail(allGoodsResult.getMessage());
                 }

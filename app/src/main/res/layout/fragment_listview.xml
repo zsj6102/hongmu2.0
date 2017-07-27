@@ -9,10 +9,11 @@
         android:layout_height="match_parent">
 
         <ListView
-            android:id="@+id/allauctionitem_listview"
+            android:id="@+id/supai_listview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
         </ListView>
     </com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout>
 </LinearLayout>
+

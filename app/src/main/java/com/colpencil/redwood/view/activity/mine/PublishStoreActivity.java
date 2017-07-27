@@ -247,6 +247,11 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
             Toast.makeText(this, "请上传封面", Toast.LENGTH_SHORT).show();
             return;
         }
+        if(s.equals("warehouse")){
+            showLoading("加入仓库中");
+        }else{
+            showLoading("正在上架销售");
+        }
         FastStoreInfo info = new FastStoreInfo();
         info.setName(postTitle.getText().toString());
         info.setCat_id(sec_id);
@@ -258,6 +263,7 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
         info.setIntro(postContent.getText().toString());
         info.setWarehouseOrshelves(s);
         Intent intent = new Intent(PublishStoreActivity.this, PublishStoreService.class);
+        intent.putExtra("type",type);
         intent.putExtra("data", info);
         startService(intent);
         CountDownTimer timer = new CountDownTimer(3000, 1000) {

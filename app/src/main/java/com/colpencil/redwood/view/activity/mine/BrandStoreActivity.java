@@ -47,7 +47,7 @@ public class BrandStoreActivity extends ColpencilActivity implements OnClickList
     @Override
     protected void initViews(View view) {
         fragments.add(new BrandMerchantFragment());
-        fragments.add(new MineBrandFragment());
+        fragments.add(MineBrandFragment.newInstance(2));
         viewpager.setOffscreenPageLimit(3);
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
         viewpager.setAdapter(mAdapter);
@@ -67,7 +67,11 @@ public class BrandStoreActivity extends ColpencilActivity implements OnClickList
 
     @Override
     public void onClick(View v) {
-
+         switch (v.getId()){
+             case R.id.iv_back:
+                 finish();
+                 break;
+         }
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -51,11 +52,19 @@ public class SpeedShotActivity extends ColpencilActivity{
     @Override
     protected void initViews(View view) {
         fragments.add(new SpeedFragemnt());
-        fragments.add(new MineBrandFragment());
+        fragments.add(MineBrandFragment.newInstance(1));
         viewpager.setOffscreenPageLimit(3);
         adapter=new MyPagerAdapter(getSupportFragmentManager());
         viewpager.setAdapter(adapter);
         viewpager.setCurrentItem(0);
+        /**
+         * 不是商家是不显示我的店铺的方法
+         */
+        //        segment.removeViewAt(segment.getChildCount()-1);
+//        segment.updateBackground();
+//        RadioGroup.LayoutParams layoutParams = new RadioGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+//        layoutParams.setMargins(0, 0, 0, 0);
+//        segment.getChildAt(segment.getChildCount() - 1).setLayoutParams(layoutParams);
         segment.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {

@@ -49,13 +49,16 @@ public class PublishListActivity extends ColpencilActivity {
     @OnClick(R.id.layout_pinpai_mingshi)
     void brandClick() {
         Intent intent = new Intent(this, PublishFamousActivity.class);
+        intent.putExtra("type", type);
         startActivity(intent);
 
     }
 
     @OnClick(R.id.layout_supai)
     void supaiClick() {
+
         Intent intent = new Intent(this, PublishStoreActivity.class);
+        intent.putExtra("type", type);
         startActivity(intent);
 
     }
@@ -63,6 +66,7 @@ public class PublishListActivity extends ColpencilActivity {
     @OnClick(R.id.layout_zhuanchang)
     void zhuanClick() {
         Intent intent = new Intent(this, PublishZcActivity.class);
+        intent.putExtra("type", type);
         startActivity(intent);
 
     }
