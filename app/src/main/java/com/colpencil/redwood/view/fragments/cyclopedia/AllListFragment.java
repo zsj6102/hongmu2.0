@@ -69,9 +69,11 @@ public class AllListFragment extends ColpencilFragment implements ICyclopediaTag
                 getResources().getColor(R.color.white));
         initAdapter();
         initBus();
+    }
+    @Override
+    public void loadData() {
         presenter.loadTagItem("3", categoryVo.getCat_id(), page, pageSize, "");
     }
-
     private void initAdapter() {
         adapter = new CycloItemAdapter(cylist, getActivity());
         listView.setAdapter(adapter);

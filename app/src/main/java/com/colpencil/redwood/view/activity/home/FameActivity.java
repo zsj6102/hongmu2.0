@@ -64,7 +64,7 @@ public class FameActivity extends ColpencilActivity{
     private void initTab() {
         for(FameItem fameItem:FameItems){
             tab_layout.addTab(tab_layout.newTab().setText(fameItem.getCat_name()));
-            adapter.addFragment(FameItemFragment.newInstance(fameItem.getCat_id()),fameItem.getCat_name());
+            adapter.addFragment(FameItemFragment.newInstance(fameItem.getCat_id(),3),fameItem.getCat_name());
         }
     }
     @Override

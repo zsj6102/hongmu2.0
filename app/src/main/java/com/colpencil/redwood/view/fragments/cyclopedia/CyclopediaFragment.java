@@ -82,11 +82,7 @@ public class CyclopediaFragment extends ColpencilFragment implements ITagView {
         header1.setBackgroundColor(getResources().getColor(R.color.main_brown));
         totop_iv.setImageResource(R.mipmap.totop_icon);
         iv_post.setImageResource(R.mipmap.release_icon);
-        if (SharedPreferencesUtil.getInstance(getActivity()).getBoolean("isLogin", false)) {
-            present.loadMyTag();
-        } else {
-            present.loadTag(2);
-        }
+
         et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -111,7 +107,14 @@ public class CyclopediaFragment extends ColpencilFragment implements ITagView {
         });
         initBus();
     }
-
+    @Override
+    public void loadData() {
+        if (SharedPreferencesUtil.getInstance(getActivity()).getBoolean("isLogin", false)) {
+            present.loadMyTag();
+        } else {
+            present.loadTag(2);
+        }
+    }
     private void initBus() {
         observable = RxBus.get().register("rxBusMsg", RxBusMsg.class);
         Subscriber<RxBusMsg> subscriber = new Subscriber<RxBusMsg>() {

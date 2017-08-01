@@ -152,17 +152,18 @@ public class CircleRightItemFragment extends ColpencilFragment
             }
         });
         initBus();
-        loadData();
+
     }
 
-    private void loadData() {
-        if (NetUtils.isConnected(getActivity())) {
-            presenter.loadList(type, page, pageSize);
-        } else {
-            presenter.loadLocal(Integer.valueOf(type), getActivity());
-        }
-    }
 
+@Override
+public void loadData() {
+    if (NetUtils.isConnected(getActivity())) {
+                    presenter.loadList(type, page, pageSize);
+                } else {
+                    presenter.loadLocal(Integer.valueOf(type), getActivity());
+                }
+}
     private void initBus() {
         observable = RxBus.get().register("refreshmsg", RefreshMsg.class);
         subscriber = new Subscriber<RefreshMsg>() {

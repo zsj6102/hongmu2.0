@@ -43,7 +43,10 @@ public class HoldingShelvesFragment extends ColpencilFragment implements View.On
         tv_speed.setOnClickListener(this);
         tv_week.setOnClickListener(this);
     }
+    @Override
+    public void loadData() {
 
+    }
     @Override
     public ColpencilPresenter getPresenter() {
         return null;

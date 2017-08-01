@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:ban="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:ban="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/line_color_thirst"
+                android:orientation="vertical">
 
-    <ScrollView
+
+
+    <github.chenupt.dragtoplayout.DragTopLayout
+        android:id="@+id/drag_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+
+        >
 
         <LinearLayout
+            android:id="@+id/top_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:gravity="center"
             android:orientation="vertical">
 
             <com.youth.banner.Banner
-                android:id="@+id/banner"
+                android:id="@+id/circle_banner"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:background="@color/color_fffbfa"
@@ -28,6 +36,14 @@
                 ban:indicator_width="5dp"
                 ban:is_auto_play="true"/>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/drag_content_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabsLayout"
                 android:layout_width="match_parent"
@@ -37,10 +53,36 @@
                 app:tabSelectedTextColor="@color/main_red"
                 app:tabTextAppearance="@style/HomeTabTextAppearance"/>
 
-            <com.property.colpencil.colpencilandroidlibrary.Ui.NoScrollViewPager
-                android:id="@+id/myviewpager"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+            </android.support.v4.view.ViewPager>
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+    </github.chenupt.dragtoplayout.DragTopLayout>
+
+
+    <ImageView
+        android:id="@+id/post_iv"
+        android:layout_width="@dimen/height_44dp"
+        android:layout_height="@dimen/height_44dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="159dp"
+        android:layout_marginRight="@dimen/margin_15dp"
+        android:src="@mipmap/release_icon"/>
+
+    <ImageView
+        android:id="@+id/totop_iv"
+        android:layout_width="@dimen/height_44dp"
+        android:layout_height="@dimen/height_44dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginRight="@dimen/margin_15dp"
+        android:src="@mipmap/totop_icon"/>
+
+
+</RelativeLayout>

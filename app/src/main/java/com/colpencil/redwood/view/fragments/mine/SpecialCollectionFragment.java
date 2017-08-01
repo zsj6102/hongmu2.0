@@ -49,7 +49,17 @@ public class SpecialCollectionFragment extends ColpencilFragment implements IDyn
         fragment.setArguments(bundle);
         return fragment;
     }
-
+    @Override
+    public void loadData() {
+        final HashMap<String,Integer> intparams=new HashMap<>();
+        intparams.put("cat_id",type);
+        intparams.put("page",pageNo);
+        intparams.put("pageSize",pageSize);
+        final HashMap<String, RequestBody> strparams=new HashMap<>();
+        strparams.put("type",RequestBody.create(null,"zhuangchang"));
+        showLoading("加载中...");
+        dynamicPresent.getDynamic(pageNo,intparams,strparams);
+    }
     @Override
     protected void initViews(View view) {
         type=getArguments().getInt("type");
@@ -86,8 +96,7 @@ public class SpecialCollectionFragment extends ColpencilFragment implements IDyn
         mAdapter = new DynamicAdapter(getActivity(), mlist, R.layout.item_brand_good);
         gridview.setAdapter(mAdapter);
 
-        showLoading("加载中...");
-        dynamicPresent.getDynamic(pageNo,intparams,strparams);
+
     }
 
     @Override

@@ -139,7 +139,7 @@ public class PostFragment extends ColpencilFragment implements IPostFragmentView
                 if (msg.getType() == 29) {//刷新数据
                     //个人中心需要重新请求数据
                     pageNo = 1;
-                    loadData();
+                    presenter.getContent(pageNo, pageSize);
                 } else if (msg.getType() == 64) {
                     if (getUserVisibleHint()) {
                         presenter.removeCollection();
@@ -148,7 +148,7 @@ public class PostFragment extends ColpencilFragment implements IPostFragmentView
             }
         };
         observable.subscribe(subscriber);
-        loadData();
+
     }
 
 
@@ -199,7 +199,7 @@ public class PostFragment extends ColpencilFragment implements IPostFragmentView
     public void removeAll(EntityResult<String> result) {
         if (result.getCode() == 0) {
             pageNo = 1;
-            loadData();
+            presenter.getContent(pageNo, pageSize);
             RxBusMsg rxBusMsg = new RxBusMsg();
             rxBusMsg.setType(26);
             RxBus.get().post("rxBusMsg", rxBusMsg);
@@ -210,11 +210,14 @@ public class PostFragment extends ColpencilFragment implements IPostFragmentView
     /**
      * 数据加载
      */
-    private void loadData() {
+//    private void loadData() {
+//        presenter.getContent(pageNo, pageSize);
+//        pageNo++;
+//    }
+    @Override
+    public void loadData() {
         presenter.getContent(pageNo, pageSize);
-        pageNo++;
     }
-
     /**
      * 设置是否可进行上拉加载操作
      */
@@ -236,14 +239,15 @@ public class PostFragment extends ColpencilFragment implements IPostFragmentView
         mdatas.clear();
         mAdapter.notifyDataSetChanged();
         pageNo = 1;
-        loadData();
+        presenter.getContent(pageNo, pageSize);
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         if (flag == true) {
             showLoading(Constants.progressName);
-            loadData();
+            pageNo++;
+            presenter.getContent(pageNo, pageSize);
         }
         return false;
     }

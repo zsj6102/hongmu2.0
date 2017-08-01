@@ -34,7 +34,8 @@ public class WeekShelfFragment extends ColpencilFragment {
         adapter = new WeekShelfAdapter(getActivity(),list, R.layout.item_weekshelf);
         common_listview.setAdapter(adapter);
     }
-
+    @Override
+    public void loadData() {}
     @Override
     public ColpencilPresenter getPresenter() {
         return null;

@@ -61,8 +61,8 @@ public class GetVoucherFragment extends ColpencilFragment implements IMyCouponsF
         ll_header.setVisibility(View.GONE);
         mAdapter = new MyCouponsFragmentAdapter(getActivity(), mdata, R.layout.item_voucher, 0, 1);
         gridView.setAdapter(mAdapter);
-        showLoading(Constants.progressName);
-        loadData();
+
+
         mAdapter.setListener(new MyCouponsFragmentAdapter.ChangeListener() {
             @Override
             public void change(int position) {
@@ -112,10 +112,14 @@ public class GetVoucherFragment extends ColpencilFragment implements IMyCouponsF
     /**
      * 数据加载
      */
-    private void loadData() {
+//    private void loadData() {
+//        presenter.loadGetCoupon();
+//    }
+    @Override
+    public void loadData() {
+        showLoading(Constants.progressName);
         presenter.loadGetCoupon();
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();

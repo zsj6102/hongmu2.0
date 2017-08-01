@@ -68,15 +68,16 @@ public class DynamicFragment extends ColpencilFragment implements IDynamicView {
         final HashMap<String, String> intparams = new HashMap<>();
         intparams.put("page", pageNo + "");
         intparams.put("pageSize", pageSize + "");
-        intparams.put("type","pinpai");
+        if(type == 2 || type == 21){
+            intparams.put("type","pinpai");
+        }else if(type == 3 || type == 31){
+            intparams.put("type","mingjiang");
+        }
+
         intparams.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id")+"");
         intparams.put("token",SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
-        showLoading("加载中...");
-        if(type == 2 || type == 3){
-            dynamicPresent.getStoreDynamic(pageNo,intparams);
-        }else{
-            dynamicPresent.getCollection(pageNo,intparams);
-        }
+
+
         refreshLayout.setDelegate(new BGARefreshLayoutDelegate() {
             @Override
             public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
@@ -113,7 +114,27 @@ public class DynamicFragment extends ColpencilFragment implements IDynamicView {
 
 //        dynamicPresent.getDynamic(pageNo, intparams, strparams);
     }
+    @Override
+    public void loadData() {
+        showLoading("加载中...");
+        final HashMap<String, String> intparams = new HashMap<>();
+        intparams.put("page", pageNo + "");
+        intparams.put("pageSize", pageSize + "");
+        if(type == 2 || type == 21){
+            intparams.put("type","pinpai");
+        }else if(type == 3 || type == 31){
+            intparams.put("type","mingjiang");
+        }
 
+        intparams.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id")+"");
+        intparams.put("token",SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+        if(type == 2 || type == 3){
+            dynamicPresent.getStoreDynamic(pageNo,intparams);
+        }else{
+            dynamicPresent.getCollection(pageNo,intparams);
+        }
+
+    }
     @Override
     public ColpencilPresenter getPresenter() {
         dynamicPresent = new DynamicPresent();

@@ -73,9 +73,7 @@ public class CircleRightFragment extends ColpencilFragment implements ICircleRig
         adapter.addFragment(CircleRightItemFragment.newInstance("40000"));
 
         nvp.setAdapter(adapter);
-        presenter.loadStatic(
-                SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"),
-                String.valueOf(SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id")));
+
 
         observable = RxBus.get().register("refreshmsg", RefreshMsg.class);
         subscriber = new Subscriber<RefreshMsg>() {
@@ -112,7 +110,12 @@ public class CircleRightFragment extends ColpencilFragment implements ICircleRig
 
     }
 
-
+    @Override
+    public void loadData() {
+        presenter.loadStatic(
+                SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"),
+                String.valueOf(SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id")));
+    }
     @OnClick(R.id.circle_right_posts)
     void postsOnClick() {
         view1.setBackgroundColor(getResources().getColor(R.color.main_red));

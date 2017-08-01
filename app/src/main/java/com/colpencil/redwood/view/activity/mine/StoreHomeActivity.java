@@ -45,8 +45,6 @@ import butterknife.Bind;
 )
 public class StoreHomeActivity extends ColpencilActivity {
 
-    @Bind(R.id.base_header_ll)
-    LinearLayout base_header_ll;
 
     @Bind(R.id.tv_main_title)
     TextView tv_main_title;
@@ -97,14 +95,10 @@ public class StoreHomeActivity extends ColpencilActivity {
 
     private void initData(int type){
         tv_main_title.setText("商家主页");
+
         tv_shoppingCartFinish.setVisibility(View.VISIBLE);
         tv_shoppingCartFinish.setText("···");
-        base_header_ll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+
         tv_shoppingCartFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

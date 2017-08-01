@@ -129,13 +129,18 @@ public class SpecialPastFragment extends ColpencilFragment implements BGARefresh
         return false;
     }
 
-    private void loadData(){
+//    private void loadData(){
+//        showLoading(Constants.progressName);
+//        page = 1;
+//        keyWord = edit_search.getText().toString();
+//
+//    }
+    @Override
+    public void loadData() {
         showLoading(Constants.progressName);
-        page = 1;
-        keyWord = edit_search.getText().toString();
-
+                page = 1;
+                keyWord = edit_search.getText().toString();
     }
-
     private void isLoadMore(List<SpecialPastItem> itemList){
         if(page == 1){
             list.clear();

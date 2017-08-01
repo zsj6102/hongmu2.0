@@ -116,7 +116,6 @@ public class GoodLeftFragment extends ColpencilFragment implements IGoodLeftView
         initHeader();
         initBus();
         initWebView();
-        loadData();
     }
 
     private void initHeader() {
@@ -154,12 +153,15 @@ public class GoodLeftFragment extends ColpencilFragment implements IGoodLeftView
         });
     }
 
-    private void loadData() {
-        presenter.loadGoodInfo(goodid + "");
-        presenter.loadRecommend(8, 1, 3);
-        presenter.loadGoodDetail(goodid);
-    }
-
+//    private void loadData() {
+//
+//    }
+@Override
+public void loadData() {
+    presenter.loadGoodInfo(goodid + "");
+            presenter.loadRecommend(8, 1, 3);
+            presenter.loadGoodDetail(goodid);
+}
     private void initBus() {
         observable = RxBus.get().register(StringConfig.GOODSBUS, GoodBusMsg.class);
         subscriber = new Subscriber<GoodBusMsg>() {

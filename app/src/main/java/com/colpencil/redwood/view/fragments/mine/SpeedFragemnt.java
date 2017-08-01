@@ -5,11 +5,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.view.ViewPager;
 import android.view.View;
-
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.bean.AdInfo;
+import com.colpencil.redwood.bean.Info.RxClickMsg;
 import com.colpencil.redwood.bean.result.AdResult;
 import com.colpencil.redwood.function.tools.MyImageLoader;
 import com.colpencil.redwood.present.SpeedPresent;
@@ -17,8 +17,7 @@ import com.colpencil.redwood.view.impl.SpeedView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilFragment;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
-import com.property.colpencil.colpencilandroidlibrary.Ui.NoScrollViewPager;
-import com.property.colpencil.colpencilandroidlibrary.Ui.ViewpagerCycle.ADInfo;
+import com.property.colpencil.colpencilandroidlibrary.Function.Rx.RxBus;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
@@ -26,19 +25,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
+import github.chenupt.dragtoplayout.DragTopLayout;
 
-import static com.unionpay.mobile.android.global.a.A;
 
 @ActivityFragmentInject(
         contentViewId = R.layout.fragment_speed
 )
 public class SpeedFragemnt extends ColpencilFragment implements SpeedView {
-    @Bind(R.id.banner)
+    @Bind(R.id.circle_banner)
     Banner banner;
-    @Bind(R.id.speedtabLayout)
-    TabLayout speedtabLayout;
-    @Bind(R.id.speedviewpager)
-    NoScrollViewPager speedviewpager;
+
+    @Bind(R.id.tabsLayout)
+    TabLayout tablayout;
+    @Bind(R.id.view_pager)
+    ViewPager viewPager;
+    @Bind(R.id.drag_layout)
+    DragTopLayout dragLayout;
+
     private MyPageAdapter adapter;
     private SpeedPresent speedPresent;
 
@@ -46,17 +51,22 @@ public class SpeedFragemnt extends ColpencilFragment implements SpeedView {
     protected void initViews(View view) {
         showLoading("加载中...");
         speedPresent.getAd("supai");
+        dragLayout.setOverDrag(false);
         adapter=new MyPageAdapter(getChildFragmentManager());
         adapter.addFragment(new AllAuctionFragment(),"所有拍品");
-        adapter.addFragment(CardWallFragment.newInstance(11),"速拍名片墙");
-        speedviewpager.setAdapter(adapter);
-        speedviewpager.setOffscreenPageLimit(2);
-        speedtabLayout.addTab(speedtabLayout.newTab().setText("所有拍品"));
-        speedtabLayout.addTab(speedtabLayout.newTab().setText("速拍名片墙"));
-        speedtabLayout.setupWithViewPager(speedviewpager);
+        adapter.addFragment(AllCardWallFragment.newInstance(1),"速拍名片墙");
+        viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(2);
+        tablayout.addTab(tablayout.newTab().setText("所有拍品"));
+        tablayout.addTab(tablayout.newTab().setText("速拍名片墙"));
+        tablayout.setupWithViewPager(viewPager);
 
     }
-
+    @Override
+    public void loadData() {
+        showLoading("加载中...");
+        speedPresent.getAd("supai");
+    }
     @Override
     public ColpencilPresenter getPresenter() {
         speedPresent=new SpeedPresent();
@@ -67,7 +77,29 @@ public class SpeedFragemnt extends ColpencilFragment implements SpeedView {
     public void bindView(Bundle savedInstanceState) {
 
     }
+    @OnClick(R.id.totop_iv)
+    void totop() {
 
+        dragLayout.openTopView(true);
+        RxClickMsg msg = new RxClickMsg();
+        msg.setType(100);
+        RxBus.get().post("totop",msg);
+    }
+    public void onEvent(Boolean b){
+        dragLayout.setTouchMode(b);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+
+    }
     @Override
     public void loadSuccess() {
 

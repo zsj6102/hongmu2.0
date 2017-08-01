@@ -66,5 +66,8 @@ public class DiscoveryFragment extends ColpencilFragment {
         intent.setClass(getActivity(), CustomListActivity.class);
         startActivity(intent);
     }
+    @Override
+    public void loadData() {
 
+    }
 }

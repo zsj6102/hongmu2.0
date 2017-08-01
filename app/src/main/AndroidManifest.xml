@@ -300,6 +300,13 @@
         </activity>
         <activity android:name=".view.activity.mine.PublishStoreActivity"
                   android:screenOrientation="portrait"/>
+
+        <activity android:name=".view.activity.mine.FamousStoreActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".view.activity.mine.HallofFameActivity"
+                  android:screenOrientation="portrait"/>
+
         <service android:name=".view.PlayerService"/>
         <service android:name=".view.DownLoadService"/>
         <service android:name=".services.PostsService"/>

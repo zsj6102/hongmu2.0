@@ -46,15 +46,18 @@ public class AuctionItemFragment extends ColpencilFragment implements BGARefresh
 
     }
 
-    private void loadData() {
-        for(int i=0;i<8;i++){
-            AllAuctionItemInfo allAuctionItemInfo=new AllAuctionItemInfo();
-            allAuctionItemInfos.add(allAuctionItemInfo);
-        }
-        adapter.notifyDataSetChanged();
-        refreshLayout.endRefreshing(0);
-    }
+//    private void loadData() {
+//        for(int i=0;i<8;i++){
+//            AllAuctionItemInfo allAuctionItemInfo=new AllAuctionItemInfo();
+//            allAuctionItemInfos.add(allAuctionItemInfo);
+//        }
+//        adapter.notifyDataSetChanged();
+//        refreshLayout.endRefreshing(0);
+//    }
+@Override
+public void loadData() {
 
+}
     @Override
     public ColpencilPresenter getPresenter() {
         return null;

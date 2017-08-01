@@ -143,6 +143,11 @@ public class CircleLeftFragment extends ColpencilFragment implements BGARefreshL
             }
         });
 
+
+        initBus();
+    }
+    @Override
+    public void loadData() {
         if (SharedPreferencesUtil.getInstance(getActivity()).getBoolean(StringConfig.ISLOGIN, false)) {
             presenter.loadMyTag();
         } else {
@@ -150,9 +155,7 @@ public class CircleLeftFragment extends ColpencilFragment implements BGARefreshL
         }
         presenter.loadImage("13");
         presenter.loadPost(mType, page, pageSize);
-        initBus();
     }
-
     private void initBus() {
         observable = RxBus.get().register("refreshmsg", RefreshMsg.class);
         subscriber = new Subscriber<RefreshMsg>() {

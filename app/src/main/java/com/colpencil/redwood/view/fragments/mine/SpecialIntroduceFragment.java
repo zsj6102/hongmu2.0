@@ -41,10 +41,6 @@ public class SpecialIntroduceFragment extends ColpencilFragment implements ISpec
     @Override
     protected void initViews(View view) {
         id=getArguments().getInt("special_id");
-
-        showLoading("加载中...");
-        specialIntroducePresent.getSpecialIntroduce(id);
-
     }
 
     @Override
@@ -64,11 +60,15 @@ public class SpecialIntroduceFragment extends ColpencilFragment implements ISpec
         webview.loadUrl(info.getUrl());
         hideLoading();
     }
-
+    @Override
+    public void loadData() {
+        showLoading("加载中...");
+        specialIntroducePresent.getSpecialIntroduce(id);
+    }
     @Override
     public void loadFail(String message) {
 
         hideLoading();
-        ToastTools.showShort(getActivity(),"加载错误，请刷新!");
+        ToastTools.showShort(getActivity(),"加载错误");
     }
 }

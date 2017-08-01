@@ -64,5 +64,6 @@ dependencies {
     compile 'com.jph.takephoto:takephoto_library:4.0.2'
     compile 'com.orhanobut:dialogplus:1.11@aar'
     compile 'info.hoang8f:android-segmented:1.0.6'
-
+    compile 'com.github.chenupt.android:dragtoplayout:1.2.1@aar'
+    compile 'de.greenrobot:eventbus:2.4.0'
 }

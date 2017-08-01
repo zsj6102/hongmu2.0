@@ -52,7 +52,8 @@ public class AuctionFragment extends ColpencilFragment {
     public ColpencilPresenter getPresenter() {
         return null;
     }
-
+    @Override
+    public void loadData() {}
     @Override
     public void bindView(Bundle savedInstanceState) {
 

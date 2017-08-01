@@ -68,15 +68,10 @@ public class HotGoodFragment extends ColpencilFragment implements IHotGoodView, 
         bga_hotGoodFragment.setDelegate(this);
         bga_hotGoodFragment.setRefreshViewHolder(new BGANormalRefreshViewHolder(getActivity(), true));
         bga_hotGoodFragment.setSnackStyle(getActivity().findViewById(android.R.id.content), getResources().getColor(R.color.material_drawer_primary), getResources().getColor(R.color.main_red));
-        initData();
-    }
-
-    private void initData() {
         gridview_hotGoodFragment.setBackgroundColor(getResources().getColor(R.color.main_background));
         gridview_hotGoodFragment.setVerticalSpacing(0);
         meAdapter = new HotGoodAdapter(mdata, getActivity());
         gridview_hotGoodFragment.setAdapter(meAdapter);
-        presenter.loadGoodInfor(pageNo, pageSize);
         gridview_hotGoodFragment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -87,6 +82,11 @@ public class HotGoodFragment extends ColpencilFragment implements IHotGoodView, 
         });
     }
 
+
+    @Override
+    public void loadData() {
+        presenter.loadGoodInfor(pageNo, pageSize);
+    }
     @Override
     public ColpencilPresenter getPresenter() {
         presenter = new HotGoodPresenter();

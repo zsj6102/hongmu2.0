@@ -44,8 +44,7 @@ public class MasterCraftsmanFragment extends ColpencilFragment implements SpeedV
     private SpeedPresent speedPresent;
     @Override
     protected void initViews(View view) {
-        showLoading("加载中...");
-        speedPresent.getAd("mingjiang");
+
         adapetr=new MyPageAdapter(getChildFragmentManager());
         adapetr.addFragent(new NewProductFragment(), "最新出品");
         adapetr.addFragent(new CraftsmanCardFragment(), "匠师名片墙");
@@ -76,7 +75,11 @@ public class MasterCraftsmanFragment extends ColpencilFragment implements SpeedV
     public void loadFail(String message) {
 
     }
-
+    @Override
+    public void loadData() {
+        showLoading("加载中...");
+        speedPresent.getAd("mingjiang");
+    }
     @Override
     public void getAd(AdResult adResult) {
         List<AdInfo> adInfoList=adResult.getData();

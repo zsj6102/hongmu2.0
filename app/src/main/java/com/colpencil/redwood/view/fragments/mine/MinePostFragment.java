@@ -47,7 +47,8 @@ public class MinePostFragment extends ColpencilFragment{
 
         minepost_listview.setAdapter(new MinePostAdapter(getActivity(),minePostInfos,R.layout.item_minepost));
     }
-
+    @Override
+    public void loadData() {}
     @Override
     public ColpencilPresenter getPresenter() {
         return null;

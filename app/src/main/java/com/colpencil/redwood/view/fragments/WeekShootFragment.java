@@ -95,7 +95,7 @@ public class WeekShootFragment extends ColpencilFragment implements IWeekShootVi
         mAdapter = new WeekShootAdapter(rv_weekShoot, getActivity());
         rv_weekShoot.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         rv_weekShoot.setAdapter(mAdapter);
-        loadData();
+
     }
 
     private void initBus() {
@@ -135,11 +135,14 @@ public class WeekShootFragment extends ColpencilFragment implements IWeekShootVi
     /**
      * 数据加载
      */
-    private void loadData() {
+//    private void loadData() {
+//        weekShootPresenter.getContent(mtype, pageNo, pageSize);
+//        pageNo++;
+//    }
+    @Override
+    public void loadData() {
         weekShootPresenter.getContent(mtype, pageNo, pageSize);
-        pageNo++;
     }
-
     @Override
     public void refresh(List<WeekAuctionList> data) {
         mAdapter.addNewDatas(data);//添加最新数据
@@ -173,7 +176,7 @@ public class WeekShootFragment extends ColpencilFragment implements IWeekShootVi
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         mAdapter.clear();//清空数据
         pageNo = 1;
-        loadData();
+        weekShootPresenter.getContent(mtype, pageNo, pageSize);
     }
 
     /**
@@ -185,7 +188,8 @@ public class WeekShootFragment extends ColpencilFragment implements IWeekShootVi
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         if (flag == true) {
-            loadData();
+            pageNo++;
+            weekShootPresenter.getContent(mtype, pageNo, pageSize);
         }
         return false;
     }

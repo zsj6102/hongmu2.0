@@ -1,6 +1,4 @@
 package com.colpencil.redwood.present.mine;
-
-import com.colpencil.redwood.bean.result.AllGoodsResult;
 import com.colpencil.redwood.bean.result.DynamicResult;
 import com.colpencil.redwood.model.DynamicModel;
 import com.colpencil.redwood.model.imples.IDynamicModel;
@@ -8,9 +6,7 @@ import com.colpencil.redwood.view.impl.IDynamicView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 
 import java.util.HashMap;
-
 import okhttp3.RequestBody;
-import rx.Observable;
 import rx.Observer;
 
 public class DynamicPresent extends ColpencilPresenter<IDynamicView> {

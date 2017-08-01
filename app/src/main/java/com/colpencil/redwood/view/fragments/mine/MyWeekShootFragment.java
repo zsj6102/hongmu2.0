@@ -136,7 +136,7 @@ public class MyWeekShootFragment extends ColpencilFragment implements IMyWeekSho
                     }
                     mAdapter.clear();//清空数据
                     pageNo = 1;
-                    loadData();
+                    presenter.getContent(pageNo, pageSize, mTypeFlag);
                 } else if (msg.getType() == 65) {
                     presenter.payKeyInfor(msg.getOrder_id());
                 }
@@ -146,7 +146,7 @@ public class MyWeekShootFragment extends ColpencilFragment implements IMyWeekSho
         if (mTypeFlag.equals("0")) {
             showLoading(Constants.progressName);
         }
-        loadData();
+
         mAdapter.setListener(new MyWeekShootAdapter.ItemClickListener() {
             @Override
             public void itemClick(int position) {
@@ -240,7 +240,7 @@ public class MyWeekShootFragment extends ColpencilFragment implements IMyWeekSho
         showLoading(Constants.progressName);
         mAdapter.clear();//清空数据
         pageNo = 1;
-        loadData();
+        presenter.getContent(pageNo, pageSize, mTypeFlag);
     }
 
     /**
@@ -253,7 +253,8 @@ public class MyWeekShootFragment extends ColpencilFragment implements IMyWeekSho
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         if (flag == true) {
             showLoading(Constants.progressName);
-            loadData();
+            pageNo++;
+            presenter.getContent(pageNo, pageSize, mTypeFlag);
         }
         return false;
     }
@@ -261,11 +262,15 @@ public class MyWeekShootFragment extends ColpencilFragment implements IMyWeekSho
     /**
      * 数据加载
      */
-    private void loadData() {
+//    private void loadData() {
+//        presenter.getContent(pageNo, pageSize, mTypeFlag);
+//        pageNo++;
+//    }
+    @Override
+    public void loadData() {
+        showLoading("");
         presenter.getContent(pageNo, pageSize, mTypeFlag);
-        pageNo++;
     }
-
     /**
      * 设置是否可进行上拉加载操作
      */

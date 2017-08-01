@@ -101,13 +101,13 @@ public class MyVoucherFragment extends ColpencilFragment implements IMyCouponsFr
                 if (msg.getType() == 33) {//重新请求数据
                     showLoading(Constants.progressName);
                     pageNo = 1;
-                    loadData();
+                    presenter.getContent(pageNo, pageSize);
                 }
             }
         };
         observable.subscribe(subscriber);
         showLoading(Constants.progressName);
-        loadData();
+
     }
 
     @Override
@@ -154,7 +154,7 @@ public class MyVoucherFragment extends ColpencilFragment implements IMyCouponsFr
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         pageNo = 1;
-        loadData();
+        presenter.getContent(pageNo, pageSize);
     }
 
     /**
@@ -167,7 +167,7 @@ public class MyVoucherFragment extends ColpencilFragment implements IMyCouponsFr
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         if (flag == true) {
             pageNo++;
-            loadData();
+            presenter.getContent(pageNo, pageSize);
         }
         return false;
     }
@@ -175,10 +175,13 @@ public class MyVoucherFragment extends ColpencilFragment implements IMyCouponsFr
     /**
      * 数据加载
      */
-    private void loadData() {
+//    private void loadData() {
+//        presenter.getContent(pageNo, pageSize);
+//    }
+    @Override
+    public void loadData() {
         presenter.getContent(pageNo, pageSize);
     }
-
     /**
      * 设置是否可进行上拉加载操作
      */

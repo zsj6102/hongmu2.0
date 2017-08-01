@@ -1,6 +1,5 @@
 package com.colpencil.redwood.model.imples;
 
-import com.colpencil.redwood.bean.result.AllGoodsResult;
 import com.colpencil.redwood.bean.result.DynamicResult;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilModel;
 

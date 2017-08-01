@@ -213,7 +213,7 @@ public class OrderCenterFragment extends ColpencilFragment implements IOrderCent
                     if (mTypeFlag.equals("0")) {
                         showLoading(Constants.progressName);
                     }
-                    loadData();
+                    presenter.getContent(pageNo, pageSize, Integer.valueOf(mTypeFlag));
                 } else if (msg.getType() == 51 && msg.getMsg().equals(mTypeFlag)) {//提醒卖家发货
                     presenter.remindDelivery(msg.getSn());
                     showLoading(Constants.progressName);
@@ -233,7 +233,7 @@ public class OrderCenterFragment extends ColpencilFragment implements IOrderCent
             }
         };
         observable.subscribe(subscriber);
-        loadData();
+
     }
 
     @Override
@@ -320,7 +320,7 @@ public class OrderCenterFragment extends ColpencilFragment implements IOrderCent
         showLoading(Constants.progressName);
         mAdapter.clear();//清空数据
         pageNo = 1;
-        loadData();
+        presenter.getContent(pageNo, pageSize, Integer.valueOf(mTypeFlag));
     }
 
     /**
@@ -333,7 +333,8 @@ public class OrderCenterFragment extends ColpencilFragment implements IOrderCent
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         if (flag == true) {
             showLoading(Constants.progressName);
-            loadData();
+            pageNo++;
+            presenter.getContent(pageNo, pageSize, Integer.valueOf(mTypeFlag));
         }
         return false;
     }
@@ -341,11 +342,14 @@ public class OrderCenterFragment extends ColpencilFragment implements IOrderCent
     /**
      * 数据加载
      */
-    private void loadData() {
+//    private void loadData() {
+//        presenter.getContent(pageNo, pageSize, Integer.valueOf(mTypeFlag));
+//        pageNo++;
+//    }
+    @Override
+    public void loadData() {
         presenter.getContent(pageNo, pageSize, Integer.valueOf(mTypeFlag));
-        pageNo++;
     }
-
     /**
      * 设置是否可进行上拉加载操作
      */

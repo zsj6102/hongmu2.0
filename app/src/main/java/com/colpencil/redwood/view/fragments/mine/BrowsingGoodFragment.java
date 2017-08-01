@@ -48,7 +48,7 @@ public class BrowsingGoodFragment extends ColpencilFragment implements IBrowsing
     /**
      * 分页请求页码
      */
-    private long pageNo = 0;
+    private long pageNo = 1;
     /**
      * 每页信息条数
      */
@@ -94,13 +94,12 @@ public class BrowsingGoodFragment extends ColpencilFragment implements IBrowsing
                     showLoading("正在删除该记录...");
                     presenter.delete(msg.getFoot_id());
                 } else if (msg.getType() == 40) {
-                    pageNo = 0;
+                    pageNo = 1;
                     presenter.getContent(pageNo, pageSize);
                 }
             }
         };
         observable.subscribe(subscriber);
-        loadData();
     }
 
     @Override
@@ -149,7 +148,7 @@ public class BrowsingGoodFragment extends ColpencilFragment implements IBrowsing
     public void delete(EntityResult<String> result) {
         hideLoading();
         if (result.getCode() == 0) {
-            pageNo = 0;
+            pageNo = 1;
             presenter.getContent(pageNo, pageSize);
         }
     }
@@ -158,10 +157,13 @@ public class BrowsingGoodFragment extends ColpencilFragment implements IBrowsing
     /**
      * 数据加载
      */
-    private void loadData() {
+//    private void loadData() {
+//        presenter.getContent(pageNo, pageSize);
+//    }
+    @Override
+    public void loadData() {
         presenter.getContent(pageNo, pageSize);
     }
-
     /**
      * 设置是否可进行上拉加载操作
      */
@@ -179,14 +181,15 @@ public class BrowsingGoodFragment extends ColpencilFragment implements IBrowsing
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        pageNo = 0;
-        loadData();
+        pageNo = 1;
+        presenter.getContent(pageNo, pageSize);
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         if (flag == true) {
-            loadData();
+            pageNo++;
+            presenter.getContent(pageNo, pageSize);
         }
         return false;
     }

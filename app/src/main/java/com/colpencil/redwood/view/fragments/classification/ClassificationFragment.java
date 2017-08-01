@@ -66,17 +66,16 @@ public class ClassificationFragment extends ColpencilFragment
 
     @Override
     protected void initViews(View view) {
-        initData();
+        listview_hSearch.setOnItemClickListener(this);
     }
 
     /**
      * 数据初始化
      */
-    private void initData() {
-        listview_hSearch.setOnItemClickListener(this);
+    @Override
+    public void loadData() {
         hSearchPresent.loadListViewData();
     }
-
     @Override
     public ColpencilPresenter getPresenter() {
         hSearchPresent = new HSearchPresent();

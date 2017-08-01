@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 import info.hoang8f.android.segmented.SegmentedGroup;
 
 @ActivityFragmentInject(
@@ -88,6 +89,10 @@ public class SpeedShotActivity extends ColpencilActivity{
 
     }
 
+    @OnClick(R.id.ll_back)
+    void back(){
+        finish();
+    }
     @Override
     public ColpencilPresenter getPresenter() {
         return null;

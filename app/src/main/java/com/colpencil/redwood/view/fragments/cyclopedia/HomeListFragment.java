@@ -74,7 +74,10 @@ public class HomeListFragment extends ColpencilFragment implements ICyclopediaTa
         fragment.setArguments(bundle);
         return fragment;
     }
-
+    @Override
+    public void loadData() {
+        presenter.loadTagItem("3", categoryVo.getCat_id(), page, pageSize, "");
+    }
     @Override
     protected void initViews(View view) {
         categoryVo = (CategoryVo) getArguments().getSerializable("categoryVo");
@@ -93,7 +96,7 @@ public class HomeListFragment extends ColpencilFragment implements ICyclopediaTa
                 getResources().getColor(R.color.white));
         initAdapter();
         initBus();
-        presenter.loadTagItem("3", categoryVo.getCat_id(), page, pageSize, "");
+
     }
 
     private void initAdapter() {

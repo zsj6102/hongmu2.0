@@ -206,11 +206,6 @@ public class MeFragment extends ColpencilFragment implements IMeFragmentView, Vi
     private void initData() {
         meAdapter = new MeFragmentAdapter(getActivity(), mdata, R.layout.item_mefragment_good);
         gridView_me.setAdapter(meAdapter);
-        if (TextStringUtils.isEmpty(SharedPreferencesUtil.getInstance(App.getInstance()).getString("token")) == false && SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") != 0) {
-            //获取用户个人信息
-            presenter.loadUserInfor();
-        }
-        presenter.loadGoodInfor(7, pageNo, pageSize);
         observable = RxBus.get().register("rxBusMsg", RxBusMsg.class);
         subscriber = new Subscriber<RxBusMsg>() {
             @Override
@@ -307,7 +302,15 @@ public class MeFragment extends ColpencilFragment implements IMeFragmentView, Vi
     public void bindView(Bundle savedInstanceState) {
 
     }
-
+    @Override
+    public void loadData() {
+        showLoading("");
+        if (TextStringUtils.isEmpty(SharedPreferencesUtil.getInstance(App.getInstance()).getString("token")) == false && SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") != 0) {
+            //获取用户个人信息
+            presenter.loadUserInfor();
+        }
+        presenter.loadGoodInfor(7, pageNo, pageSize);
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

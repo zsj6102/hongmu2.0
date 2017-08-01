@@ -25,7 +25,8 @@ public abstract class ColpencilFragment<T extends ColpencilPresenter<ColpencilBa
 
     protected ColpencilPresenter mPresenter;
     protected Context mContext;
-
+    protected boolean isInit = false;
+    protected boolean isVisible = false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         mPresenter = getPresenter();
@@ -79,6 +80,11 @@ public abstract class ColpencilFragment<T extends ColpencilPresenter<ColpencilBa
         View view = inflater.inflate(mContentViewId, container, false);
         ButterKnife.bind(this, view);
         initViews(view);
+        isInit = true;
+        /**
+         * 懒加载
+         */
+        lazyLoad();
         return view;
     }
 
@@ -100,7 +106,24 @@ public abstract class ColpencilFragment<T extends ColpencilPresenter<ColpencilBa
         bindView(savedInstanceState);
     }
 
-
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+         if(isVisibleToUser){
+             isVisible = true;
+             lazyLoad();
+         }else{
+             isVisible = false;
+         }
+    }
+    protected void lazyLoad(){
+        if(isInit && isVisible){
+            loadData();
+            isInit = false;
+            isVisible = false;
+        }
+    }
+     protected  abstract  void loadData();
     @Override
     public void onDestroy() {
         if (mPresenter != null && this instanceof ColpencilBaseView) {

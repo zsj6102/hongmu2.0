@@ -38,8 +38,7 @@ public class AllAuctionFragment extends ColpencilFragment  implements AllAuction
     private List<GoodsTypeInfo> goodsTypeInfoList=new ArrayList<>();
     @Override
     protected void initViews(View view) {
-        showLoading("加载中...");
-        allAuctionPresent.getGoodsType();
+
     }
 
     @Override
@@ -52,7 +51,11 @@ public class AllAuctionFragment extends ColpencilFragment  implements AllAuction
     public void bindView(Bundle savedInstanceState) {
 
     }
-
+    @Override
+    public void loadData() {
+        showLoading("加载中...");
+        allAuctionPresent.getGoodsType();
+    }
     @Override
     public void loadSuccess() {
 

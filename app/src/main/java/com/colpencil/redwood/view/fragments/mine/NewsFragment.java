@@ -148,7 +148,7 @@ public class NewsFragment extends ColpencilFragment implements ICyclopediaFragme
             }
         };
         observable.subscribe(subscriber);
-        loadData();
+
     }
 
 
@@ -182,7 +182,7 @@ public class NewsFragment extends ColpencilFragment implements ICyclopediaFragme
     public void removeAll(EntityResult<String> result) {
         if (result.getCode() == 0) {
             pageNo = 1;
-            loadData();
+            presenter.loadNews(pageNo, pageSize);
             RxBusMsg msg = new RxBusMsg();
             msg.setType(26);
             RxBus.get().post("rxBusMsg", msg);
@@ -215,11 +215,14 @@ public class NewsFragment extends ColpencilFragment implements ICyclopediaFragme
     /**
      * 数据加载
      */
-    private void loadData() {
+//    private void loadData() {
+//        presenter.loadNews(pageNo, pageSize);
+//        pageNo++;
+//    }
+    @Override
+    public void loadData() {
         presenter.loadNews(pageNo, pageSize);
-        pageNo++;
     }
-
     /**
      * 设置是否可进行上拉加载操作
      */
@@ -241,14 +244,15 @@ public class NewsFragment extends ColpencilFragment implements ICyclopediaFragme
         mdatas.clear();
         mAdapter.notifyDataSetChanged();
         pageNo = 1;
-        loadData();
+        presenter.loadNews(pageNo, pageSize);
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         if (flag == true) {
             showLoading(Constants.progressName);
-            loadData();
+            pageNo++;
+            presenter.loadNews(pageNo, pageSize);
         }
         return false;
     }

@@ -31,4 +31,6 @@ public class MessageFragment extends ColpencilFragment {
     public void bindView(Bundle savedInstanceState) {
 
     }
+    @Override
+    public void loadData() {}
 }

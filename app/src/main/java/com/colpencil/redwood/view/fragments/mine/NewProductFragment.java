@@ -12,9 +12,10 @@ import android.widget.ImageView;
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.bean.CategoryItem;
 import com.colpencil.redwood.bean.GoodsTypeInfo;
+
 import com.colpencil.redwood.bean.result.GoodsTypeResult;
 import com.colpencil.redwood.present.home.AllAuctionPresent;
-import com.colpencil.redwood.view.activity.home.CategoryActivity;
+
 import com.colpencil.redwood.view.fragments.home.FameItemFragment;
 import com.colpencil.redwood.view.impl.AllAuctionView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilFragment;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+
 
 @ActivityFragmentInject(
         contentViewId = R.layout.fragment_new_product
@@ -37,27 +39,32 @@ public class NewProductFragment extends ColpencilFragment implements AllAuctionV
     ViewPager vp;
     @Bind(R.id.iv_add)
     ImageView iv_add;
-
     private MyPageAdapter mAdapter;
-    private List<CategoryItem> categorys = new ArrayList<>();
     private AllAuctionPresent allAuctionPresent;
     private List<GoodsTypeInfo> goodsTypeInfoList=new ArrayList<>();
-
+    private int type;
+    public static NewProductFragment newInstance(int type){
+        NewProductFragment fragment = new NewProductFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", type);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
     @Override
     protected void initViews(View view) {
-        showLoading("加载中...");
-        allAuctionPresent.getGoodsType();
-
+        type = getArguments().getInt("type");
     }
-
-
 
     @Override
     public ColpencilPresenter getPresenter() {
         allAuctionPresent=new AllAuctionPresent();
         return allAuctionPresent;
     }
-
+    @Override
+    public void loadData() {
+        showLoading("加载中...");
+        allAuctionPresent.getGoodsType();
+    }
 
     @Override
     public void bindView(Bundle savedInstanceState) {
@@ -81,8 +88,10 @@ public class NewProductFragment extends ColpencilFragment implements AllAuctionV
         mAdapter = new MyPageAdapter(getChildFragmentManager());
         for (int i=0;i<goodsTypeInfoList.size();i++) {
             tabLayout.addTab(tabLayout.newTab().setText(goodsTypeInfoList.get(i).getName()));
-            mAdapter.addFragment(FameItemFragment.newInstance(goodsTypeInfoList.get(i).getCat_id()), goodsTypeInfoList.get(i).getName());
+
+            mAdapter.addFragment(FameItemFragment.newInstance(goodsTypeInfoList.get(i).getCat_id(),type), goodsTypeInfoList.get(i).getName());
         }
+
         vp.setAdapter(mAdapter);
         vp.setOffscreenPageLimit(3);
         tabLayout.setupWithViewPager(vp);

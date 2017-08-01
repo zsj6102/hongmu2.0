@@ -73,7 +73,7 @@ public class NewsListFragment extends ColpencilFragment implements ICycloListVie
         adapter = new ItemMyCycloAdapter(getActivity(), mdata, mType);
         listView.setLayoutManager(new LinearLayoutManager(getActivity()));
         listView.setAdapter(adapter);
-        presenter.loadNews(mType, page, pageSize);
+
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -105,7 +105,10 @@ public class NewsListFragment extends ColpencilFragment implements ICycloListVie
         });
         initBus();
     }
-
+    @Override
+    public void loadData() {
+        presenter.loadNews(mType, page, pageSize);
+    }
     @Override
     public ColpencilPresenter getPresenter() {
         presenter = new CycloListPresenter();

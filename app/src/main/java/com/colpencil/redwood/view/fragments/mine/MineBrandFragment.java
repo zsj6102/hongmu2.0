@@ -39,6 +39,8 @@ public class MineBrandFragment extends ColpencilFragment {
         return fragment;
     }
     @Override
+    public void loadData() {}
+    @Override
     protected void initViews(View view) {
         type = getArguments().getInt("type");
         vp.setOffscreenPageLimit(3);
@@ -53,11 +55,11 @@ public class MineBrandFragment extends ColpencilFragment {
         }
 
         if(type == 1){    //速拍 我的名片夹
-            madapter.addFragment(CardWallFragment.newInstance(12), "个人名片夹");
+            madapter.addFragment(CardWallFragment.newInstance(1), "个人名片夹");
         }else if(type == 2 ){// 品牌   我的名片夹
-            madapter.addFragment(CardWallFragment.newInstance(1), "店铺名片夹");
+            madapter.addFragment(CardWallFragment.newInstance(2), "店铺名片夹");
         }else if(type == 3){//名师 我的名片夹
-            madapter.addFragment(CardWallFragment.newInstance(22), "店铺名片夹");
+            madapter.addFragment(CardWallFragment.newInstance(3), "店铺名片夹");
         }
 
         if(type == 1){       //速拍我的收藏

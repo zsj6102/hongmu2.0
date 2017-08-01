@@ -24,7 +24,10 @@ import com.colpencil.redwood.view.activity.home.NewListActivity;
 import com.colpencil.redwood.view.activity.home.SignInActivity;
 import com.colpencil.redwood.view.activity.home.WeekShootActivity;
 import com.colpencil.redwood.view.activity.login.LoginActivity;
+import com.colpencil.redwood.view.activity.mine.AllSpecialActivity;
 import com.colpencil.redwood.view.activity.mine.BrandStoreActivity;
+import com.colpencil.redwood.view.activity.mine.FamousStoreActivity;
+import com.colpencil.redwood.view.activity.mine.HallofFameActivity;
 import com.colpencil.redwood.view.activity.mine.SpeedShotActivity;
 import com.colpencil.redwood.view.base.CommonViewHolder;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
@@ -32,6 +35,7 @@ import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPrefe
 import java.util.List;
 
 import static android.R.id.list;
+import static com.unionpay.mobile.android.global.a.A;
 
 public class GridAdapter extends BaseAdapter {
     public Context context;
@@ -144,6 +148,18 @@ public class GridAdapter extends BaseAdapter {
                 }else if(code.equals(StringConfig.MODULE_SUPAI)){ //速拍商区
                     Intent intent = new Intent();
                     intent.setClass(context, SpeedShotActivity.class);
+                    context.startActivity(intent);
+                }else if(code.equals(StringConfig.MODULE_MINSHI)){ //名师名匠
+                    Intent intent = new Intent();
+                    intent.setClass(context, FamousStoreActivity.class);
+                    context.startActivity(intent);
+                }else if(code.equals(StringConfig.MODULE_MINGRENTANG)){//名人堂
+                   Intent intent = new Intent();
+                    intent.setClass(context, HallofFameActivity.class);
+                    context.startActivity(intent);
+                }else if(code.equals(StringConfig.MODULE_ZHUANGCHANG)){//专场
+                    Intent intent = new Intent();
+                    intent.setClass(context, AllSpecialActivity.class);
                     context.startActivity(intent);
                 }
             }

@@ -39,10 +39,6 @@ public class CraftsmanCardFragment extends ColpencilFragment implements AllAucti
     private List<GoodsTypeInfo> goodsTypeInfoList=new ArrayList<>();
     @Override
     protected void initViews(View view) {
-        showLoading("加载中...");
-        allAuctionPresent.getGoodsType();
-
-
     }
 
 
@@ -74,7 +70,7 @@ public class CraftsmanCardFragment extends ColpencilFragment implements AllAucti
         adapter =new MyPageAdapter(getChildFragmentManager());
         for(int i=0;i<goodsTypeInfoList.size();i++){
             tabLayout.addTab(tabLayout.newTab().setText(goodsTypeInfoList.get(i).getName()));
-            adapter.addFragment(FameItemFragment.newInstance(goodsTypeInfoList.get(i).getCat_id()),goodsTypeInfoList.get(i).getName());
+            adapter.addFragment(FameItemFragment.newInstance(goodsTypeInfoList.get(i).getCat_id(),3),goodsTypeInfoList.get(i).getName());
         }
         viewpager.setAdapter(adapter);
         viewpager.setOffscreenPageLimit(3);
@@ -82,7 +78,11 @@ public class CraftsmanCardFragment extends ColpencilFragment implements AllAucti
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         hideLoading();
     }
-
+    @Override
+    public void loadData() {
+        showLoading("加载中...");
+        allAuctionPresent.getGoodsType();
+    }
     class MyPageAdapter extends FragmentPagerAdapter {
 
         private final List<Fragment> fragments = new ArrayList<>();

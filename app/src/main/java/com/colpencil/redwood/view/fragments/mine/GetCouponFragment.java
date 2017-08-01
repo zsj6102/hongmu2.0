@@ -69,8 +69,8 @@ public class GetCouponFragment extends ColpencilFragment implements IMyCouponsFr
                 presenter.change(coupon.getPoint(), coupon.getCpns_sn(), coupon.getCpns_id());
             }
         });
-        showLoading(Constants.progressName);
-        loadData();
+
+
     }
 
     @Override
@@ -112,10 +112,14 @@ public class GetCouponFragment extends ColpencilFragment implements IMyCouponsFr
     /**
      * 数据加载
      */
-    private void loadData() {
+//    private void loadData() {
+//        presenter.loadGetCoupon();
+//    }
+    @Override
+    public void loadData() {
+        showLoading(Constants.progressName);
         presenter.loadGetCoupon();
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();

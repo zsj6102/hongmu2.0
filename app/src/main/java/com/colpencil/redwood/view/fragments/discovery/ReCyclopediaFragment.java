@@ -98,9 +98,12 @@ public class ReCyclopediaFragment extends ColpencilFragment implements ICycloped
                 getResources().getColor(R.color.white));
         initAdapter();
         initBus();
+
+    }
+    @Override
+    public void loadData() {
         presenter.loadTagItem("3", categoryVo.getCat_id(), page, pageSize, "1");
     }
-
     private void initAdapter() {
         manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);

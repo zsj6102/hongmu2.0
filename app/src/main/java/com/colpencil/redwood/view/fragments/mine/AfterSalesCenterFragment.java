@@ -166,7 +166,7 @@ public class AfterSalesCenterFragment extends ColpencilFragment implements IAfte
                     showLoading(Constants.progressName);
                     mAdapter.clear();//清空数据
                     pageNo = 1;
-                    loadData();
+                    presenter.getContent(pageNo, pageSize, Integer.valueOf(mTypeFlag));
                 }
             }
         };
@@ -174,7 +174,7 @@ public class AfterSalesCenterFragment extends ColpencilFragment implements IAfte
         if (mTypeFlag.equals("1")) {
             showLoading(Constants.progressName);
         }
-        loadData();
+
     }
 
     @Override
@@ -256,7 +256,7 @@ public class AfterSalesCenterFragment extends ColpencilFragment implements IAfte
         showLoading(Constants.progressName);
         mAdapter.clear();//清空数据
         pageNo = 1;
-        loadData();
+        presenter.getContent(pageNo, pageSize, Integer.valueOf(mTypeFlag));
     }
 
     /**
@@ -269,7 +269,9 @@ public class AfterSalesCenterFragment extends ColpencilFragment implements IAfte
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         if (flag == true) {
             showLoading(Constants.progressName);
-            loadData();
+            pageNo++;
+            presenter.getContent(pageNo, pageSize, Integer.valueOf(mTypeFlag));
+
         }
         return false;
     }
@@ -277,11 +279,11 @@ public class AfterSalesCenterFragment extends ColpencilFragment implements IAfte
     /**
      * 数据加载
      */
-    private void loadData() {
+    @Override
+    public void loadData() {
+        pageNo = 1;
         presenter.getContent(pageNo, pageSize, Integer.valueOf(mTypeFlag));
-        pageNo++;
     }
-
     /**
      * 设置是否可进行上拉加载操作
      */

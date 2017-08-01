@@ -14,10 +14,12 @@ import rx.Observer;
 
 public class CardPresenter extends ColpencilPresenter<ICardView> {
     private ICardModel cardModel;
-    public CardPresenter(){
+
+    public CardPresenter() {
         cardModel = new CardModel();
     }
-    public void getCardStore(final int pageNo, HashMap<String,String> params){
+
+    public void getCardStore(final int pageNo, HashMap<String, String> params) {
         cardModel.loadCardStore(params);
         Observer<CardWallInfo> observer = new Observer<CardWallInfo>() {
             @Override
@@ -32,21 +34,27 @@ public class CardPresenter extends ColpencilPresenter<ICardView> {
 
             @Override
             public void onNext(CardWallInfo cardWallInfo) {
-                if(cardWallInfo.getCode()==0){
-                    if(pageNo==1){
-                        mView.refresh(cardWallInfo);
-                    }else{
-                        mView.loadMore(cardWallInfo);
+                //防止空指针
+                if(cardWallInfo!=null){
+                    if (cardWallInfo.getCode() == 0) {
+                        if (pageNo == 1) {
+                            mView.refresh(cardWallInfo);
+                        } else {
+                            mView.loadMore(cardWallInfo);
+                        }
+                    } else {
+                        if(cardWallInfo.getMessage()!=null){
+                            mView.loadFail(cardWallInfo.getMessage());
+                        }
                     }
-                }else{
-                    mView.loadFail(cardWallInfo.getMessage());
                 }
+
             }
         };
         cardModel.subCardStore(observer);
     }
 
-    public void getCardMine(final int pageNo,HashMap<String,String> params){
+    public void getCardMine(final int pageNo, HashMap<String, String> params) {
         cardModel.loadaCardMime(params);
         Observer<CardWallInfo> observer = new Observer<CardWallInfo>() {
             @Override
@@ -61,21 +69,26 @@ public class CardPresenter extends ColpencilPresenter<ICardView> {
 
             @Override
             public void onNext(CardWallInfo cardWallInfo) {
-                if(cardWallInfo.getCode()==0){
-                    if(pageNo==1){
-                        mView.refresh(cardWallInfo);
-                    }else{
-                        mView.loadMore(cardWallInfo);
+                if (cardWallInfo != null) {
+                    if (cardWallInfo.getCode() == 0) {
+                        if (pageNo == 1) {
+                            mView.refresh(cardWallInfo);
+                        } else {
+                            mView.loadMore(cardWallInfo);
+                        }
+                    } else {
+                        if (cardWallInfo.getMessage() != null) {
+                            mView.loadFail(cardWallInfo.getMessage());
+                        }
                     }
-                }else{
-                    mView.loadFail(cardWallInfo.getMessage());
                 }
+
             }
         };
         cardModel.subCardMine(observer);
     }
 
-    public void getCareReturn(HashMap<String,String> params){
+    public void getCareReturn(HashMap<String, String> params) {
         cardModel.getCareStatus(params);
         Observer<CareReturn> observer = new Observer<CareReturn>() {
             @Override
@@ -90,10 +103,45 @@ public class CardPresenter extends ColpencilPresenter<ICardView> {
 
             @Override
             public void onNext(CareReturn careReturn) {
-                 mView.operate(careReturn);
+                if (careReturn != null) {
+                    mView.operate(careReturn);
+                }
             }
         };
         cardModel.subCare(observer);
     }
 
+    public void getMRCard(final int pageNo, HashMap<String, String> params) {
+        cardModel.loadCardMR(params);
+        Observer<CardWallInfo> observer = new Observer<CardWallInfo>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(CardWallInfo cardWallInfo) {
+                if (cardWallInfo != null) {
+                    if (cardWallInfo.getCode() == 0) {
+                        if (pageNo == 1) {
+                            mView.refresh(cardWallInfo);
+                        } else {
+                            mView.loadMore(cardWallInfo);
+                        }
+                    } else {
+                        if (cardWallInfo.getMessage() != null) {
+                            mView.loadFail(cardWallInfo.getMessage());
+                        }
+                    }
+                }
+
+            }
+        };
+        cardModel.subCardMR(observer);
+    }
 }

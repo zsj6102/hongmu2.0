@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.bean.GoodsTypeInfo;
@@ -23,14 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 @ActivityFragmentInject(
-        contentViewId = R.layout.activity_allspecial
-)
+        contentViewId = R.layout.activity_allspecial)
 /**
  * 所有专场
- */
-public class AllSpecialActivity extends ColpencilActivity implements AllAuctionView {
+ */ public class AllSpecialActivity extends ColpencilActivity implements AllAuctionView {
 
     @Bind(R.id.tab_layout)
     TabLayout tabLayout;
@@ -38,22 +38,29 @@ public class AllSpecialActivity extends ColpencilActivity implements AllAuctionV
     ViewPager vp;
     @Bind(R.id.iv_add)
     ImageView iv_add;
-
+    @Bind(R.id.tv_main_title)
+    TextView tvmain;
     private AllSpecialActivity.MyPageAdapter mAdapter;
     private AllAuctionPresent allAuctionPresent;
-    private List<GoodsTypeInfo> goodsTypeInfoList=new ArrayList<>();
+    private List<GoodsTypeInfo> goodsTypeInfoList = new ArrayList<>();
 
 
     @Override
     protected void initViews(View view) {
         showLoading("加载中...");
+        tvmain.setText("专场");
         allAuctionPresent.getGoodsType();
     }
 
     @Override
     public ColpencilPresenter getPresenter() {
-        allAuctionPresent=new AllAuctionPresent();
+        allAuctionPresent = new AllAuctionPresent();
         return allAuctionPresent;
+    }
+
+    @OnClick(R.id.iv_back)
+    void back() {
+        finish();
     }
 
     @Override
@@ -73,10 +80,10 @@ public class AllSpecialActivity extends ColpencilActivity implements AllAuctionV
 
     @Override
     public void getGoodsType(GoodsTypeResult goodsTypeResult) {
-        List<GoodsTypeInfo> list=goodsTypeResult.getData();
+        List<GoodsTypeInfo> list = goodsTypeResult.getData();
         goodsTypeInfoList.addAll(list);
         mAdapter = new AllSpecialActivity.MyPageAdapter(getSupportFragmentManager());
-        for (int i=0;i<goodsTypeInfoList.size();i++) {
+        for (int i = 0; i < goodsTypeInfoList.size(); i++) {
             tabLayout.addTab(tabLayout.newTab().setText(goodsTypeInfoList.get(i).getName()));
             mAdapter.addFragment(AllSpecialItemFragment.newInstance(goodsTypeInfoList.get(i).getCat_id()), goodsTypeInfoList.get(i).getName());
         }

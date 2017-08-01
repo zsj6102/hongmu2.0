@@ -64,11 +64,14 @@ public class GoodRightFragment extends ColpencilFragment implements IGoodRightVi
                 getResources().getColor(R.color.white));
         adapter = new GoodCommentAdapter(getActivity(), list, R.layout.item_good_comment);
         listview.setAdapter(adapter);
+
+    }
+
+    @Override
+    public void loadData() {
         presenter.loadComment(goodsId + "", page, pageSize);
         presenter.loadCommentsNum(goodsId);
     }
-
-
     @Override
     public ColpencilPresenter getPresenter() {
         presenter = new GoodRightPresenter();

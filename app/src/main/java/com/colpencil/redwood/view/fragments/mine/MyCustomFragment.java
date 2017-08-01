@@ -151,12 +151,12 @@ public class MyCustomFragment extends ColpencilFragment implements IMyCustomFrag
                     if (mTypeFlag.equals("0")) {
                         showLoading(Constants.progressName);
                     }
-                    loadData();
+                    presenter.getContent(pageNo, pageSize, mTypeFlag);
                 }
             }
         };
         observable.subscribe(subscriber);
-        loadData();
+
         mAdapter.setListener(new MyCustomAdapter.OnMyItemClickListener() {
             @Override
             public void itemClick(int position) {
@@ -220,7 +220,7 @@ public class MyCustomFragment extends ColpencilFragment implements IMyCustomFrag
         showLoading(Constants.progressName);
         mAdapter.clear();//清空数据
         pageNo = 1;
-        loadData();
+        presenter.getContent(pageNo, pageSize, mTypeFlag);
     }
 
     /**
@@ -233,7 +233,8 @@ public class MyCustomFragment extends ColpencilFragment implements IMyCustomFrag
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         if (flag == true) {
             showLoading(Constants.progressName);
-            loadData();
+            pageNo++;
+            presenter.getContent(pageNo, pageSize, mTypeFlag);
         }
         return false;
     }
@@ -241,11 +242,14 @@ public class MyCustomFragment extends ColpencilFragment implements IMyCustomFrag
     /**
      * 数据加载
      */
-    private void loadData() {
+//    private void loadData() {
+//        presenter.getContent(pageNo, pageSize, mTypeFlag);
+//        pageNo++;
+//    }
+    @Override
+    public void loadData() {
         presenter.getContent(pageNo, pageSize, mTypeFlag);
-        pageNo++;
     }
-
     /**
      * 设置是否可进行上拉加载操作
      */

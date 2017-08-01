@@ -1239,6 +1239,9 @@ public interface RedWoodApi {
     Observable<AdResult> getAd(@Query("type") String type);
 
 
+    /**
+     * 专场名人列表
+     */
 
     /**
      * 获取品牌/名师名匠 /专场新品
@@ -1283,7 +1286,12 @@ public interface RedWoodApi {
     @Multipart
     @POST("mobileSpeSection!getSpecialDetail.do")
     Observable<SpecialIntroduceResult> getSpecialIntroduce(@Part("special_id") int special_id);
-
+    /**
+     * 名人堂
+     */
+    @POST("mobileSpeSection!findStoreRecommend.do")
+    @FormUrlEncoded
+    Observable<CardWallInfo> getMRCar(@FieldMap Map<String,String> map);
     /**
      *商家申请
      * @param params

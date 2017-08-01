@@ -53,9 +53,11 @@ public class GoodMiddleFragment extends ColpencilFragment implements IAnnounceVi
         bar.setVisibility(View.VISIBLE);
         goodsId = getArguments().getInt("goodsId");
         tool = new WebViewTool();
+    }
+    @Override
+    public void loadData() {
         presenter.loadGoodMiddle(goodsId);
     }
-
     @Override
     public ColpencilPresenter getPresenter() {
         presenter = new AnnouncePresenter();

@@ -149,6 +149,10 @@ public class CircleLeftItemFragment extends ColpencilFragment implements BGARefr
             }
         };
         observable.subscribe(subscriber);
+
+    }
+    @Override
+    public void loadData() {
         if (NetUtils.isConnected(getActivity())) {
             presenter.loadList(type, page, pageSize);
         } else {
@@ -157,7 +161,6 @@ public class CircleLeftItemFragment extends ColpencilFragment implements BGARefr
             }
         }
     }
-
     @Override
     public ColpencilPresenter getPresenter() {
         presenter = new CircleLeftItemPresenter();

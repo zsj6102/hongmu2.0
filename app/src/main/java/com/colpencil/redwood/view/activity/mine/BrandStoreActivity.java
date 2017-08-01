@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 import info.hoang8f.android.segmented.SegmentedGroup;
 
 @ActivityFragmentInject(
@@ -30,7 +31,7 @@ import info.hoang8f.android.segmented.SegmentedGroup;
 /**
  * 品牌商区
  */
-public class BrandStoreActivity extends ColpencilActivity implements OnClickListener, OnCheckedChangeListener {
+public class BrandStoreActivity extends ColpencilActivity implements   OnCheckedChangeListener {
 
     @Bind(R.id.viewpager)
     NoScrollViewPager viewpager;
@@ -65,13 +66,10 @@ public class BrandStoreActivity extends ColpencilActivity implements OnClickList
 
     }
 
-    @Override
-    public void onClick(View v) {
-         switch (v.getId()){
-             case R.id.iv_back:
-                 finish();
-                 break;
-         }
+
+    @OnClick(R.id.ll_back)
+    void back(){
+         finish();
     }
 
     @Override

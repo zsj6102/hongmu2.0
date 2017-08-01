@@ -131,8 +131,8 @@ public class GoodsFragment extends ColpencilFragment implements IGoodsView, BGAR
             }
         };
         observable.subscribe(subscriber);
-        showLoading(Constants.progressName);
-        loadData();
+
+
         base_swipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -174,7 +174,8 @@ public class GoodsFragment extends ColpencilFragment implements IGoodsView, BGAR
     public void deleteAll(EntityResult<String> result) {
         if (result.getCode() == 0) {
             pageNo = 1;
-            loadData();
+            showLoading(Constants.progressName);
+            presenter.getContent(pageNo, pageSize);
             RxBusMsg rxBusMsg = new RxBusMsg();
             rxBusMsg.setType(26);
             RxBus.get().post("rxBusMsg", rxBusMsg);
@@ -199,7 +200,8 @@ public class GoodsFragment extends ColpencilFragment implements IGoodsView, BGAR
         bga_basedelete.endRefreshing(0);
         hideLoading();
         pageNo = 1;
-        loadData();
+        showLoading(Constants.progressName);
+        presenter.getContent(pageNo, pageSize);
         ColpenciSnackbarUtil.downShowing(getActivity().findViewById(android.R.id.content), result.getMessage());
         if (result.getCode() == 3) {//未登录
             Intent intent = new Intent(getActivity(), LoginActivity.class);
@@ -211,11 +213,15 @@ public class GoodsFragment extends ColpencilFragment implements IGoodsView, BGAR
     /**
      * 数据加载
      */
-    private void loadData() {
+//    private void loadData() {
+//        presenter.getContent(pageNo, pageSize);
+//        pageNo++;
+//    }
+    @Override
+    public void loadData() {
+        showLoading(Constants.progressName);
         presenter.getContent(pageNo, pageSize);
-        pageNo++;
     }
-
     /**
      * 设置是否可进行上拉加载操作
      */
@@ -237,14 +243,15 @@ public class GoodsFragment extends ColpencilFragment implements IGoodsView, BGAR
         mdatas.clear();
         mAdapter.notifyDataSetChanged();
         pageNo = 1;
-        loadData();
+        presenter.getContent(pageNo, pageSize);
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         if (flag == true) {
+            pageNo++;
             showLoading(Constants.progressName);
-            loadData();
+            presenter.getContent(pageNo, pageSize);
         }
         return false;
     }

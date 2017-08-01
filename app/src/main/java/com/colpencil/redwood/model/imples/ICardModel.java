@@ -18,4 +18,8 @@ public interface ICardModel {
     void getCareStatus(HashMap<String,String> params);
 
     void subCare(Observer<CareReturn> observer);
+
+    void loadCardMR(HashMap<String,String> params);
+
+    void subCardMR(Observer<CardWallInfo> observer);
 }

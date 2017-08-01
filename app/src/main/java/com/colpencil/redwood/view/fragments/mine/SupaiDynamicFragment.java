@@ -60,11 +60,7 @@ public class SupaiDynamicFragment extends ColpencilFragment implements ISupaiDyn
         params.put("type","supai");
         params.put("page",page+"");
         params.put("pageSize",pageSize+"");
-        if(type == 1){
-            presenter.getSupaiDynamic(page,params);
-        }else{
-            presenter.getSupaiCol(page,params);
-        }
+
        refreshLayout.setDelegate(new BGARefreshLayout.BGARefreshLayoutDelegate() {
            @Override
            public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
@@ -96,7 +92,21 @@ public class SupaiDynamicFragment extends ColpencilFragment implements ISupaiDyn
         adapter = new ItemAllAuctionAdapter(getActivity(), allGoodsInfoList, R.layout.item_allauctionitem);
         supaiListview.setAdapter(adapter);
     }
-
+    @Override
+    public void loadData() {
+        showLoading("加载中...");
+        final   HashMap<String,String> params = new HashMap<String, String>();
+        params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+        params.put("member_id",SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id")+"");
+        params.put("type","supai");
+        params.put("page",page+"");
+        params.put("pageSize",pageSize+"");
+        if(type == 1){
+            presenter.getSupaiDynamic(page,params);
+        }else{
+            presenter.getSupaiCol(page,params);
+        }
+    }
     @Override
     public ColpencilPresenter getPresenter() {
         presenter = new SupaiPresenter();

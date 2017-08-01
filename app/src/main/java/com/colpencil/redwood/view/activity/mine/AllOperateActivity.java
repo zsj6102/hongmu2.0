@@ -21,8 +21,6 @@ import java.util.List;
 
 import butterknife.Bind;
 
-import static com.colpencil.redwood.R.id.speedtabLayout;
-import static com.colpencil.redwood.R.id.speedviewpager;
 
 @ActivityFragmentInject(
         contentViewId = R.layout.activity_alloperate

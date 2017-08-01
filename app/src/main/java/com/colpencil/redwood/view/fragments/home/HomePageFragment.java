@@ -107,7 +107,6 @@ public class HomePageFragment extends ColpencilFragment implements IHomePageView
     protected void initViews(View view) {
         initHeader();
         initHolder();
-        initData();
         initBus();
     }
 
@@ -122,7 +121,17 @@ public class HomePageFragment extends ColpencilFragment implements IHomePageView
                 getResources().getColor(R.color.material_drawer_primary),
                 getResources().getColor(R.color.white));
     }
-
+    @Override
+    public void loadData() {
+        presenter.loadRecommend();
+        presenter.loadGoods("20", page, pageSize);
+        if (SharedPreferencesUtil.getInstance(getActivity()).getBoolean(StringConfig.ISLOGIN, false)) {
+            presenter.loadMyTag();
+        } else {
+            presenter.loadTag(2);
+        }
+        showLoading("");
+    }
     private void initHolder() {
         topBanner = new TopBannerViewHolder(0, getActivity());
         funcHolder = new ViewpagerGridViewHolder(1, getActivity());
@@ -148,16 +157,7 @@ public class HomePageFragment extends ColpencilFragment implements IHomePageView
         listView.setAdapter(new NullAdapter(getActivity(), new ArrayList<String>(), R.layout.item_null));
     }
 
-    private void initData() {
-        presenter.loadRecommend();
-        presenter.loadGoods("20", page, pageSize);
-        if (SharedPreferencesUtil.getInstance(getActivity()).getBoolean(StringConfig.ISLOGIN, false)) {
-            presenter.loadMyTag();
-        } else {
-            presenter.loadTag(2);
-        }
-        showLoading("");
-    }
+
 
     private void initBus() {
         observable = RxBus.get().register("rxBusMsg", RxBusMsg.class);

@@ -5,11 +5,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.bean.AllGoodsInfo;
 import com.colpencil.redwood.bean.DynamicInfo;
+import com.colpencil.redwood.bean.Info.RxClickMsg;
 import com.colpencil.redwood.bean.result.AllGoodsResult;
 import com.colpencil.redwood.present.home.AllAuctionItemPresent;
 import com.colpencil.redwood.view.adapters.ItemAllAuctionAdapter;
@@ -17,6 +20,7 @@ import com.colpencil.redwood.view.impl.AllAuctionItemView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilFragment;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
+import com.property.colpencil.colpencilandroidlibrary.Function.Rx.RxBus;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGANormalRefreshViewHolder;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout;
@@ -27,9 +31,14 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
+import github.chenupt.dragtoplayout.AttachUtil;
 import okhttp3.RequestBody;
+import rx.Observable;
+import rx.Subscriber;
 
 import static com.colpencil.redwood.view.activity.HomeActivity.result;
+import static com.unionpay.mobile.android.global.a.A;
 
 @ActivityFragmentInject(
         contentViewId = R.layout.fragment_allauctionitem)
@@ -46,7 +55,7 @@ public class AllAuctionItemFragment extends ColpencilFragment implements AllAuct
     private int page = 1;
     private int pageSize = 10;
     private int type;
-
+    private Observable<RxClickMsg> clickMsgObservable;
     public static AllAuctionItemFragment newInstance(int type) {
         Bundle bundle = new Bundle();
         AllAuctionItemFragment fragment = new AllAuctionItemFragment();
@@ -100,6 +109,46 @@ public class AllAuctionItemFragment extends ColpencilFragment implements AllAuct
                 getResources().getColor(R.color.white));
         adapter = new ItemAllAuctionAdapter(getActivity(), allGoodsInfoList, R.layout.item_allauctionitem);
         allauctionitem.setAdapter(adapter);
+        allauctionitem.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+                EventBus.getDefault().post(AttachUtil.isAdapterViewAttach(absListView));
+            }
+        });
+
+        initBus();
+    }
+    private void initBus() {
+        clickMsgObservable = RxBus.get().register("totop", RxClickMsg.class);
+        Subscriber<RxClickMsg> observer = new Subscriber<RxClickMsg>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(RxClickMsg rxClickMsg) {
+                if (rxClickMsg.getType() == 100) {
+
+                    allauctionitem.setSelection(0);
+                }
+            }
+
+        };
+        clickMsgObservable.subscribe(observer);
+    }
+    @Override
+    public void loadData() {
         HashMap<String, RequestBody> strparams = new HashMap<>();
         strparams.put("type", RequestBody.create(null, "supai"));
         strparams.put("token", RequestBody.create(null, SharedPreferencesUtil.getInstance(getActivity()).getString("token")));
@@ -111,9 +160,7 @@ public class AllAuctionItemFragment extends ColpencilFragment implements AllAuct
         Log.d("pretty", type + "");
         showLoading("加载中...");
         allAuctionItemPresent.getAllGoods(page,strparams, intparams);
-
     }
-
     @Override
     public ColpencilPresenter getPresenter() {
         allAuctionItemPresent = new AllAuctionItemPresent();
@@ -132,7 +179,7 @@ public class AllAuctionItemFragment extends ColpencilFragment implements AllAuct
 
     @Override
     public void loadFail(String message) {
-
+        Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
     }
 
     @Override

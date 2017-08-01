@@ -73,7 +73,7 @@ public class CycloListFragment extends ColpencilFragment implements ICycloListVi
         adapter = new ItemMyCycloAdapter(getActivity(), mdata, mType);
         listView.setLayoutManager(new LinearLayoutManager(getActivity()));
         listView.setAdapter(adapter);
-        presenter.loadList(mType, page, pageSize);
+
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -105,7 +105,10 @@ public class CycloListFragment extends ColpencilFragment implements ICycloListVi
         });
         initBus();
     }
-
+    @Override
+    public void loadData() {
+        presenter.loadList(mType, page, pageSize);
+    }
     private void initBus() {
         observable = RxBus.get().register("refreshmsg", RefreshMsg.class);
         subscriber = new Subscriber<RefreshMsg>() {

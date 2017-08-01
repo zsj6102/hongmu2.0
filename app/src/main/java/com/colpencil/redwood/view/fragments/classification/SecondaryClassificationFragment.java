@@ -55,7 +55,10 @@ public class SecondaryClassificationFragment extends ColpencilFragment {
         fragment.setArguments(bundle);
         return fragment;
     }
+    @Override
+    public void loadData() {
 
+    }
     @Override
     protected void initViews(View view) {
         initData();
