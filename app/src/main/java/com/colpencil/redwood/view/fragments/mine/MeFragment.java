@@ -26,6 +26,7 @@ import com.colpencil.redwood.function.tools.ImageLoaderUtils;
 import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
 import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.mine.MeFragmentPresenter;
+import com.colpencil.redwood.view.activity.ShoppingCartActivitys.NewShopingCartActivity;
 import com.colpencil.redwood.view.activity.ShoppingCartActivitys.ShoppingCartActivity;
 import com.colpencil.redwood.view.activity.home.GoodDetailActivity;
 import com.colpencil.redwood.view.activity.home.HelpActivity;
@@ -401,7 +402,7 @@ public class MeFragment extends ColpencilFragment implements IMeFragmentView, Vi
                 if (!loginState) {
                     ColpenciSnackbarUtil.downShowing(getActivity().findViewById(android.R.id.content), "未登录");
                 } else {
-                    Intent intent = new Intent(getActivity(), ShoppingCartActivity.class);
+                    Intent intent = new Intent(getActivity(), NewShopingCartActivity.class);
                     startActivity(intent);
                 }
                 break;

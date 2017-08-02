@@ -49,8 +49,6 @@ public class SpeedFragemnt extends ColpencilFragment implements SpeedView {
 
     @Override
     protected void initViews(View view) {
-        showLoading("加载中...");
-        speedPresent.getAd("supai");
         dragLayout.setOverDrag(false);
         adapter=new MyPageAdapter(getChildFragmentManager());
         adapter.addFragment(new AllAuctionFragment(),"所有拍品");
@@ -102,12 +100,12 @@ public class SpeedFragemnt extends ColpencilFragment implements SpeedView {
     }
     @Override
     public void loadSuccess() {
-
+      hideLoading();
     }
 
     @Override
     public void loadFail(String message) {
-
+        hideLoading();
     }
 
     @Override

@@ -3,8 +3,12 @@ package com.colpencil.redwood.model.imples;
 import com.colpencil.redwood.bean.CartItem;
 import com.colpencil.redwood.bean.Result;
 import com.colpencil.redwood.bean.ShoppingCartReturn;
+import com.colpencil.redwood.bean.result.AllCartList;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilModel;
 
+import java.util.Map;
+
+import rx.Observable;
 import rx.Observer;
 
 /**
@@ -29,4 +33,8 @@ public interface IShoppingCartModel extends ColpencilModel {
 
     //注册观察者
     void sub(Observer<ShoppingCartReturn> subscriber);
+
+    void loadNewCartData(Map<String,String> params);
+
+    void subnew(Observer<AllCartList>  subcriber);
 }

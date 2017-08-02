@@ -29,6 +29,7 @@ import com.colpencil.redwood.function.utils.ListUtils;
 import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
 import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.cyclopedia.TagPresenter;
+import com.colpencil.redwood.view.activity.ShoppingCartActivitys.NewShopingCartActivity;
 import com.colpencil.redwood.view.activity.ShoppingCartActivitys.ShoppingCartActivity;
 import com.colpencil.redwood.view.activity.cyclopedia.PostCyclopediaActivity;
 import com.colpencil.redwood.view.activity.home.CategoryActivity;
@@ -197,7 +198,7 @@ public class CyclopediaFragment extends ColpencilFragment implements ITagView {
     @OnClick(R.id.search_header_car)
     void onClick(){
         if(SharedPreferencesUtil.getInstance(getActivity()).getBoolean(StringConfig.ISLOGIN, false)){
-            Intent intent = new Intent(getActivity(), ShoppingCartActivity.class);
+            Intent intent = new Intent(getActivity(), NewShopingCartActivity.class);
             startActivity(intent);
         } else {
             showDialog();

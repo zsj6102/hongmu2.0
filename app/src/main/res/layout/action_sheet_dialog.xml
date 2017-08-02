@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_44dp"
+            android:background="@color/main_brown"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dialog_title"
+                android:layout_width="@dimen/width_0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_15dp"
+                android:layout_weight="1"
+                android:text="请选择配送方式"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_18sp"/>
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/post_dialog_listview"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:dividerHeight="@dimen/width_0dp"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_44dp"
+            android:background="@color/main_brown"
+            android:gravity="center"
+            android:text="关闭"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_18sp"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
+

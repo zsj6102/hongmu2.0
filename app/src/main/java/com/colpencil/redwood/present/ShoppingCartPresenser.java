@@ -5,10 +5,13 @@ import android.util.Log;
 import com.colpencil.redwood.bean.CartItem;
 import com.colpencil.redwood.bean.Result;
 import com.colpencil.redwood.bean.ShoppingCartReturn;
+import com.colpencil.redwood.bean.result.AllCartList;
 import com.colpencil.redwood.model.ShoppingCartModel;
 import com.colpencil.redwood.model.imples.IShoppingCartModel;
 import com.colpencil.redwood.view.impl.IShoppingCartView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
+
+import java.util.Map;
 
 import rx.Observer;
 
@@ -23,6 +26,36 @@ public class ShoppingCartPresenser extends ColpencilPresenter<IShoppingCartView>
 
     public ShoppingCartPresenser() {
         shoppingCartModel = new ShoppingCartModel();
+    }
+
+    /**
+     * 二期请求购物车新接口
+     */
+    public void loadAllcartList(Map<String, String> params) {
+        shoppingCartModel.loadNewCartData(params);
+        Observer<AllCartList> observer = new Observer<AllCartList>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(AllCartList allCartList) {
+                if (allCartList != null) {
+                    if (allCartList.getCode() == 0) {
+                        mView.loadNewCartData(allCartList);
+                    } else {
+                        mView.loadFail(String.valueOf(allCartList.getCode()), allCartList.getMessage());
+                    }
+                }
+            }
+        };
+        shoppingCartModel.subnew(observer);
     }
 
     /**

@@ -16,6 +16,8 @@ import com.colpencil.redwood.configs.StringConfig;
 import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
 import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.cyclopedia.HSearchPresent;
+import com.colpencil.redwood.view.activity.ShoppingCartActivitys.NewShopingCartActivity;
+
 import com.colpencil.redwood.view.activity.ShoppingCartActivitys.ShoppingCartActivity;
 import com.colpencil.redwood.view.activity.classification.SearchGoodActivity;
 import com.colpencil.redwood.view.activity.login.LoginActivity;
@@ -136,7 +138,7 @@ public class ClassificationFragment extends ColpencilFragment
     @OnClick(R.id.iv_gotoShoppingCart)
     void shopOnClick() {
         if (SharedPreferencesUtil.getInstance(getActivity()).getBoolean(StringConfig.ISLOGIN, false)) {
-            Intent intent = new Intent(getActivity(), ShoppingCartActivity.class);
+            Intent intent = new Intent(getActivity(), NewShopingCartActivity.class);
             startActivity(intent);
         } else {
             showDialog();

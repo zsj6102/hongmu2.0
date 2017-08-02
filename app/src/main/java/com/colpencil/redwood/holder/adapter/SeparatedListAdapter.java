@@ -131,7 +131,7 @@ public class SeparatedListAdapter extends BaseAdapter {
         return 2;
     }
 
-    private class ViewHolder {
+      class ViewHolder {
         ImageView iv_special;
     }
 

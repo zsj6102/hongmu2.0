@@ -32,6 +32,7 @@ import com.colpencil.redwood.holder.home.TopBannerViewHolder;
 import com.colpencil.redwood.holder.home.ViewpagerGridViewHolder;
 import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.home.HomePresenter;
+import com.colpencil.redwood.view.activity.ShoppingCartActivitys.NewShopingCartActivity;
 import com.colpencil.redwood.view.activity.ShoppingCartActivitys.ShoppingCartActivity;
 import com.colpencil.redwood.view.activity.home.CategoryActivity;
 import com.colpencil.redwood.view.activity.home.CodeActivity;
@@ -196,7 +197,7 @@ public class HomePageFragment extends ColpencilFragment implements IHomePageView
     @OnClick(R.id.search_header_car)
     void onClick() {
         if (SharedPreferencesUtil.getInstance(getActivity()).getBoolean(StringConfig.ISLOGIN, false)) {
-            Intent intent = new Intent(getActivity(), ShoppingCartActivity.class);
+            Intent intent = new Intent(getActivity(), NewShopingCartActivity.class);
             startActivity(intent);
         } else {
             final CommonDialog dialog = new CommonDialog(getActivity(), "你还没登录喔!", "去登录", "取消");

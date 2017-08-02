@@ -7,12 +7,14 @@ import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.CartItem;
 import com.colpencil.redwood.bean.Result;
 import com.colpencil.redwood.bean.ShoppingCartReturn;
+import com.colpencil.redwood.bean.result.AllCartList;
 import com.colpencil.redwood.function.config.UrlConfig;
 import com.colpencil.redwood.model.imples.IShoppingCartModel;
 import com.property.colpencil.colpencilandroidlibrary.Function.MianCore.RetrofitManager;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import rx.Observable;
 import rx.Observer;
@@ -28,10 +30,36 @@ import rx.schedulers.Schedulers;
  */
 public class ShoppingCartModel implements IShoppingCartModel {
 
+
+
     private Observable<ShoppingCartReturn> shoppingCartReturnObservable;
 
     private Observable<Result> resultObservable;
 
+    private Observable<AllCartList> newObservable;
+
+    /**
+     * 二期获取新的购物车信息接口
+     */
+    @Override
+    public void loadNewCartData(Map<String,String> params) {
+        newObservable = RetrofitManager
+                .getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class).getAllCartList(params)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<AllCartList, AllCartList>() {
+                    @Override
+                    public AllCartList call(AllCartList allCartList) {
+                        return allCartList;
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void subnew(Observer<AllCartList> subcriber) {
+        newObservable.subscribe(subcriber);
+    }
     /**
      * 获取购车信息
      */

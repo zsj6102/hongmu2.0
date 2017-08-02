@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.bean.CartItem;
 import com.colpencil.redwood.bean.RxBusMsg;
+import com.colpencil.redwood.bean.result.AllCartList;
 import com.colpencil.redwood.configs.Constants;
 import com.colpencil.redwood.configs.StringConfig;
 import com.colpencil.redwood.function.utils.ListUtils;
@@ -52,6 +53,10 @@ import rx.Subscriber;
         contentViewId = R.layout.activity_shoppingcart
 )
 public class ShoppingCartActivity extends ColpencilActivity implements IShoppingCartView {
+    @Override
+    public void loadNewCartData(AllCartList data) {
+
+    }
 
     @Bind(R.id.tv_main_title)
     TextView tv_title;

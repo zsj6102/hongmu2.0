@@ -67,6 +67,7 @@ public abstract class ColpencilFragment<T extends ColpencilPresenter<ColpencilBa
         return mRootView;
     }
 
+
     @Override
     public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (getClass().isAnnotationPresent(ActivityFragmentInject.class)) {

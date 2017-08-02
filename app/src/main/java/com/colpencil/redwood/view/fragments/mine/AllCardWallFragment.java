@@ -45,19 +45,17 @@ public class AllCardWallFragment  extends ColpencilFragment implements AllAuctio
     }
     @Override
     public void loadSuccess() {
-
+        hideLoading();
     }
 
     @Override
     protected void initViews(View view) {
-        showLoading("加载中...");
         type = getArguments().getInt("type");
-
     }
 
     @Override
     public void loadFail(String message) {
-
+       hideLoading();
     }
 
     @Override
@@ -77,6 +75,7 @@ public class AllCardWallFragment  extends ColpencilFragment implements AllAuctio
     }
     @Override
     public void loadData() {
+        showLoading("加载中...");
         allAuctionPresent.getGoodsType();
     }
     @Override

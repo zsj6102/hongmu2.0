@@ -98,12 +98,12 @@ public class BrandMerchantFragment extends ColpencilFragment implements SpeedVie
 
     @Override
     public void loadSuccess() {
-
+       hideLoading();
     }
 
     @Override
     public void loadFail(String message) {
-
+        hideLoading();
     }
     @Override
     public void loadData() {

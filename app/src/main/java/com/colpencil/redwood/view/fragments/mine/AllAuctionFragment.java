@@ -58,12 +58,12 @@ public class AllAuctionFragment extends ColpencilFragment  implements AllAuction
     }
     @Override
     public void loadSuccess() {
-
+        hideLoading();
     }
 
     @Override
     public void loadFail(String message) {
-
+        hideLoading();
     }
 
     @Override

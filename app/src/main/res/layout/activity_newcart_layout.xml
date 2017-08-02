@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/main_background"
+              android:orientation="vertical">
+
+    <include layout="@layout/base_header" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/ll_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="45.5dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="119dp"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/cart_empty" />
+
+            <TextView
+                android:id="@+id/tv_empty"
+                android:layout_width="@dimen/width_150dp"
+                android:layout_height="@dimen/height_44dp"
+                android:background="@drawable/red_solid_shape"
+                android:gravity="center"
+                android:text="去首页逛逛"
+                android:textColor="@color/white"
+                android:textSize="@dimen/main_title_size" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout_have"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <ListView
+                android:id="@+id/listView_shoppingCart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="45.5dp"
+                android:background="@color/main_background"
+                android:descendantFocusability="blocksDescendants"
+                android:scrollbars="none" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45.5dp"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/line_color_first" />
+
+                <LinearLayout
+                    android:id="@+id/shoppingCart_delete"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:id="@+id/shoppingCart_deleteSelectAll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/paddingLeft">
+
+                        <ImageView
+                            android:id="@+id/shoppingCart_deleteImg"
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/select_no" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="全选"
+                            android:textColor="@color/text_color_first"
+                            android:textSize="@dimen/main_text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:paddingRight="15dp">
+
+                        <TextView
+                            android:id="@+id/shoppingCart_deleteSumbit"
+                            android:layout_width="80dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/gary_solid_shape"
+                            android:gravity="center"
+                            android:text="删除"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/main_text_size" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/shoppingCart_buy"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/shoppingCart_buySelectAll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/paddingLeft">
+
+                        <ImageView
+                            android:id="@+id/shoppingCart_buyImg"
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/select_no" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="全选"
+                            android:textColor="@color/text_color_first"
+                            android:textSize="@dimen/main_text_size" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="总计："
+                        android:textColor="@color/text_color_first"
+                        android:textSize="@dimen/main_text_size" />
+
+                    <TextView
+                        android:id="@+id/shoppingCart_buyPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="¥0.00"
+                        android:textColor="@color/main_red"
+                        android:textSize="@dimen/main_text_size" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:paddingRight="15dp">
+
+                        <TextView
+                            android:id="@+id/shoppingCart_buySumbit"
+                            android:layout_width="70dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/gary_solid_shape"
+                            android:gravity="center"
+                            android:text="结算"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/main_text_size" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

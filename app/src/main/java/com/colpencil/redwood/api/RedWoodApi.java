@@ -47,6 +47,7 @@ import com.colpencil.redwood.bean.SizeColorInfo;
 import com.colpencil.redwood.bean.SortOptionsReturn;
 import com.colpencil.redwood.bean.WeekPersonList;
 import com.colpencil.redwood.bean.result.AdResult;
+import com.colpencil.redwood.bean.result.AllCartList;
 import com.colpencil.redwood.bean.result.AllGoodsResult;
 import com.colpencil.redwood.bean.result.AllSpecialResult;
 import com.colpencil.redwood.bean.result.AnnounceResult;
@@ -79,6 +80,7 @@ import com.colpencil.redwood.bean.result.StatisticResult;
 import com.colpencil.redwood.bean.result.WeekAuctionListResult;
 import com.colpencil.redwood.bean.result.WeekAuctionTagResult;
 import com.colpencil.redwood.bean.result.WeekShootDetailResult;
+import com.colpencil.redwood.bean.result.ZcAllCardInfo;
 
 import java.util.HashMap;
 import java.util.List;
@@ -659,6 +661,12 @@ public interface RedWoodApi {
     @GET("mobileCart!list.do")
     Observable<ShoppingCartReturn> shoppingCartInfor(@Query("memberId") int memberId, @Query("token") String token);
 
+    /**
+     * 二期购物车列表
+     */
+    @POST("mobileCart!cartList.do")
+    @FormUrlEncoded
+    Observable<AllCartList> getAllCartList(@FieldMap Map<String,String> params);
     /**
      * 修改购物车信息
      */
@@ -1292,6 +1300,14 @@ public interface RedWoodApi {
     @POST("mobileSpeSection!findStoreRecommend.do")
     @FormUrlEncoded
     Observable<CardWallInfo> getMRCar(@FieldMap Map<String,String> map);
+
+    /**
+     * 专场驻场名人
+     */
+    @POST("mobileSpeSection!findStoreBySpecial.do")
+    @FormUrlEncoded
+    Observable<ZcAllCardInfo> getAllFamous(@FieldMap Map<String,String> map);
+
     /**
      *商家申请
      * @param params

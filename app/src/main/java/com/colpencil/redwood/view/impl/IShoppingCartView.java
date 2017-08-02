@@ -1,6 +1,7 @@
 package com.colpencil.redwood.view.impl;
 
 import com.colpencil.redwood.bean.CartItem;
+import com.colpencil.redwood.bean.result.AllCartList;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilBaseView;
 
 import java.util.List;
@@ -22,4 +23,8 @@ public interface IShoppingCartView extends ColpencilBaseView {
     void deletefail(String code, String msg);
 
     void loadFail(String code, String msg);
+
+    void loadNewCartData(AllCartList data);
+
+
 }

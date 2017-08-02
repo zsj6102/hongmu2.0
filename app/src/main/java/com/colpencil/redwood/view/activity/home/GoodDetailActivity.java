@@ -35,6 +35,7 @@ import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
 import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.GoodDetailPresenter;
 import com.colpencil.redwood.view.activity.HomeActivity;
+import com.colpencil.redwood.view.activity.ShoppingCartActivitys.NewShopingCartActivity;
 import com.colpencil.redwood.view.activity.ShoppingCartActivitys.PaymentActivity;
 import com.colpencil.redwood.view.activity.ShoppingCartActivitys.ShoppingCartActivity;
 import com.colpencil.redwood.view.activity.login.LoginActivity;
@@ -187,7 +188,7 @@ public class GoodDetailActivity extends ColpencilActivity implements IGoodDetail
     @OnClick(R.id.iv_car)
     void toCarClick() {
         if (SharedPreferencesUtil.getInstance(this).getBoolean(StringConfig.ISLOGIN, false)) {
-            Intent intent = new Intent(this, ShoppingCartActivity.class);
+            Intent intent = new Intent(this, NewShopingCartActivity.class);
             startActivity(intent);
         } else {
             type = 3;

@@ -71,7 +71,6 @@ public class AllSpecialItemFragment extends ColpencilFragment implements AllSpec
             @Override
             public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
                 pageNo = 1;
-                showLoading("加载中...");
                 allSpecialItemPresent.getSpecial(pageNo, strparams, intparams);
             }
 
@@ -79,7 +78,6 @@ public class AllSpecialItemFragment extends ColpencilFragment implements AllSpec
             public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
                 if (isRefresh) {
                     pageNo++;
-                    showLoading("加载中...");
                     allSpecialItemPresent.getSpecial(pageNo, strparams, intparams);
                 }
                 return false;
@@ -197,12 +195,12 @@ public class AllSpecialItemFragment extends ColpencilFragment implements AllSpec
 
     @Override
     public void loadSuccess() {
-
+      hideLoading();
     }
 
     @Override
     public void loadFail(String message) {
-
+        hideLoading();
     }
 
 }

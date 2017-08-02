@@ -83,12 +83,11 @@ public class CardWallItemFragment extends ColpencilFragment implements ICardView
             params.put("store_type", origion + "");
 
         }
-        showLoading("加载中...");
         refreshLayout.setDelegate(new BGARefreshLayout.BGARefreshLayoutDelegate() {
             @Override
             public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
                 pageNo = 1;
-                showLoading("加载中...");
+
                 if(type!=4){
                     presenter.getCardStore(pageNo, params);
                 }else{
@@ -101,7 +100,6 @@ public class CardWallItemFragment extends ColpencilFragment implements ICardView
             public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
                 if (isRefresh) {
                     pageNo++;
-                    showLoading("加载中...");
                     if(type!=4){
                         presenter.getCardStore(pageNo, params);
                     }else{
@@ -231,7 +229,7 @@ public class CardWallItemFragment extends ColpencilFragment implements ICardView
 
     @Override
     public void loadSuccess() {
-
+        hideLoading();
     }
 
     @Override

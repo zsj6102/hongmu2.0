@@ -12,26 +12,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.colpencil.redwood.R;
-import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.base.PhotoBaseActivity;
 import com.colpencil.redwood.bean.AddresBean;
-import com.colpencil.redwood.bean.ApplyStatusReturn;
 import com.colpencil.redwood.bean.CatBean;
 import com.colpencil.redwood.bean.CatListBean;
 import com.colpencil.redwood.bean.FamousApplyInfo;
 import com.colpencil.redwood.bean.PostTypeInfo;
-import com.colpencil.redwood.bean.result.ApplyReturn;
 import com.colpencil.redwood.configs.Constants;
 import com.colpencil.redwood.function.utils.ListUtils;
 import com.colpencil.redwood.function.widgets.dialogs.CategoryDialog;
 import com.colpencil.redwood.function.widgets.dialogs.SelectPlaceDialog;
 import com.colpencil.redwood.present.mine.ApplyPresenter;
-import com.colpencil.redwood.services.CyclopediaService;
 import com.colpencil.redwood.services.FamousApplyService;
-import com.colpencil.redwood.view.activity.home.PostNewsActivity;
 import com.colpencil.redwood.view.adapters.ImageSelectAdapter;
 import com.colpencil.redwood.view.impl.ApplayView;
 import com.jph.takephoto.model.TResult;
@@ -41,25 +35,18 @@ import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.ui.ImagePreviewDelActivity;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
-import com.property.colpencil.colpencilandroidlibrary.Function.Tools.OkhttpUtils;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.TextStringUtils;
-
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.shaohui.advancedluban.Luban;
 import me.shaohui.advancedluban.OnMultiCompressListener;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 
 import static com.umeng.socialize.utils.DeviceConfig.context;
-import static com.unionpay.mobile.android.global.a.B;
-import static com.unionpay.mobile.android.global.a.F;
+
 
 
 @ActivityFragmentInject(

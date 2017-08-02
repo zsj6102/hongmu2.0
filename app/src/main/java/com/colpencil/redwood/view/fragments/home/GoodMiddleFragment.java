@@ -1,7 +1,10 @@
 package com.colpencil.redwood.view.fragments.home;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -16,6 +19,7 @@ import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.Colpenci
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * @author 陈宝
@@ -26,10 +30,11 @@ import butterknife.Bind;
 @ActivityFragmentInject(contentViewId = R.layout.activity_webview)
 public class GoodMiddleFragment extends ColpencilFragment implements IAnnounceView {
 
+    @Bind(R.id.common_webview)
+    WebView webView;
     private int goodsId;
     private AnnouncePresenter presenter;
-    @Bind(R.id.common_webview)
-    com.tencent.smtt.sdk.WebView webView;
+
     @Bind(R.id.common_progress)
     ProgressBar bar;
     @Bind(R.id.base_header_layout)
@@ -54,10 +59,12 @@ public class GoodMiddleFragment extends ColpencilFragment implements IAnnounceVi
         goodsId = getArguments().getInt("goodsId");
         tool = new WebViewTool();
     }
+
     @Override
     public void loadData() {
         presenter.loadGoodMiddle(goodsId);
     }
+
     @Override
     public ColpencilPresenter getPresenter() {
         presenter = new AnnouncePresenter();
@@ -72,8 +79,21 @@ public class GoodMiddleFragment extends ColpencilFragment implements IAnnounceVi
     @Override
     public void loadSuccess(AnnounceResult result) {
         if ("1".equals(result.getCode())) {
-            tool.X5Load(webView, result.getUrl(), bar);
+            tool.load(webView, result.getUrl(), bar);
         }
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }

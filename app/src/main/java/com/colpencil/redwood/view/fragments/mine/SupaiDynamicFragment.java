@@ -53,7 +53,6 @@ public class SupaiDynamicFragment extends ColpencilFragment implements ISupaiDyn
     @Override
     protected void initViews(View view) {
         type = getArguments().getInt("type");
-        showLoading("加载中...");
         final   HashMap<String,String> params = new HashMap<String, String>();
         params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
         params.put("member_id",SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id")+"");
@@ -65,7 +64,6 @@ public class SupaiDynamicFragment extends ColpencilFragment implements ISupaiDyn
            @Override
            public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
                page = 1;
-               showLoading("加载中...");
                if(type == 1){
                    presenter.getSupaiDynamic(page,params);
                }else{
@@ -77,7 +75,6 @@ public class SupaiDynamicFragment extends ColpencilFragment implements ISupaiDyn
            public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
                if (isRefresh) {
                    page++;
-                   showLoading("加载中...");
                    if(type == 1){
                        presenter.getSupaiDynamic(page,params);
                    }else{
@@ -120,11 +117,12 @@ public class SupaiDynamicFragment extends ColpencilFragment implements ISupaiDyn
 
     @Override
     public void loadSuccess() {
-
+        hideLoading();
     }
 
     @Override
     public void loadFail(String message) {
+        hideLoading();
         Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
     }
 

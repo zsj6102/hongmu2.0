@@ -16,6 +16,7 @@ import com.colpencil.redwood.view.fragments.mine.CardWallFragment;
 import com.colpencil.redwood.view.fragments.mine.DynamicFragment;
 import com.colpencil.redwood.view.fragments.mine.SpecialCollectionFragment;
 import com.colpencil.redwood.view.fragments.mine.SpecialIntroduceFragment;
+import com.colpencil.redwood.view.fragments.mine.ZcFamousFragment;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilActivity;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
@@ -24,6 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
+
+import static android.view.View.Z;
 
 /**@author  QFZ
  * @deprecated  专场
@@ -34,9 +38,6 @@ import butterknife.Bind;
 )
 
 public class SpecialActivity extends ColpencilActivity {
-    @Bind(R.id.iv_back)
-    ImageView iv_back;
-
     @Bind(R.id.tv_main_title)
     TextView tv_main_title;
 
@@ -56,7 +57,7 @@ public class SpecialActivity extends ColpencilActivity {
     private String special_name;
     @Override
     protected void initViews(View view) {
-        special_id=getIntent().getIntExtra("special_id",0);
+        special_id=Integer.parseInt(getIntent().getStringExtra("special_id"));
         special_name=getIntent().getStringExtra("special_name");
 
         totop_iv.setImageResource(R.mipmap.totop_icon);
@@ -66,7 +67,7 @@ public class SpecialActivity extends ColpencilActivity {
         adapter=new MyPageAdapter(getSupportFragmentManager());
         adapter.addFragment(SpecialIntroduceFragment.newInstance(special_id) ,"专场介绍");
         adapter.addFragment(SpecialCollectionFragment.newInstance(special_id) ,"该场藏品");
-        adapter.addFragment(CardWallFragment.newInstance(0) ,"驻场名人");
+        adapter.addFragment(ZcFamousFragment.newInstance(special_id) ,"驻场名人");
 
         tab_layout.addTab(tab_layout.newTab().setText("专场介绍"));
         tab_layout.addTab(tab_layout.newTab().setText("该场藏品"));
@@ -77,6 +78,10 @@ public class SpecialActivity extends ColpencilActivity {
 
     }
 
+    @OnClick(R.id.iv_back)
+    void back(){
+        finish();
+    }
     @Override
     public ColpencilPresenter getPresenter() {
         return null;
