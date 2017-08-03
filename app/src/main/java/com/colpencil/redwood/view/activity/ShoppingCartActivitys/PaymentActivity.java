@@ -14,6 +14,7 @@ import com.colpencil.redwood.bean.Address;
 import com.colpencil.redwood.bean.GoodOfOrder;
 import com.colpencil.redwood.bean.KindOfPrice;
 import com.colpencil.redwood.bean.MemberCoupon;
+import com.colpencil.redwood.bean.OrderDtail;
 import com.colpencil.redwood.bean.PayForReturn;
 import com.colpencil.redwood.bean.PayType;
 import com.colpencil.redwood.bean.Postages;
@@ -110,7 +111,7 @@ public class PaymentActivity extends ColpencilActivity implements IPaymentView {
     private float voucherPrice;
     private float postagePrice;
     private KindOfPrice mKind;
-
+    private String cart_ids;
     @Override
     protected void initViews(View view) {
         initParams();
@@ -123,6 +124,12 @@ public class PaymentActivity extends ColpencilActivity implements IPaymentView {
     private void initParams() {
         mTypeFlag = getIntent().getStringExtra("key");
         goFrom = getIntent().getStringExtra("goFrom");
+//        cart_ids = getIntent().getStringExtra("cartIds");
+//        Map<String,String> params = new HashMap<>();
+//        params.put("member_id",SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id")+"");
+//        params.put("token",SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+//        params.put("cart_ids",cart_ids);
+//        presenter.getOrderPay(params);
     }
 
     private void initContent() {
@@ -280,6 +287,11 @@ public class PaymentActivity extends ColpencilActivity implements IPaymentView {
             voucherCount = result.getResult().getVoucherCount();
         }
     }
+
+//    @Override
+//    public void loadNewOrder(OrderDtail result) {
+//
+//    }
 
     private void showMsg(String msg) {
         if (!goFrom.equals("MyCustomFragment")) {

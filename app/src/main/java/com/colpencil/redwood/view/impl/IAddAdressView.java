@@ -1,5 +1,6 @@
 package com.colpencil.redwood.view.impl;
 
+import com.colpencil.redwood.bean.AddresBean;
 import com.colpencil.redwood.bean.EntityResult;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilBaseView;
 
@@ -12,5 +13,6 @@ import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.Colpenci
 public interface IAddAdressView extends ColpencilBaseView {
 
     void result(EntityResult<String> result);
-
+    void load(AddresBean result);
+    void applyError(String messagge);
 }

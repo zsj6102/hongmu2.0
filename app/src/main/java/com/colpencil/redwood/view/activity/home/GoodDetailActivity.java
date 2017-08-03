@@ -36,6 +36,7 @@ import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.GoodDetailPresenter;
 import com.colpencil.redwood.view.activity.HomeActivity;
 import com.colpencil.redwood.view.activity.ShoppingCartActivitys.NewShopingCartActivity;
+import com.colpencil.redwood.view.activity.ShoppingCartActivitys.OrderActivity;
 import com.colpencil.redwood.view.activity.ShoppingCartActivitys.PaymentActivity;
 import com.colpencil.redwood.view.activity.ShoppingCartActivitys.ShoppingCartActivity;
 import com.colpencil.redwood.view.activity.login.LoginActivity;
@@ -381,7 +382,7 @@ public class GoodDetailActivity extends ColpencilActivity implements IGoodDetail
                 return;
             } else {
                 Intent intent = new Intent();
-                intent.setClass(this, PaymentActivity.class);
+                intent.setClass(this, OrderActivity.class);
                 intent.putExtra("key", "订单确定");
                 intent.putExtra("goFrom", "GoodDetailActivity");
                 intent.putExtra("product_id", productId);    //int类型

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/main_background"
+              android:orientation="vertical">
+
+    <include layout="@layout/base_header" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/main_background" />
+
+    <RelativeLayout
+        android:descendantFocusability="afterDescendants"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.property.colpencil.colpencilandroidlibrary.Ui.BaseListView
+            android:id="@+id/payment_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="45.5dp"
+            android:scrollbars="none" />
+
+        <LinearLayout
+            android:id="@+id/pay_commit"
+            android:layout_width="match_parent"
+            android:layout_height="45.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/main_LinearLayout_background"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/padding_0.5dp"
+                android:background="@color/line_color_first" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="共"
+                    android:textColor="@color/text_color_first"
+                    android:textSize="@dimen/main_text_size" />
+
+                <TextView
+                    android:id="@+id/shoppingCart_buyCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/main_red"
+                    android:textSize="@dimen/main_text_size" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="个商品"
+                    android:textColor="@color/text_color_first"
+                    android:textSize="@dimen/main_text_size" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="总计："
+                    android:textColor="@color/text_color_first"
+                    android:textSize="@dimen/main_text_size" />
+
+                <TextView
+                    android:id="@+id/shoppingCart_buyPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¥0"
+                    android:textColor="@color/main_red"
+                    android:textSize="@dimen/main_text_size" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:paddingRight="15dp">
+
+                    <TextView
+                        android:id="@+id/sumbit_pay"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/red_solid_shape"
+                        android:gravity="center"
+                        android:text="去支付"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/main_text_size" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

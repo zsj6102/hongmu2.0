@@ -308,6 +308,8 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.ShoppingCartActivitys.NewShopingCartActivity"
                    />
+        <activity android:name=".view.activity.ShoppingCartActivitys.OrderActivity"
+                  android:screenOrientation="portrait"/>
         <service android:name=".view.PlayerService"/>
         <service android:name=".view.DownLoadService"/>
         <service android:name=".services.PostsService"/>

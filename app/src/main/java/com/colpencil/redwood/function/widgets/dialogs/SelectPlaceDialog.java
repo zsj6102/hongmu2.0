@@ -146,9 +146,9 @@ public class SelectPlaceDialog extends Dialog implements OnWheelChangedListener 
             //按钮事件
             @Override
             public void onClick(View v) {
-//                SharedPreferencesUtil.getInstance(context).setString("province", mCurrentProviceName);
-//                SharedPreferencesUtil.getInstance(context).setString("city", mCurrentCityName);
-//                SharedPreferencesUtil.getInstance(context).setString("region", mCurrentDistrictName);
+                SharedPreferencesUtil.getInstance(context).setString("province", mCurrentProviceName);
+                SharedPreferencesUtil.getInstance(context).setString("city", mCurrentCityName);
+                SharedPreferencesUtil.getInstance(context).setString("region", mCurrentDistrictName);
                 if(type == 0){
                     SharedPreferencesUtil.getInstance(context).setInt("region_id0",mCurrentDisId);
                 }

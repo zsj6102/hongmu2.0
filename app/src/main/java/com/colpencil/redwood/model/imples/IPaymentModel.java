@@ -3,10 +3,13 @@ package com.colpencil.redwood.model.imples;
 import com.colpencil.redwood.bean.PayForReturn;
 import com.colpencil.redwood.bean.PayKeyRetrun;
 import com.colpencil.redwood.bean.result.MemberCouponResult;
+import com.colpencil.redwood.bean.result.OrderPayInfo;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilModel;
 
 import java.util.HashMap;
+import java.util.Map;
 
+import rx.Observable;
 import rx.Observer;
 
 /**
@@ -36,4 +39,6 @@ public interface IPaymentModel extends ColpencilModel {
     void loadCoupon(String cartIds);
 
     void subCoupon(Observer<MemberCouponResult> observer);
+
+
 }

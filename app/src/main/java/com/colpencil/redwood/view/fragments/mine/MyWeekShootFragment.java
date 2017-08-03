@@ -16,6 +16,7 @@ import com.colpencil.redwood.function.utils.Pay.LhjalipayUtils;
 import com.colpencil.redwood.function.utils.Pay.Wechat.WeChatPayForUtil;
 import com.colpencil.redwood.function.utils.SpaceItemDecoration;
 import com.colpencil.redwood.present.mine.MyWeekShootFragmentPresenter;
+import com.colpencil.redwood.view.activity.ShoppingCartActivitys.OrderActivity;
 import com.colpencil.redwood.view.activity.ShoppingCartActivitys.PaymentActivity;
 import com.colpencil.redwood.view.activity.home.ProductdetailsActivity;
 import com.colpencil.redwood.view.activity.home.WeekShootActivity;
@@ -124,7 +125,7 @@ public class MyWeekShootFragment extends ColpencilFragment implements IMyWeekSho
                     Intent intent = new Intent(getActivity(), WeekShootActivity.class);
                     startActivity(intent);
                 } else if (msg.getType() == 18 && msg.getMsg().equals(mTypeFlag)) {//立即支付
-                    Intent intent = new Intent(getActivity(), PaymentActivity.class);
+                    Intent intent = new Intent(getActivity(), OrderActivity.class);
                     intent.putExtra("goFrom", "MyWeekShootFragment");
                     intent.putExtra("product_id", msg.getProduct_id());
                     intent.putExtra("goods_id", msg.getGoods_id());

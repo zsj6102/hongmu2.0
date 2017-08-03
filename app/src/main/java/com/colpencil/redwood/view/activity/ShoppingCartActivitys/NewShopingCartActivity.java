@@ -22,6 +22,7 @@ import com.colpencil.redwood.function.utils.ListUtils;
 import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
 
 
+import com.colpencil.redwood.function.widgets.swipe.SwipeListView;
 import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.ShoppingCartPresenser;
 import com.colpencil.redwood.view.activity.login.LoginActivity;
@@ -53,7 +54,7 @@ public class NewShopingCartActivity extends ColpencilActivity implements IShoppi
     @Bind(R.id.tv_shoppingCartFinish)
     TextView tv_right;
     @Bind(R.id.listView_shoppingCart)
-    ListView listView;
+    SwipeListView listView;
     @Bind(R.id.shoppingCart_delete)
     LinearLayout ll_delete;
     @Bind(R.id.shoppingCart_buy)
@@ -295,7 +296,7 @@ public class NewShopingCartActivity extends ColpencilActivity implements IShoppi
             }
         }
         if (!cartIds.isEmpty()) {
-            Intent intent = new Intent(NewShopingCartActivity.this, PaymentActivity.class);
+            Intent intent = new Intent(NewShopingCartActivity.this, OrderActivity.class);
             intent.putExtra("key", "订单确定");
             cartIds = cartIds.substring(0, cartIds.length() - 1);
             intent.putExtra("cartIds", cartIds);

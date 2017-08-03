@@ -20,6 +20,7 @@ import com.colpencil.redwood.configs.StringConfig;
 import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
 import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.CustomPresenter;
+import com.colpencil.redwood.view.activity.ShoppingCartActivitys.OrderActivity;
 import com.colpencil.redwood.view.activity.ShoppingCartActivitys.PaymentActivity;
 import com.colpencil.redwood.view.activity.login.LoginActivity;
 import com.colpencil.redwood.view.adapters.NullAdapter;
@@ -100,7 +101,7 @@ public class CustomActivity extends ColpencilActivity implements ICustomView {
     @OnClick(R.id.tv_custom)
     void customClick() {
         if (SharedPreferencesUtil.getInstance(this).getBoolean(StringConfig.ISLOGIN, false)) {
-            Intent intent = new Intent(CustomActivity.this, PaymentActivity.class);
+            Intent intent = new Intent(CustomActivity.this, OrderActivity.class);
             intent.putExtra("key", "订单确认");
             intent.putExtra("goFrom", "CustomActivity");
             if (custom != null) {

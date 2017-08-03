@@ -1,5 +1,6 @@
 package com.colpencil.redwood.present.mine;
 
+import com.colpencil.redwood.bean.AddresBean;
 import com.colpencil.redwood.bean.Address;
 import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.model.AddAddressModel;
@@ -8,6 +9,7 @@ import com.colpencil.redwood.view.impl.IAddAdressView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 
 import rx.Observer;
+import rx.Subscriber;
 
 /**
  * 描述：我的优惠券
@@ -63,6 +65,36 @@ public class AddAddressPresenter extends ColpencilPresenter<IAddAdressView> {
             }
         };
         addressModel.subUpdate(observer);
+    }
+
+    /**
+     * 下载省市区
+     * @param id
+     */
+    public void loadRegion(int id){
+        addressModel.loadRegion(id);
+        Subscriber<AddresBean> subscriber = new Subscriber<AddresBean>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if(mView!=null){
+                    mView.applyError(e.getMessage());
+                }
+
+            }
+
+            @Override
+            public void onNext(AddresBean regionInfoResultInfo) {
+                if(mView!=null){
+                    mView.load(regionInfoResultInfo);
+                }
+            }
+        };
+        addressModel.subRegion(subscriber);
     }
 
 }

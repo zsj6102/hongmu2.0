@@ -7,8 +7,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.colpencil.redwood.R;
+import com.colpencil.redwood.bean.AddresBean;
 import com.colpencil.redwood.bean.Address;
 import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.RxBusMsg;
@@ -59,6 +61,8 @@ public class AddAdressActivity extends ColpencilActivity implements View.OnClick
     ImageView iv_def_addr;
     private boolean isSelectDef;
     private AddAddressPresenter presenter;
+    private AddresBean bean;
+    private int touch = 0;
 
     @Override
     protected void initViews(View view) {
@@ -69,6 +73,7 @@ public class AddAdressActivity extends ColpencilActivity implements View.OnClick
      * 数据初始化
      */
     private void initData() {
+        presenter.loadRegion(0);
         tv_main_title.setText(getIntent().getStringExtra("key"));
         if (getIntent().getStringExtra("key").equals("修改收货地址")) {
             showLoading(Constants.progressName);
@@ -125,7 +130,12 @@ public class AddAdressActivity extends ColpencilActivity implements View.OnClick
                 finish();
                 break;
             case R.id.add_newAddress://省市区选择
-//                new SelectPlaceDialog(AddAdressActivity.this, add_newAddress,bean).show();
+                if (bean != null && bean.getData().size() != 0) {
+                    new SelectPlaceDialog(this, add_newAddress, bean,4).show();
+                } else {
+                    touch = 1;
+                    showLoading("加载中");
+                }
                 break;
             case R.id.tv_sumbitAdd://新增地址
                 judge();
@@ -140,6 +150,21 @@ public class AddAdressActivity extends ColpencilActivity implements View.OnClick
                 }
                 break;
         }
+    }
+
+    @Override
+    public void load(AddresBean result) {
+        hideLoading();
+        bean = result;
+        if (touch == 1 ) {
+            new SelectPlaceDialog(this, add_newAddress, result,4).show();
+        }
+    }
+
+    @Override
+    public void applyError(String messagge) {
+        hideLoading();
+        Toast.makeText(this,messagge,Toast.LENGTH_SHORT).show();
     }
 
     /**

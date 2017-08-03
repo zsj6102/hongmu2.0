@@ -15,6 +15,7 @@ import com.colpencil.redwood.function.utils.Pay.LhjalipayUtils;
 import com.colpencil.redwood.function.utils.Pay.Wechat.WeChatPayForUtil;
 import com.colpencil.redwood.function.utils.SpaceItemDecoration;
 import com.colpencil.redwood.present.mine.MyCustomFragmentPresenter;
+import com.colpencil.redwood.view.activity.ShoppingCartActivitys.OrderActivity;
 import com.colpencil.redwood.view.activity.ShoppingCartActivitys.PaymentActivity;
 import com.colpencil.redwood.view.activity.discovery.CustomActionActivity;
 import com.colpencil.redwood.view.adapters.MyCustomAdapter;
@@ -130,7 +131,7 @@ public class MyCustomFragment extends ColpencilFragment implements IMyCustomFrag
             public void onNext(RxBusMsg msg) {
                 if (msg.getType() == 20 && msg.getMsg().equals(mTypeFlag)) {//进行相关支付操作
                     if (msg.getCustomType() == 0 && msg.getStateName() == 1) {//私人定制并且未进行过第一次付款操作
-                        Intent intent = new Intent(getActivity(), PaymentActivity.class);
+                        Intent intent = new Intent(getActivity(), OrderActivity.class);
                         intent.putExtra("key", "订单确认");
                         intent.putExtra("goFrom", "MyCustomFragment");
                         intent.putExtra("product_id", msg.getProduct_id());

@@ -37,9 +37,6 @@ import butterknife.Bind;
 import rx.Observable;
 import rx.Subscriber;
 
-;
-;
-
 /**
  * 描述：收货地址
  * 作者：曾 凤

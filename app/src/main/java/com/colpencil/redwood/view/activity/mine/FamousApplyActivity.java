@@ -133,7 +133,7 @@ public class FamousApplyActivity extends PhotoBaseActivity implements OnClickLis
     String s = "";
     private List<PostTypeInfo> list = new ArrayList<>();
     SharedPreferencesUtil sp;
-    int regiontype = 0;
+    int regiontype = 0;   //个人住地址 店的地址等等用这个来区分
     private String region_id1 = "";
     private String region_id2 = "";
     @Override

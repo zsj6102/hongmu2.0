@@ -69,6 +69,7 @@ import com.colpencil.redwood.bean.result.HotResult;
 import com.colpencil.redwood.bean.result.MemberCouponResult;
 import com.colpencil.redwood.bean.result.MyCommentResult;
 import com.colpencil.redwood.bean.result.OfficialResult;
+import com.colpencil.redwood.bean.result.OrderPayInfo;
 import com.colpencil.redwood.bean.result.PCommentResult;
 import com.colpencil.redwood.bean.result.PostStateResult;
 import com.colpencil.redwood.bean.result.PostsResult;
@@ -667,6 +668,13 @@ public interface RedWoodApi {
     @POST("mobileCart!cartList.do")
     @FormUrlEncoded
     Observable<AllCartList> getAllCartList(@FieldMap Map<String,String> params);
+
+    /**
+     * 二期购物车转订单支付
+     */
+    @POST("mobileStoreOrder!orderPay.do")
+    @FormUrlEncoded
+    Observable<OrderPayInfo> getOrderPay(@FieldMap Map<String,String> params);
     /**
      * 修改购物车信息
      */

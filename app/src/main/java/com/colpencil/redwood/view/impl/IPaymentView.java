@@ -1,5 +1,6 @@
 package com.colpencil.redwood.view.impl;
 
+import com.colpencil.redwood.bean.OrderDtail;
 import com.colpencil.redwood.bean.PayForReturn;
 import com.colpencil.redwood.bean.result.MemberCouponResult;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilBaseView;
@@ -42,4 +43,6 @@ public interface IPaymentView extends ColpencilBaseView {
      * 优惠券结果
      */
     void loadCouponResult(MemberCouponResult result);
+
+
 }

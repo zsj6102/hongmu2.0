@@ -1,10 +1,14 @@
 package com.colpencil.redwood.model.imples;
 
+import com.colpencil.redwood.bean.AddresBean;
 import com.colpencil.redwood.bean.Address;
 import com.colpencil.redwood.bean.EntityResult;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilModel;
 
 import rx.Observer;
+import rx.Subscriber;
+
+import static android.R.attr.id;
 
 /**
  * 描述：我的优惠券
@@ -23,4 +27,8 @@ public interface IAddAddressModel extends ColpencilModel {
     void updateAddress(Address address);
 
     void subUpdate(Observer<EntityResult<String>> observer);
+
+    void loadRegion(int id);
+
+    void subRegion(Observer<AddresBean> observer);
 }

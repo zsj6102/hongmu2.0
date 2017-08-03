@@ -7,12 +7,14 @@ import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.PayForReturn;
 import com.colpencil.redwood.bean.PayKeyRetrun;
 import com.colpencil.redwood.bean.result.MemberCouponResult;
+import com.colpencil.redwood.bean.result.OrderPayInfo;
 import com.colpencil.redwood.function.config.UrlConfig;
 import com.colpencil.redwood.model.imples.IPaymentModel;
 import com.property.colpencil.colpencilandroidlibrary.Function.MianCore.RetrofitManager;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import rx.Observable;
 import rx.Observer;
@@ -33,6 +35,7 @@ public class PaymentModel implements IPaymentModel {
     private Observable<PayKeyRetrun> payReturnObservable;
 
     private Observable<MemberCouponResult> couponObservable;
+
 
     @Override
     public void loadPayFor(String cartIds) {

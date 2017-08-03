@@ -5,6 +5,7 @@ import android.util.Log;
 import com.colpencil.redwood.bean.PayForReturn;
 import com.colpencil.redwood.bean.PayKeyRetrun;
 import com.colpencil.redwood.bean.result.MemberCouponResult;
+import com.colpencil.redwood.bean.result.OrderPayInfo;
 import com.colpencil.redwood.model.PaymentModel;
 import com.colpencil.redwood.model.imples.IPaymentModel;
 import com.colpencil.redwood.view.impl.IPaymentView;

@@ -2,6 +2,7 @@ package com.colpencil.redwood.model;
 
 import com.colpencil.redwood.api.RedWoodApi;
 import com.colpencil.redwood.base.App;
+import com.colpencil.redwood.bean.AddresBean;
 import com.colpencil.redwood.bean.Address;
 import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.function.config.UrlConfig;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 
 import rx.Observable;
 import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -27,6 +29,26 @@ public class AddAddressModel implements IAddAddressModel {
 
     private Observable<EntityResult<String>> add;
     private Observable<EntityResult<String>> update;
+    private Observable<AddresBean> rgObservable;
+
+    @Override
+    public void loadRegion(int id) {
+        rgObservable = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .getRegion(0)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<AddresBean, AddresBean>() {
+                    @Override
+                    public AddresBean call(AddresBean sellApplyResultInfo) {
+                        return sellApplyResultInfo;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void subRegion(Observer<AddresBean> observer) {
+        rgObservable.subscribe(observer);
+    }
 
     @Override
     public void addAddress(Address address) {

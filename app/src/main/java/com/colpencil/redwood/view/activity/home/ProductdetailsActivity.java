@@ -26,6 +26,7 @@ import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
 import com.colpencil.redwood.function.widgets.dialogs.OfferDialog;
 import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.ProductdetailsPresenter;
+import com.colpencil.redwood.view.activity.ShoppingCartActivitys.OrderActivity;
 import com.colpencil.redwood.view.activity.ShoppingCartActivitys.PaymentActivity;
 import com.colpencil.redwood.view.activity.login.LoginActivity;
 import com.colpencil.redwood.view.adapters.NullAdapter;
@@ -179,7 +180,7 @@ public class ProductdetailsActivity extends ColpencilActivity implements IProduc
                 });
                 offerDialog.show();
             } else {       //已结束
-                Intent intent = new Intent(this, PaymentActivity.class);
+                Intent intent = new Intent(this, OrderActivity.class);
                 intent.putExtra("goFrom", "MyWeekShootFragment");
                 intent.putExtra("product_id", mResult.getProduct_id());
                 intent.putExtra("goods_id", mResult.getGoods_id());

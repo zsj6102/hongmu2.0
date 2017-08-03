@@ -308,7 +308,7 @@ public class ShoppingCartActivity extends ColpencilActivity implements IShopping
             }
         }
         if (!cartIds.isEmpty()) {
-            Intent intent = new Intent(ShoppingCartActivity.this, PaymentActivity.class);
+            Intent intent = new Intent(ShoppingCartActivity.this, OrderActivity.class);
             intent.putExtra("key", "订单确定");
             cartIds = cartIds.substring(0, cartIds.length() - 1);
             intent.putExtra("cartIds", cartIds);
