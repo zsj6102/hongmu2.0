@@ -4,7 +4,8 @@ import android.content.Context;
 import android.view.View;
 
 import com.colpencil.redwood.R;
-import com.colpencil.redwood.bean.MemberCoupon;
+
+import com.colpencil.redwood.bean.result.MemberCoupon;
 import com.colpencil.redwood.view.base.CommonAdapter;
 import com.colpencil.redwood.view.base.CommonViewHolder;
 

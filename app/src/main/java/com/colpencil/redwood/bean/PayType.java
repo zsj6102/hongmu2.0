@@ -12,7 +12,7 @@ public class PayType implements Serializable {
     /**
      * 支付方式ID
      */
-    private String payId;
+    private int payId;
     /**
      * 支付方式头像地址
      */
@@ -37,11 +37,11 @@ public class PayType implements Serializable {
                 '}';
     }
 
-    public String getPayId() {
+    public int getPayId() {
         return payId;
     }
 
-    public void setPayId(String payId) {
+    public void setPayId(int payId) {
         this.payId = payId;
     }
 

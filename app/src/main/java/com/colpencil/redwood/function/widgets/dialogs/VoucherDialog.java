@@ -12,7 +12,8 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.colpencil.redwood.R;
-import com.colpencil.redwood.bean.MemberCoupon;
+
+import com.colpencil.redwood.bean.result.MemberCoupon;
 import com.colpencil.redwood.view.adapters.VoucherDialogAdapter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ToastTools;
 
@@ -73,17 +74,17 @@ public class VoucherDialog extends Dialog {
                     }
                 }
                 for (int j = 0; j < mList.size(); j++) {
-                    if (count <= 1) {
-                        if (j == position) {
-                            if (mList.get(j).isChoose()) {
-                                mList.get(j).setChoose(false);
-                            } else {
-                                mList.get(j).setChoose(true);
-                            }
-                        } else {
-                            mList.get(j).setChoose(false);
-                        }
-                    } else {
+//                    if (count <= 1) {
+//                        if (j == position) {
+//                            if (mList.get(j).isChoose()) {
+//                                mList.get(j).setChoose(false);
+//                            } else {
+//                                mList.get(j).setChoose(true);
+//                            }
+//                        } else {
+//                            mList.get(j).setChoose(false);
+//                        }
+//                    } else {
                         if (j == position) {
                             if (mList.get(j).isChoose()) {
                                 mList.get(j).setChoose(false);
@@ -95,7 +96,7 @@ public class VoucherDialog extends Dialog {
                                 }
                             }
                         }
-                    }
+//                    }
                 }
 
                 adapter.notifyDataSetChanged();

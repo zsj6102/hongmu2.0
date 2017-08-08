@@ -310,6 +310,8 @@
                    />
         <activity android:name=".view.activity.ShoppingCartActivitys.OrderActivity"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.ShoppingCartActivitys.PayActivity"
+            android:screenOrientation="portrait"/>
         <service android:name=".view.PlayerService"/>
         <service android:name=".view.DownLoadService"/>
         <service android:name=".services.PostsService"/>
@@ -405,6 +407,14 @@
             android:launchMode="singleTop"/>
         <!-- wechat callback-->
 
+
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
         <!--银联支付-->
         <activity
             android:name="com.unionpay.uppay.PayActivity"

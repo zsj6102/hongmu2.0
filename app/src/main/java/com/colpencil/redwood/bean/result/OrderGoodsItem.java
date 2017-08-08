@@ -9,6 +9,15 @@ public class OrderGoodsItem implements Serializable {
     private String specs;
     private String img;
     private int goods_id;
+    private boolean isShowContent;
+
+    public boolean isShowContent() {
+        return isShowContent;
+    }
+
+    public void setShowContent(boolean showContent) {
+        isShowContent = showContent;
+    }
 
     public String getName() {
         return name;

@@ -31,11 +31,12 @@
         <ListView
             android:id="@+id/post_dialog_listview"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="200dp"
             android:dividerHeight="@dimen/width_0dp"/>
 
 
         <TextView
+            android:id="@+id/dialog_close"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_44dp"
             android:background="@color/main_brown"

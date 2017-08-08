@@ -8,6 +8,15 @@ public class MemberCoupon implements Serializable {
     private String discount_price;
     private String cpns_name;
     private String goods_price;
+    private boolean isChoose;
+
+    public boolean isChoose() {
+        return isChoose;
+    }
+
+    public void setChoose(boolean choose) {
+        isChoose = choose;
+    }
 
     public int getId() {
         return id;

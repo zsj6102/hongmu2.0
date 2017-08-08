@@ -9,7 +9,7 @@ import java.util.List;
 public class OrderDtail implements Serializable {
     private List<OrderArray> orderArray;
     private Address address;
-    private List<Pays> pays;
+    private List<PayType> pays;
     private String cart_ids;
 
     public List<OrderArray> getOrderArray() {
@@ -28,11 +28,11 @@ public class OrderDtail implements Serializable {
         this.address = address;
     }
 
-    public List<Pays> getPays() {
+    public List<PayType> getPays() {
         return pays;
     }
 
-    public void setPays(List<Pays> pays) {
+    public void setPays(List<PayType> pays) {
         this.pays = pays;
     }
 

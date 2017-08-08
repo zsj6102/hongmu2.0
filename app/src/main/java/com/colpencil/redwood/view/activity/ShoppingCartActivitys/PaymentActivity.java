@@ -94,10 +94,10 @@ public class PaymentActivity extends ColpencilActivity implements IPaymentView {
     private List<PayType> payTypeList = new ArrayList<>();
     //订单商品
     private List<GoodOfOrder> mGoodInfor = new ArrayList<>();
-    //优惠券
-    private List<MemberCoupon> couponList = new ArrayList<>();
-    //代金券
-    private List<MemberCoupon> voucherList = new ArrayList<>();
+//    //优惠券
+//    private List<MemberCoupon> couponList = new ArrayList<>();
+//    //代金券
+//    private List<MemberCoupon> voucherList = new ArrayList<>();
     private PostagesAdapter postagesAdapter;
     private PayTypeAdapter payTypeAdapter;
     private int selectPostages = -1;
@@ -282,9 +282,9 @@ public class PaymentActivity extends ColpencilActivity implements IPaymentView {
     @Override
     public void loadCouponResult(MemberCouponResult result) {
         if (result.getCode() == 0) {
-            couponList.addAll(result.getResult().getCashList());
-            voucherList.addAll(result.getResult().getVoucherList());
-            voucherCount = result.getResult().getVoucherCount();
+//            couponList.addAll(result.getResult().getCashList());
+//            voucherList.addAll(result.getResult().getVoucherList());
+//            voucherCount = result.getResult().getVoucherCount();
         }
     }
 
@@ -454,8 +454,8 @@ public class PaymentActivity extends ColpencilActivity implements IPaymentView {
             if (!TextUtils.isEmpty(voucherids)) {
                 map.put("voucherids", voucherids);
             }
-            map.put("type_id", postagesList.get(selectPostages).getPostageId());
-            map.put("payment_id", payTypeList.get(selectPay).getPayId());
+            map.put("type_id", postagesList.get(selectPostages).getPostageId()+"");
+            map.put("payment_id",String.valueOf(payTypeList.get(selectPay).getPayId()) );
             map.put("goodsInfor", new Gson().toJson(mGoodInfor));
             if (TextStringUtils.isEmpty(getIntent().getStringExtra("cartIds"))) {
                 map.put("cart_ids", cartIds);
@@ -507,98 +507,98 @@ public class PaymentActivity extends ColpencilActivity implements IPaymentView {
             ButterKnife.unbind(this);
         }
 
-        @OnClick(R.id.relativeLayout_selectCoupons)
-        void couponsClick() {
-            final CouponDialog dialog = new CouponDialog(PaymentActivity.this);
-            dialog.setListener(new CouponDialog.VoucherClickListener() {
-                @Override
-                public void sureClick() {
-                    moneyId = "";
-                    couponsPrice = 0.0f;
-                    for (int i = 0; i < couponList.size(); i++) {
-                        if (couponList.get(i).isChoose()) {
-                            moneyId = couponList.get(i).getId() + "";
-                            couponsPrice += couponList.get(i).getDiscount_price();
-                        }
-                    }
-                    if (couponsPrice != 0.0f) {
-                        holder.tv_useCoupons.setText(FormatUtils.formatDouble(couponsPrice) + "元");
-                    } else {
-                        holder.tv_useCoupons.setText("");
-                    }
-                    bt_buyPrice.setText("¥" + FormatUtils.formatDouble(mKind.getGoodsPrice() + postagePrice - couponsPrice - voucherPrice));
-                    dialog.dismiss();
-                }
-
-                @Override
-                public void cancleClick() {
-                    moneyId = "";
-                    voucherPrice = 0.0f;
-                    for (int i = 0; i < couponList.size(); i++) {
-                        if (couponList.get(i).isChoose()) {
-                            moneyId = couponList.get(i).getId() + ",";
-                            voucherPrice += couponList.get(i).getDiscount_price();
-                        }
-                    }
-                    if (voucherPrice != 0.0f) {
-                        holder.tv_useCoupons.setText(FormatUtils.formatDouble(voucherPrice) + "元");
-                    } else {
-                        holder.tv_useCoupons.setText("请选择优惠券");
-                    }
-                    bt_buyPrice.setText("¥" + FormatUtils.formatDouble(mKind.getGoodsPrice() + postagePrice - couponsPrice - voucherPrice));
-                    dialog.dismiss();
-                }
-            });
-            dialog.setData(couponList);
-            dialog.show();
-        }
-
-        @OnClick(R.id.relativeLayout_vouchers)
-        void vouchersClick() {
-            final VoucherDialog dialog = new VoucherDialog(PaymentActivity.this);
-            dialog.setListener(new VoucherDialog.VoucherClickListener() {
-                @Override
-                public void sureClick() {
-                    voucherids = "";
-                    voucherPrice = 0.0f;
-                    for (int i = 0; i < voucherList.size(); i++) {
-                        if (voucherList.get(i).isChoose()) {
-                            voucherids = voucherList.get(i).getId() + ",";
-                            voucherPrice += voucherList.get(i).getDiscount_price();
-                        }
-                    }
-                    if (voucherPrice != 0.0f) {
-                        holder.tv_vouchers.setText(FormatUtils.formatDouble(voucherPrice) + "元");
-                    } else {
-                        holder.tv_vouchers.setText("请选择代金券");
-                    }
-                    bt_buyPrice.setText("¥" + FormatUtils.formatDouble(mKind.getGoodsPrice() + postagePrice - couponsPrice - voucherPrice));
-                    dialog.dismiss();
-                }
-
-                @Override
-                public void cancleClick() {
-                    voucherids = "";
-                    voucherPrice = 0.0f;
-                    for (int i = 0; i < voucherList.size(); i++) {
-                        if (voucherList.get(i).isChoose()) {
-                            voucherids = voucherList.get(i).getId() + ",";
-                            voucherPrice += voucherList.get(i).getDiscount_price();
-                        }
-                    }
-                    if (voucherPrice != 0.0f) {
-                        holder.tv_useCoupons.setText(FormatUtils.formatDouble(voucherPrice) + "元");
-                    } else {
-                        holder.tv_useCoupons.setText("请选择优惠券");
-                    }
-                    bt_buyPrice.setText("¥" + FormatUtils.formatDouble(mKind.getGoodsPrice() + postagePrice - couponsPrice - voucherPrice));
-                    dialog.dismiss();
-                }
-            });
-            dialog.setData(voucherList);
-            dialog.setCount(voucherCount);
-            dialog.show();
-        }
+//        @OnClick(R.id.relativeLayout_selectCoupons)
+//        void couponsClick() {
+//            final CouponDialog dialog = new CouponDialog(PaymentActivity.this);
+//            dialog.setListener(new CouponDialog.VoucherClickListener() {
+//                @Override
+//                public void sureClick() {
+//                    moneyId = "";
+//                    couponsPrice = 0.0f;
+//                    for (int i = 0; i < couponList.size(); i++) {
+//                        if (couponList.get(i).isChoose()) {
+//                            moneyId = couponList.get(i).getId() + "";
+//                            couponsPrice += couponList.get(i).getDiscount_price();
+//                        }
+//                    }
+//                    if (couponsPrice != 0.0f) {
+//                        holder.tv_useCoupons.setText(FormatUtils.formatDouble(couponsPrice) + "元");
+//                    } else {
+//                        holder.tv_useCoupons.setText("");
+//                    }
+//                    bt_buyPrice.setText("¥" + FormatUtils.formatDouble(mKind.getGoodsPrice() + postagePrice - couponsPrice - voucherPrice));
+//                    dialog.dismiss();
+//                }
+//
+//                @Override
+//                public void cancleClick() {
+//                    moneyId = "";
+//                    voucherPrice = 0.0f;
+//                    for (int i = 0; i < couponList.size(); i++) {
+//                        if (couponList.get(i).isChoose()) {
+//                            moneyId = couponList.get(i).getId() + ",";
+//                            voucherPrice += couponList.get(i).getDiscount_price();
+//                        }
+//                    }
+//                    if (voucherPrice != 0.0f) {
+//                        holder.tv_useCoupons.setText(FormatUtils.formatDouble(voucherPrice) + "元");
+//                    } else {
+//                        holder.tv_useCoupons.setText("请选择优惠券");
+//                    }
+//                    bt_buyPrice.setText("¥" + FormatUtils.formatDouble(mKind.getGoodsPrice() + postagePrice - couponsPrice - voucherPrice));
+//                    dialog.dismiss();
+//                }
+//            });
+//            dialog.setData(couponList);
+//            dialog.show();
+//        }
+//
+//        @OnClick(R.id.relativeLayout_vouchers)
+//        void vouchersClick() {
+//            final VoucherDialog dialog = new VoucherDialog(PaymentActivity.this);
+//            dialog.setListener(new VoucherDialog.VoucherClickListener() {
+//                @Override
+//                public void sureClick() {
+//                    voucherids = "";
+//                    voucherPrice = 0.0f;
+//                    for (int i = 0; i < voucherList.size(); i++) {
+//                        if (voucherList.get(i).isChoose()) {
+//                            voucherids = voucherList.get(i).getId() + ",";
+//                            voucherPrice += voucherList.get(i).getDiscount_price();
+//                        }
+//                    }
+//                    if (voucherPrice != 0.0f) {
+//                        holder.tv_vouchers.setText(FormatUtils.formatDouble(voucherPrice) + "元");
+//                    } else {
+//                        holder.tv_vouchers.setText("请选择代金券");
+//                    }
+//                    bt_buyPrice.setText("¥" + FormatUtils.formatDouble(mKind.getGoodsPrice() + postagePrice - couponsPrice - voucherPrice));
+//                    dialog.dismiss();
+//                }
+//
+//                @Override
+//                public void cancleClick() {
+//                    voucherids = "";
+//                    voucherPrice = 0.0f;
+//                    for (int i = 0; i < voucherList.size(); i++) {
+//                        if (voucherList.get(i).isChoose()) {
+//                            voucherids = voucherList.get(i).getId() + ",";
+//                            voucherPrice += voucherList.get(i).getDiscount_price();
+//                        }
+//                    }
+//                    if (voucherPrice != 0.0f) {
+//                        holder.tv_useCoupons.setText(FormatUtils.formatDouble(voucherPrice) + "元");
+//                    } else {
+//                        holder.tv_useCoupons.setText("请选择优惠券");
+//                    }
+//                    bt_buyPrice.setText("¥" + FormatUtils.formatDouble(mKind.getGoodsPrice() + postagePrice - couponsPrice - voucherPrice));
+//                    dialog.dismiss();
+//                }
+//            });
+//            dialog.setData(voucherList);
+//            dialog.setCount(voucherCount);
+//            dialog.show();
+//        }
 
         @OnClick(R.id.ll_noAdress)
         void noAddressClick() {

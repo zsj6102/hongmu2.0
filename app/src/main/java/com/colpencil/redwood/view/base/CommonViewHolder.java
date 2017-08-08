@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.colpencil.redwood.function.tools.ImageLoaderUtils;
+import com.zhy.autolayout.utils.AutoUtils;
 
 /**
  * @author 陈宝
@@ -26,6 +27,7 @@ public class CommonViewHolder {
         mConvertView = LayoutInflater.from(context).inflate(layoutId, parent,
                 false);
         //setTag
+        AutoUtils.autoSize(mConvertView);
         mConvertView.setTag(this);
 
 

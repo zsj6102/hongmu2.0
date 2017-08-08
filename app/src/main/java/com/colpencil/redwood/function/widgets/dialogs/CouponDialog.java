@@ -12,7 +12,8 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.colpencil.redwood.R;
-import com.colpencil.redwood.bean.MemberCoupon;
+
+import com.colpencil.redwood.bean.result.MemberCoupon;
 import com.colpencil.redwood.view.adapters.VoucherDialogAdapter;
 
 import java.util.ArrayList;

@@ -12,7 +12,7 @@ public class Postages implements Serializable {
     /**
      * 快递方式ID
      */
-    private String postageId;
+    private int postageId;
     /**
      * 快递方式头像地址
      */
@@ -38,11 +38,11 @@ public class Postages implements Serializable {
                 '}';
     }
 
-    public String getPostageId() {
+    public int getPostageId() {
         return postageId;
     }
 
-    public void setPostageId(String postageId) {
+    public void setPostageId(int postageId) {
         this.postageId = postageId;
     }
 

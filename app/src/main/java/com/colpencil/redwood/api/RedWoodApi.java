@@ -38,6 +38,7 @@ import com.colpencil.redwood.bean.OrderCenterReturn;
 import com.colpencil.redwood.bean.OrderDetailsReturn;
 import com.colpencil.redwood.bean.PayForReturn;
 import com.colpencil.redwood.bean.PayKeyRetrun;
+import com.colpencil.redwood.bean.PayReturn;
 import com.colpencil.redwood.bean.PostCollectionReturn;
 import com.colpencil.redwood.bean.Result;
 import com.colpencil.redwood.bean.ResultCodeInt;
@@ -1372,4 +1373,11 @@ public interface RedWoodApi {
     @FormUrlEncoded
     Observable<SizeColorInfo> getSize(@Field("id") int parent_id);
 
+
+    /**
+     * 多商家下单接口
+     */
+    @Multipart
+    @POST("mobileStoreOrder!createOrder.do")
+    Observable<PayReturn> getPayReturn(@PartMap HashMap<String,RequestBody> params);
 }

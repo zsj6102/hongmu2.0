@@ -13,17 +13,19 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.bean.PostTypeInfo;
+import com.colpencil.redwood.bean.Postages;
+import com.colpencil.redwood.function.widgets.adapter.PostDeliverAdapter;
 import com.colpencil.redwood.function.widgets.adapter.PostDialogAdapter;
 import java.util.List;
 
 public class SelectPostStyleDialog extends Dialog{
     private Context context;
-    private List<PostTypeInfo> list;
+    private List<Postages> list;
     private PostClickListener listener;
-    private PostDialogAdapter adapter;
+    private PostDeliverAdapter adapter;
     private ListView listView;
 
-    public SelectPostStyleDialog(Context context, List<PostTypeInfo> list) {
+    public SelectPostStyleDialog(Context context, List<Postages> list) {
         super(context, R.style.ActionSheetDialogStyle);
         this.context = context;
         this.list = list;
@@ -47,30 +49,29 @@ public class SelectPostStyleDialog extends Dialog{
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         dialogWindow.setGravity(Gravity.BOTTOM);
         DisplayMetrics d = context.getResources().getDisplayMetrics();// 获取屏幕尺寸
-        lp.width = (int) (d.widthPixels * 0.8); // 宽度为屏幕80%
-        lp.y = 20;
+        lp.width =  d.widthPixels ;
 //        lp.gravity = Gravity.BOTTOM;
 //        lp.alpha = 1f;
         dialogWindow.setAttributes(lp);
     }
     private void initListView(View view){
         listView = (ListView) view.findViewById(R.id.post_dialog_listview);
-        adapter = new PostDialogAdapter(context, list, R.layout.post_dialog_item);
+        adapter = new PostDeliverAdapter(context, list, R.layout.post_dialog_item);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                for (PostTypeInfo info : list) {
+                for (Postages info : list) {
                     if (info == list.get(position)) {
-                        if (info.isChoose()) {
-                            info.setChoose(false);
-                            listener.itemUnClick();
+                        if (info.isChooseState()) {
+                            info.setChooseState(false);
+                            listener.itemUnClick(position);
                         } else {
-                            info.setChoose(true);
+                            info.setChooseState(true);
                             listener.itemClick(position);
                         }
                     } else {
-                        info.setChoose(false);
+                        info.setChooseState(false);
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -84,7 +85,7 @@ public class SelectPostStyleDialog extends Dialog{
     public interface PostClickListener {
         void closeClick();
 
-        void itemUnClick();
+        void itemUnClick(int position);
 
         void itemClick(int position);
     }

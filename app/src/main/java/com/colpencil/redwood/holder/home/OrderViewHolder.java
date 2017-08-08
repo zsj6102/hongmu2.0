@@ -7,7 +7,7 @@ import android.view.View;
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.bean.result.OrderArray;
 import com.colpencil.redwood.function.widgets.list.Decomposers;
-import com.colpencil.redwood.holder.adapter.OrderItemAdapter;
+
 import com.property.colpencil.colpencilandroidlibrary.Ui.AdapterView.MosaicListView;
 
 
@@ -39,6 +39,6 @@ public class OrderViewHolder extends Decomposers<List<OrderArray>> {
                     count += category.getItemCount();
                 }
         }
-        listView.setAdapter(new OrderItemAdapter(mContext,list,mlist));
+//        listView.setAdapter(new OrderItemAdapter(mContext,list,mlist));
     }
 }

@@ -1,6 +1,8 @@
 package com.colpencil.redwood.bean.result;
 
 
+import com.colpencil.redwood.bean.Postages;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -36,6 +38,115 @@ public class OrderArray implements Serializable {
      * 卡券对象
      */
     private AllCoupon allCoupon;
+
+    /**
+     * 商家留言,用户评价后写进来
+     */
+    private String spec;
+    /**
+     * 优惠券
+     */
+    private double youhui;
+    private int youhuiid = -1;
+    /**
+     * 代金券
+     */
+    private double daijin;
+
+    private String daijinids;
+    /**
+     * 快递方式
+     * @return
+     */
+    private String deliver;
+
+    private int deliverid = -1;
+
+
+    /**
+     * 快递价格
+     */
+    private double deliverPrice;
+
+    /**
+     * 需要付的
+     * @return
+     */
+    private double needPay;
+    public int getYouhuiid() {
+        return youhuiid;
+    }
+
+    public void setYouhuiid(int youhuiid) {
+        this.youhuiid = youhuiid;
+    }
+
+    public String getDaijinid() {
+        return daijinids;
+    }
+
+    public void setDaijinid(String daijinid) {
+        this.daijinids = daijinid;
+    }
+
+    public int getDeliverid() {
+        return deliverid;
+    }
+
+    public void setDeliverid(int deliverid) {
+        this.deliverid = deliverid;
+    }
+
+
+
+    public double getYouhui() {
+        return youhui;
+    }
+
+    public void setYouhui(double youhui) {
+        this.youhui = youhui;
+    }
+
+    public double getDaijin() {
+        return daijin;
+    }
+
+    public void setDaijin(double daijin) {
+        this.daijin = daijin;
+    }
+
+    public String getDeliver() {
+        return deliver;
+    }
+
+    public void setDeliver(String deliver) {
+        this.deliver = deliver;
+    }
+
+    public double getDeliverPrice() {
+        return deliverPrice;
+    }
+
+    public void setDeliverPrice(double deliverPrice) {
+        this.deliverPrice = deliverPrice;
+    }
+
+    public double getNeedPay() {
+        return needPay;
+    }
+
+    public void setNeedPay(double needPay) {
+        this.needPay = needPay;
+    }
+
+    public String getSpec() {
+        return spec;
+    }
+
+    public void setSpec(String spec) {
+        this.spec = spec;
+    }
+
     public int getStoreId() {
         return storeId;
     }

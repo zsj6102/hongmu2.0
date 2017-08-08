@@ -3,6 +3,10 @@
               android:layout_width="match_parent"
               android:orientation="vertical"
               android:layout_height="wrap_content">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/main_background"/>
     <RelativeLayout
         android:id="@+id/ll_noAdress"
         android:layout_width="match_parent"
