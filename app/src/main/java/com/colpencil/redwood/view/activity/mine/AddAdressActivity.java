@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.colpencil.redwood.R;
+import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.AddresBean;
 import com.colpencil.redwood.bean.Address;
 import com.colpencil.redwood.bean.EntityResult;
@@ -80,21 +81,21 @@ public class AddAdressActivity extends ColpencilActivity implements View.OnClick
             String addressMsg = "";
             if (!TextUtils.isEmpty(getIntent().getStringExtra("province"))) {
                 addressMsg = getIntent().getStringExtra("province");
-                SharedPreferencesUtil.getInstance(this).setString("province", getIntent().getStringExtra("province"));
+                SharedPreferencesUtil.getInstance(App.getInstance()).setString("province", getIntent().getStringExtra("province"));
             } else {
-                SharedPreferencesUtil.getInstance(this).setString("province", "");
+                SharedPreferencesUtil.getInstance(App.getInstance()).setString("province", "");
             }
             if (!TextUtils.isEmpty(getIntent().getStringExtra("city"))) {
                 addressMsg = addressMsg + getIntent().getStringExtra("city");
-                SharedPreferencesUtil.getInstance(this).setString("city", getIntent().getStringExtra("city"));
+                SharedPreferencesUtil.getInstance(App.getInstance()).setString("city", getIntent().getStringExtra("city"));
             } else {
-                SharedPreferencesUtil.getInstance(this).setString("city", "");
+                SharedPreferencesUtil.getInstance(App.getInstance()).setString("city", "");
             }
             if (!TextUtils.isEmpty(getIntent().getStringExtra("region"))) {
                 addressMsg = addressMsg + getIntent().getStringExtra("region");
-                SharedPreferencesUtil.getInstance(this).setString("region", getIntent().getStringExtra("region"));
+                SharedPreferencesUtil.getInstance(App.getInstance()).setString("region", getIntent().getStringExtra("region"));
             } else {
-                SharedPreferencesUtil.getInstance(this).setString("region", "");
+                SharedPreferencesUtil.getInstance(App.getInstance()).setString("region", "");
             }
             add_newAddress.setText(addressMsg);
             et_detailAddress.setText(getIntent().getStringExtra("address"));

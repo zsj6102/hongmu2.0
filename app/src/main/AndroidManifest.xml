@@ -312,6 +312,9 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.ShoppingCartActivitys.PayActivity"
             android:screenOrientation="portrait"/>
+        <!--二期 订单详情页-->
+        <activity android:name=".view.activity.mine.OrderDetailActivity"
+            android:screenOrientation="portrait"/>
         <service android:name=".view.PlayerService"/>
         <service android:name=".view.DownLoadService"/>
         <service android:name=".services.PostsService"/>

@@ -110,6 +110,7 @@ public class CyclopediaFragment extends ColpencilFragment implements ITagView {
     }
     @Override
     public void loadData() {
+        showLoading("数据加载中...");
         if (SharedPreferencesUtil.getInstance(getActivity()).getBoolean("isLogin", false)) {
             present.loadMyTag();
         } else {
@@ -155,6 +156,7 @@ public class CyclopediaFragment extends ColpencilFragment implements ITagView {
 
     @Override
     public void loadTag(List<CategoryVo> result) {
+        hideLoading();
         adapter = new MyPageAdapter(getChildFragmentManager());
         CategoryVo categoryVo = new CategoryVo();
         categoryVo.setCat_id("");
@@ -192,7 +194,7 @@ public class CyclopediaFragment extends ColpencilFragment implements ITagView {
 
     @Override
     public void loadError(String msg, int code) {
-
+        hideLoading();
     }
 
     @OnClick(R.id.search_header_car)

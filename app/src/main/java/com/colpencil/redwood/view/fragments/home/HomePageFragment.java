@@ -173,7 +173,7 @@ public class HomePageFragment extends ColpencilFragment implements IHomePageView
 
             @Override
             public void onNext(RxBusMsg tagMsg) {
-                if (tagMsg.getType() == 58 || tagMsg.getType() == 4 || tagMsg.getType() == 63) {
+                if (tagMsg.getType() == 58 || tagMsg.getType() == 4 || tagMsg.getType() == 63 || tagMsg.getType() == 200) {
                     presenter.loadMyTag();
                 } else if (tagMsg.getType() == 53) {
                     presenter.loadTag(2);

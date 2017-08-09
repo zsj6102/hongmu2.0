@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.colpencil.redwood.R;
+import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.LoginBean;
 import com.colpencil.redwood.bean.RxBusMsg;
 import com.colpencil.redwood.configs.Constants;
@@ -155,11 +156,11 @@ public class RegisterActivity extends ColpencilActivity implements IPwdView {
     public void loginResult(LoginBean bean) {
         hideLoading();
         if (bean.getCode() == 1) {
-            SharedPreferencesUtil.getInstance(this).setString(StringConfig.MOBILEPHONE, etPwd_phone.getText().toString());
-            SharedPreferencesUtil.getInstance(this).setString(StringConfig.PASSWORD, etPwd_setPwd.getText().toString());
-            SharedPreferencesUtil.getInstance(this).setBoolean(StringConfig.ISLOGIN, true);
-            SharedPreferencesUtil.getInstance(this).setInt("member_id", bean.getMember_id());
-            SharedPreferencesUtil.getInstance(this).setString("token", bean.getToken());
+            SharedPreferencesUtil.getInstance(App.getInstance()).setString(StringConfig.MOBILEPHONE, etPwd_phone.getText().toString());
+            SharedPreferencesUtil.getInstance(App.getInstance()).setString(StringConfig.PASSWORD, etPwd_setPwd.getText().toString());
+            SharedPreferencesUtil.getInstance(App.getInstance()).setBoolean(StringConfig.ISLOGIN, true);
+            SharedPreferencesUtil.getInstance(App.getInstance()).setInt("member_id", bean.getMember_id());
+            SharedPreferencesUtil.getInstance(App.getInstance()).setString("token", bean.getToken());
             intentToHome();
         }
         ToastTools.showShort(this, bean.getMsg());

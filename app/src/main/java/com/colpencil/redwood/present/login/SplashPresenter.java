@@ -4,11 +4,13 @@ import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.HomeRecommend;
 import com.colpencil.redwood.bean.LoginBean;
+import com.colpencil.redwood.bean.RxBusMsg;
 import com.colpencil.redwood.configs.StringConfig;
 import com.colpencil.redwood.model.SplashModel;
 import com.colpencil.redwood.model.imples.ISplashModel;
 import com.colpencil.redwood.view.impl.ISplashView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
+import com.property.colpencil.colpencilandroidlibrary.Function.Rx.RxBus;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
 
 import rx.Observer;
@@ -43,10 +45,17 @@ public class SplashPresenter extends ColpencilPresenter<ISplashView> {
             @Override
             public void onNext(LoginBean loginBean) {
                 if (loginBean.getCode() == 1) {
+
                     SharedPreferencesUtil.getInstance(App.getInstance()).setInt("member_id", loginBean.getMember_id());
                     SharedPreferencesUtil.getInstance(App.getInstance()).setString("token", loginBean.getToken());
                     SharedPreferencesUtil.getInstance(App.getInstance()).setBoolean(StringConfig.ISLOGIN, true);
+                    RxBusMsg msg = new RxBusMsg();
+                    msg.setType(58);
+                    RxBus.get().post("rxBusMsg", msg);
                 } else {
+                    RxBusMsg msg = new RxBusMsg();
+                    msg.setType(53);
+                    RxBus.get().post("rxBusMsg", msg);
                     SharedPreferencesUtil.getInstance(App.getInstance()).setBoolean(StringConfig.ISLOGIN, false);
                 }
             }

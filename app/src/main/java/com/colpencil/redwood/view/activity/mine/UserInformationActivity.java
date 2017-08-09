@@ -257,9 +257,9 @@ public class UserInformationActivity extends ColpencilActivity implements UserIn
                 RxBusMsg rxBusMsg = new RxBusMsg();
                 rxBusMsg.setType(53);
                 RxBus.get().post("rxBusMsg", rxBusMsg);
-                SharedPreferencesUtil.getInstance(this).setString(StringConfig.MOBILEPHONE, "");
-                SharedPreferencesUtil.getInstance(this).setString(StringConfig.PASSWORD, "");
-                SharedPreferencesUtil.getInstance(this).setBoolean(StringConfig.ISLOGIN, false);
+                SharedPreferencesUtil.getInstance(App.getInstance()).setString(StringConfig.MOBILEPHONE, "");
+                SharedPreferencesUtil.getInstance(App.getInstance()).setString(StringConfig.PASSWORD, "");
+                SharedPreferencesUtil.getInstance(App.getInstance()).setBoolean(StringConfig.ISLOGIN, false);
                 finish();
                 break;
             case R.id.ll_clear:

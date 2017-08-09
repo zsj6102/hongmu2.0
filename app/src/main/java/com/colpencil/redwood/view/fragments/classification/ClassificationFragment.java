@@ -17,8 +17,6 @@ import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
 import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.cyclopedia.HSearchPresent;
 import com.colpencil.redwood.view.activity.ShoppingCartActivitys.NewShopingCartActivity;
-
-import com.colpencil.redwood.view.activity.ShoppingCartActivitys.ShoppingCartActivity;
 import com.colpencil.redwood.view.activity.classification.SearchGoodActivity;
 import com.colpencil.redwood.view.activity.login.LoginActivity;
 import com.colpencil.redwood.view.adapters.HSearchLVAdapter;
@@ -76,6 +74,7 @@ public class ClassificationFragment extends ColpencilFragment
      */
     @Override
     public void loadData() {
+        showLoading("数据加载中...");
         hSearchPresent.loadListViewData();
     }
     @Override
@@ -90,6 +89,7 @@ public class ClassificationFragment extends ColpencilFragment
 
     @Override
     public void loadListViewData(List<Cat> datas) {
+        hideLoading();
         lvdatas.clear();
         lvdatas.addAll(datas);
         fragments.add(new HotGoodFragment());
@@ -109,6 +109,7 @@ public class ClassificationFragment extends ColpencilFragment
      */
     @Override
     public void fail(String msg) {
+        hideLoading();
         ColpenciSnackbarUtil.downShowing(getActivity().findViewById(android.R.id.content), msg);
     }
 

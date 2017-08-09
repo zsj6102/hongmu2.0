@@ -10,6 +10,35 @@ import java.util.List;
  * @date 2016/8/22
  */
 public class OrderDetailsBean implements Serializable {
+//二期添加   商家ID，名称，留言
+    private int store_id;
+    private String strore_name;
+    private String leave_message;
+
+    public int getStore_id() {
+        return store_id;
+    }
+
+    public void setStore_id(int store_id) {
+        this.store_id = store_id;
+    }
+
+    public String getStrore_name() {
+        return strore_name;
+    }
+
+    public void setStrore_name(String strore_name) {
+        this.strore_name = strore_name;
+    }
+
+    public String getLeave_message() {
+        return leave_message;
+    }
+
+    public void setLeave_message(String leave_message) {
+        this.leave_message = leave_message;
+    }
+
     /**
      * 订单ID
      */

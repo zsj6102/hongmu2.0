@@ -35,6 +35,7 @@ import com.colpencil.redwood.bean.MyCyclopediaInfo;
 import com.colpencil.redwood.bean.MyWeekShootReturn;
 import com.colpencil.redwood.bean.NewsInfoVo;
 import com.colpencil.redwood.bean.OrderCenterReturn;
+import com.colpencil.redwood.bean.OrderDetailReturn;
 import com.colpencil.redwood.bean.OrderDetailsReturn;
 import com.colpencil.redwood.bean.PayForReturn;
 import com.colpencil.redwood.bean.PayKeyRetrun;
@@ -1373,6 +1374,7 @@ public interface RedWoodApi {
     @FormUrlEncoded
     Observable<SizeColorInfo> getSize(@Field("id") int parent_id);
 
+//<!--------------------二期相关接口------------------------------->
 
     /**
      * 多商家下单接口
@@ -1380,4 +1382,12 @@ public interface RedWoodApi {
     @Multipart
     @POST("mobileStoreOrder!createOrder.do")
     Observable<PayReturn> getPayReturn(@PartMap HashMap<String,RequestBody> params);
+
+//    /**
+//     * 订单详情
+//     */
+//    @GET("mobileOrderHandle!orderDetail.do")
+//    Observable<OrderDetailReturn> getOrderDetail(@Query("member_id") int member_id, @Query("token") String token,
+//                                              @Query("order_id") int order_id);
+
 }

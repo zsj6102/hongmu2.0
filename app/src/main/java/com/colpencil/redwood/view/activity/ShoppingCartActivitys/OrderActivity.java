@@ -127,6 +127,7 @@ public class OrderActivity extends ColpencilActivity implements IOrderView {
                 int m = 0;
                 for (int k = 0; k < mdata.size(); k++) {
                     if ((mdata.get(k).getGoodsItem().contains(adapter.getItem(position)))) {
+                        couponList.clear();
                         couponList.addAll(mdata.get(k).getPostages());
                         m = k;
                     }
@@ -183,6 +184,7 @@ public class OrderActivity extends ColpencilActivity implements IOrderView {
                 int m = 0;
                 for (int k = 0; k < mdata.size(); k++) {
                     if ((mdata.get(k).getGoodsItem().contains(adapter.getItem(position)))) {
+                        couponList.clear();
                         couponList.addAll(mdata.get(k).getAllCoupon().getCashList());
                         m = k;
                     }
@@ -240,6 +242,7 @@ public class OrderActivity extends ColpencilActivity implements IOrderView {
                 final VoucherDialog dialog = new VoucherDialog(OrderActivity.this);
                 for (int k = 0; k < mdata.size(); k++) {
                     if ((mdata.get(k).getGoodsItem().contains(adapter.getItem(position)))) {
+                        couponList.clear();
                         couponList.addAll(mdata.get(k).getAllCoupon().getVoucherList());
                         dialog.setCount(mdata.get(k).getAllCoupon().getVoucherCount());
                         m = k;

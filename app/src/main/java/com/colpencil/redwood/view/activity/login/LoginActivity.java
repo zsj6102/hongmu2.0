@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.colpencil.redwood.R;
+import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.LoginBean;
 import com.colpencil.redwood.bean.RxBusMsg;
 import com.colpencil.redwood.configs.Constants;
@@ -158,12 +159,12 @@ public class LoginActivity extends ColpencilActivity implements ILoginView {
         ColpenciSnackbarUtil.downShowing(findViewById(android.R.id.content), loginBean.getMsg());
         if (loginBean.getCode() == 1) {//登录成功
             String password = et_loginPwd.getText().toString();
-            SharedPreferencesUtil.getInstance(this).setString(StringConfig.MOBILEPHONE, et_loginPhone.getText().toString());
-            SharedPreferencesUtil.getInstance(this).setString(StringConfig.PASSWORD, password);
-            SharedPreferencesUtil.getInstance(this).setBoolean(StringConfig.ISLOGIN, true);
+            SharedPreferencesUtil.getInstance(App.getInstance()).setString(StringConfig.MOBILEPHONE, et_loginPhone.getText().toString());
+            SharedPreferencesUtil.getInstance(App.getInstance()).setString(StringConfig.PASSWORD, password);
+            SharedPreferencesUtil.getInstance(App.getInstance()).setBoolean(StringConfig.ISLOGIN, true);
             gotoHome(loginBean);
         } else {
-            SharedPreferencesUtil.getInstance(this).setBoolean(StringConfig.ISLOGIN, false);
+            SharedPreferencesUtil.getInstance(App.getInstance()).setBoolean(StringConfig.ISLOGIN, false);
         }
     }
 
@@ -187,8 +188,8 @@ public class LoginActivity extends ColpencilActivity implements ILoginView {
      * 进入主页
      */
     private void gotoHome(LoginBean loginBean) {
-        SharedPreferencesUtil.getInstance(this).setInt("member_id", loginBean.getMember_id());
-        SharedPreferencesUtil.getInstance(this).setString("token", loginBean.getToken());
+        SharedPreferencesUtil.getInstance(App.getInstance()).setInt("member_id", loginBean.getMember_id());
+        SharedPreferencesUtil.getInstance(App.getInstance()).setString("token", loginBean.getToken());
         if (requestCode == Constants.REQUEST_LOGIN) {
             RxBusMsg rxBusMsg = new RxBusMsg();
             rxBusMsg.setType(4);

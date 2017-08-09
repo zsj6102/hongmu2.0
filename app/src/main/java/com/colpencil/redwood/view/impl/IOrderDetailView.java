@@ -1,19 +1,13 @@
 package com.colpencil.redwood.view.impl;
 
 import com.colpencil.redwood.bean.OrderDetailReturn;
-import com.colpencil.redwood.bean.OrderDetailsReturn;
+
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilBaseView;
 
 import java.util.Map;
 
-/**
- * 作者：曾 凤
- * 邮箱：20000263@qq.com
- * 日期：2016/8/22 10 39
- */
-public interface IOrderDetailsView extends ColpencilBaseView {
-
-    void result(OrderDetailsReturn orderDetailsReturn);
+public interface IOrderDetailView extends ColpencilBaseView {
+    void result(OrderDetailReturn orderDetailsReturn);
 
     void fail(int code, String msg);
 

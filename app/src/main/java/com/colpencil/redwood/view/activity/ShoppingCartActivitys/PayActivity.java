@@ -99,7 +99,7 @@ public class PayActivity extends ColpencilActivity implements IPayView {
                 item.setType_id(payinfo.getOrderArrays().get(i).getDeliverid());
             }
             if (payinfo.getOrderArrays().get(i).getYouhuiid() != -1) {
-                item.setMoneyId(payinfo.getOrderArrays().get(i).getDeliverid());
+                item.setMoneyId(payinfo.getOrderArrays().get(i).getYouhuiid());
             }
             if (payinfo.getOrderArrays().get(i).getDaijinid() != null) {
                 item.setVoucherids(payinfo.getOrderArrays().get(i).getDaijinid());

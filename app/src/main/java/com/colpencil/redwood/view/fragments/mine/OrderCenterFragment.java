@@ -19,6 +19,7 @@ import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.mine.OrderCenterFragmentPresenter;
 import com.colpencil.redwood.view.activity.mine.AfterSalesActivity;
 import com.colpencil.redwood.view.activity.mine.EvaluationActivity;
+import com.colpencil.redwood.view.activity.mine.OrderDetailActivity;
 import com.colpencil.redwood.view.activity.mine.OrderDetailsActivity;
 import com.colpencil.redwood.view.activity.mine.RefundMoneyActivity;
 import com.colpencil.redwood.view.activity.mine.WebViewActivity;

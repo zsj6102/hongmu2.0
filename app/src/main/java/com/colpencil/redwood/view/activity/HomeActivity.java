@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.colpencil.redwood.R;
+import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.ApplyStatusReturn;
 import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.HomeRecommend;
@@ -267,8 +268,8 @@ public class HomeActivity extends ColpencilActivity implements View.OnClickListe
             ToastTools.showShort(this, "再按一次退出程序");
             mHandler.sendEmptyMessageDelayed(0, 2000);
         } else {
-            SharedPreferencesUtil.getInstance(this).setString("token", "");
-            SharedPreferencesUtil.getInstance(this).setInt("member_id", 0);
+            SharedPreferencesUtil.getInstance(App.getInstance()).setString("token", "");
+            SharedPreferencesUtil.getInstance(App.getInstance()).setInt("member_id", 0);
             finish();
             System.exit(0);
         }

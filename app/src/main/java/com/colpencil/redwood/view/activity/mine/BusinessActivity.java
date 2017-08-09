@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.colpencil.redwood.R;
+import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.ApplyStatusReturn;
 import com.colpencil.redwood.bean.RefreshMsg;
 import com.colpencil.redwood.present.mine.ApplyStatusPresenter;
@@ -105,8 +106,8 @@ public class BusinessActivity extends ColpencilActivity implements View.OnClickL
         tvCorperate.setText("<" + "合作热线：13888999899" + ">");
         HashMap<String, String> params = new HashMap<>();
         //去获取申请状态
-        params.put("member_id", SharedPreferencesUtil.getInstance(this).getInt("member_id") + "");
-        params.put("token", SharedPreferencesUtil.getInstance(this).getString("token"));
+        params.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+        params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
         presenter.getApplyStatus(params);
         showLoading("");
         initBus();

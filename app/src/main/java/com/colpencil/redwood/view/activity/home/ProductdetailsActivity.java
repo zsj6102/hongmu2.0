@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.colpencil.redwood.R;
+import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.BidderInfoVo;
 import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.RxBusMsg;
@@ -297,7 +298,7 @@ public class ProductdetailsActivity extends ColpencilActivity implements IProduc
         } else {    //已结束
             current_price.setVisibility(View.GONE);
             lvBiddingAdapter.setState(true);
-            if (result.getWinner() == SharedPreferencesUtil.getInstance(this).getInt("member_id")) {
+            if (result.getWinner() == SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id")) {
                 tv_current.setText("我已拍得");
                 if (result.getBuy_status() == 0) {
                     btn_offer.setText("去付款");
