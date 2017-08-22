@@ -29,10 +29,9 @@ import rx.Observable;
 import rx.Subscriber;
 
 
-
 /**
  * @author 陈宝
- * @Description:商家合作
+ * @Description:商家合作 我是商家
  * @Email DramaScript@outlook.com
  * @date 2016/8/23
  */
@@ -87,6 +86,7 @@ public class BusinessActivity extends ColpencilActivity implements View.OnClickL
     private int store_id;
     private String storename;
     private int store_type;
+
     @Override
     protected void initViews(View view) {
         tv_title.setText("商家合作");
@@ -158,7 +158,7 @@ public class BusinessActivity extends ColpencilActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         Intent intent;
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.iv_back:
                 RefreshMsg msg = new RefreshMsg();
                 msg.setType(0);//个人 二期
@@ -181,20 +181,31 @@ public class BusinessActivity extends ColpencilActivity implements View.OnClickL
                 finish();
                 break;
             case R.id.layout_store1:
-                if(store_type == 1){
-                    intent = new Intent(this,PublishStoreActivity.class);
-                    intent.putExtra("type",store_type);
+                if (store_type == 1) {
+                    intent = new Intent(this, PublishStoreActivity.class);
+                    intent.putExtra("type", store_type);
+                    intent.putExtra("id", store_id + "");
                     startActivity(intent);
-                }else{
-                    intent = new Intent(this,PublishListActivity.class);
-                    intent.putExtra("type",store_type+"");
-                    intent.putExtra("name", storename);
-                    intent.putExtra("id",store_id+"");
+                } else {
+                    intent = new Intent(this, PublishListActivity.class);
+                    intent.putExtra("type", store_type + "");
+//                    intent.putExtra("name", storename);
+                    intent.putExtra("id", store_id + "");
                     startActivity(intent);
                 }
-
+                break;
             case R.id.tv_commit:
                 setApplyVisible();
+                break;
+            case R.id.layout_store2:
+                intent = new Intent(this, CommodityManageActivity.class);
+                intent.putExtra("type","2");//商品管理
+                startActivity(intent);
+                 break;
+            case R.id.layout_store3:
+                intent = new Intent(this,CommodityManageActivity.class);
+                intent.putExtra("type","3");//订单管理
+                startActivity(intent);
                 break;
         }
 
@@ -253,6 +264,7 @@ public class BusinessActivity extends ColpencilActivity implements View.OnClickL
                 layoutApply.setVisibility(View.GONE);
                 layoutStatus.setVisibility(View.GONE);
                 store_type = applyStatusReturn.getData().getStore_type();
+                SharedPreferencesUtil.getInstance(App.getInstance()).setInt("store_type",store_type);
                 store_id = applyStatusReturn.getData().getStore_id();
                 storename = applyStatusReturn.getData().getStore_name();
             }

@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.bean.GoodsTypeInfo;
+import com.colpencil.redwood.bean.Info.StoreDetail;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.bean.result.GoodsTypeResult;
 import com.colpencil.redwood.present.home.AllAuctionPresent;
 import com.colpencil.redwood.view.fragments.mine.AllSpecialItemFragment;
@@ -77,6 +79,8 @@ import butterknife.OnClick;
     public void loadFail(String message) {
 
     }
+
+
 
     @Override
     public void getGoodsType(GoodsTypeResult goodsTypeResult) {

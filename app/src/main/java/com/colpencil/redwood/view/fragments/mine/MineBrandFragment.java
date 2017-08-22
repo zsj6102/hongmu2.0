@@ -19,6 +19,9 @@ import java.util.List;
 
 import butterknife.Bind;
 
+/**
+ * 商家我的界面
+ */
 @ActivityFragmentInject(
         contentViewId = R.layout.fragment_mine_brand
 )

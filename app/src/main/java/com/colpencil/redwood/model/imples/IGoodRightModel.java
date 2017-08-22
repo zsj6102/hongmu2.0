@@ -3,6 +3,7 @@ package com.colpencil.redwood.model.imples;
 import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.GoodComment;
 import com.colpencil.redwood.bean.ListResult;
+import com.colpencil.redwood.bean.NumReturn;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilModel;
 
 import rx.Observer;
@@ -33,5 +34,5 @@ public interface IGoodRightModel extends ColpencilModel {
      */
     void loadCommentsNum(int goods_id);
 
-    void subCommentsNum(Observer<EntityResult<String>> observer);
+    void subCommentsNum(Observer<NumReturn> observer);
 }

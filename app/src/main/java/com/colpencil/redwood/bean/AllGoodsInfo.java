@@ -4,29 +4,46 @@ import java.io.Serializable;
 import java.util.List;
 
 public class AllGoodsInfo implements Serializable {
-    private int store_id;
-    private String store_type;
-    private String store_logo;
-    private String store_name;
-    private String store_city;
-    private String goods_rate;
-    private String point;
-    private int collectmember;
-    private String name;
-    private int goods_id;
-    private String intro;
-    private double price;
-    private String create_time;
+    private int store_id;//商家id
+    private String store_type;//商家图标
+    private String store_logo;//商家头像
+    private String store_name;//商家名称
+    private String store_city;//商家所在城市
+    private String goods_rate;//好评率
+    private String point;//用户等级图标
+    private int collectmember;//收藏个数
+    private String name;//商品名称
+    private int goods_id;//商品id
+    private String intro;//商品介绍
+    private double price;//商品价格
+    private String create_time;//发布时间
 
-    private int store;
-    private int comment_count;
-    private List<AllGoodsImgInfo> list_view_gallery;
-    private int is_top;
-    private String cover;
-    private int fans_count;
-    private String point_name;
-    private String store_type_name;
+    private int store;//库存
+    private int comment_count;//评论数
+    private List<AllGoodsImgInfo> list_view_gallery;//商品图片
+    private int is_top;//是否置顶
+    private String cover;//商品的广告图
+    private int fans_count;//粉丝数
+    private String point_name;//用户等级描述
+    private String store_type_name;//商家类型
+    private float cover_proportion;//广告图宽高比
+    private int have_collection;//是否收藏 0没收藏 1相反
 
+    public int getHave_collection() {
+        return have_collection;
+    }
+
+    public void setHave_collection(int have_collection) {
+        this.have_collection = have_collection;
+    }
+
+    public float getCover_proportion() {
+        return cover_proportion;
+    }
+
+    public void setCover_proportion(float cover_proportion) {
+        this.cover_proportion = cover_proportion;
+    }
 
     public int getStore_id() {
         return store_id;

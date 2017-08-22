@@ -3,7 +3,9 @@ package com.colpencil.redwood.view.fragments.home;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -375,7 +377,22 @@ public class HomePageFragment extends ColpencilFragment implements IHomePageView
      */
     @OnClick(R.id.totop_iv)
     void totopOnClick() {
-        listView.setSelection(0);
+        listView.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_CANCEL, 0, 0, 0));
+        listView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent ev) {
+                switch (ev.getAction()) {
+                    case MotionEvent.ACTION_CANCEL:
+                        listView.setSelection(0);
+                        break;
+
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
+
     }
 
 }

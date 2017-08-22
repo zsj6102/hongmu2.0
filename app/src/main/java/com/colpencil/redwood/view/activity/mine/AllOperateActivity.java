@@ -6,11 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
-
 import com.colpencil.redwood.R;
-import com.colpencil.redwood.view.fragments.mine.AllAuctionFragment;
-import com.colpencil.redwood.view.fragments.mine.CardWallFragment;
-import com.colpencil.redwood.view.fragments.mine.SpeedFragemnt;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilActivity;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;

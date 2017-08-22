@@ -7,20 +7,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.Toast;
-
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.bean.AdInfo;
 import com.colpencil.redwood.bean.Info.RxClickMsg;
 import com.colpencil.redwood.bean.result.AdResult;
 import com.colpencil.redwood.function.tools.MyImageLoader;
+import com.colpencil.redwood.function.widgets.DragTopLayout;
 import com.colpencil.redwood.present.SpeedPresent;
 import com.colpencil.redwood.view.impl.SpeedView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilFragment;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
 import com.property.colpencil.colpencilandroidlibrary.Function.Rx.RxBus;
-import com.property.colpencil.colpencilandroidlibrary.Ui.NoScrollViewPager;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
@@ -30,8 +28,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
-import github.chenupt.dragtoplayout.DragTopLayout;
-
 @ActivityFragmentInject(
         contentViewId = R.layout.fragment_brand_merchant
 )
@@ -77,6 +73,9 @@ public class BrandMerchantFragment extends ColpencilFragment implements SpeedVie
         RxBus.get().post("totop",msg);
     }
     public void onEvent(Boolean b){
+        if(dragLayout.getState() == DragTopLayout.PanelState.EXPANDED){
+            dragLayout.setTouchMode(true);
+        }
         dragLayout.setTouchMode(b);
     }
     @Override

@@ -1,6 +1,7 @@
 package com.colpencil.redwood.view.base;
 
 import android.content.Context;
+import android.text.SpannableStringBuilder;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,7 +86,11 @@ public class CommonViewHolder {
         view.setText(text);
         return this;
     }
-
+    public CommonViewHolder setText(int viewId, SpannableStringBuilder style){
+        TextView view = getView(viewId);
+        view.setText(style);
+        return this;
+    }
     /**
      * 为ImageView加载图片
      *

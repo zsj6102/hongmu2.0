@@ -366,7 +366,7 @@ public class PayActivity extends ColpencilActivity implements IPayView {
         }
         minute = -1;
         second = -1;
-        RxBus.get().unregister("rxBusMsg", observable);
+//        RxBus.get().unregister("rxBusMsg", observable);
     }
 
     @Override

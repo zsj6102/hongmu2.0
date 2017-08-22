@@ -2,12 +2,14 @@ package com.colpencil.redwood.model;
 
 import com.colpencil.redwood.api.RedWoodApi;
 import com.colpencil.redwood.base.App;
+import com.colpencil.redwood.bean.AddResult;
 import com.colpencil.redwood.bean.result.AllGoodsResult;
 import com.colpencil.redwood.function.config.UrlConfig;
 import com.colpencil.redwood.model.imples.ISupaiDynamicModel;
 import com.property.colpencil.colpencilandroidlibrary.Function.MianCore.RetrofitManager;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import rx.Observable;
 import rx.Observer;
@@ -18,6 +20,8 @@ import rx.schedulers.Schedulers;
 public class SupaiDynamicModel implements ISupaiDynamicModel {
     private Observable<AllGoodsResult> colsupaiObservable;
     private Observable<AllGoodsResult> supaiDynamic;
+    private Observable<AddResult> addResultObservable;
+    private  Observable<AddResult> likeObservable;
     /**
      *  我的收藏(速拍)
      * @param params
@@ -62,5 +66,43 @@ public class SupaiDynamicModel implements ISupaiDynamicModel {
     @Override
     public void subSupaiDynamic(Observer<AllGoodsResult> observer) {
         supaiDynamic.subscribe(observer);
+    }
+    @Override
+    public void getAddCommentResult(Map<String, String> params) {
+        addResultObservable = RetrofitManager.getInstance(1, App.getInstance(),UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .getAdd(params)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<AddResult, AddResult>() {
+                    @Override
+                    public AddResult call(AddResult result) {
+                        return result;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void subAddResult(Observer<AddResult> observer) {
+        addResultObservable.subscribe(observer);
+    }
+
+
+    @Override
+    public void getLikeResult(Map<String, String> params) {
+        likeObservable = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .getLike(params)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<AddResult, AddResult>() {
+                    @Override
+                    public AddResult call(AddResult result) {
+                        return result;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void subLike(Observer<AddResult> observer) {
+        likeObservable.subscribe(observer);
     }
 }

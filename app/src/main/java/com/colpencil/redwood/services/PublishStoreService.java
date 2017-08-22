@@ -30,6 +30,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
+import static com.colpencil.redwood.R.id.price;
+
 public class PublishStoreService extends Service {
     @Nullable
     @Override
@@ -54,18 +56,26 @@ public class PublishStoreService extends Service {
                 }
             }
         }
+        if(info.getStore_id()!=null){
+            params.put("store_id",OkhttpUtils.toRequestBody(info.getStore_id()));
+        }
+
         params.put("cat_id", OkhttpUtils.toRequestBody(info.getCat_id()));
         params.put("token", OkhttpUtils.toRequestBody(SharedPreferencesUtil.getInstance(this).getString("token")));
         params.put("member_id", OkhttpUtils.toRequestBody(SharedPreferencesUtil.getInstance(this).getInt("member_id") + ""));
         params.put("name", OkhttpUtils.toRequestBody(info.getName()));
-        params.put("price", OkhttpUtils.toRequestBody(info.getPrice()));
-        if(type.equals("1")){
-            params.put("cover\";filename=\"1.png", RequestBody.create(MediaType.parse("image/png"), info.getCover()));
+        if(info.getPrice()!=null){
+            params.put("price", OkhttpUtils.toRequestBody(info.getPrice()));
+        }
+        params.put("cover\";filename=\"1.png", RequestBody.create(MediaType.parse("image/png"), info.getCover()));
+//        if(type.equals("1")){
             params.put("intro", OkhttpUtils.toRequestBody(info.getIntro()));
-        }
-        if(!type.equals("1")){
-            params.put("mktprice",OkhttpUtils.toRequestBody(info.getMktprice()));
-        }
+//        }
+//        if(!type.equals("1")){
+            if(info.getMktprice()!=null){
+                params.put("mktprice",OkhttpUtils.toRequestBody(info.getMktprice()));
+            }
+//        }
         params.put("store", OkhttpUtils.toRequestBody(info.getStore()));
         params.put("goods_type", OkhttpUtils.toRequestBody(info.getGoods_type()));
         params.put("warehouseOrshelves", OkhttpUtils.toRequestBody(info.getWarehouseOrshelves()));

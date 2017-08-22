@@ -10,13 +10,13 @@
 
     <ImageView
         android:id="@+id/orderCenter_iv"
-        android:layout_width="55dp"
-        android:layout_height="55dp" />
+        android:layout_width="110px"
+        android:layout_height="110px" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="20px"
         android:orientation="vertical">
 
         <LinearLayout
@@ -32,11 +32,11 @@
                 android:singleLine="true"
                 android:maxEms="7"
                 android:textColor="@color/text_color_first"
-                android:textSize="@dimen/main_text_size" />
+                android:textSize="28px" />
 
             <View
                 android:layout_width="0dp"
-                android:layout_height="1dp"
+                android:layout_height="1px"
                 android:layout_weight="1"/>
 
             <TextView
@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/main_red"
-                android:textSize="@dimen/main_text_size" />
+                android:textSize="28px" />
 
         </LinearLayout>
 
@@ -61,30 +61,30 @@
                 android:ellipsize="end"
                 android:lines="2"
                 android:textColor="@color/text_color_thirst"
-                android:textSize="13sp" />
+                android:textSize="26px" />
 
             <TextView
                 android:id="@+id/item_buyAfterSale"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginRight="10dp"
+                android:layout_height="40px"
+                android:layout_marginRight="20px"
                 android:background="@drawable/red_border_white_solid"
                 android:gravity="center"
                 android:text="申请售后"
                 android:textColor="@color/main_red"
-                android:textSize="11sp"
+                android:textSize="22px"
                 android:visibility="gone" />
 
             <TextView
                 android:id="@+id/item_buyAfterEvaluation"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginRight="10dp"
+                android:layout_height="40px"
+                android:layout_marginRight="20px"
                 android:background="@drawable/red_border_white_solid"
                 android:gravity="center"
                 android:text="去评价"
                 android:textColor="@color/main_red"
-                android:textSize="11sp"
+                android:textSize="22px"
                 android:visibility="gone" />
 
             <TextView
@@ -92,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_color_thirst"
-                android:textSize="13sp" />
+                android:textSize="26px" />
 
         </LinearLayout>
 

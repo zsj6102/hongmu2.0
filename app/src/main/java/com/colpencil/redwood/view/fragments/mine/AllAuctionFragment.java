@@ -11,6 +11,8 @@ import android.view.View;
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.bean.AllAuctionItem;
 import com.colpencil.redwood.bean.GoodsTypeInfo;
+import com.colpencil.redwood.bean.Info.StoreDetail;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.bean.result.GoodsTypeResult;
 import com.colpencil.redwood.present.home.AllAuctionPresent;
 import com.colpencil.redwood.view.impl.AllAuctionView;
@@ -23,7 +25,9 @@ import java.util.List;
 
 import butterknife.Bind;
 
-
+/**
+ * 所有拍品
+ */
 @ActivityFragmentInject(
         contentViewId = R.layout.fragment_allauction
 )
@@ -81,6 +85,8 @@ public class AllAuctionFragment extends ColpencilFragment  implements AllAuction
         tab_layout.setTabMode(TabLayout.MODE_SCROLLABLE);
         hideLoading();
     }
+
+
 
     class MyPageAdapter extends FragmentPagerAdapter {
 

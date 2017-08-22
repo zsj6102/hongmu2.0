@@ -6,8 +6,14 @@
     android:orientation="vertical">
 
     <include layout="@layout/base_header" />
-    <include layout="@layout/activity_apply_status"/>
-    <include layout = "@layout/activity_is_store"/>
+    <include
+        android:id="@+id/layout_status"
+        android:visibility="gone"
+        layout="@layout/activity_apply_status"/>
+    <include
+        android:id="@+id/layout_is_store"
+        android:visibility="gone"
+        layout = "@layout/activity_is_store"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"

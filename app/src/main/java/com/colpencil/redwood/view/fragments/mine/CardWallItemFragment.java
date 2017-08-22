@@ -15,10 +15,12 @@ import com.colpencil.redwood.bean.Info.RxClickMsg;
 import com.colpencil.redwood.bean.result.CareReturn;
 import com.colpencil.redwood.configs.Constants;
 import com.colpencil.redwood.configs.StringConfig;
+import com.colpencil.redwood.function.widgets.AttachUtil;
 import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
 import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.mine.CardPresenter;
 import com.colpencil.redwood.view.activity.login.LoginActivity;
+import com.colpencil.redwood.view.activity.mine.StoreHomeActivity;
 import com.colpencil.redwood.view.adapters.CardWallAdapter;
 import com.colpencil.redwood.view.impl.ICardView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilFragment;
@@ -35,10 +37,13 @@ import java.util.List;
 
 import butterknife.Bind;
 import de.greenrobot.event.EventBus;
-import github.chenupt.dragtoplayout.AttachUtil;
+
 import rx.Observable;
 import rx.Subscriber;
 
+/**
+ * 商品区店铺名片墙
+ */
 @ActivityFragmentInject(
         contentViewId = R.layout.fragment_common_list)
 
@@ -174,6 +179,14 @@ public class CardWallItemFragment extends ColpencilFragment implements ICardView
     private void initAdatper() {
         mAdapter.setListener(new CardWallAdapter.ComOnClickListener() {
             @Override
+            public void contentClick(int position) {
+                Intent intent = new Intent(getActivity(), StoreHomeActivity.class);
+                intent.putExtra("type",origion);
+                intent.putExtra("store_id",Integer.parseInt(mlist.get(position).getStore_id()));
+                startActivity(intent);
+            }
+
+            @Override
             public void careClick(int position) {
                 pos = position;
                 if (SharedPreferencesUtil.getInstance(getActivity()).getBoolean(StringConfig.ISLOGIN, false)) {
@@ -186,6 +199,7 @@ public class CardWallItemFragment extends ColpencilFragment implements ICardView
                     params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
                     params.put("fans_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
                     params.put("concern_id", mlist.get(pos).getMember_id() + "");
+                    showLoading("");
                     presenter.getCareReturn(params);
                 } else {
                     final CommonDialog dialog = new CommonDialog(getActivity(), "你还没登录喔!", "去登录", "取消");
@@ -214,16 +228,33 @@ public class CardWallItemFragment extends ColpencilFragment implements ICardView
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Constants.REQUEST_LOGIN) {  //登录返回来的结果
-            HashMap<String, String> params = new HashMap<String, String>();
-            if (mlist.get(pos).getIsfocus() == 0) {
-                params.put("fans_type", 6 + "");//取消关注
-            } else {
-                params.put("fans_type", 5 + "");//关注
+//            HashMap<String, String> params = new HashMap<String, String>();
+//            if (mlist.get(pos).getIsfocus() == 0) {
+//                params.put("fans_type", 6 + "");//取消关注
+//            } else {
+//                params.put("fans_type", 5 + "");//关注
+//            }
+//            params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+//            params.put("fans_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+//            params.put("concern_id", mlist.get(pos).getMember_id() + "");
+//            presenter.getCareReturn(params);
+            final HashMap<String, String> params = new HashMap<>();
+            params.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+            params.put("page", pageNo + "");
+            params.put("pageSize", pageSize + "");
+            params.put("cat_id", type + "");
+            if(type!=4){
+                params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+                params.put("store_type", origion + "");
+
             }
-            params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
-            params.put("fans_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
-            params.put("concern_id", mlist.get(pos).getMember_id() + "");
-            presenter.getCareReturn(params);
+            if(type!=4){
+                presenter.getCardStore(pageNo, params);
+            }else{
+                presenter.getMRCard(pageNo,params);
+            }
+
+            showLoading("加载中...");
         }
     }
 
@@ -269,6 +300,7 @@ public class CardWallItemFragment extends ColpencilFragment implements ICardView
     public void operate(CareReturn result) {
 
         if (result.getCode() == 0) {
+            hideLoading();
             final HashMap<String, String> params = new HashMap<>();
             params.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
             params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));

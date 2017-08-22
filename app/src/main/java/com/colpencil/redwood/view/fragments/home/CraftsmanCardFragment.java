@@ -11,6 +11,8 @@ import android.view.View;
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.bean.CraftsmanCardItem;
 import com.colpencil.redwood.bean.GoodsTypeInfo;
+import com.colpencil.redwood.bean.Info.StoreDetail;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.bean.result.GoodsTypeResult;
 import com.colpencil.redwood.present.home.AllAuctionPresent;
 import com.colpencil.redwood.view.impl.AllAuctionView;
@@ -57,6 +59,8 @@ public class CraftsmanCardFragment extends ColpencilFragment implements AllAucti
     public void loadSuccess() {
 
     }
+
+
 
     @Override
     public void loadFail(String message) {

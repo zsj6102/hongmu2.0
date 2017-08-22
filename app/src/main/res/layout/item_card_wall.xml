@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/line_color_second" />
+        android:background="@color/line_color_second"/>
 
     <LinearLayout
+        android:id="@+id/content_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/main_LinearLayout_background"
@@ -23,7 +24,7 @@
             android:layout_marginBottom="19dp"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="19dp"
-            app:sriv_oval="true" />
+            app:sriv_oval="true"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -39,13 +40,15 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tv_storename"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="灰太狼"
                     android:textColor="@color/main_brown"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
                 <TextView
+                    android:id="@+id/tv_recommend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -57,7 +60,7 @@
                     android:paddingTop="2dp"
                     android:text="推荐"
                     android:textColor="@color/main_red"
-                    android:textSize="8sp" />
+                    android:textSize="8sp"/>
 
             </LinearLayout>
 
@@ -68,9 +71,10 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/cardwall_level" />
+                    android:id="@+id/iv_dengji"
+                    android:layout_width="24dp"
+                    android:layout_height="10dp"
+                    android:src="@mipmap/cardwall_level"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -78,21 +82,23 @@
                     android:layout_marginLeft="7dp"
                     android:text="惊天泣鬼级"
                     android:textColor="@color/color_192a46"
-                    android:textSize="10sp" />
+                    android:textSize="10sp"/>
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/iv_type"
+                    android:layout_width="24dp"
+                    android:layout_height="10dp"
                     android:layout_marginLeft="12dp"
-                    android:src="@mipmap/cardwall_business" />
+                    android:src="@mipmap/cardwall_business"/>
 
                 <TextView
+                    android:id="@+id/tv_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="7dp"
                     android:text="品牌商家"
                     android:textColor="@color/color_192a46"
-                    android:textSize="10sp" />
+                    android:textSize="10sp"/>
 
             </LinearLayout>
 
@@ -107,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:text="好评："
                     android:textColor="@color/text_color_thirst"
-                    android:textSize="10sp" />
+                    android:textSize="10sp"/>
 
                 <TextView
                     android:id="@+id/tv_praise_count"
@@ -115,13 +121,13 @@
                     android:layout_height="wrap_content"
                     android:text="96%"
                     android:textColor="@color/main_red"
-                    android:textSize="10sp" />
+                    android:textSize="10sp"/>
 
                 <View
                     android:layout_width="0.5dp"
                     android:layout_height="10dp"
                     android:layout_marginLeft="10dp"
-                    android:background="@color/line_color_first" />
+                    android:background="@color/line_color_first"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -129,7 +135,7 @@
                     android:layout_marginLeft="10dp"
                     android:text="粉丝："
                     android:textColor="@color/text_color_thirst"
-                    android:textSize="10sp" />
+                    android:textSize="10sp"/>
 
                 <TextView
                     android:id="@+id/tv_follow"
@@ -137,7 +143,7 @@
                     android:layout_height="wrap_content"
                     android:text="266"
                     android:textColor="@color/main_red"
-                    android:textSize="10sp" />
+                    android:textSize="10sp"/>
 
             </LinearLayout>
 
@@ -155,22 +161,22 @@
                 android:id="@+id/layout_care"
                 android:layout_width="60dp"
                 android:layout_height="25dp"
-                android:visibility="visible"
                 android:background="@drawable/line2_line_transparent_shape"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="visible">
 
                 <ImageView
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:src="@drawable/focus_icon" />
+                    android:src="@drawable/focus_icon"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="关注"
                     android:textColor="@color/main_brown"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
             </LinearLayout>
 
@@ -188,7 +194,7 @@
                     android:layout_height="wrap_content"
                     android:text="取消关注"
                     android:textColor="@color/main_brown"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
             </LinearLayout>
 

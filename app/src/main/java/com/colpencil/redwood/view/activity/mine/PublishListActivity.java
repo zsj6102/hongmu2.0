@@ -25,10 +25,11 @@ public class PublishListActivity extends ColpencilActivity {
     @Bind(R.id.tv_main_title)
     TextView tvMainTitle;
     private String type;
-
+    private String store_id;
     @Override
     protected void initViews(View view) {
         type = getIntent().getStringExtra("type");
+        store_id = getIntent().getStringExtra("id");
         tvMainTitle.setText("发布商品");
         if (type != null) {
             if (type.equals("2")) {
@@ -59,6 +60,7 @@ public class PublishListActivity extends ColpencilActivity {
 
         Intent intent = new Intent(this, PublishStoreActivity.class);
         intent.putExtra("type", type);
+        intent.putExtra("id",store_id);
         startActivity(intent);
 
     }

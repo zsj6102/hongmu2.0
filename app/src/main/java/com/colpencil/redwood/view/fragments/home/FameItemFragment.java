@@ -13,6 +13,7 @@ import com.colpencil.redwood.bean.DynamicInfo;
 import com.colpencil.redwood.bean.FameInfo;
 import com.colpencil.redwood.bean.Info.RxClickMsg;
 import com.colpencil.redwood.bean.result.DynamicResult;
+import com.colpencil.redwood.function.widgets.AttachUtil;
 import com.colpencil.redwood.present.mine.DynamicPresent;
 import com.colpencil.redwood.view.adapters.FameAdapter;
 import com.colpencil.redwood.view.impl.IDynamicView;
@@ -30,13 +31,10 @@ import java.util.List;
 
 import butterknife.Bind;
 import de.greenrobot.event.EventBus;
-import github.chenupt.dragtoplayout.AttachUtil;
+
 import okhttp3.RequestBody;
 import rx.Observable;
 import rx.Subscriber;
-
-import static com.colpencil.redwood.R.id.gridview;
-import static com.colpencil.redwood.R.id.listview;
 
 
 @ActivityFragmentInject(
@@ -123,6 +121,7 @@ public class FameItemFragment extends ColpencilFragment implements IDynamicView 
 
             @Override
             public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
                 EventBus.getDefault().post(AttachUtil.isAdapterViewAttach(absListView));
             }
         });

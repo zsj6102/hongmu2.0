@@ -5,7 +5,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.colpencil.redwood.R;
 import com.colpencil.redwood.bean.AuctionInfo;
+import com.colpencil.redwood.bean.JiashangItem;
 import com.colpencil.redwood.function.tools.MyImageLoader;
 import com.colpencil.redwood.view.base.CommonAdapter;
 import com.colpencil.redwood.view.base.CommonViewHolder;
@@ -18,19 +20,19 @@ import java.util.List;
 import static com.colpencil.redwood.R.id.auction_banner;
 import static com.colpencil.redwood.R.id.auction_recycler;
 
-public class AuctionItemAdapter extends CommonAdapter<AuctionInfo> {
+public class AuctionItemAdapter extends CommonAdapter<JiashangItem> {
 
-    public AuctionItemAdapter(Context context, List<AuctionInfo> mDatas, int itemLayoutId) {
+    public AuctionItemAdapter(Context context, List<JiashangItem> mDatas, int itemLayoutId) {
         super(context, mDatas, itemLayoutId);
     }
 
     @Override
-    public void convert(CommonViewHolder helper, AuctionInfo item, int position) {
+    public void convert(CommonViewHolder helper, JiashangItem item, int position) {
         Banner banner= helper.getView(auction_banner);
         RecyclerView recycler=helper.getView(auction_recycler);
         recycler.setHasFixedSize(true);
-        recycler.setAdapter(new HomeAuctionAdapter(mContext, mDatas.get(position).getHomeAuctionInfos()));
-        if (mDatas.get(position).getHomeAuctionInfos().size() > 3) {
+        recycler.setAdapter(new HomeAuctionAdapter(mContext, mDatas.get(position).getList_view_gallery()));
+        if (mDatas.get(position).getList_view_gallery().size() > 3) {
             recycler.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         } else {
             recycler.setLayoutManager(new GridLayoutManager(mContext, 3));
@@ -38,8 +40,7 @@ public class AuctionItemAdapter extends CommonAdapter<AuctionInfo> {
 
         banner.setImageLoader(new MyImageLoader());
         List<String> imgUrls = new ArrayList<>();
-        imgUrls.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489627919&di=f00e984bd8d85c96cebae9afbdbb2ccd&imgtype=jpg&er=1&src=http%3A%2F%2Fpic71.nipic.com%2Ffile%2F20150629%2F17961491_211658772000_2.jpg");
-        imgUrls.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489033202628&di=0dacc1f0cae01168ebe1d362f64a314e&imgtype=0&src=http%3A%2F%2F5.26923.com%2Fdownload%2Fpic%2F000%2F327%2F862e3d13da417308895e06bfac198f87.jpg");
+        imgUrls.add(item.getCover());
         banner.setImages(imgUrls);
         if (imgUrls.size() > 1) {
             banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);//指示器模式
@@ -47,5 +48,10 @@ public class AuctionItemAdapter extends CommonAdapter<AuctionInfo> {
             banner.setBannerStyle(BannerConfig.NOT_INDICATOR);//无指示器模式
         }
         banner.start();
+        helper.setText(R.id.auction_test,item.getIntro());
+        helper.setText(R.id.tv_creattime,item.getCreate_time());
+        helper.setText(R.id.tv_like_num,item.getCollectmember()+"");
+        helper.setText(R.id.tv_comment_count,item.getComment_count()+"");
+        helper.setText(R.id.price,item.getPrice()+"");
     }
 }

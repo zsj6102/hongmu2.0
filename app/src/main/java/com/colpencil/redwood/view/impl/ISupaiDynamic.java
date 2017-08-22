@@ -1,5 +1,6 @@
 package com.colpencil.redwood.view.impl;
 
+import com.colpencil.redwood.bean.AddResult;
 import com.colpencil.redwood.bean.result.AllGoodsResult;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilBaseView;
 
@@ -12,4 +13,8 @@ public interface ISupaiDynamic extends ColpencilBaseView {
     void loadMoreSp(AllGoodsResult result);
 
     void refreshSp(AllGoodsResult result);
+
+    void addComment(AddResult result);
+
+    void addLike(AddResult result);
 }

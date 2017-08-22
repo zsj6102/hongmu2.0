@@ -18,11 +18,11 @@ import java.util.List;
 
 public class PostItemAdapter extends RecyclerView.Adapter<PostItemAdapter.MyViewHolder>{
     private Context context;
-    private List<PostItemInfo> mdata;
+    private List<String> mdata;
     private int width;
     private int height;
 
-    public  PostItemAdapter(Context context,List<PostItemInfo> mdata){
+    public  PostItemAdapter(Context context,List<String> mdata){
         this.context=context;
         this.mdata=mdata;
 
@@ -34,7 +34,7 @@ public class PostItemAdapter extends RecyclerView.Adapter<PostItemAdapter.MyView
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        ImageLoaderUtils.loadImage(context, mdata.get(position).getImgUrl(), holder.iv);
+        ImageLoaderUtils.loadImage(context, mdata.get(position) , holder.iv);
 
         width = SharedPreferencesUtil.getInstance(App.getInstance()).getInt("goodwidth", 0);
         height = SharedPreferencesUtil.getInstance(App.getInstance()).getInt("goodheight", 0);

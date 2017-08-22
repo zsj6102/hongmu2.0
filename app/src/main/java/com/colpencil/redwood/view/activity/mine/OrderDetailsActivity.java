@@ -33,6 +33,8 @@ import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscriber;
 
+import static com.colpencil.redwood.R.id.leave_message;
+
 /**
  * @author 曾 凤
  * @Description: 订单详情
@@ -78,6 +80,10 @@ public class OrderDetailsActivity extends ColpencilActivity implements IOrderDet
     TextView tv_postage;
     @Bind(R.id.orderdetails_time)
     TextView tv_time;
+    @Bind(R.id.tv_storename)
+    TextView tv_store;
+    @Bind(R.id.leave_message)
+    TextView tv_message;
 
     private Observable<RxBusMsg> observable;
     private Subscriber subscriber;
@@ -104,6 +110,7 @@ public class OrderDetailsActivity extends ColpencilActivity implements IOrderDet
 
     private void initViews() {
         tv_title.setText("订单详情");
+
         if (status == 0) {      //待付款
             btn2.setVisibility(View.VISIBLE);
             btn3.setVisibility(View.VISIBLE);
@@ -206,6 +213,8 @@ public class OrderDetailsActivity extends ColpencilActivity implements IOrderDet
             tv_receiver.setText(result.getResult().getAddresscontact());
             tv_discount.setText("-" + FormatUtils.formatDouble(result.getResult().getDiscount()));
             tv_time.setText(result.getResult().getCreate_time());
+            tv_store.setText(result.getResult().getStrore_name());
+            tv_message.setText(result.getResult().getLeave_message());
             if (status != 7) {
                 if (result.getResult().getStateFlag() == 0) {      //待付款
                     btn2.setVisibility(View.VISIBLE);

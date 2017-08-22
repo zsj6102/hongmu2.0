@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.GoodComment;
+import com.colpencil.redwood.bean.NumReturn;
 import com.colpencil.redwood.present.home.GoodRightPresenter;
 import com.colpencil.redwood.view.adapters.GoodCommentAdapter;
 import com.colpencil.redwood.view.impl.IGoodRightView;
@@ -102,7 +103,7 @@ public class GoodRightFragment extends ColpencilFragment implements IGoodRightVi
     }
 
     @Override
-    public void loadNums(EntityResult<String> result) {
+    public void loadNums(NumReturn result) {
         if (result.getCode() == 1) {
             tv_count.setText(result.getNum() + "");
         }

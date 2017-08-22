@@ -1,8 +1,8 @@
 package com.colpencil.redwood.present.home;
 
-import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.GoodComment;
 import com.colpencil.redwood.bean.ListResult;
+import com.colpencil.redwood.bean.NumReturn;
 import com.colpencil.redwood.model.GoodRightModel;
 import com.colpencil.redwood.model.imples.IGoodRightModel;
 import com.colpencil.redwood.view.impl.IGoodRightView;
@@ -63,7 +63,7 @@ public class GoodRightPresenter extends ColpencilPresenter<IGoodRightView> {
      */
     public void loadCommentsNum(int goods_id) {
         model.loadCommentsNum(goods_id);
-        Observer<EntityResult<String>> observer = new Observer<EntityResult<String>>() {
+        Observer<NumReturn> observer = new Observer<NumReturn>() {
             @Override
             public void onCompleted() {
 
@@ -75,7 +75,7 @@ public class GoodRightPresenter extends ColpencilPresenter<IGoodRightView> {
             }
 
             @Override
-            public void onNext(EntityResult<String> result) {
+            public void onNext(NumReturn result) {
                 mView.loadNums(result);
             }
         };

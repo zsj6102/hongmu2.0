@@ -2,6 +2,7 @@ package com.colpencil.redwood.present.home;
 
 import android.util.Log;
 
+import com.colpencil.redwood.bean.AddResult;
 import com.colpencil.redwood.bean.result.AllGoodsResult;
 import com.colpencil.redwood.model.AllAuctionItemModel;
 import com.colpencil.redwood.model.imples.IAllAuctionItemModel;
@@ -9,9 +10,14 @@ import com.colpencil.redwood.view.impl.AllAuctionItemView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.RequestBody;
 import rx.Observer;
+import rx.exceptions.CompositeException;
+import rx.plugins.RxJavaPlugins;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class AllAuctionItemPresent extends ColpencilPresenter<AllAuctionItemView> {
     private IAllAuctionItemModel allAuctionItemModel;
@@ -48,4 +54,49 @@ public class AllAuctionItemPresent extends ColpencilPresenter<AllAuctionItemView
         allAuctionItemModel.subGetAllGoods(observer);
     }
 
+    public void getAddCommentResult(Map<String,String> map){
+        allAuctionItemModel.getAddCommentResult(map);
+        Observer<AddResult> observer = new Observer<AddResult>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(AddResult result) {
+               if(result!=null && mView!=null){
+                   mView.addComment(result);
+               }
+            }
+        };
+        allAuctionItemModel.subAddResult(observer);
+    }
+
+    public void getLike(Map<String,String> params){
+        allAuctionItemModel.getLikeResult(params);
+        Observer<AddResult> observer = new Observer<AddResult>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(AddResult result) {
+                if(result!=null && mView!=null){
+                    mView.addLike(result);
+                }
+            }
+        };
+        allAuctionItemModel.subLike(observer);
+    }
 }

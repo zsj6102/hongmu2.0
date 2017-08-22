@@ -12,6 +12,7 @@ import com.colpencil.redwood.bean.AdInfo;
 import com.colpencil.redwood.bean.Info.RxClickMsg;
 import com.colpencil.redwood.bean.result.AdResult;
 import com.colpencil.redwood.function.tools.MyImageLoader;
+import com.colpencil.redwood.function.widgets.DragTopLayout;
 import com.colpencil.redwood.present.SpeedPresent;
 import com.colpencil.redwood.view.impl.SpeedView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilFragment;
@@ -27,7 +28,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
-import github.chenupt.dragtoplayout.DragTopLayout;
+
 
 
 @ActivityFragmentInject(

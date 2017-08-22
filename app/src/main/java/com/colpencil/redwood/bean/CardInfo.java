@@ -3,18 +3,18 @@ package com.colpencil.redwood.bean;
 import java.io.Serializable;
 
 public class CardInfo implements Serializable{
-    private int member_id;
-    private String store_name;
-    private String member_photo;
-    private int store_count;
-    private String face;
-    private String store_id;
-    private int store_type;
-    private String praise_rate;
-    private String store_type_path;
-    private int prize_count;
-    private int isfocus;
-    private int store_recommend;
+    private int member_id;//会员id
+    private String store_name;//商家名称
+    private String member_photo;//会员等级图标
+    private int store_count;//粉丝个数
+    private String face;//会员头像
+    private String store_id;//商家id
+    private int store_type;//商家类型
+    private String praise_rate;//好评率
+    private String store_type_path;//商家类型图标
+    private int prize_count;//获奖作品个数
+    private int isfocus;//是否已关注
+    private int store_recommend;//是否推荐
 
     public int getMember_id() {
         return member_id;

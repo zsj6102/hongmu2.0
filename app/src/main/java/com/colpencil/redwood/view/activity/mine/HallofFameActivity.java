@@ -11,6 +11,8 @@ import android.widget.ImageView;
 
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.bean.GoodsTypeInfo;
+import com.colpencil.redwood.bean.Info.StoreDetail;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.bean.result.GoodsTypeResult;
 import com.colpencil.redwood.present.home.AllAuctionPresent;
 import com.colpencil.redwood.view.fragments.home.FameItemFragment;
@@ -46,6 +48,8 @@ public class HallofFameActivity extends ColpencilActivity implements AllAuctionV
     public void loadSuccess() {
 
     }
+
+
 
     @Override
     public void loadFail(String message) {

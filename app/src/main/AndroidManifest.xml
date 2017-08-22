@@ -123,13 +123,15 @@
         <!--订单详情-->
         <activity android:name=".view.activity.mine.OrderDetailsActivity"></activity>
         <!--速拍-->
-        <activity android:name=".view.activity.mine.SpeedShotActivity"></activity>
+        <activity android:name=".view.activity.mine.SpeedShotActivity"
+                  android:windowSoftInputMode="adjustResize"></activity>
         <!--禅音-->
         <activity android:name=".view.activity.discovery.MusicCenterActivity"></activity>
         <activity android:name=".view.activity.mine.MyNewsActivity"/>
         <activity
             android:name=".view.activity.cyclopedia.CyclopediaDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.activity.home.SearchActivity"
             android:screenOrientation="portrait"/>
@@ -315,6 +317,17 @@
         <!--二期 订单详情页-->
         <activity android:name=".view.activity.mine.OrderDetailActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.mine.StoreIntroductionActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.mine.FansAndLikeActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.mine.NodeReplyActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.mine.ReplyDetail"
+                  android:screenOrientation="portrait"/>
+        <!-- 商品管理 h5-->
+        <activity android:name=".view.activity.mine.CommodityManageActivity"
+                  android:screenOrientation="portrait"/>
         <service android:name=".view.PlayerService"/>
         <service android:name=".view.DownLoadService"/>
         <service android:name=".services.PostsService"/>
@@ -348,7 +361,7 @@
         <!--微信平台-->
         <meta-data android:name="design_width" android:value="750">
         </meta-data>
-        <meta-data android:name="design_height" android:value="1334">
+        <meta-data android:name="design_height" android:value="1295">
         </meta-data>
         <activity
             android:name=".wxapi.WXEntryActivity"

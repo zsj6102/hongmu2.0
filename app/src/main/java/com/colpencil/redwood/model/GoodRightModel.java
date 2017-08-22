@@ -5,6 +5,7 @@ import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.GoodComment;
 import com.colpencil.redwood.bean.ListResult;
+import com.colpencil.redwood.bean.NumReturn;
 import com.colpencil.redwood.function.config.UrlConfig;
 import com.colpencil.redwood.model.imples.IGoodRightModel;
 import com.property.colpencil.colpencilandroidlibrary.Function.MianCore.RetrofitManager;
@@ -24,7 +25,7 @@ import rx.schedulers.Schedulers;
 public class GoodRightModel implements IGoodRightModel {
 
     Observable<ListResult<GoodComment>> observable;
-    Observable<EntityResult<String>> goodNums;
+    Observable<NumReturn> goodNums;
 
     @Override
     public void loadComment(String goodId, int page, int pageSize) {
@@ -51,16 +52,16 @@ public class GoodRightModel implements IGoodRightModel {
                 .createApi(RedWoodApi.class)
                 .loadGoodCommentNum(goods_id)
                 .subscribeOn(Schedulers.io())
-                .map(new Func1<EntityResult<String>, EntityResult<String>>() {
+                .map(new Func1<NumReturn, NumReturn>() {
                     @Override
-                    public EntityResult<String> call(EntityResult<String> result) {
+                    public NumReturn call(NumReturn result) {
                         return result;
                     }
                 }).observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
-    public void subCommentsNum(Observer<EntityResult<String>> observer) {
+    public void subCommentsNum(Observer<NumReturn> observer) {
         goodNums.subscribe(observer);
     }
 

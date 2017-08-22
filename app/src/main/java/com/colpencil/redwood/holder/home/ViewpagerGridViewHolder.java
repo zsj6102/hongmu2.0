@@ -36,37 +36,48 @@ public class ViewpagerGridViewHolder extends Decomposers<List<FuncPointVo>> {
     public void refreshView(List<FuncPointVo> funcPointVos, int position) {
         totalPage = (int) Math.ceil(funcPointVos.size() * 1.0 / mPageSize);
         for (int i = 0; i < totalPage; i++) {
-             final MosaicGridView gridView = (MosaicGridView) View.inflate(mContext, R.layout.gridview_inviewpager, null);
-            gridView.setAdapter(new GridAdapter(mContext, funcPointVos, i, mPageSize ));
+            final MosaicGridView gridView = (MosaicGridView) View.inflate(mContext, R.layout.gridview_inviewpager, null);
+            gridView.setAdapter(new GridAdapter(mContext, funcPointVos, i, mPageSize));
             viewPagerList.add(gridView);
         }
 
         viewPager.setAdapter(new ViewPagerAdapter(viewPagerList));
         ivPoints = new ImageView[totalPage];
-        for (int i = 0; i < totalPage; i++) {
-            ivPoints[i] = new ImageView(mContext);
-            if (i == 0) {
-                ivPoints[i].setImageResource(R.drawable.point_select);
-            } else {
-                ivPoints[i].setImageResource(R.drawable.point_unselect);
+        if (totalPage > 1) {   //页数大于1显示
+            for (int i = 0; i < totalPage; i++) {
+                ivPoints[i] = new ImageView(mContext);
+                if (i == 0) {
+                    ivPoints[i].setImageResource(R.drawable.point_select);
+                } else {
+                    ivPoints[i].setImageResource(R.drawable.point_unselect);
+                }
+                if(i == 0){
+                    ivPoints[i].setPadding(0, 8, 4, 8);
+                }else{
+                    ivPoints[i].setPadding(4, 8, 0, 8);
+                }
+
+                points.addView(ivPoints[i]);
             }
-            ivPoints[i].setPadding(8, 8, 8, 8);
-            points.addView(ivPoints[i]);
         }
 
-        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+
+        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                for (int i = 0; i < totalPage; i++) {
+                if (totalPage > 1) {
+                    for (int i = 0; i < totalPage; i++) {
 
-                    if (i == position) {
-                        ivPoints[i].setImageResource(R.drawable.point_select);
-                    } else {
-                        ivPoints[i].setImageResource(R.drawable.point_unselect);
+                        if (i == position) {
+                            ivPoints[i].setImageResource(R.drawable.point_select);
+                        } else {
+                            ivPoints[i].setImageResource(R.drawable.point_unselect);
+                        }
+
                     }
-
                 }
+
             }
         });
     }

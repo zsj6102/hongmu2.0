@@ -1,9 +1,11 @@
 package com.colpencil.redwood.api;
 
+import com.colpencil.redwood.bean.AddResult;
 import com.colpencil.redwood.bean.AddresBean;
 import com.colpencil.redwood.bean.AddressReturn;
 import com.colpencil.redwood.bean.AfterSalesCenterReturn;
 import com.colpencil.redwood.bean.ApplyStatusReturn;
+import com.colpencil.redwood.bean.ArticalItem;
 import com.colpencil.redwood.bean.BannerVo;
 import com.colpencil.redwood.bean.BrowsingCyclopediaDate;
 import com.colpencil.redwood.bean.BrowsingGoodDate;
@@ -20,30 +22,40 @@ import com.colpencil.redwood.bean.CyclopediaContent;
 import com.colpencil.redwood.bean.CyclopediaInfoVo;
 import com.colpencil.redwood.bean.CyclopediaItem;
 import com.colpencil.redwood.bean.EntityResult;
+import com.colpencil.redwood.bean.FirstComment;
 import com.colpencil.redwood.bean.FuncPointVo;
 import com.colpencil.redwood.bean.GoodComment;
 import com.colpencil.redwood.bean.GoodsItem;
 import com.colpencil.redwood.bean.HomeGoodInfo;
 import com.colpencil.redwood.bean.HomeRecommend;
+import com.colpencil.redwood.bean.Info.StoreDetail;
 import com.colpencil.redwood.bean.IntegralReturn;
+import com.colpencil.redwood.bean.ItemStoreFans;
+import com.colpencil.redwood.bean.JiashangItem;
 import com.colpencil.redwood.bean.ListResult;
 import com.colpencil.redwood.bean.LoginBean;
 import com.colpencil.redwood.bean.LogisTicsBean;
 import com.colpencil.redwood.bean.MessageReturn;
+import com.colpencil.redwood.bean.MinePostItem;
 import com.colpencil.redwood.bean.MusicResourseReturn;
 import com.colpencil.redwood.bean.MyCyclopediaInfo;
 import com.colpencil.redwood.bean.MyWeekShootReturn;
 import com.colpencil.redwood.bean.NewsInfoVo;
+import com.colpencil.redwood.bean.NodeReplyItem;
+import com.colpencil.redwood.bean.NumReturn;
 import com.colpencil.redwood.bean.OrderCenterReturn;
-import com.colpencil.redwood.bean.OrderDetailReturn;
 import com.colpencil.redwood.bean.OrderDetailsReturn;
 import com.colpencil.redwood.bean.PayForReturn;
 import com.colpencil.redwood.bean.PayKeyRetrun;
 import com.colpencil.redwood.bean.PayReturn;
+import com.colpencil.redwood.bean.PlainRack;
 import com.colpencil.redwood.bean.PostCollectionReturn;
+import com.colpencil.redwood.bean.RatedItem;
+import com.colpencil.redwood.bean.ReplyToDetail;
+import com.colpencil.redwood.bean.ReplyToItem;
 import com.colpencil.redwood.bean.Result;
 import com.colpencil.redwood.bean.ResultCodeInt;
-import com.colpencil.redwood.bean.SellApply;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.bean.ShoppingCartReturn;
 import com.colpencil.redwood.bean.SizeColorInfo;
 import com.colpencil.redwood.bean.SortOptionsReturn;
@@ -75,8 +87,6 @@ import com.colpencil.redwood.bean.result.OrderPayInfo;
 import com.colpencil.redwood.bean.result.PCommentResult;
 import com.colpencil.redwood.bean.result.PostStateResult;
 import com.colpencil.redwood.bean.result.PostsResult;
-import com.colpencil.redwood.bean.result.ResultInfo;
-import com.colpencil.redwood.bean.result.ResultRegion;
 import com.colpencil.redwood.bean.result.SignInResult;
 import com.colpencil.redwood.bean.result.SpecialIntroduceResult;
 import com.colpencil.redwood.bean.result.StatisticResult;
@@ -101,7 +111,8 @@ import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
-import rx.Observer;
+
+import static com.unionpay.mobile.android.global.a.F;
 
 /**
  * 描述： Api
@@ -840,7 +851,7 @@ public interface RedWoodApi {
                                                  @Query("page") int page, @Query("pageSize") int pageSize, @Query("operationType") int operationType);
 
     /**
-     * 提交商品评论
+     *
      */
     @Multipart
     @POST("mobileComments!addMemberComments.do")
@@ -1000,14 +1011,6 @@ public interface RedWoodApi {
     Observable<ListResult<HomeGoodInfo>> loadGoodByKeywood(@PartMap HashMap<String, RequestBody> params);
 
 
-    /**
-     * 获取商品评论数
-     *
-     * @param goods_id
-     * @return
-     */
-    @GET("mobileGoodsDetail!getCommentNum.do")
-    Observable<EntityResult<String>> loadGoodCommentNum(@Query("goods_id") int goods_id);
 
     /**
      * 相关规范
@@ -1389,5 +1392,110 @@ public interface RedWoodApi {
 //    @GET("mobileOrderHandle!orderDetail.do")
 //    Observable<OrderDetailReturn> getOrderDetail(@Query("member_id") int member_id, @Query("token") String token,
 //                                              @Query("order_id") int order_id);
+    /**
+     * 商家或个人主页
+     */
+    @POST("mobileStore!getStoreDetail.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<StoreDetail>> getStoreDetail(@FieldMap Map<String,String> map);
+
+    /**
+     * 商家关注列表和粉丝列表
+     */
+    @POST("memberFans2!findStoreFans.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<List<ItemStoreFans>>> getStoreFans(@FieldMap Map<String,String> map);
+
+    /**
+     * 个人商家主页-架上拍品
+     商家主页-藏品货架-速拍货架
+     名师名匠主页-藏品货架-速拍货架
+     */
+    @POST("mobileGoodsList!getAlljiashang.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<List<JiashangItem>>> getAllJiashang(@FieldMap Map<String,String> map);
+
+
+    /**
+     * 品牌商家主页-藏品货架-品牌货架
+     名师名匠主页-藏品货架-名师名匠
+     */
+    @POST("mobileGoods2!findPlainRack.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<List<PlainRack>>>  getPlainRack(@FieldMap Map<String,String> map);
+
+    /**
+     * 商家主页 -- 他的帖子
+     */
+    @POST("mobileNotes2!findPostList.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<List<MinePostItem>>>  getMinePost(@FieldMap Map<String,String> map);
+
+    /**
+     * 商家的百科，新闻列表
+     */
+    @POST("mobileStoreArticle!findArticalList.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<List<ArticalItem>>>  getArticalList(@FieldMap Map<String,String> map);
+    /**
+     * 商家受评区
+     */
+    @POST("MobileStoreComment!getAssessment.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<List<RatedItem>>>  getRatedList(@FieldMap Map<String,String> map);
+    /**
+     * 所有商品,帖子，百科，新闻的评论
+     */
+    @POST("mobileStoreArticle!add.do")
+    @FormUrlEncoded
+    Observable<AddResult>  getAdd(@FieldMap Map<String,String> map);
+    /**
+     * 速拍区商品点赞
+     */
+    @POST("mobileGoodsList!addFavorite.do")
+    @FormUrlEncoded
+    Observable<AddResult>  getLike(@FieldMap Map<String,String> map);
+    /**
+     * 帖子，速拍，百科，新闻的一级评论列表
+     */
+
+    @POST(" mobileStoreArticle!findNotesReplys.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<List<NodeReplyItem>>>  getNodeReply(@FieldMap Map<String,String> map);
+
+
+    /**
+     * 获取商品评论数
+     *
+     * @param goods_id
+     * @return
+     */
+    @GET("mobileGoodsDetail!getCommentNum.do")
+    Observable<NumReturn> loadGoodCommentNum(@Query("goods_id") int goods_id);
+    /**
+     *速拍一级评论数
+     *
+     * @param
+     * @return
+     */
+    @POST("mobileStoreArticle!getFirstDiscussCount.do")
+    @FormUrlEncoded
+    Observable<FirstComment> getCommentNum(@FieldMap Map<String,String> map);
+
+    /**
+     *速拍评论详情
+     *商家主页--他的帖子||他的百科||他的新闻--详情--评论详情
+     * @param
+     * @return
+     */
+    @POST("mobileNotes2!getReplayDetail.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<List<ReplyToItem>>> getReplyDetail(@FieldMap Map<String,String> map);
+    /**
+     * 所有帖子，速拍，百科，新闻的回复
+     */
+    @POST("mobileStoreArticle!addReplay.do")
+    @FormUrlEncoded
+    Observable<AddResult>  getReplyAdd(@FieldMap Map<String,String> map);
 
 }

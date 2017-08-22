@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.HomeAuctionInfo;
+import com.colpencil.redwood.bean.UrlString;
 import com.colpencil.redwood.function.tools.ImageLoaderUtils;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
 
@@ -20,11 +21,11 @@ import static android.R.attr.width;
 
 public class HomeAuctionAdapter extends RecyclerView.Adapter<HomeAuctionAdapter.MyViewHolder> {
     private Context context;
-    private List<HomeAuctionInfo> mdata;
+    private List<UrlString> mdata;
     private int width;
     private int height;
 
-    public  HomeAuctionAdapter(Context context, List<HomeAuctionInfo> mdata){
+    public  HomeAuctionAdapter(Context context, List<UrlString> mdata){
         this.context=context;
         this.mdata=mdata;
 
@@ -36,7 +37,7 @@ public class HomeAuctionAdapter extends RecyclerView.Adapter<HomeAuctionAdapter.
 
     @Override
     public void onBindViewHolder(final HomeAuctionAdapter.MyViewHolder holder, int position) {
-        ImageLoaderUtils.loadImage(context, mdata.get(position).getImgUrl(), holder.iv);
+        ImageLoaderUtils.loadImage(context, mdata.get(position).getThumbnail(), holder.iv);
 
         width = SharedPreferencesUtil.getInstance(App.getInstance()).getInt("goodwidth", 0);
         height = SharedPreferencesUtil.getInstance(App.getInstance()).getInt("goodheight", 0);

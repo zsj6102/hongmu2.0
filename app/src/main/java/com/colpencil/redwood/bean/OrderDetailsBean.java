@@ -12,7 +12,7 @@ import java.util.List;
 public class OrderDetailsBean implements Serializable {
 //二期添加   商家ID，名称，留言
     private int store_id;
-    private String strore_name;
+    private String store_name;
     private String leave_message;
 
     public int getStore_id() {
@@ -24,11 +24,11 @@ public class OrderDetailsBean implements Serializable {
     }
 
     public String getStrore_name() {
-        return strore_name;
+        return store_name;
     }
 
-    public void setStrore_name(String strore_name) {
-        this.strore_name = strore_name;
+    public void setStrore_name(String store_name) {
+        this.store_name = store_name;
     }
 
     public String getLeave_message() {

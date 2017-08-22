@@ -11,7 +11,7 @@ public class FastStoreInfo implements Serializable {
     private String price;
     private String store;
     private String intro;
-    private int store_id;
+    private String store_id;
     private String goods_type;
     private File cover;
     private List<File> images;
@@ -68,11 +68,11 @@ public class FastStoreInfo implements Serializable {
         this.intro = intro;
     }
 
-    public int getStore_id() {
+    public String getStore_id() {
         return store_id;
     }
 
-    public void setStore_id(int store_id) {
+    public void setStore_id(String store_id) {
         this.store_id = store_id;
     }
 

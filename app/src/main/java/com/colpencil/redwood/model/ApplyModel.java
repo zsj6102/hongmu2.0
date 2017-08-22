@@ -3,27 +3,16 @@ package com.colpencil.redwood.model;
 import com.colpencil.redwood.api.RedWoodApi;
 import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.AddresBean;
-import com.colpencil.redwood.bean.ApplyStatusReturn;
 import com.colpencil.redwood.bean.CatListBean;
-import com.colpencil.redwood.bean.CatReturnData;
-import com.colpencil.redwood.bean.SellApply;
-import com.colpencil.redwood.bean.result.ApplyReturn;
-import com.colpencil.redwood.bean.result.ResultInfo;
-import com.colpencil.redwood.bean.result.ResultRegion;
 import com.colpencil.redwood.function.config.UrlConfig;
 import com.colpencil.redwood.model.imples.IApplyModel;
 import com.property.colpencil.colpencilandroidlibrary.Function.MianCore.RetrofitManager;
 
-import java.util.HashMap;
-
-import okhttp3.RequestBody;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
-
-import static android.R.attr.id;
 
 public class ApplyModel implements IApplyModel {
     private Observable<AddresBean> rgObservable;

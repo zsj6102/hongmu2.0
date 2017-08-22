@@ -33,6 +33,7 @@ import com.lzy.imagepicker.ui.ImagePreviewDelActivity;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilActivity;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
+import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ToastTools;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -89,8 +90,7 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
     private String sec_id = "";
     private List<PostTypeInfo> list = new ArrayList<>();
     private String type;
-    private String name;
-    private String id;
+    private String store_id;
     private List<File> fileList = new ArrayList<>();
     private File mFile;
 
@@ -125,8 +125,8 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
     protected void initViews(View view) {
         tvMainTitle.setText("发布商品");
         type = getIntent().getStringExtra("type");
-        id = getIntent().getStringExtra("id");
-        name = getIntent().getStringExtra("name");
+        store_id = getIntent().getStringExtra("id");
+//        name = getIntent().getStringExtra("name");
         edtStorePrice.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         llCategory.setOnClickListener(this);
         ivBack.setOnClickListener(this);
@@ -247,6 +247,26 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
             Toast.makeText(this, "请上传封面", Toast.LENGTH_SHORT).show();
             return;
         }
+        if(fileList.size() == 0){
+            Toast.makeText(this, "请上传照片", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(sec_id.equals("")){
+            ToastTools.showShort(this,"请选择速拍类别");
+            return;
+        }
+        if(postTitle.getText().toString().trim().equals("")){
+            ToastTools.showShort(this,"请输入拍品名称");
+            return;
+        }
+        if(edtStorePrice.getText().toString().trim().equals("")){
+            ToastTools.showShort(this,"请输入拍品价格");
+            return;
+        }
+        if(edtStoreLeft.getText().toString().trim().equals("")){
+            ToastTools.showShort(this,"请输入库存");
+            return;
+        }
         if(s.equals("warehouse")){
             showLoading("加入仓库中");
         }else{
@@ -256,6 +276,7 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
         info.setName(postTitle.getText().toString());
         info.setCat_id(sec_id);
         info.setCover(mFile);
+        info.setStore_id(store_id);
         info.setImages(fileList);
         info.setGoods_type("supai");
         info.setStore(edtStoreLeft.getText().toString());

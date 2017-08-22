@@ -15,10 +15,12 @@ import com.colpencil.redwood.bean.Info.RxClickMsg;
 import com.colpencil.redwood.bean.result.CareReturn;
 import com.colpencil.redwood.configs.Constants;
 import com.colpencil.redwood.configs.StringConfig;
+import com.colpencil.redwood.function.widgets.AttachUtil;
 import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
 import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.mine.CardPresenter;
 import com.colpencil.redwood.view.activity.login.LoginActivity;
+import com.colpencil.redwood.view.activity.mine.StoreHomeActivity;
 import com.colpencil.redwood.view.adapters.CardWallAdapter;
 import com.colpencil.redwood.view.impl.ICardView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilFragment;
@@ -36,7 +38,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import de.greenrobot.event.EventBus;
-import github.chenupt.dragtoplayout.AttachUtil;
+
 import rx.Observable;
 import rx.Subscriber;
 
@@ -166,6 +168,14 @@ public class CardWallFragment extends ColpencilFragment implements ICardView {
 
     private void initAdatper() {
         mAdapter.setListener(new CardWallAdapter.ComOnClickListener() {
+            @Override
+            public void contentClick(int position) {
+                Intent intent = new Intent(getActivity(), StoreHomeActivity.class);
+                intent.putExtra("type",type);
+                intent.putExtra("store_id",mlist.get(position).getStore_id());
+                startActivity(intent);
+            }
+
             @Override
             public void careClick(int position) {
                 pos = position;

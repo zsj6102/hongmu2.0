@@ -512,8 +512,8 @@ public class MeFragment extends ColpencilFragment implements IMeFragmentView, Vi
                 startActivity(intentAbout);
                 break;
             case R.id.ll_wallet:
-                mIntent = new Intent(getActivity(), StoreHomeActivity.class);
-                startActivity(mIntent);
+//                mIntent = new Intent(getActivity(), StoreHomeActivity.class);
+//                startActivity(mIntent);
                 break;
             case R.id.ll_vip:
                 mIntent = new Intent(getActivity(), AllSpecialActivity.class);

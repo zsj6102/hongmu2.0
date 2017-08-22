@@ -10,4 +10,5 @@ public interface AllAuctionView extends ColpencilBaseView {
     void loadFail(String message);
 
     void getGoodsType(GoodsTypeResult goodsTypeResult);
+
 }

@@ -13,6 +13,8 @@ import com.colpencil.redwood.R;
 import com.colpencil.redwood.bean.CategoryItem;
 import com.colpencil.redwood.bean.GoodsTypeInfo;
 
+import com.colpencil.redwood.bean.Info.StoreDetail;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.bean.result.GoodsTypeResult;
 import com.colpencil.redwood.present.home.AllAuctionPresent;
 
@@ -39,6 +41,7 @@ public class NewProductFragment extends ColpencilFragment implements AllAuctionV
     ViewPager vp;
     @Bind(R.id.iv_add)
     ImageView iv_add;
+
     private MyPageAdapter mAdapter;
     private AllAuctionPresent allAuctionPresent;
     private List<GoodsTypeInfo> goodsTypeInfoList=new ArrayList<>();
@@ -65,6 +68,7 @@ public class NewProductFragment extends ColpencilFragment implements AllAuctionV
         showLoading("加载中...");
         allAuctionPresent.getGoodsType();
     }
+
 
     @Override
     public void bindView(Bundle savedInstanceState) {

@@ -1,5 +1,6 @@
 package com.colpencil.redwood.view.impl;
 
+import com.colpencil.redwood.bean.AddResult;
 import com.colpencil.redwood.bean.result.AllGoodsResult;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilBaseView;
 
@@ -11,9 +12,13 @@ public interface AllAuctionItemView extends ColpencilBaseView {
 
     void loadFail(String message);
 
-    void getAllGoods(AllGoodsResult allGoodsResult);
+
 
     void loadMore(AllGoodsResult result);
 
     void refresh(AllGoodsResult result);
+
+    void addComment(AddResult result);
+
+    void addLike(AddResult result);
 }
