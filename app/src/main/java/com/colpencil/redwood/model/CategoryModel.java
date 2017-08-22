@@ -30,7 +30,9 @@ public class CategoryModel implements ICategoryModel {
     Observable<ListResult<CategoryVo>> circle;
     Observable<ListResult<CategoryVo>> allCircle;
     Observable<EntityResult<String>> saveCircle;
-
+    Observable<ListResult<CategoryVo>> allGoodsTag;
+    Observable<ListResult<CategoryVo>> myGoodsTag;
+    Observable<EntityResult<String>> savaAdd;
     @Override
     public void loadAllTag() {
         allTag = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
@@ -43,6 +45,68 @@ public class CategoryModel implements ICategoryModel {
                         return homeTagResult;
                     }
                 }).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void loadGoodsAllTag() {
+        allGoodsTag = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .loadGoodsAllTag()
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<ListResult<CategoryVo>, ListResult<CategoryVo>>() {
+                    @Override
+                    public ListResult<CategoryVo> call(ListResult<CategoryVo> homeTagResult) {
+                        return homeTagResult;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void subAllGoodsTag(Observer<ListResult<CategoryVo>> observer) {
+        allGoodsTag.subscribe(observer);
+    }
+
+    @Override
+    public void loadMyGoodSTag() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+        params.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+        myGoodsTag = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .loadMyGoodsTag(params)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<ListResult<CategoryVo>, ListResult<CategoryVo>>() {
+                    @Override
+                    public ListResult<CategoryVo> call(ListResult<CategoryVo> homeTagResult) {
+                        return homeTagResult;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void subMyGoodsTag(Observer<ListResult<CategoryVo>> observer) {
+        myGoodsTag.subscribe(observer);
+    }
+
+    @Override
+    public void addMyTag(int cat_type, List<String> list) {
+        savaAdd = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .addMyGoodsTag(SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"),
+                        SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id"),
+                        cat_type, list)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<EntityResult<String>, EntityResult<String>>() {
+                    @Override
+                    public EntityResult<String> call(EntityResult<String> result) {
+                        return result;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void subAddTag(Observer<EntityResult<String>> observer) {
+        savaAdd.subscribe(observer);
     }
 
     @Override

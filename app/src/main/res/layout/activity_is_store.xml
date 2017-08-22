@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/layout_is_store"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:id="@+id/layout_is_store"
-              android:visibility="gone"
+              android:visibility="visible"
     >
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="164px"
+        android:layout_height="82dp"
         android:layout_margin="30px"
         android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/layout_store1"
-            android:layout_width="164px"
-            android:layout_height="164px"
+            android:layout_width="82dp"
+            android:layout_height="82dp"
             android:layout_alignParentLeft="true"
             android:background="@drawable/store_circle"
             android:gravity="center"
@@ -51,8 +52,8 @@
 
             <LinearLayout
                 android:id="@+id/layout_store2"
-                android:layout_width="164px"
-                android:layout_height="164px"
+                android:layout_width="82dp"
+                android:layout_height="82dp"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/store_circle2"
                 android:gravity="center"
@@ -83,8 +84,8 @@
 
         <LinearLayout
             android:id="@+id/layout_store3"
-            android:layout_width="164px"
-            android:layout_height="164px"
+            android:layout_width="82dp"
+            android:layout_height="82dp"
             android:layout_alignParentRight="true"
             android:background="@drawable/store_circle3"
             android:gravity="center"
@@ -115,14 +116,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="164px"
+        android:layout_height="82dp"
         android:layout_margin="30px"
         android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/layout_store4"
-            android:layout_width="164px"
-            android:layout_height="164px"
+            android:layout_width="82dp"
+            android:layout_height="82dp"
             android:layout_alignParentLeft="true"
             android:background="@drawable/store_circle4"
             android:gravity="center"
@@ -158,27 +159,31 @@
 
             <LinearLayout
                 android:id="@+id/layout_store5"
-                android:layout_width="164px"
-                android:layout_height="164px"
-               android:gravity="center"
+                android:layout_width="82dp"
+                android:layout_height="82dp"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/store_circle5"
+                android:gravity="center"
                 >
-                <LinearLayout android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
                     <ImageView
-                        android:layout_gravity="center_horizontal"
                         android:layout_width="56px"
                         android:layout_height="54px"
+                        android:layout_gravity="center_horizontal"
                         android:src="@mipmap/shop_setting"/>
+
                     <TextView
-                        android:layout_marginTop="10px"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10px"
+                        android:text="店铺设置"
                         android:textColor="@color/shop_text"
                         android:textSize="24px"
-                        android:text="店铺设置"
                         />
                 </LinearLayout>
             </LinearLayout>
@@ -186,27 +191,31 @@
 
         <LinearLayout
             android:id="@+id/layout_store6"
-            android:layout_width="164px"
-            android:layout_height="164px"
+            android:layout_width="82dp"
+            android:layout_height="82dp"
             android:layout_alignParentRight="true"
-            android:gravity="center"
             android:background="@drawable/store_circle6"
+            android:gravity="center"
             >
-            <LinearLayout android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
                 <ImageView
-                    android:layout_gravity="center_horizontal"
                     android:layout_width="56px"
                     android:layout_height="54px"
+                    android:layout_gravity="center_horizontal"
                     android:src="@mipmap/work_circle"/>
+
                 <TextView
-                    android:layout_marginTop="10px"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10px"
+                    android:text="我的圈子"
                     android:textColor="@color/shop_text"
                     android:textSize="24px"
-                    android:text="我的圈子"
                     />
             </LinearLayout>
         </LinearLayout>
@@ -214,33 +223,37 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="164px"
+        android:layout_height="82dp"
         android:layout_margin="30px"
         android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/layout_store7"
-            android:layout_width="164px"
-            android:layout_height="164px"
+            android:layout_width="82dp"
+            android:layout_height="82dp"
             android:layout_alignParentLeft="true"
-android:gravity="center"
             android:background="@drawable/store_circle7"
+            android:gravity="center"
             >
-            <LinearLayout android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
                 <ImageView
-                    android:layout_gravity="center_horizontal"
                     android:layout_width="56px"
                     android:layout_height="54px"
+                    android:layout_gravity="center_horizontal"
                     android:src="@mipmap/chat_list"/>
+
                 <TextView
-                    android:layout_marginTop="10px"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10px"
+                    android:text="聊天列表"
                     android:textColor="@color/shop_text"
                     android:textSize="24px"
-                    android:text="聊天列表"
                     />
             </LinearLayout>
         </LinearLayout>
@@ -253,27 +266,31 @@ android:gravity="center"
 
             <LinearLayout
                 android:id="@+id/layout_store8"
-                android:layout_width="164px"
-                android:layout_height="164px"
+                android:layout_width="82dp"
+                android:layout_height="82dp"
                 android:layout_alignParentRight="true"
-                android:gravity="center"
                 android:background="@drawable/store_circle8"
+                android:gravity="center"
                 >
-                <LinearLayout android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
                     <ImageView
-                        android:layout_gravity="center_horizontal"
                         android:layout_width="56px"
                         android:layout_height="54px"
+                        android:layout_gravity="center_horizontal"
                         android:src="@mipmap/evalute"/>
+
                     <TextView
-                        android:layout_marginTop="10px"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10px"
+                        android:text="评价管理"
                         android:textColor="@color/shop_text"
                         android:textSize="24px"
-                        android:text="评价管理"
                         />
                 </LinearLayout>
             </LinearLayout>

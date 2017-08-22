@@ -75,8 +75,8 @@ public class CategoryActivity extends ColpencilActivity implements ICategoryView
         listView.setAdapter(new NullAdapter(this, new ArrayList<String>(), R.layout.item_null));
         initHeader();
         showLoading("");
-        presenter.loadMyTag();
-        presenter.loadAllTag();
+        presenter.loadMyGoodsTag();
+        presenter.loadAllGoodsTag();
     }
 
     private void initHeader() {
@@ -134,7 +134,7 @@ public class CategoryActivity extends ColpencilActivity implements ICategoryView
             if (stringList.size() <= 0) {
                 ToastTools.showShort(this, "至少选择一个分类");
             } else {
-                presenter.addToServer(2, stringList);
+                presenter.addMyTag(4, stringList);
             }
         } else {
             showDialog();

@@ -144,10 +144,10 @@ public class HomeActivity extends ColpencilActivity implements View.OnClickListe
                     iv_homepage.setImageResource(R.mipmap.btn_homepage_pressure);
                     tv_homepage.setTextColor(getResources().getColor(R.color.main_red));
                 } else if (msg.getType() == 56) {
-                    setBottomMeunStyle();
-                    iv_cyclopedia.setImageResource(R.mipmap.btn_cyclopedia_pressure);
-                    tv_cyclopedia.setTextColor(HomeActivity.this.getResources().getColor(R.color.main_red));
-                    main_viewpage.setCurrentItem(3, false);
+//                    setBottomMeunStyle();
+//                    iv_cyclopedia.setImageResource(R.mipmap.btn_cyclopedia_pressure);
+//                    tv_cyclopedia.setTextColor(HomeActivity.this.getResources().getColor(R.color.main_red));
+//                    main_viewpage.setCurrentItem(3, false);
                 }
             }
         };

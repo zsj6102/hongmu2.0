@@ -42,7 +42,6 @@ public class CommodityManageActivity extends ColpencilActivity {
     LinearLayout layouthead;
     private String type;
     private String url;
-
     @Override
     protected void initViews(View view) {
         type = getIntent().getStringExtra("type");
@@ -99,7 +98,15 @@ public class CommodityManageActivity extends ColpencilActivity {
 //            url = "http://192.168.0.233:80/wwhm/appStoreGoods!index.do";
             url = UrlConfig.PHILHARMONIC_HOST+"appStoreGoods!index.do";
         } else if (type.equals("3")) {
-            url = UrlConfig.PHILHARMONIC_HOST + "orderCenter!orderCenter.do";
+            url = UrlConfig.PHILHARMONIC_HOST + "orderCenter!orderCenter.do";//订单管理
+        }else if(type.equals("4")){
+            url = UrlConfig.PHILHARMONIC_HOST + "appStoreRightsOrder!rights_order_list.do";//维权订单
+        }else if(type.equals("7")){
+            url = UrlConfig.PHILHARMONIC_HOST + "appChat!chatList.do";//聊天列表
+        }else if(type.equals("8")){
+            url = UrlConfig.PHILHARMONIC_HOST + "appevaluate!evaluate.do";//评价管理
+        }else if(type.equals("9")){
+            url = UrlConfig.PHILHARMONIC_HOST + "appWallet!indexWallet.do";//我的钱包
         }
         webView.loadUrl(url);
 
@@ -131,10 +138,10 @@ public class CommodityManageActivity extends ColpencilActivity {
             return SharedPreferencesUtil.getInstance(App.getInstance()).getInt("store_type");
         }
 
-        //        @JavascriptInterface
-        //        public Integer getSessionType(){
-        //            return
-        //        }
+        @JavascriptInterface
+        public int getSessionType() {
+            return SharedPreferencesUtil.getInstance(App.getInstance()).getInt("session_type");
+        }
         @JavascriptInterface
         public void back() {
             finish();

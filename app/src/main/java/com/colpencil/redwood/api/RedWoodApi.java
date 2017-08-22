@@ -802,7 +802,11 @@ public interface RedWoodApi {
 
     @GET("mobileDataCat!getDataCat.do")
     Observable<ListResult<CategoryVo>> loadAllTag();
-
+    /**
+     * 二期首页 商品所有一级分类
+     */
+    @GET("mobileDataCat!getGoodsCat.do")
+    Observable<ListResult<CategoryVo>> loadGoodsAllTag();
     /**
      * 获取我的分类
      *
@@ -812,12 +816,31 @@ public interface RedWoodApi {
     @GET("mobileDataCat!getMyDataCat.do")
     Observable<ListResult<CategoryVo>> loadMyTag(@QueryMap HashMap<String, String> params);
 
+    /**
+     * 获取我的商品分类
+     *
+     * @param params
+     * @return
+     */
+    @GET("mobileDataCat!getMyGoodsData.do")
+    Observable<ListResult<CategoryVo>> loadMyGoodsTag(@QueryMap HashMap<String, String> params);
+
     @GET("mobileDataCat!saveMyDataCat.do")
     Observable<EntityResult<String>> addMyTag(@Query("token") String token,
                                               @Query("member_id") int member_id,
                                               @Query("cat_type") int cat_type,
                                               @Query("catidList") List<String> list);
 
+    /**
+     * 二期保存用户商品分类
+     * @param
+     * @return
+     */
+    @GET("mobileDataCat!saveMyGoodsCat.do")
+    Observable<EntityResult<String>> addMyGoodsTag(@Query("token") String token,
+                                              @Query("member_id") int member_id,
+                                              @Query("cat_type") int cat_type,
+                                              @Query("catidList") List<String> list);
     @GET("mobileHtml!getGoodsInformation.do")
     Observable<AnnounceResult> loadGoodMiddle(@Query("goods_id") int goods_id);
 

@@ -132,9 +132,10 @@ public class CyclopediaFragment extends ColpencilFragment implements ITagView {
 
             @Override
             public void onNext(RxBusMsg rxBusMsg) {
-                if (rxBusMsg.getType() == 56) {
-                    viewpager.setCurrentItem(rxBusMsg.getPosition());
-                } else if (rxBusMsg.getType() == 4 || rxBusMsg.getType() == 58 || rxBusMsg.getType() == 63) {
+//                if (rxBusMsg.getType() == 56) {
+////                    viewpager.setCurrentItem(rxBusMsg.getPosition());
+//                } else
+                if (rxBusMsg.getType() == 4 || rxBusMsg.getType() == 58 || rxBusMsg.getType() == 63) {
                     present.loadMyTag();
                 } else if (rxBusMsg.getType() == 53) {
                     present.loadTag(2);

@@ -29,6 +29,32 @@ public class CategoryPresenter extends ColpencilPresenter<ICategoryView> {
     public CategoryPresenter() {
         model = new CategoryModel();
     }
+    /**
+     * 二期获取所有标签
+     */
+    public void loadAllGoodsTag(){
+        model.loadGoodsAllTag();
+        Observer<ListResult<CategoryVo>> observer = new Observer<ListResult<CategoryVo>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ListResult<CategoryVo> homeTagResult) {
+                if (homeTagResult.getCode() == 0) {
+                    mView.loadAllTag(homeTagResult.getCatListResult());
+                }
+            }
+        };
+        model.subAllGoodsTag(observer);
+    }
+
 
     /**
      * 获取我的标签
@@ -61,7 +87,37 @@ public class CategoryPresenter extends ColpencilPresenter<ICategoryView> {
         };
         model.subMyTag(observer);
     }
+    /**
+     * 获取我的商品标签
+     */
+    public void loadMyGoodsTag() {
+        model.loadMyGoodSTag();
+        Observer<ListResult<CategoryVo>> observer = new Observer<ListResult<CategoryVo>>() {
+            @Override
+            public void onCompleted() {
 
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ListResult<CategoryVo> result) {
+                if (SharedPreferencesUtil.getInstance(App.getInstance()).getBoolean(StringConfig.ISLOGIN, false)) {
+                    if (result.getCode() == 0) {
+                        mView.loadMyTag(result.getMemberCatListResult());
+                    } else {
+                        mView.loadMyTag(new ArrayList<CategoryVo>());
+                    }
+                } else {
+                    mView.loadMyTag(new ArrayList<CategoryVo>());
+                }
+            }
+        };
+        model.subMyGoodsTag(observer);
+    }
     /**
      * 获取所有表情
      */
@@ -108,7 +164,26 @@ public class CategoryPresenter extends ColpencilPresenter<ICategoryView> {
         };
         model.subSubmit(observer);
     }
+    public void addMyTag(int cat_type, List<String> list) {
+        model.addMyTag(cat_type, list);
+        Observer<EntityResult<String>> observer = new Observer<EntityResult<String>>() {
+            @Override
+            public void onCompleted() {
 
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(EntityResult<String> result) {
+                mView.operateResult(result);
+            }
+        };
+        model.subAddTag(observer);
+    }
     /**
      * 周拍
      */

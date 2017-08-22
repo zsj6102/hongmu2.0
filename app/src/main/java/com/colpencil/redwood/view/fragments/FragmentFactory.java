@@ -6,7 +6,8 @@ import com.colpencil.redwood.view.activity.HomeActivity;
 import com.colpencil.redwood.view.fragments.classification.ClassificationFragment;
 import com.colpencil.redwood.view.fragments.cyclopedia.CyclopediaFragment;
 import com.colpencil.redwood.view.fragments.discovery.DiscoveryFragment;
-import com.colpencil.redwood.view.fragments.home.HomePageFragment;
+import com.colpencil.redwood.view.fragments.home.HomeGoodsFragment;
+
 import com.colpencil.redwood.view.fragments.mine.MeFragment;
 
 import java.util.HashMap;
@@ -27,7 +28,7 @@ public class FragmentFactory {
         fragment = map.get(position);
         if (fragment == null) {
             if (position == 0) {
-                fragment = new HomePageFragment();
+                fragment = new HomeGoodsFragment();
             } else if (position == 1) {
                 fragment = new ClassificationFragment();
             } else if (position == 2) {

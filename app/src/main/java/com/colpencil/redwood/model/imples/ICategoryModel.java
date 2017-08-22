@@ -23,6 +23,20 @@ public interface ICategoryModel extends ColpencilModel {
     void loadAllTag();
 
     void subAllTag(Observer<ListResult<CategoryVo>> observer);
+    /**
+     * 获取二期商品所有标签
+     */
+    void loadGoodsAllTag();
+
+    void subAllGoodsTag(Observer<ListResult<CategoryVo>> observer);
+    /**
+     * 获取二期商品我的所有标签
+     */
+    void loadMyGoodSTag();
+
+    void subMyGoodsTag(Observer<ListResult<CategoryVo>> observer);
+
+
 
     /**
      * 获取所有标签
@@ -30,6 +44,12 @@ public interface ICategoryModel extends ColpencilModel {
     void loadMyTag();
 
     void subMyTag(Observer<ListResult<CategoryVo>> observer);
+    /**
+     * 二期用户自定义
+     */
+    void addMyTag(int cat_type,List<String> list);
+
+    void subAddTag(Observer<EntityResult<String>> observer);
 
     /**
      * 保存我的标签

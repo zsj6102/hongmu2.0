@@ -89,6 +89,7 @@ public class BusinessActivity extends ColpencilActivity implements View.OnClickL
 
     @Override
     protected void initViews(View view) {
+        SharedPreferencesUtil.getInstance(App.getInstance()).setInt("session_type",2);
         tv_title.setText("商家合作");
         ll_person.setOnClickListener(this);
         iv_back.setOnClickListener(this);
@@ -158,6 +159,7 @@ public class BusinessActivity extends ColpencilActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         Intent intent;
+
         switch (view.getId()) {
             case R.id.iv_back:
                 RefreshMsg msg = new RefreshMsg();
@@ -205,6 +207,21 @@ public class BusinessActivity extends ColpencilActivity implements View.OnClickL
             case R.id.layout_store3:
                 intent = new Intent(this,CommodityManageActivity.class);
                 intent.putExtra("type","3");//订单管理
+                startActivity(intent);
+                break;
+            case R.id.layout_store4:
+                intent = new Intent(this,CommodityManageActivity.class);
+                intent.putExtra("type","4");//维权订单
+                startActivity(intent);
+                break;
+            case R.id.layout_store7:
+                intent = new Intent(this,CommodityManageActivity.class);
+                intent.putExtra("type","7");//聊天列表
+                startActivity(intent);
+                break;
+            case R.id.layout_store8:
+                intent = new Intent(this,CommodityManageActivity.class);
+                intent.putExtra("type","8");//聊天列表
                 startActivity(intent);
                 break;
         }

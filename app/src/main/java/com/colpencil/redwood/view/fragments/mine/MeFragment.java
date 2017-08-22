@@ -36,6 +36,7 @@ import com.colpencil.redwood.view.activity.mine.AfterSalesCenterActivity;
 import com.colpencil.redwood.view.activity.mine.AllSpecialActivity;
 import com.colpencil.redwood.view.activity.mine.BrowsingHistoryActivity;
 import com.colpencil.redwood.view.activity.mine.BusinessActivity;
+import com.colpencil.redwood.view.activity.mine.CommodityManageActivity;
 import com.colpencil.redwood.view.activity.mine.MineCycloActivity;
 import com.colpencil.redwood.view.activity.mine.MyCollectionActivity;
 import com.colpencil.redwood.view.activity.mine.MyCouponsActivity;
@@ -512,8 +513,9 @@ public class MeFragment extends ColpencilFragment implements IMeFragmentView, Vi
                 startActivity(intentAbout);
                 break;
             case R.id.ll_wallet:
-//                mIntent = new Intent(getActivity(), StoreHomeActivity.class);
-//                startActivity(mIntent);
+                mIntent = new Intent(getActivity(), CommodityManageActivity.class);
+                mIntent.putExtra("type", "9");
+                startActivity(mIntent);
                 break;
             case R.id.ll_vip:
                 mIntent = new Intent(getActivity(), AllSpecialActivity.class);

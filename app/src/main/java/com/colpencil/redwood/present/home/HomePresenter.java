@@ -5,10 +5,13 @@ import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.HomeGoodInfo;
 import com.colpencil.redwood.bean.HomeRecommend;
 import com.colpencil.redwood.bean.ListResult;
+
 import com.colpencil.redwood.model.HomeModel;
 import com.colpencil.redwood.model.imples.IHomeModel;
 import com.colpencil.redwood.view.impl.IHomePageView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
+
+
 
 import rx.Observer;
 

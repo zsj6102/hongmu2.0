@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/line_color_thirst">
+
+
+    <include
+        android:id="@+id/myhead"
+        layout="@layout/search_header" />
+
+    <LinearLayout
+        android:id="@+id/header2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/myhead"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/tab_layout_header"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:tabTextColor="@color/text_color_first"
+                app:tabIndicatorColor="@color/main_red"
+                app:tabSelectedTextColor="@color/main_red"/>
+
+            <View
+                android:layout_width="@dimen/padding_0.5dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/margin_5dp"
+                android:layout_marginTop="@dimen/margin_5dp"
+                android:background="@color/color_ecdad6" />
+
+            <LinearLayout
+                android:id="@+id/ll_iv"
+                android:layout_width="@dimen/width_50dp"
+                android:layout_height="@dimen/width_32dp"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/tab_layout_header_addiv"
+                    android:layout_width="@dimen/width_20dp"
+                    android:layout_height="@dimen/width_20dp"
+                    android:src="@mipmap/home_add_icon" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/main_background" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/color_fffbfa"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header2" />
+
+    <ImageView
+        android:id="@+id/totop_iv"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginRight="15dp" />
+
+    <ImageView
+        android:id="@+id/iv_post"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="159dp"
+        android:layout_marginRight="15dp" />
+
+</RelativeLayout>
