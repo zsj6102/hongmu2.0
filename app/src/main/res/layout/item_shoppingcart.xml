@@ -53,7 +53,6 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:lines="2"
-                        android:text="印度小叶紫檀手串男2.0文玩手珠檀木手链老料108颗佛珠红木项链女"
                         android:textColor="@color/text_color_first"
                         android:textSize="@dimen/main_text_size" />
 
@@ -71,7 +70,6 @@
                             android:layout_weight="1"
                             android:ellipsize="end"
                             android:maxLines="2"
-                            android:text="红色，18mm"
                             android:textColor="@color/text_color_second"
                             android:textSize="@dimen/main_text_size" />
 

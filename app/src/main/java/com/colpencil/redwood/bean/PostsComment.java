@@ -17,6 +17,42 @@ public class PostsComment implements Serializable {
     private long time;
     private long createtime;
     private String member_photo;
+    private int isfocus;
+    private int re_con_count;
+    private int re_like_count;
+    private int re_id;
+
+    public int getRe_id() {
+        return re_id;
+    }
+
+    public void setRe_id(int re_id) {
+        this.re_id = re_id;
+    }
+
+    public int getIsfocus() {
+        return isfocus;
+    }
+
+    public void setIsfocus(int isfocus) {
+        this.isfocus = isfocus;
+    }
+
+    public int getRe_con_count() {
+        return re_con_count;
+    }
+
+    public void setRe_con_count(int re_con_count) {
+        this.re_con_count = re_con_count;
+    }
+
+    public int getRe_like_count() {
+        return re_like_count;
+    }
+
+    public void setRe_like_count(int re_like_count) {
+        this.re_like_count = re_like_count;
+    }
 
     public String getRe_content() {
         return re_content;

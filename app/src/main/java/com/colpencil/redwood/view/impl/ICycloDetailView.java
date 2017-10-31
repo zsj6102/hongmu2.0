@@ -1,6 +1,8 @@
 package com.colpencil.redwood.view.impl;
 
 import com.colpencil.redwood.bean.EntityResult;
+import com.colpencil.redwood.bean.ResultInfo;
+import com.colpencil.redwood.bean.result.CommonResult;
 import com.colpencil.redwood.bean.result.PCommentResult;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilBaseView;
 
@@ -44,7 +46,7 @@ public interface ICycloDetailView extends ColpencilBaseView {
      *
      * @param result
      */
-    void shareResult(EntityResult<String> result);
+    void shareResult(CommonResult result);
 
     /**
      * 点赞
@@ -58,4 +60,5 @@ public interface ICycloDetailView extends ColpencilBaseView {
      */
     void likeStateResult(EntityResult<String> result);
 
+    void addLike(ResultInfo<String> resultInfo);
 }

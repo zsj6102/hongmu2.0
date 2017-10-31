@@ -1,6 +1,10 @@
 package com.colpencil.redwood.model.imples;
+import com.colpencil.redwood.bean.ResultInfo;
+import com.colpencil.redwood.bean.WeekAuctionList;
 import com.colpencil.redwood.bean.result.WeekAuctionListResult;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilModel;
+
+import java.util.List;
 
 import rx.Observer;
 
@@ -17,4 +21,8 @@ public interface IWeekShootModel extends ColpencilModel {
 
     //注册观察者
     void sub(Observer<WeekAuctionListResult> subscriber);
+
+    void loadSearch(String keyword,int pageNo,int pageSize);
+
+    void subSearch(Observer<WeekAuctionListResult> subscriber);
 }

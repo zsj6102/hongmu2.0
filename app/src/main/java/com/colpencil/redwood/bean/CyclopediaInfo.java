@@ -12,7 +12,7 @@ public class CyclopediaInfo implements Serializable {
     private File coverFile;
     private int type;
     private List<File> fileList;
-    private int game;
+    private Integer game;
 
     public String getTitle() {
         return title;
@@ -62,11 +62,11 @@ public class CyclopediaInfo implements Serializable {
         this.fileList = fileList;
     }
 
-    public int getGame() {
+    public Integer getGame() {
         return game;
     }
 
-    public void setGame(int game) {
+    public void setGame(Integer game) {
         this.game = game;
     }
 }

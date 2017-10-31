@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.configs.Constants;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
+import com.zhy.autolayout.utils.AutoUtils;
 
 
 import java.util.ArrayList;
@@ -84,11 +86,15 @@ public class ImageSelectAdapter extends RecyclerView.Adapter<ImageSelectAdapter.
     public class SelectedPicViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView iv_img;
+
         private int clickPosition;
 
         public SelectedPicViewHolder(View itemView) {
             super(itemView);
+            AutoUtils.autoSize(itemView);
             iv_img = (ImageView) itemView.findViewById(R.id.item_grida_image);
+
+
         }
 
         public void bind(int position) {
@@ -96,6 +102,7 @@ public class ImageSelectAdapter extends RecyclerView.Adapter<ImageSelectAdapter.
             itemView.setOnClickListener(this);
             //根据条目位置设置图片
             ImageItem item = mData.get(position);
+
             if (isAdded && position == getItemCount() - 1) {
                 iv_img.setImageResource(R.mipmap.imgselect);
                 clickPosition = Constants.IMAGE_ITEM_ADD;

@@ -2,6 +2,8 @@ package com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +16,7 @@ import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.Activi
 import com.property.colpencil.colpencilandroidlibrary.Ui.MyProgressDialog;
 
 import butterknife.ButterKnife;
+import solid.ren.skinlibrary.base.SkinBaseFragment;
 
 /**
  * @Description:所有fragment的基类
@@ -21,7 +24,7 @@ import butterknife.ButterKnife;
  * @Email  DramaScript@outlook.com
  * @date 16/6/23
  */
-public abstract class ColpencilFragment<T extends ColpencilPresenter<ColpencilBaseView>> extends Fragment implements ColpencilBase,ColpencilBaseView {
+public abstract class ColpencilFragment<T extends ColpencilPresenter<ColpencilBaseView>> extends SkinBaseFragment implements ColpencilBase,ColpencilBaseView {
 
     protected ColpencilPresenter mPresenter;
     protected Context mContext;

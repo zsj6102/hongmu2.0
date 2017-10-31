@@ -1,11 +1,16 @@
 package com.colpencil.redwood.present.mine;
 
 import com.colpencil.redwood.bean.CatListBean;
+import com.colpencil.redwood.bean.CoverSpecialItem;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.bean.SizeColorInfo;
 import com.colpencil.redwood.model.PublishModel;
 import com.colpencil.redwood.model.imples.IPublishModel;
 import com.colpencil.redwood.view.impl.PublishView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
+
+import java.util.List;
+import java.util.Map;
 
 import rx.Subscriber;
 
@@ -62,5 +67,48 @@ public class PublishPresenter extends  ColpencilPresenter<PublishView>  {
             }
         };
         model.sub(subscriber);
+    }
+
+    public void loadZcList(int id){
+        model.loadZcList(id);
+        Subscriber<ResultInfo<List<CoverSpecialItem>>> subscriber = new Subscriber<ResultInfo<List<CoverSpecialItem>>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResultInfo<List<CoverSpecialItem>> resultInfo) {
+                mView.loadZcList(resultInfo);
+            }
+        };
+        model.subZcList(subscriber);
+    }
+    public void loadPro(Map<String,String> map){
+        model.loadPro(map);
+        Subscriber<ResultInfo<String>> subscriber = new Subscriber<ResultInfo<String>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResultInfo<String> stringResultInfo) {
+                if(mView!=null){
+                    mView.loadPro(stringResultInfo);
+                }
+            }
+        };
+        model.subPro(subscriber);
     }
 }

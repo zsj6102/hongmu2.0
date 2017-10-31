@@ -22,4 +22,8 @@ public interface ICardModel {
     void loadCardMR(HashMap<String,String> params);
 
     void subCardMR(Observer<CardWallInfo> observer);
+
+    void loadCardMy(HashMap<String,String> params);
+
+    void subCardMy(Observer<CardWallInfo> observer);
 }

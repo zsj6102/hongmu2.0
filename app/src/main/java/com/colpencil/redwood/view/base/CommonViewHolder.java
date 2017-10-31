@@ -28,7 +28,7 @@ public class CommonViewHolder {
         mConvertView = LayoutInflater.from(context).inflate(layoutId, parent,
                 false);
         //setTag
-        AutoUtils.autoSize(mConvertView);
+
         mConvertView.setTag(this);
 
 

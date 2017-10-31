@@ -1,5 +1,6 @@
 package com.colpencil.redwood.view.fragments.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.bean.result.GoodsTypeResult;
 import com.colpencil.redwood.present.home.AllAuctionPresent;
 
+import com.colpencil.redwood.view.activity.home.SearchActivity;
 import com.colpencil.redwood.view.fragments.home.FameItemFragment;
 import com.colpencil.redwood.view.impl.AllAuctionView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilFragment;
@@ -28,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 
 @ActivityFragmentInject(
@@ -68,7 +71,13 @@ public class NewProductFragment extends ColpencilFragment implements AllAuctionV
         showLoading("加载中...");
         allAuctionPresent.getGoodsType();
     }
+    @OnClick(R.id.iv_add)
+    void search() {
+        Intent intent = new Intent(getActivity(), SearchActivity.class);
+        intent.putExtra("from", "Brand");
+        getActivity().startActivity(intent);
 
+    }
 
     @Override
     public void bindView(Bundle savedInstanceState) {

@@ -3,6 +3,8 @@ package com.colpencil.redwood.model;
 import com.colpencil.redwood.api.RedWoodApi;
 import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.EntityResult;
+import com.colpencil.redwood.bean.NodeReplyItem;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.bean.result.CommonResult;
 import com.colpencil.redwood.bean.result.PCommentResult;
 import com.colpencil.redwood.bean.result.PostsResult;
@@ -13,6 +15,8 @@ import com.property.colpencil.colpencilandroidlibrary.Function.MianCore.Retrofit
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import okhttp3.RequestBody;
 import rx.Observable;
@@ -39,7 +43,22 @@ public class CommentDetailModel implements ICommentDetailModel {
     private Observable<CommonResult> share;
     private Observable<EntityResult<String>> addup;
     private Observable<EntityResult<String>> likeState;
+    private Observable<ResultInfo<String>> likeObservable;
+    private Observable<ResultInfo<List<NodeReplyItem>>> observable;
+    @Override
+    public void getNodeReply(Map<String, String> map ) {
+        observable = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST).createApi(RedWoodApi.class).getNodeReply(map).subscribeOn(Schedulers.io()).map(new Func1<ResultInfo<List<NodeReplyItem>>, ResultInfo<List<NodeReplyItem>>>() {
+            @Override
+            public ResultInfo<List<NodeReplyItem>> call(ResultInfo<List<NodeReplyItem>> listResultInfo) {
+                return listResultInfo;
+            }
+        }).observeOn(AndroidSchedulers.mainThread());
+    }
 
+    @Override
+    public void subReply(Observer<ResultInfo<List<NodeReplyItem>>> observer) {
+        observable.subscribe(observer);
+    }
     /**
      * 获取帖子详情
      *
@@ -71,7 +90,7 @@ public class CommentDetailModel implements ICommentDetailModel {
     public void loadComments(String ote_id, int page, int pageSize) {
         comobser = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
                 .createApi(RedWoodApi.class)
-                .loadCommentList(ote_id, page, pageSize)
+                .loadCommentList(SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id"),ote_id, page, pageSize)
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<PCommentResult, PCommentResult>() {
                     @Override
@@ -300,5 +319,24 @@ public class CommentDetailModel implements ICommentDetailModel {
     @Override
     public void subLikeState(Observer<EntityResult<String>> observer) {
         likeState.subscribe(observer);
+    }
+
+    @Override
+    public void addLike(Map<String, String> map) {
+        likeObservable = RetrofitManager.getInstance(1,App.getInstance(),UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .getNoteLike(map)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<ResultInfo<String>, ResultInfo<String>>() {
+                    @Override
+                    public ResultInfo<String> call(ResultInfo<String> resultInfo) {
+                        return resultInfo;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void subLikeCom(Observer<ResultInfo<String>> observer) {
+        likeObservable.subscribe(observer);
     }
 }

@@ -30,6 +30,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.OnClick;
 
+import static com.colpencil.redwood.view.activity.HomeActivity.result;
+
 /**
  * @author 陈宝
  * @Description:搜索商品的结果界面
@@ -54,6 +56,8 @@ public class GoodResultActivity extends ColpencilActivity implements ISearchGood
     private int page = 1;
     private int pageSize = 10;
     private boolean isRefresh = false;
+    @Bind(R.id.refreshLayout2)
+    BGARefreshLayout refreshLayout2;
 
     @Override
     protected void initViews(View view) {
@@ -65,6 +69,11 @@ public class GoodResultActivity extends ColpencilActivity implements ISearchGood
         editText.setHint("搜索商品");
         editText.setText(keyword);
         refreshLayout.setDelegate(this);
+        refreshLayout2.setDelegate(this);
+        refreshLayout2.setRefreshViewHolder(new BGANormalRefreshViewHolder(this, true));
+        refreshLayout2.setSnackStyle(this.findViewById(android.R.id.content),
+                getResources().getColor(R.color.material_drawer_primary),
+                getResources().getColor(R.color.white));
         refreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(this, true));
         refreshLayout.setSnackStyle(this.findViewById(android.R.id.content),
                 getResources().getColor(R.color.material_drawer_primary),
@@ -90,6 +99,7 @@ public class GoodResultActivity extends ColpencilActivity implements ISearchGood
     }
 
     private void loadData() {
+        showLoading(Constants.progressName);
         presenter.loadGood(keyword, page, pageSize);
         //保存搜索结果
         new Thread(new Runnable() {
@@ -120,6 +130,13 @@ public class GoodResultActivity extends ColpencilActivity implements ISearchGood
         goodList.clear();
         goodList.addAll(list);
         adapter.notifyDataSetChanged();
+        if (ListUtils.listIsNullOrEmpty(list)) {
+            refreshLayout2.setVisibility(View.VISIBLE);
+            refreshLayout.setVisibility(View.GONE);
+        } else {
+            refreshLayout2.setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -158,9 +175,11 @@ public class GoodResultActivity extends ColpencilActivity implements ISearchGood
                 isRefresh = true;
             }
             refreshLayout.endRefreshing(result.size());
+            refreshLayout2.endRefreshing(result.size());
         } else {
             isRefresh = false;
             refreshLayout.endRefreshing(0);
+            refreshLayout2.endRefreshing(0);
         }
     }
 }

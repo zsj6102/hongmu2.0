@@ -17,7 +17,7 @@ import rx.schedulers.Schedulers;
 
 public class OrderModel implements IOrderModel {
     private Observable<OrderPayInfo> orderObserverable;
-
+    private Observable<OrderPayInfo> directObservable;
     @Override
     public void loadNewOrder(Map<String, String> map) {
         orderObserverable = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
@@ -37,4 +37,22 @@ public class OrderModel implements IOrderModel {
         orderObserverable.subscribe(observer);
     }
 
+    @Override
+    public void subDirectOrder(Observer<OrderPayInfo> observer) {
+        directObservable.subscribe(observer);
+    }
+
+    @Override
+    public void loadDirectOrder(Map<String, String> map) {
+        directObservable = RetrofitManager.getInstance(1,App.getInstance(),UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .getDirectOrder(map)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<OrderPayInfo, OrderPayInfo>() {
+                    @Override
+                    public OrderPayInfo call(OrderPayInfo orderPayInfo) {
+                        return orderPayInfo;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
+    }
 }

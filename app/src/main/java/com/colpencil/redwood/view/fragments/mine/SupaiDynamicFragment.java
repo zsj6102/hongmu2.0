@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
@@ -18,12 +19,16 @@ import com.colpencil.redwood.R;
 import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.AddResult;
 import com.colpencil.redwood.bean.AllGoodsInfo;
+import com.colpencil.redwood.bean.RefreshMsg;
+import com.colpencil.redwood.bean.RxBusMsg;
 import com.colpencil.redwood.bean.result.AllGoodsResult;
 import com.colpencil.redwood.configs.Constants;
 import com.colpencil.redwood.configs.StringConfig;
+import com.colpencil.redwood.function.utils.ListUtils;
 import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
 import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.mine.SupaiPresenter;
+import com.colpencil.redwood.view.activity.ShoppingCartActivitys.OrderActivity;
 import com.colpencil.redwood.view.activity.login.LoginActivity;
 import com.colpencil.redwood.view.activity.mine.NodeReplyActivity;
 import com.colpencil.redwood.view.adapters.ItemAllAuctionAdapter;
@@ -31,21 +36,24 @@ import com.colpencil.redwood.view.impl.ISupaiDynamic;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilFragment;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
+import com.property.colpencil.colpencilandroidlibrary.Function.Rx.RxBus;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ToastTools;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGANormalRefreshViewHolder;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Subscriber;
 
-import static com.colpencil.redwood.R.id.et_content;
-
+/**
+ * 拍品动态 我的收藏
+ * 登录多余
+ */
 @ActivityFragmentInject(contentViewId = R.layout.fragment_listview)
 public class SupaiDynamicFragment extends ColpencilFragment implements ISupaiDynamic {
 
@@ -53,6 +61,10 @@ public class SupaiDynamicFragment extends ColpencilFragment implements ISupaiDyn
     ListView supaiListview;
     @Bind(R.id.refreshLayout)
     BGARefreshLayout refreshLayout;
+    //    @Bind(R.id.no_data_layout)
+    //    LinearLayout nodataLayout;
+    @Bind(R.id.refreshLayout2)
+    BGARefreshLayout refreshLayout2;
     private SupaiPresenter presenter;
     private boolean isRefresh = false;
     private ItemAllAuctionAdapter adapter;
@@ -65,6 +77,11 @@ public class SupaiDynamicFragment extends ColpencilFragment implements ISupaiDyn
     private String content;
     private EditText et_content;
     private View view;
+    private Observable<RxBusMsg> observable;
+    private Subscriber subscriber;
+    private int intenttype;
+    private BGARefreshLayout.BGARefreshLayoutDelegate delegate;
+
     public static SupaiDynamicFragment newInstance(int type) {
         Bundle bundle = new Bundle();
         SupaiDynamicFragment fragment = new SupaiDynamicFragment();
@@ -77,48 +94,104 @@ public class SupaiDynamicFragment extends ColpencilFragment implements ISupaiDyn
     protected void initViews(View view) {
         this.view = view;
         type = getArguments().getInt("type");
-        final   HashMap<String,String> params = new HashMap<String, String>();
-        params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
-        params.put("member_id",SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id")+"");
-        params.put("type","supai");
-        params.put("page",page+"");
-        params.put("pageSize",pageSize+"");
+        final HashMap<String, String> params = new HashMap<String, String>();
 
-       refreshLayout.setDelegate(new BGARefreshLayout.BGARefreshLayoutDelegate() {
-           @Override
-           public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-               page = 1;
-               if(type == 1){
-                   presenter.getSupaiDynamic(page,params);
-               }else{
-                   presenter.getSupaiCol(page,params);
-               }
-           }
+        params.put("type", "supai");
+        params.put("pageSize", pageSize + "");
+        delegate = new BGARefreshLayout.BGARefreshLayoutDelegate() {
+            @Override
+            public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+                page = 1;
+                params.put("page", page + "");
+                params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+                params.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                if (type == 1) {
 
-           @Override
-           public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-               if (isRefresh) {
-                   page++;
-                   if(type == 1){
-                       presenter.getSupaiDynamic(page,params);
-                   }else{
-                       presenter.getSupaiCol(page,params);
-                   }
-               }
-               return false;
-           }
-       });
+                    presenter.getSupaiDynamic(page, params);
+                } else {
+                    presenter.getSupaiCol(page, params);
+                }
+            }
+
+            @Override
+            public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+                if (isRefresh) {
+                    page++;
+                    params.put("page", page + "");
+                    params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+                    params.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                    if (type == 1) {
+                        presenter.getSupaiDynamic(page, params);
+                    } else {
+                        presenter.getSupaiCol(page, params);
+                    }
+                }
+                return false;
+            }
+        };
+        refreshLayout.setDelegate(delegate);
+        refreshLayout2.setDelegate(delegate);
         refreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getActivity(), true));
         refreshLayout.setSnackStyle(getActivity().findViewById(android.R.id.content), getResources().getColor(R.color.material_drawer_primary), getResources().getColor(R.color.white));
+        refreshLayout2.setRefreshViewHolder(new BGANormalRefreshViewHolder(getActivity(), true));
+        refreshLayout2.setSnackStyle(getActivity().findViewById(android.R.id.content), getResources().getColor(R.color.material_drawer_primary), getResources().getColor(R.color.white));
         adapter = new ItemAllAuctionAdapter(getActivity(), allGoodsInfoList, R.layout.item_allauctionitem);
         initAdapter();
         supaiListview.setAdapter(adapter);
+        observable = RxBus.get().register("rxBusMsg", RxBusMsg.class);
+        subscriber = new Subscriber<RxBusMsg>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onNext(RxBusMsg tagMsg) {
+                if (tagMsg.getType() == 4) {
+                    page = 1;
+                    params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+                    params.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                    params.put("page", page + "");
+                    if (intenttype == 1) {
+                        Map<String, String> map = new HashMap<String, String>();
+                        map.put("goods_id", allGoodsInfoList.get(pos).getGoods_id() + "");
+                        map.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                        map.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+                        presenter.getLike(map);
+                    } else {
+                        if (type == 1) {
+                            presenter.getSupaiDynamic(1, params);
+                        } else {
+                            presenter.getSupaiCol(1, params);
+
+                        }
+                    }
+
+                }else  if(tagMsg.getType() == 90){
+                    //点赞后重新刷新
+                    page  = 1;
+                    params.put("page", page + "");
+                    params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+                    params.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                    if (type == 1) {
+                        presenter.getSupaiDynamic(page, params);
+                    } else {
+                        presenter.getSupaiCol(page, params);
+                    }
+                }
+            }
+        };
+        observable.subscribe(subscriber);
+
     }
 
     /**
      * 适配器初始化
      */
-    private void initAdapter(){
+    private void initAdapter() {
         adapter.setListener(new ItemAllAuctionAdapter.MyListener() {
             @Override
             public void click(int position) {
@@ -127,27 +200,45 @@ public class SupaiDynamicFragment extends ColpencilFragment implements ISupaiDyn
             }
 
             @Override
+            public void buy(int position) {
+                Intent intent = new Intent(getActivity(), OrderActivity.class);
+                intent.putExtra("key", "订单确定");
+                intent.putExtra("goFrom", "SupaiDynamicFragment");
+                intent.putExtra("product_id", allGoodsInfoList.get(position).getProduct_id());    //int类型
+                intent.putExtra("goods_id", allGoodsInfoList.get(position).getGoods_id());     //int类型
+                intent.putExtra("num", 1);    //int类型
+                startActivity(intent);
+            }
+
+            @Override
             public void like(int position) {
                 pos = position;
-                Map<String,String> map = new HashMap<String, String>();
-                map.put("goods_id",allGoodsInfoList.get(position).getGoods_id()+"");
-                map.put("member_id",SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id")+"");
-                map.put("token",SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
-                presenter.getLike(map);
+                intenttype = 1;
+                if (SharedPreferencesUtil.getInstance(getActivity()).getBoolean(StringConfig.ISLOGIN, false)) {
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put("goods_id", allGoodsInfoList.get(position).getGoods_id() + "");
+                    map.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                    map.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+                    presenter.getLike(map);
+                } else {
+                    showDialog();
+                }
+
             }
 
             @Override
             public void reply(int position) {
+                intenttype = 2;
                 Intent intent = new Intent(getActivity(), NodeReplyActivity.class);
-                intent.putExtra("goodsid",allGoodsInfoList.get(position).getGoods_id());
+                intent.putExtra("goodsid", allGoodsInfoList.get(position).getGoods_id());
                 startActivity(intent);
             }
         });
     }
+
     private void showPopWindow(View view) {
         if (window == null) {
-            window = new PopupWindow(initPopWindow(),
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            window = new PopupWindow(initPopWindow(), ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
         window.setFocusable(true);
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -176,12 +267,12 @@ public class SupaiDynamicFragment extends ColpencilFragment implements ISupaiDyn
                         return;
                     }
                     showLoading("正在提交中...");
-                    Map<String,String> map = new HashMap<String, String>();
-                    map.put("h_id",allGoodsInfoList.get(pos).getGoods_id()+"");
-                    map.put("type","1");
-                    map.put("content",content);
-                    map.put("member_id",SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id")+"");
-                    map.put("token",SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put("h_id", allGoodsInfoList.get(pos).getGoods_id() + "");
+                    map.put("type", "1");
+                    map.put("content", content);
+                    map.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                    map.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
                     presenter.getAddCommentResult(map);
                 } else {
                     showDialog();
@@ -191,11 +282,13 @@ public class SupaiDynamicFragment extends ColpencilFragment implements ISupaiDyn
         });
         return view;
     }
+
     private void dismissPop() {
         if (window != null) {
             window.dismiss();
         }
     }
+
     private void showDialog() {
         final CommonDialog dialog = new CommonDialog(getActivity(), "你还没登录喔!", "去登录", "取消");
         dialog.setListener(new DialogOnClickListener() {
@@ -218,18 +311,19 @@ public class SupaiDynamicFragment extends ColpencilFragment implements ISupaiDyn
         intent.putExtra(StringConfig.REQUEST_CODE, 100);
         startActivityForResult(intent, Constants.REQUEST_LOGIN);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Constants.REQUEST_LOGIN) {  //登录返回来的结果
 
             if (!TextUtils.isEmpty(content)) {
-                Map<String,String> map = new HashMap<String, String>();
-                map.put("h_id",allGoodsInfoList.get(pos).getGoods_id()+"");
-                map.put("type","1");
-                map.put("content",content);
-                map.put("member_id",SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id")+"");
-                map.put("token",SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("h_id", allGoodsInfoList.get(pos).getGoods_id() + "");
+                map.put("type", "1");
+                map.put("content", content);
+                map.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                map.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
                 presenter.getAddCommentResult(map);
             } else {
                 ToastTools.showShort(getActivity(), "请输入评论的内容");
@@ -237,21 +331,23 @@ public class SupaiDynamicFragment extends ColpencilFragment implements ISupaiDyn
 
         }
     }
+
     @Override
     public void loadData() {
         showLoading("加载中...");
-        final   HashMap<String,String> params = new HashMap<String, String>();
+        final HashMap<String, String> params = new HashMap<String, String>();
         params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
-        params.put("member_id",SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id")+"");
-        params.put("type","supai");
-        params.put("page",page+"");
-        params.put("pageSize",pageSize+"");
-        if(type == 1){
-            presenter.getSupaiDynamic(page,params);
-        }else{
-            presenter.getSupaiCol(page,params);
+        params.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+        params.put("type", "supai");
+        params.put("page", page + "");
+        params.put("pageSize", pageSize + "");
+        if (type == 1) {
+            presenter.getSupaiDynamic(page, params);
+        } else {
+            presenter.getSupaiCol(page, params);
         }
     }
+
     @Override
     public ColpencilPresenter getPresenter() {
         presenter = new SupaiPresenter();
@@ -271,7 +367,13 @@ public class SupaiDynamicFragment extends ColpencilFragment implements ISupaiDyn
     @Override
     public void loadFail(String message) {
         hideLoading();
-        Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        refreshLayout2.endRefreshing(0);
+        refreshLayout.endRefreshing(0);
+        refreshLayout.endLoadingMore();
+        refreshLayout2.endLoadingMore();
+        refreshLayout2.setVisibility(View.VISIBLE);
+        refreshLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -288,16 +390,26 @@ public class SupaiDynamicFragment extends ColpencilFragment implements ISupaiDyn
         allGoodsInfoList.clear();
         allGoodsInfoList.addAll(result.getData());
         adapter.notifyDataSetChanged();
+        if (ListUtils.listIsNullOrEmpty(result.getData())) {
+            refreshLayout2.setVisibility(View.VISIBLE);
+            refreshLayout.setVisibility(View.GONE);
+        } else {
+            refreshLayout2.setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.VISIBLE);
+        }
         hideLoading();
     }
+
     private void isLoadMore(List<AllGoodsInfo> list) {
         if (list.size() < pageSize) {
             isRefresh = false;
         } else {
             isRefresh = true;
         }
+        refreshLayout2.endRefreshing(0);
         refreshLayout.endRefreshing(0);
         refreshLayout.endLoadingMore();
+        refreshLayout2.endLoadingMore();
     }
 
     @Override
@@ -322,30 +434,41 @@ public class SupaiDynamicFragment extends ColpencilFragment implements ISupaiDyn
     @Override
     public void addComment(AddResult result) {
         hideLoading();
-        ToastTools.showShort(getActivity(),result.getMessage());
-        if(result.getCode() == 0){
-            allGoodsInfoList.get(pos).setComment_count(allGoodsInfoList.get(pos).getComment_count()+1);
+        ToastTools.showShort(getActivity(), result.getMessage());
+        if (result.getCode() == 0) {
+            allGoodsInfoList.get(pos).setComment_count(allGoodsInfoList.get(pos).getComment_count() + 1);
             adapter.notifyDataSetChanged();
         }
     }
 
     @Override
     public void addLike(AddResult result) {
-        ToastTools.showShort(getActivity(),result.getMessage());
-        if(result.getCode() == 0){
-            //在这边只能是取消收藏
-//            if(allGoodsInfoList.get(pos).getHave_collection() == 0){
-//                allGoodsInfoList.get(pos).setHave_collection(1);
-//                allGoodsInfoList.get(pos).setCollectmember(allGoodsInfoList.get(pos).getCollectmember()+1);
-//                adapter.notifyDataSetChanged();
-//            }else{
-//                allGoodsInfoList.get(pos).setHave_collection(0);
-//                allGoodsInfoList.get(pos).setCollectmember(allGoodsInfoList.get(pos).getCollectmember()-1);
-//                adapter.notifyDataSetChanged();
-//            }
-            allGoodsInfoList.remove(pos);
-            adapter.notifyDataSetChanged();
-
+        ToastTools.showShort(getActivity(), result.getMessage());
+        if (result.getCode() == 0) {
+            if (type == 11) {   //我的收藏
+                allGoodsInfoList.remove(pos);
+                if (ListUtils.listIsNullOrEmpty(allGoodsInfoList)) {
+                    refreshLayout2.setVisibility(View.VISIBLE);
+                    refreshLayout.setVisibility(View.GONE);
+                } else {
+                    refreshLayout2.setVisibility(View.GONE);
+                    refreshLayout.setVisibility(View.VISIBLE);
+                }
+                adapter.notifyDataSetChanged();
+            } else {
+                if (allGoodsInfoList.get(pos).getHave_collection() == 0) {
+                    allGoodsInfoList.get(pos).setHave_collection(1);
+                    allGoodsInfoList.get(pos).setCollectmember(allGoodsInfoList.get(pos).getCollectmember() + 1);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    allGoodsInfoList.get(pos).setHave_collection(0);
+                    allGoodsInfoList.get(pos).setCollectmember(allGoodsInfoList.get(pos).getCollectmember() - 1);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+            RxBusMsg msg = new RxBusMsg();
+            msg.setType(91);
+            RxBus.get().post("rxBusMsg", msg);
         }
     }
 }

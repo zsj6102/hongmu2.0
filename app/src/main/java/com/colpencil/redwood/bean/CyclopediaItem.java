@@ -9,6 +9,8 @@ import java.io.Serializable;
  * @date 2016/8/8
  */
 public class CyclopediaItem implements Serializable {
+
+    private int cat_id;
     /**
      * 浏览记录id
      */
@@ -43,6 +45,13 @@ public class CyclopediaItem implements Serializable {
 
     private int comment_count;
 
+    public int getCat_id() {
+        return cat_id;
+    }
+
+    public void setCat_id(int cat_id) {
+        this.cat_id = cat_id;
+    }
 
     @Override
     public String toString() {

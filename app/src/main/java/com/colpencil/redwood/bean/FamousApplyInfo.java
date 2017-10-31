@@ -25,6 +25,24 @@ public class FamousApplyInfo implements Serializable {
     private String ps_name;
     private String ps_region_id;
     private String ps_address;
+    private File store_file;
+    private String store_name;
+
+    public File getStore_file() {
+        return store_file;
+    }
+
+    public void setStore_file(File store_file) {
+        this.store_file = store_file;
+    }
+
+    public String getStore_name() {
+        return store_name;
+    }
+
+    public void setStore_name(String store_name) {
+        this.store_name = store_name;
+    }
 
     public String getPs_name() {
         return ps_name;

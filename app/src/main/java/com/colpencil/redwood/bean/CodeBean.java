@@ -7,6 +7,24 @@ public class CodeBean implements Serializable {
     private String weixinImg;
     private String iosImg;
     private String anroidImg;
+    private String content;
+    private String url;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public String getWeixinImg() {
         return weixinImg;

@@ -102,5 +102,47 @@ public class BrowsingHistoryPresenter extends ColpencilPresenter<IBrowsingHistor
         model.subRecord(observer);
     }
 
+
+    public void baikeShare(int ote_id,String articl_id){
+        model.shareBaike(ote_id,articl_id);
+        Observer<CommonResult> observer = new Observer<CommonResult>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(CommonResult result) {
+                mView.shareBaike(result);
+            }
+        };
+        model.subShareBike(observer);
+    }
+
+    public void goodsShare(String goodsid){
+        model.shareGoods(goodsid);
+        Observer<CommonResult> observer = new Observer<CommonResult>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(CommonResult result) {
+                mView.shareGoods(result);
+            }
+        };
+        model.subShareGoods(observer);
+    }
 }
 

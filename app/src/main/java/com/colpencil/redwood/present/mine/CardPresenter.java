@@ -144,4 +144,39 @@ public class CardPresenter extends ColpencilPresenter<ICardView> {
         };
         cardModel.subCardMR(observer);
     }
+
+    public void getCardMy(final int pageNo, HashMap<String, String> params) {
+        cardModel.loadCardMy(params);
+        Observer<CardWallInfo> observer = new Observer<CardWallInfo>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(CardWallInfo cardWallInfo) {
+                if (cardWallInfo != null) {
+                    if (cardWallInfo.getCode() == 0) {
+                        if (pageNo == 1) {
+                            mView.refresh(cardWallInfo);
+                        } else {
+                            mView.loadMore(cardWallInfo);
+                        }
+                    } else {
+                        if (cardWallInfo.getMessage() != null) {
+                            mView.loadFail(cardWallInfo.getMessage());
+                        }
+                    }
+                }
+
+            }
+        };
+        cardModel.subCardMy(observer);
+    }
+
 }

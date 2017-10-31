@@ -3,11 +3,14 @@ package com.colpencil.redwood.present.home;
 import com.colpencil.redwood.bean.HomeGoodInfo;
 import com.colpencil.redwood.bean.ListResult;
 import com.colpencil.redwood.bean.result.AnnounceResult;
+import com.colpencil.redwood.bean.result.CareReturn;
 import com.colpencil.redwood.bean.result.GoodInfoResult;
 import com.colpencil.redwood.model.GoodLeftModel;
 import com.colpencil.redwood.model.imples.IGoodLeftModel;
 import com.colpencil.redwood.view.impl.IGoodLeftView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
+
+import java.util.Map;
 
 import rx.Observer;
 
@@ -52,7 +55,51 @@ public class GoodLeftPresenter extends ColpencilPresenter<IGoodLeftView> {
         };
         model.subGoodInfo(observer);
     }
+    public void getCareReturn(Map<String, String> params) {
+        model.care(params);
+        Observer<CareReturn> observer = new Observer<CareReturn>() {
+            @Override
+            public void onCompleted() {
 
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mView.loadFail("服务器异常");
+            }
+
+            @Override
+            public void onNext(CareReturn careReturn) {
+                if (careReturn != null && mView != null) {
+                    mView.care(careReturn);
+                }
+            }
+        };
+        model.subCare(observer);
+    }
+
+    public void getUncareReturn(Map<String, String> params) {
+        model.unCare(params);
+        Observer<CareReturn> observer = new Observer<CareReturn>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mView.loadFail("服务器异常");
+            }
+
+            @Override
+            public void onNext(CareReturn careReturn) {
+                if (careReturn != null && mView != null) {
+                    mView.uncare(careReturn);
+                }
+            }
+        };
+        model.subUnCare(observer);
+    }
     /**
      * 商品推荐
      */

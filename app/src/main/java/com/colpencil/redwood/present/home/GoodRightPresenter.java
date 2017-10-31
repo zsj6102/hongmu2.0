@@ -3,10 +3,13 @@ package com.colpencil.redwood.present.home;
 import com.colpencil.redwood.bean.GoodComment;
 import com.colpencil.redwood.bean.ListResult;
 import com.colpencil.redwood.bean.NumReturn;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.model.GoodRightModel;
 import com.colpencil.redwood.model.imples.IGoodRightModel;
 import com.colpencil.redwood.view.impl.IGoodRightView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
+
+import java.util.Map;
 
 import rx.Observer;
 
@@ -80,5 +83,28 @@ public class GoodRightPresenter extends ColpencilPresenter<IGoodRightView> {
             }
         };
         model.subCommentsNum(observer);
+    }
+
+    public void getLikeResult(Map<String,String> map){
+        model.addLike(map);
+        Observer<ResultInfo<String>> observer = new Observer<ResultInfo<String>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResultInfo<String> resultInfo) {
+                if(mView!=null && resultInfo!=null){
+                    mView.addLike(resultInfo);
+                }
+            }
+        };
+        model.subLike(observer);
     }
 }

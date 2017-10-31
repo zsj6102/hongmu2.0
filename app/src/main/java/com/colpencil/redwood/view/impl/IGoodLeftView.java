@@ -3,6 +3,7 @@ package com.colpencil.redwood.view.impl;
 import com.colpencil.redwood.bean.GoodInfo;
 import com.colpencil.redwood.bean.HomeGoodInfo;
 import com.colpencil.redwood.bean.result.AnnounceResult;
+import com.colpencil.redwood.bean.result.CareReturn;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilBaseView;
 
 import java.util.List;
@@ -34,5 +35,9 @@ public interface IGoodLeftView extends ColpencilBaseView {
     void loadRecommendError();
 
     void loadDetail(AnnounceResult result);
+    void care(CareReturn result);
 
+    void uncare(CareReturn reult);
+
+    void loadFail(String msg);
 }

@@ -3,6 +3,9 @@ package com.colpencil.redwood.model.imples;
 import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.result.CommonResult;
 import com.colpencil.redwood.bean.result.GoodInfoResult;
+import com.colpencil.redwood.bean.result.OrderPayInfo;
+
+import java.util.Map;
 
 import rx.Observer;
 
@@ -74,4 +77,8 @@ public interface IGoodDetailModel {
     void addUpShare(int type, String platform, int id);
 
     void subAddup(Observer<EntityResult<String>> observer);
+
+    void loadDirectOrder(Map<String,String> map);
+
+    void subDirectOrder(Observer<OrderPayInfo> observer);
 }

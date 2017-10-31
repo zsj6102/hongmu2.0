@@ -14,7 +14,7 @@ ext{
     andfixVersion = "0.4.0@aar"
     nineoldandroidsVersion='2.4.0'
     topsnackbarVersion='0.0.8'
-    okhttpVersion = '3.2.0'
+    okhttpVersion = '3.3.1'
     leakcanaryVersion = '1.4-beta2'
     draggerVersion = '2.4'
     annotationVersion = '10.0-b28'

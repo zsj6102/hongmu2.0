@@ -39,6 +39,8 @@ public class LoginPresent extends ColpencilPresenter<ILoginView> {
 
             @Override
             public void onError(Throwable e) {
+                Log.e("返回值", e.toString());
+                mView.loginFail("服务请求失败");
             }
 
             @Override

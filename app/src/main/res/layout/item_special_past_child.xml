@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
 
-        <ImageView
+        <com.colpencil.redwood.function.widgets.RoundImageView
             android:id="@+id/iv_special"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_margin="10dp"
             android:scaleType="centerCrop"
-            android:background="@drawable/special_past_shape"
             android:src="@mipmap/test"
             />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text=" "
+            android:textColor="@color/white"
+
+            android:textSize="16sp"/>
+    </RelativeLayout>
 
 </LinearLayout>

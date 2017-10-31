@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+               xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -15,6 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:text="真实姓名："
+
             android:textColor="@color/text_color_first"
             android:textSize="15sp" />
 
@@ -25,11 +27,85 @@
             android:layout_marginRight="12dp"
             android:background="@null"
             android:hint="请输入真实姓名"
+            android:maxLength="20"
             android:textColor="@color/text_color_thirst"
             android:textColorHint="@color/text_color_thirst"
             android:textSize="15sp" />
 
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color_second" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/main_LinearLayout_background"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:text="店铺名称："
+            android:textColor="@color/text_color_first"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/edt_storename"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="12dp"
+            android:background="@null"
+            android:hint="请输入店铺名称"
+            android:maxLength="20"
+            android:textColor="@color/text_color_thirst"
+            android:textColorHint="@color/text_color_thirst"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color_second" />
+    <RelativeLayout
+        android:id="@+id/updateImg_userInfor"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/main_LinearLayout_background"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="店铺Logo："
+            android:textColor="@color/text_color_first"
+            android:textSize="@dimen/main_text_size" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.property.colpencil.colpencilandroidlibrary.Ui.SelectableRoundedImageView
+                android:id="@+id/iv_userInfor"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="15dp"
+                app:sriv_oval="true" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="12dp"
+                android:src="@mipmap/right_icon" />
+        </LinearLayout>
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
@@ -58,6 +134,7 @@
             android:layout_marginRight="12dp"
             android:background="@null"
             android:hint="请输入身份证号"
+            android:maxLength="18"
             android:textColor="@color/text_color_thirst"
             android:textColorHint="@color/text_color_thirst"
             android:textSize="15sp" />
@@ -142,6 +219,7 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:lines="1"
+
             android:text="请点击选择所在的区域"
             android:textColor="@color/text_color_thirst"
             android:textSize="15sp" />
@@ -167,6 +245,7 @@
         android:hint="点击输入详细地址"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
+        android:maxLength="50"
         android:textColor="@color/text_color_thirst"
         android:textColorHint="@color/text_color_thirst"
         android:textSize="15sp" />
@@ -239,6 +318,8 @@
             android:layout_marginRight="12dp"
             android:background="@null"
             android:hint="请输入银行卡号"
+            android:inputType="number"
+            android:maxLength="21"
             android:textColor="@color/text_color_thirst"
             android:textColorHint="@color/text_color_thirst"
             android:textSize="15sp" />
@@ -269,7 +350,8 @@
             android:layout_height="match_parent"
             android:layout_marginRight="12dp"
             android:background="@null"
-            android:hint="请输入卡类型"
+            android:hint="如工商银行"
+            android:maxLength="20"
             android:textColor="@color/text_color_thirst"
             android:textColorHint="@color/text_color_thirst"
             android:textSize="15sp" />
@@ -301,6 +383,7 @@
             android:layout_marginRight="12dp"
             android:background="@null"
             android:hint="请输入持卡人"
+            android:maxLength="20"
             android:textColor="@color/text_color_thirst"
             android:textColorHint="@color/text_color_thirst"
             android:textSize="15sp" />

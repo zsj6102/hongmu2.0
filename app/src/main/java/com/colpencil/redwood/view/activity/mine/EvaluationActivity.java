@@ -2,12 +2,15 @@ package com.colpencil.redwood.view.activity.mine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.base.App;
@@ -15,6 +18,8 @@ import com.colpencil.redwood.bean.ResultCodeInt;
 import com.colpencil.redwood.bean.RxBusMsg;
 import com.colpencil.redwood.configs.Constants;
 import com.colpencil.redwood.function.tools.DialogTools;
+import com.colpencil.redwood.function.widgets.ProperRatingBar;
+import com.colpencil.redwood.function.widgets.RatingListener;
 import com.colpencil.redwood.present.mine.EvaluationPresenter;
 import com.colpencil.redwood.view.activity.login.LoginActivity;
 import com.colpencil.redwood.view.adapters.ImageSelectAdapter;
@@ -67,7 +72,8 @@ public class EvaluationActivity extends ColpencilActivity
     EditText et_content;
 
     private EvaluationPresenter presenter;
-
+    @Bind(R.id.lowerRatingBar)
+    ProperRatingBar lowerRatingBar;
     private ImageSelectAdapter adapter;
     private ArrayList<ImageItem> defaultDataArray = new ArrayList<>();
     private int order_id;
@@ -77,12 +83,20 @@ public class EvaluationActivity extends ColpencilActivity
     public static final int REQUEST_CODE_SELECT = 100;
     public static final int REQUEST_CODE_PREVIEW = 101;
     private List<File> fileList = new ArrayList<>();
-
+    private int rate;
+    private RatingListener ratingListener = new RatingListener() {
+        @Override
+        public void onRatePicked(ProperRatingBar ratingBar) {
+            rate = ratingBar.getRating();
+            Log.e("ee",rate+"");
+        }
+    };
     @Override
     protected void initViews(View view) {
         order_id = getIntent().getIntExtra("order_id", 0);
         goods_id = getIntent().getIntExtra("goods_id", 0) + "";
         initImagePicker();
+        lowerRatingBar.setListener(ratingListener);
         initData();
     }
 
@@ -160,15 +174,18 @@ public class EvaluationActivity extends ColpencilActivity
         } else if (content.length() > 100) {
             ToastTools.showShort(this, "评论内容不能超过100字...");
             return;
-        } else {
+        } else if(rate == 0){
+            ToastTools.showShort(this,"请评分");
+        }else {
             showLoading(Constants.progressName);
-            presenter.submitComment(order_id, goods_id, content, fileList, 0);
+            presenter.submitComment(rate,order_id, goods_id, content, fileList, 0);
         }
     }
 
     @Override
     public void submitResult(ResultCodeInt result) {
         hideLoading();
+
         ColpenciSnackbarUtil.downShowing(findViewById(android.R.id.content), result.getMsg());
         if (result.getCode() == 1) {//评价成功
             RxBusMsg rxBusMsg = new RxBusMsg();
@@ -195,6 +212,7 @@ public class EvaluationActivity extends ColpencilActivity
                 Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);
                 intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, (ArrayList<ImageItem>) adapter.getImages());
                 intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
+                intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
                 startActivityForResult(intentPreview, REQUEST_CODE_PREVIEW);
                 break;
         }

@@ -33,7 +33,7 @@ public class ItemBrowsingGoodAdapter extends CommonAdapter<GoodsItem> {
             @Override
             public void onClick(View v) {
                 RefreshMsg msg = new RefreshMsg();
-                msg.setType(11);
+                msg.setType(12);//商品
                 msg.setTitle(item.getName());
                 msg.setContent(item.getName());
                 msg.setId(Integer.valueOf(item.getGoods_id()));

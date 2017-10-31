@@ -21,8 +21,8 @@ public class EvaluationPresenter extends ColpencilPresenter<IEvaluationView> {
         model = new EvaluationModel();
     }
 
-    public void submitComment(int order_id, String goods_id, String content, List<File> files, int type) {
-        model.submitComment(order_id, goods_id, content, files, type);
+    public void submitComment(int rate,int order_id, String goods_id, String content, List<File> files, int type) {
+        model.submitComment(rate,order_id, goods_id, content, files, type);
         Observer<ResultCodeInt> observer = new Observer<ResultCodeInt>() {
             @Override
             public void onCompleted() {

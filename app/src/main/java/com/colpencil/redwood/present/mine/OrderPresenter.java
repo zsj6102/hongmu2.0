@@ -28,17 +28,47 @@ public class OrderPresenter extends ColpencilPresenter<IOrderView> {
 
             @Override
             public void onError(Throwable e) {
-              mView.loadError(e.getMessage());
+                if(mView!=null){
+                    mView.loadError("服务器异常");
+                }
+
+            }
+
+            @Override
+            public void onNext(OrderPayInfo orderPayInfo) {
+                if(orderPayInfo!= null && orderPayInfo.getCode() == 0 && mView!=null){
+                    mView.loadNewOrder(orderPayInfo.getData());
+                }else{
+                    mView.loadError(orderPayInfo.getMessage());
+                }
+
+            }
+        };
+        paymentModel.subOrder(observer);
+    }
+
+    public void getDirectOrder(Map<String,String> params){
+        paymentModel.loadDirectOrder(params);
+        Observer<OrderPayInfo> observer = new Observer<OrderPayInfo>(){
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mView.loadError("服务器异常");
             }
 
             @Override
             public void onNext(OrderPayInfo orderPayInfo) {
                 if(orderPayInfo!= null && orderPayInfo.getCode() == 0){
                     mView.loadNewOrder(orderPayInfo.getData());
+                }else{
+                    mView.loadError(orderPayInfo.getMessage());
                 }
-
             }
         };
-        paymentModel.subOrder(observer);
+        paymentModel.subDirectOrder(observer);
     }
 }

@@ -19,9 +19,11 @@ import com.colpencil.redwood.bean.CatBean;
 import com.colpencil.redwood.bean.CatListBean;
 import com.colpencil.redwood.bean.FastStoreInfo;
 import com.colpencil.redwood.bean.PostTypeInfo;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.configs.Constants;
 import com.colpencil.redwood.function.utils.ListUtils;
 import com.colpencil.redwood.function.widgets.dialogs.CategoryDialog;
+import com.colpencil.redwood.function.widgets.dialogs.PostDialog;
 import com.colpencil.redwood.present.mine.ApplyPresenter;
 import com.colpencil.redwood.services.PublishStoreService;
 import com.colpencil.redwood.view.adapters.ImageSelectAdapter;
@@ -37,7 +39,9 @@ import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ToastTools;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -46,7 +50,10 @@ import me.shaohui.advancedluban.Luban;
 import me.shaohui.advancedluban.OnCompressListener;
 import me.shaohui.advancedluban.OnMultiCompressListener;
 
-
+/**
+ * 发布速拍 商品
+ *
+ */
 @ActivityFragmentInject(contentViewId = R.layout.activity_publish_fast)
 public class PublishStoreActivity extends ColpencilActivity implements View.OnClickListener, ImageSelectAdapter.OnRecyclerViewItemClickListener, ApplayView {
 
@@ -75,7 +82,6 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
     TextView upSell;
     @Bind(R.id.iv_cover_add)
     ImageView ivCoverAdd;
-
     private ImagePicker imagePicker;
     public static final int REQUEST_CODE_SELECT = 100;
     public static final int REQUEST_CODE_PREVIEW = 101;
@@ -85,8 +91,7 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
     private ArrayList<ImageItem> defaultDataArray = new ArrayList<>();
     private ArrayList<ImageItem> coverDataArray = new ArrayList<>();
     private boolean isCover = true;     //ture为封面，false为多选图片
-    private CategoryDialog dialog;
-    String s = "";
+    private PostDialog dialog;
     private String sec_id = "";
     private List<PostTypeInfo> list = new ArrayList<>();
     private String type;
@@ -127,6 +132,9 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
         type = getIntent().getStringExtra("type");
         store_id = getIntent().getStringExtra("id");
 //        name = getIntent().getStringExtra("name");
+        Map<String,String> map = new HashMap<>();
+        map.put("store_id",store_id+"");
+        presenter.loadPro(map);
         edtStorePrice.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         llCategory.setOnClickListener(this);
         ivBack.setOnClickListener(this);
@@ -155,7 +163,7 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
             case Constants.IMAGE_ITEM_ADD:
                 //打开选择,本次允许选择的数量
                 ImagePicker.getInstance().setSelectLimit(maxImgCount - defaultDataArray.size());
-                Intent intent = new Intent(this, ImageGridActivity.class);
+                Intent intent = new Intent(PublishStoreActivity.this, ImageGridActivity.class);
                 startActivityForResult(intent, REQUEST_CODE_SELECT);
                 break;
             default:
@@ -163,7 +171,7 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
                 Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);
                 intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, (ArrayList<ImageItem>) adapter.getImages());
                 intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
-
+                intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
                 startActivityForResult(intentPreview, REQUEST_CODE_PREVIEW);
                 break;
         }
@@ -174,10 +182,11 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
         switch (view.getId()) {
             case R.id.ll_category:
                 if (dialog == null) {
-                    dialog = new CategoryDialog(PublishStoreActivity.this, R.style.PostDialogTheme, list);
+                    dialog = new PostDialog(PublishStoreActivity.this, R.style.PostDialogTheme, list);
                 }
                 dialog.setTitle("请选择经营品类");
-                dialog.setListener(new CategoryDialog.PostClickListener() {
+                dialog.setListener(new PostDialog.PostClickListener() {
+
                     @Override
                     public void closeClick() {
                         dialog.dismiss();
@@ -190,17 +199,10 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
                     }
 
                     @Override
-                    public void itemClick(List<Integer> position) {
-                        for (int i = 0; i < position.size(); i++) {
-                            if (i != position.size() - 1) {
-                                s = s + list.get(position.get(i)).getTypename() + ",";
-                                sec_id = sec_id + list.get(position.get(i)).getSec_id() + ",";
-                            } else {
-                                s = s + list.get(position.get(i)).getTypename();
-                                sec_id = sec_id + list.get(position.get(i)).getSec_id();
-                            }
-                        }
-                        postNewsCategory.setText(s);
+                    public void itemClick(int position) {
+
+                        postNewsCategory.setText(list.get(position).getTypename());
+                        sec_id = list.get(position).getSec_id();
                         dialog.dismiss();
                     }
                 });
@@ -233,7 +235,7 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
             Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);
             intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, coverDataArray);
             intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, 0);
-
+            intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
             startActivityForResult(intentPreview, REQUEST_CODE_PREVIEW);
         } else {    //选择图片
             imagePicker.setSelectLimit(1);
@@ -443,6 +445,15 @@ public class PublishStoreActivity extends ColpencilActivity implements View.OnCl
                 info.setChoose(false);
                 list.add(info);
             }
+        }
+    }
+
+    @Override
+    public void loadPro(ResultInfo<String> result) {
+        if(result.getCode() == 0){
+            String str;
+            str ="顶藏将在此价格上提取" +result.getData()+"的佣金";
+            edtStorePrice.setHint(str);
         }
     }
 }

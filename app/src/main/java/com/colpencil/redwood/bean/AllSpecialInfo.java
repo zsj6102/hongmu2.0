@@ -8,7 +8,16 @@ public class AllSpecialInfo implements Serializable {
     private String special_name;
     private long create_time;
     private int is_top;
+    private Integer cat_id;
     private String spe_picture;
+
+    public Integer getCat_id() {
+        return cat_id;
+    }
+
+    public void setCat_id(Integer cat_id) {
+        this.cat_id = cat_id;
+    }
 
     public int getSpecial_id() {
         return special_id;

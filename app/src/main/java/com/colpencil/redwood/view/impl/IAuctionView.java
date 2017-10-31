@@ -1,5 +1,6 @@
 package com.colpencil.redwood.view.impl;
 
+import com.colpencil.redwood.bean.AddResult;
 import com.colpencil.redwood.bean.JiashangItem;
 
 import com.colpencil.redwood.bean.ResultInfo;
@@ -14,4 +15,7 @@ public interface IAuctionView extends ColpencilBaseView {
     void loadMore(ResultInfo<List<JiashangItem>> data);
 
     void loadFail(String msg);
+    void addComment(AddResult result);
+
+    void addLike(AddResult result);
 }

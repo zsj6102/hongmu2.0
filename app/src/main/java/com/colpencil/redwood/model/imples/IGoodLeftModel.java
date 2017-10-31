@@ -3,8 +3,11 @@ package com.colpencil.redwood.model.imples;
 import com.colpencil.redwood.bean.HomeGoodInfo;
 import com.colpencil.redwood.bean.ListResult;
 import com.colpencil.redwood.bean.result.AnnounceResult;
+import com.colpencil.redwood.bean.result.CareReturn;
 import com.colpencil.redwood.bean.result.GoodInfoResult;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilModel;
+
+import java.util.Map;
 
 import rx.Observer;
 
@@ -39,5 +42,16 @@ public interface IGoodLeftModel extends ColpencilModel {
      */
     void loadGoodDetail(int goodsId);
     void subDetail(Observer<AnnounceResult> observer);
+    void care(Map<String,String> parems);
+
+    void subCare(Observer<CareReturn> observer);
+
+    /**
+     * 取消关注商家
+     */
+
+    void unCare(Map<String,String> params);
+
+    void subUnCare(Observer<CareReturn> observer);
 
 }

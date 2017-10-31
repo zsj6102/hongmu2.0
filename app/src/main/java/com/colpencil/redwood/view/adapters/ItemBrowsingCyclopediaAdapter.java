@@ -34,8 +34,9 @@ public class ItemBrowsingCyclopediaAdapter extends CommonAdapter<CyclopediaItem>
             @Override
             public void onClick(View v) {
                 RefreshMsg msg = new RefreshMsg();
-                msg.setType(11);
+                msg.setType(11);//百科
                 msg.setTitle(item.getTitle());
+                msg.setCat_id(item.getCat_id());
                 msg.setContent(item.getPage_description());
                 msg.setId(Integer.valueOf(item.getArticle_id()));
                 msg.setImage(item.getImage());

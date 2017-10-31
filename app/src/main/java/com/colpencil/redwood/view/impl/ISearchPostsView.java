@@ -23,7 +23,7 @@ public interface ISearchPostsView extends ColpencilBaseView {
 
     void loadMore(List<CommentVo> commentVos);
 
-    void loadError();
+    void loadError(String msg);
 
     /**
      * 提交评论结果

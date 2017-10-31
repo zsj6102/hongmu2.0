@@ -6,6 +6,7 @@ public class ReplyToItem implements Serializable {
     private Integer member_id;
     private String store_name;  //   回复评论会员昵称或商家名称
     private String member_photo;  //   回复评论会员等级图标
+    private String face;
     private Integer re_id;  //   回复ID
     private Integer store_type;  //   回复商家类型
     private String store_path;  //   回复评论会员头像
@@ -14,6 +15,15 @@ public class ReplyToItem implements Serializable {
 //    private Integer replay_type;  //   回复类型
 //    private String child_to_member;  //   回复谁的内容
     private String to_member_name; //对谁的回复
+
+    public String getFace() {
+        return face;
+    }
+
+    public void setFace(String face) {
+        this.face = face;
+    }
+
     public Integer getMember_id() {
         return member_id;
     }

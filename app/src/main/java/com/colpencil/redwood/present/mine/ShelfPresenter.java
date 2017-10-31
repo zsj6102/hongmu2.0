@@ -30,7 +30,7 @@ public class ShelfPresenter extends ColpencilPresenter<IShelfView> {
 
             @Override
             public void onError(Throwable e) {
-
+                mView.loadFail("服务器异常");
             }
 
             @Override

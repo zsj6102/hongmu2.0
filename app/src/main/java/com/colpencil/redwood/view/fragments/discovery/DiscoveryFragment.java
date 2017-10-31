@@ -9,11 +9,14 @@ import com.colpencil.redwood.view.activity.discovery.CustomListActivity;
 import com.colpencil.redwood.view.activity.discovery.MusicCenterActivity;
 import com.colpencil.redwood.view.activity.discovery.ReCyclopediaActivity;
 import com.colpencil.redwood.view.activity.home.CollectionCircleActivity;
+import com.colpencil.redwood.view.activity.mine.AllSpecialActivity;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilFragment;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
 
 import butterknife.OnClick;
+
+import static com.unionpay.mobile.android.global.a.A;
 
 /**
  * 描述：发现
@@ -64,6 +67,12 @@ public class DiscoveryFragment extends ColpencilFragment {
     void customOnClick() {
         Intent intent = new Intent();
         intent.setClass(getActivity(), CustomListActivity.class);
+        startActivity(intent);
+    }
+    @OnClick(R.id.rl_zc)
+    void zcOnClick() {
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), AllSpecialActivity.class);
         startActivity(intent);
     }
     @Override

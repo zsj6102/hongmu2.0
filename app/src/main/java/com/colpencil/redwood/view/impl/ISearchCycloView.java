@@ -18,5 +18,5 @@ public interface ISearchCycloView extends ColpencilBaseView {
      */
     void loadSuccess(List<CyclopediaInfoVo> cyclopediaInfoVos);
 
-    void loadError();
+    void loadError(String msg);
 }

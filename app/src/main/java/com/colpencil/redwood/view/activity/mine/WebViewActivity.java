@@ -85,11 +85,11 @@ public class WebViewActivity extends ColpencilActivity implements IWebViewView {
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (webView.canGoBack()) {
-                    webView.goBack();
-                } else {
+//                if (webView.canGoBack()) {
+//                    webView.goBack();
+//                } else {
                     finish();
-                }
+//                }
             }
         });
     }
@@ -143,11 +143,11 @@ public class WebViewActivity extends ColpencilActivity implements IWebViewView {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK
                 && event.getRepeatCount() == 0) {
-            if (webView.canGoBack()) {
-                webView.goBack();
-            } else {
+//            if (webView.canGoBack()) {
+//                webView.goBack();
+//            } else {
                 finish();
-            }
+//            }
             return true;
         }
         return super.onKeyDown(keyCode, event);

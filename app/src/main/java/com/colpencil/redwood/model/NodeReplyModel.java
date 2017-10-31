@@ -26,8 +26,9 @@ public class NodeReplyModel implements INodeReplyModel {
     private Observable<ResultInfo<List<NodeReplyItem>>> observable;
     private Observable<FirstComment> goodNums;
     private Observable<AddResult> addResultObservable;
+    private Observable<ResultInfo<String>> likeObservable;
     @Override
-    public void getNodeReply(Map<String, String> map) {
+    public void getNodeReply(Map<String, String> map ) {
         observable = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST).createApi(RedWoodApi.class).getNodeReply(map).subscribeOn(Schedulers.io()).map(new Func1<ResultInfo<List<NodeReplyItem>>, ResultInfo<List<NodeReplyItem>>>() {
             @Override
             public ResultInfo<List<NodeReplyItem>> call(ResultInfo<List<NodeReplyItem>> listResultInfo) {
@@ -75,5 +76,24 @@ public class NodeReplyModel implements INodeReplyModel {
     @Override
     public void subAddResult(Observer<AddResult> observer) {
         addResultObservable.subscribe(observer);
+    }
+
+    @Override
+    public void addLike(Map<String, String> map) {
+        likeObservable = RetrofitManager.getInstance(1,App.getInstance(),UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .getNoteLike(map)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<ResultInfo<String>, ResultInfo<String>>() {
+                    @Override
+                    public ResultInfo<String> call(ResultInfo<String> resultInfo) {
+                        return resultInfo;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void subLike(Observer<ResultInfo<String>> observer) {
+        likeObservable.subscribe(observer);
     }
 }

@@ -6,12 +6,16 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.colpencil.redwood.R;
+import com.colpencil.redwood.bean.RecommendVo;
 import com.colpencil.redwood.bean.RemoduleVo;
 import com.colpencil.redwood.function.tools.ImageLoaderUtils;
 import com.colpencil.redwood.function.utils.ListUtils;
 import com.colpencil.redwood.function.widgets.list.Decomposers;
 import com.colpencil.redwood.holder.adapter.MiddleItemAdapter;
 import com.property.colpencil.colpencilandroidlibrary.Ui.AdapterView.MosaicListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MiddleItemViewHolder extends Decomposers<RemoduleVo> {
 
@@ -36,6 +40,8 @@ public class MiddleItemViewHolder extends Decomposers<RemoduleVo> {
             String url = vo.getRecHead().get(0).getUrl();
             ImageLoaderUtils.loadImage(mContext, url, imageView);
         }
+        List<RecommendVo> list = new ArrayList<>();
+        list.addAll(vo.getRecModuleList());
         recyclerView.setAdapter(new MiddleItemAdapter(vo.getRecModuleList(), mContext));
     }
 }

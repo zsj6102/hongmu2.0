@@ -10,4 +10,6 @@ public interface SpeedView extends ColpencilBaseView {
     void loadFail(String message);
 
     void getAd(AdResult adResult);
+
+
 }

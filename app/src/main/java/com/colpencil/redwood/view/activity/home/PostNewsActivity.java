@@ -165,6 +165,7 @@ public class PostNewsActivity extends ColpencilActivity
                 Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);
                 intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, defaultDataArray);
                 intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
+                intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
                 startActivityForResult(intentPreview, REQUEST_CODE_PREVIEW);
                 break;
         }
@@ -177,6 +178,7 @@ public class PostNewsActivity extends ColpencilActivity
             Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);
             intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, coverDataArray);
             intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, 0);
+            intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
             startActivityForResult(intentPreview, REQUEST_CODE_PREVIEW);
         } else {    //选择图片
             imagePicker.setSelectLimit(1);

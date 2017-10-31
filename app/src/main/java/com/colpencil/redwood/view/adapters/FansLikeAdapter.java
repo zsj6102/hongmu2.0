@@ -25,22 +25,35 @@ public class FansLikeAdapter extends CommonAdapter<ItemStoreFans> {
         Glide.with(mContext).load(item.getFace()).into((SelectableRoundedImageView) helper.getView(R.id.iv_head));
         Glide.with(mContext).load(item.getMember_photo()).into((ImageView) helper.getView(R.id.iv_dengji));
         Glide.with(mContext).load(item.getStore_type_path()).into((ImageView) helper.getView(R.id.iv_type));
-        if(item.getStore_type() == 0){
+        if(item.getStore_type()!=null){
+            if(item.getStore_type() == 0){
+                helper.setText(R.id.tv_type,"普通会员");
+            }else if(item.getStore_type() == 1){
+                helper.setText(R.id.tv_type,"个人商家");
+            }else if(item.getStore_type() == 2){
+                helper.setText(R.id.tv_type,"品牌商家");
+            }else if(item.getStore_type() == 3){
+                helper.setText(R.id.tv_type,"名师名匠");
+            }
+        }else{
             helper.setText(R.id.tv_type,"普通会员");
-        }else if(item.getStore_type() == 1){
-            helper.setText(R.id.tv_type,"个人商家");
-        }else if(item.getStore_type() == 2){
-            helper.setText(R.id.tv_type,"品牌商家");
-        }else if(item.getStore_type() == 3){
-            helper.setText(R.id.tv_type,"名师名匠");
         }
+        if(item.getPrize_count()!=null){
+            helper.getView(R.id.layout_prize).setVisibility(View.VISIBLE);
+            helper.setText(R.id.tv_praise_count,item.getPrize_count()+"");
+        }else{
+            helper.getView(R.id.layout_prize).setVisibility(View.GONE);
+        }
+        helper.setText(R.id.tv_dengji,item.getLv_name());
+        helper.setText(R.id.tv_storename,item.getStore_name());
         if(item.getStore_recommend() == 0){
             helper.getView(R.id.tv_recommend).setVisibility(View.GONE);
         }else {
             helper.getView(R.id.tv_recommend).setVisibility(View.VISIBLE);
         }
-        helper.setText(R.id.tv_praise_count,item.getPraise_rate());
+//        helper.setText(R.id.tv_praise_count,item.getPraise_rate());
         helper.setText(R.id.tv_follow,item.getStore_count()+"");
+
         if(item.getIsfocus() == 0){
             helper.getView(R.id.layout_care).setVisibility(View.GONE);
             helper.getView(R.id.layout_uncare).setVisibility(View.VISIBLE);

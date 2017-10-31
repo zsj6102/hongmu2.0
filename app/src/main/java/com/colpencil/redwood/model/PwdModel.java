@@ -148,7 +148,7 @@ public class PwdModel implements IPwdModel {
     public void getCodeBind(String mobile) {
         bindCode = RetrofitManager
                 .getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
-                .createApi(RedWoodApi.class).getvalidateCode(mobile)
+                .createApi(RedWoodApi.class).getvalidateCode2(mobile)
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<LoginBean, LoginBean>() {
                     @Override

@@ -18,7 +18,34 @@ public class FastStoreInfo implements Serializable {
     private String warehouseOrshelves;
     private String mktprice;
     private String specs;
-    private int spe_section_id;
+    private String spe_section_id;
+    private String array_id;
+    private Integer goods_id;
+    private List<File> image;
+
+    public List<File> getImage() {
+        return image;
+    }
+
+    public void setImage(List<File> image) {
+        this.image = image;
+    }
+
+    public Integer getGoods_id() {
+        return goods_id;
+    }
+
+    public void setGoods_id(Integer goods_id) {
+        this.goods_id = goods_id;
+    }
+
+    public String getArray_id() {
+        return array_id;
+    }
+
+    public void setArray_id(String array_id) {
+        this.array_id = array_id;
+    }
 
     public String getCat_id() {
         return cat_id;
@@ -124,11 +151,11 @@ public class FastStoreInfo implements Serializable {
         this.specs = specs;
     }
 
-    public int getSpe_section_id() {
+    public String getSpe_section_id() {
         return spe_section_id;
     }
 
-    public void setSpe_section_id(int spe_section_id) {
+    public void setSpe_section_id(String spe_section_id) {
         this.spe_section_id = spe_section_id;
     }
 }

@@ -7,26 +7,24 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.base.App;
-import com.colpencil.redwood.bean.ApplyStatusReturn;
 import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.HomeRecommend;
 import com.colpencil.redwood.bean.Info.RxClickMsg;
 import com.colpencil.redwood.bean.RxBusMsg;
-import com.colpencil.redwood.present.mine.ApplyStatusPresenter;
 import com.colpencil.redwood.view.fragments.FragmentFactory;
-import com.colpencil.redwood.view.impl.IBuisnessView;
 import com.jaeger.library.StatusBarUtil;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilActivity;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
+
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
 import com.property.colpencil.colpencilandroidlibrary.Function.Rx.RxBus;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
@@ -105,6 +103,7 @@ public class HomeActivity extends ColpencilActivity implements View.OnClickListe
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
             StatusBarUtil.setColor(this, getResources().getColor(R.color.main_brown));
         }
+
         setSwipeBackEnable(false);
         initData();
         result = (EntityResult<HomeRecommend>) getIntent().getSerializableExtra("data");
@@ -144,10 +143,7 @@ public class HomeActivity extends ColpencilActivity implements View.OnClickListe
                     iv_homepage.setImageResource(R.mipmap.btn_homepage_pressure);
                     tv_homepage.setTextColor(getResources().getColor(R.color.main_red));
                 } else if (msg.getType() == 56) {
-//                    setBottomMeunStyle();
-//                    iv_cyclopedia.setImageResource(R.mipmap.btn_cyclopedia_pressure);
-//                    tv_cyclopedia.setTextColor(HomeActivity.this.getResources().getColor(R.color.main_red));
-//                    main_viewpage.setCurrentItem(3, false);
+//
                 }
             }
         };
@@ -168,12 +164,15 @@ public class HomeActivity extends ColpencilActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_homepage:
+
                 setBottomMeunStyle();
                 iv_homepage.setImageResource(R.mipmap.btn_homepage_pressure);
                 tv_homepage.setTextColor(this.getResources().getColor(R.color.main_red));
                 main_viewpage.setCurrentItem(0, false);
                 break;
             case R.id.ll_classification:
+
+
                 setBottomMeunStyle();
                 iv_classification.setImageResource(R.mipmap.btn_classification_pressure);
                 tv_classification.setTextColor(this.getResources().getColor(R.color.main_red));
@@ -202,6 +201,8 @@ public class HomeActivity extends ColpencilActivity implements View.OnClickListe
                 break;
         }
     }
+
+
 
     /**
      * 设置底部菜单样式

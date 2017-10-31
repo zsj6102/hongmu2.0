@@ -72,4 +72,17 @@ public interface IHomeModel extends ColpencilModel {
     void search(int cat_id, String keyword, int page, int pageSize);
 
     void subSearch(Observer<CyclopediaResult> observer);
+
+    /**
+     * 获取二期商品所有标签
+     */
+    void loadGoodsAllTag();
+
+    void subAllGoodsTag(Observer<ListResult<CategoryVo>> observer);
+    /**
+     * 获取二期商品我的所有标签
+     */
+    void loadMyGoodSTag();
+
+    void subMyGoodsTag(Observer<ListResult<CategoryVo>> observer);
 }

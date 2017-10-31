@@ -1,5 +1,6 @@
 package com.colpencil.redwood.view.activity.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import com.colpencil.redwood.bean.Info.StoreDetail;
 import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.bean.result.GoodsTypeResult;
 import com.colpencil.redwood.present.home.AllAuctionPresent;
+import com.colpencil.redwood.view.activity.home.SearchActivity;
 import com.colpencil.redwood.view.fragments.mine.AllSpecialItemFragment;
 import com.colpencil.redwood.view.impl.AllAuctionView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilActivity;
@@ -64,7 +66,13 @@ import butterknife.OnClick;
     void back() {
         finish();
     }
+    @OnClick(R.id.iv_add)
+    void search() {
+        Intent intent = new Intent(this, SearchActivity.class);
+        intent.putExtra("from", "Zc");
+        startActivity(intent);
 
+    }
     @Override
     public void bindView(Bundle savedInstanceState) {
 

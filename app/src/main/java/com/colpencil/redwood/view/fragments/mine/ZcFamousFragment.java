@@ -13,16 +13,19 @@ import com.colpencil.redwood.bean.result.CareReturn;
 import com.colpencil.redwood.bean.result.ZcAllCardInfo;
 import com.colpencil.redwood.configs.Constants;
 import com.colpencil.redwood.configs.StringConfig;
+import com.colpencil.redwood.function.utils.ListUtils;
 import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
 import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.mine.ZcFamousPrensenter;
 import com.colpencil.redwood.view.activity.login.LoginActivity;
+import com.colpencil.redwood.view.activity.mine.StoreHomeActivity;
 import com.colpencil.redwood.view.adapters.ZcFamousAdapter;
 import com.colpencil.redwood.view.impl.IZcFoumousView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilFragment;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
+import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ToastTools;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGANormalRefreshViewHolder;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout;
 
@@ -40,6 +43,9 @@ public class ZcFamousFragment extends ColpencilFragment implements IZcFoumousVie
     BGARefreshLayout refreshLayout;
     @Bind(R.id.common_listview)
     ListView listview;
+    @Bind(R.id.refreshLayout2)
+    BGARefreshLayout refreshLayout2;
+    private BGARefreshLayout.BGARefreshLayoutDelegate delegate;
     private int pageNo = 1, pageSize = 10;
     private boolean isRefresh = false;
     private List<ZcCardInfo> mList = new ArrayList<>();
@@ -64,7 +70,7 @@ public class ZcFamousFragment extends ColpencilFragment implements IZcFoumousVie
         params.put("special_id", type + "");
         params.put("page", pageNo + "");
         params.put("pageSize", pageSize + "");
-        refreshLayout.setDelegate(new BGARefreshLayout.BGARefreshLayoutDelegate() {
+        delegate = new BGARefreshLayout.BGARefreshLayoutDelegate() {
             @Override
             public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
                 pageNo = 1;
@@ -80,7 +86,11 @@ public class ZcFamousFragment extends ColpencilFragment implements IZcFoumousVie
                 }
                 return false;
             }
-        });
+        };
+        refreshLayout.setDelegate(delegate);
+        refreshLayout2.setDelegate(delegate);
+        refreshLayout2.setRefreshViewHolder(new BGANormalRefreshViewHolder(getActivity(), true));
+        refreshLayout2.setSnackStyle(getActivity().findViewById(android.R.id.content), getResources().getColor(R.color.material_drawer_primary), getResources().getColor(R.color.white));
         refreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getActivity(), true));
         refreshLayout.setSnackStyle(getActivity().findViewById(android.R.id.content), getResources().getColor(R.color.material_drawer_primary), getResources().getColor(R.color.white));
         mAdapter = new ZcFamousAdapter(getActivity(), mList, R.layout.item_card_wall);
@@ -90,6 +100,18 @@ public class ZcFamousFragment extends ColpencilFragment implements IZcFoumousVie
 
     private void initAdatper() {
         mAdapter.setListener(new ZcFamousAdapter.ComOnClickListener() {
+            @Override
+            public void contentClick(int position) {
+                if(mList.get(position).getStore_type()!= null){
+                    Intent intent = new Intent(getActivity(), StoreHomeActivity.class);
+                    intent.putExtra("type", mList.get(position).getStore_type());
+                    intent.putExtra("store_id", mList.get(position).getStore_id());
+                    startActivity(intent);
+                }else{
+                    ToastTools.showShort(getActivity(),"他还不是商家");
+                }
+
+            }
             @Override
             public void careClick(int position) {
                 pos = position;
@@ -171,6 +193,13 @@ public class ZcFamousFragment extends ColpencilFragment implements IZcFoumousVie
         mList.clear();
         mList.addAll(info.getData());
         mAdapter.notifyDataSetChanged();
+        if (ListUtils.listIsNullOrEmpty(info.getData())) {
+            refreshLayout2.setVisibility(View.VISIBLE);
+            refreshLayout.setVisibility(View.GONE);
+        } else {
+            refreshLayout2.setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.VISIBLE);
+        }
         hideLoading();
     }
 
@@ -185,7 +214,13 @@ public class ZcFamousFragment extends ColpencilFragment implements IZcFoumousVie
     @Override
     public void loadFail(String message) {
         hideLoading();
-        Toast.makeText(getActivity(), "加载失败", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        refreshLayout2.endRefreshing(0);
+        refreshLayout.endRefreshing(0);
+        refreshLayout.endLoadingMore();
+        refreshLayout2.endLoadingMore();
+        refreshLayout2.setVisibility(View.VISIBLE);
+        refreshLayout.setVisibility(View.GONE);
 
     }
 
@@ -199,6 +234,8 @@ public class ZcFamousFragment extends ColpencilFragment implements IZcFoumousVie
             params.put("pageSize", pageSize + "");
             prensenter.getAllFamous(pageNo, params);
         }
+            ToastTools.showShort(getActivity(),result.getMessage());
+
     }
 
     private void isLoadMore(ZcAllCardInfo info) {
@@ -207,7 +244,9 @@ public class ZcFamousFragment extends ColpencilFragment implements IZcFoumousVie
         } else {
             isRefresh = true;
         }
+        refreshLayout2.endRefreshing(0);
         refreshLayout.endRefreshing(0);
         refreshLayout.endLoadingMore();
+        refreshLayout2.endLoadingMore();
     }
 }

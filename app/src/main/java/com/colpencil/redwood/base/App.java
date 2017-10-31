@@ -7,6 +7,8 @@ import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
+import com.colpencil.redwood.CustomAttr.RadioButtonAttr;
+import com.colpencil.redwood.CustomAttr.TabLayoutIndicatorAttr;
 import com.colpencil.redwood.configs.Constants;
 import com.colpencil.redwood.configs.StringConfig;
 import com.colpencil.redwood.dao.DaoMaster;
@@ -28,6 +30,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Field;
 
+import solid.ren.skinlibrary.SkinConfig;
+import solid.ren.skinlibrary.base.SkinBaseApplication;
+
 
 /**
  * @author 曾 凤
@@ -35,8 +40,8 @@ import java.lang.reflect.Field;
  * @Email 20000263@qq.com
  * @date 2016/7/6
  */
-public class App extends MultiDexApplication {
-    static final String TAG="MyApplication";
+public class App extends  SkinBaseApplication{
+    static final String TAG = "MyApplication";
     private static DaoSession daoSession;
     private static DaoMaster daoMaster;
 
@@ -54,13 +59,13 @@ public class App extends MultiDexApplication {
         Log.e("程序启动", "====");
         instance = this;
         //初始化内存泄漏工具
-//        LeakCanary.install(this);
+        //        LeakCanary.install(this);
         //必须初始化框架操作
         ColpencilFrame.init(this);
         //初始化日志工具
         ColpencilLogger.init();
         //配置快速编译
-//        FreelineCore.init(this);
+        //        FreelineCore.init(this);
         //选择图片
         //WeChat appid appsecret
         PlatformConfig.setWeixin("wx8ff267ef571440e5", "c559520928df2ad6f26cff454c17a489");
@@ -90,7 +95,7 @@ public class App extends MultiDexApplication {
 
             @Override
             public void onViewInitFinished(boolean arg0) {
-                LogUtil.i(TAG,"onViewInitFinished is " + arg0);
+                LogUtil.i(TAG, "onViewInitFinished is " + arg0);
             }
 
             @Override
@@ -101,17 +106,17 @@ public class App extends MultiDexApplication {
         QbSdk.setTbsListener(new TbsListener() {
             @Override
             public void onDownloadFinish(int i) {
-                LogUtil.i(TAG,"onDownloadFinish");
+                LogUtil.i(TAG, "onDownloadFinish");
             }
 
             @Override
             public void onInstallFinish(int i) {
-                LogUtil.i(TAG,"onInstallFinish");
+                LogUtil.i(TAG, "onInstallFinish");
             }
 
             @Override
             public void onDownloadProgress(int i) {
-                LogUtil.i(TAG,"onDownloadProgress:" + i);
+                LogUtil.i(TAG, "onDownloadProgress:" + i);
             }
         });
         QbSdk.initX5Environment(this, cb);
@@ -157,21 +162,30 @@ public class App extends MultiDexApplication {
     }
 
     private void openStrict() {
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                .detectCustomSlowCalls() //API等级11，使用StrictMode.noteSlowCode
-                .detectDiskReads()
-                .detectDiskWrites()
-                .detectNetwork()   // or .detectAll() for all detectable problems
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectCustomSlowCalls() //API等级11，使用StrictMode.noteSlowCode
+                .detectDiskReads().detectDiskWrites().detectNetwork()   // or .detectAll() for all detectable problems
                 .penaltyDialog() //弹出违规提示对话框
                 .penaltyLog() //在Logcat 中打印违规异常信息
                 .penaltyFlashScreen() //API等级11
                 .build());
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                .detectLeakedSqlLiteObjects()
-                .detectLeakedClosableObjects() //API等级11
-                .penaltyLog()
-                .penaltyDeath()
-                .build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects().detectLeakedClosableObjects() //API等级11
+                .penaltyLog().penaltyDeath().build());
+    }
+
+    static class MyApp extends SkinBaseApplication {
+        @Override
+        public void onCreate() {
+            super.onCreate();
+        }
+
+        public void init() {
+            SkinConfig.setCanChangeStatusColor(true);
+            SkinConfig.setCanChangeFont(true);
+            SkinConfig.setDebug(true);
+            SkinConfig.addSupportAttr("tabLayoutIndicator", new TabLayoutIndicatorAttr());
+            SkinConfig.addSupportAttr("button", new RadioButtonAttr());
+            SkinConfig.enableGlobalSkinApply();
+        }
     }
 
     private class MyExecptionHandler implements Thread.UncaughtExceptionHandler {
@@ -183,13 +197,11 @@ public class App extends MultiDexApplication {
                 PrintWriter pw = new PrintWriter(sw);
                 Field[] fileds = Build.class.getDeclaredFields();
                 for (Field filed : fileds) {
-                    System.out
-                            .println(filed.getName() + "--" + filed.get(null));
+                    System.out.println(filed.getName() + "--" + filed.get(null));
                     sw.write(filed.getName() + "--" + filed.get(null) + "\n");
                 }
                 ex.printStackTrace(pw);
-                File file = new File(Environment.getExternalStorageDirectory(),
-                        "log.txt");
+                File file = new File(Environment.getExternalStorageDirectory(), "log.txt");
                 FileOutputStream fos = new FileOutputStream(file);
                 fos.write(sw.toString().getBytes());
                 fos.close();

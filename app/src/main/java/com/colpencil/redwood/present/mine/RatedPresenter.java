@@ -28,7 +28,7 @@ public class RatedPresenter extends ColpencilPresenter<IRatedView> {
 
             @Override
             public void onError(Throwable e) {
-                mView.loadFail(e.getMessage());
+                mView.loadFail("服务器异常");
             }
 
             @Override

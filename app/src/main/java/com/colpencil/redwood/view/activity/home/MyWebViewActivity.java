@@ -1,6 +1,7 @@
 package com.colpencil.redwood.view.activity.home;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
@@ -60,4 +61,5 @@ public class MyWebViewActivity extends ColpencilActivity {
     public void bindView(Bundle savedInstanceState) {
 
     }
+
 }

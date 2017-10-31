@@ -69,4 +69,62 @@ public class FansLikePresenter extends ColpencilPresenter<IFansAndLike> {
         };
         model.subCare(observer);
     }
+
+    public void getSearch(final int pageNo, Map<String,String> map){
+        model.loadSearch(map);
+        Observer<ResultInfo<List<ItemStoreFans>>> observer = new Observer<ResultInfo<List<ItemStoreFans>>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResultInfo<List<ItemStoreFans>> resultInfo) {
+                if(resultInfo != null && mView!=null){
+                    if(pageNo == 1){
+                        mView.refresh(resultInfo);
+                    }else{
+                        mView.loadMore(resultInfo);
+                    }
+                }else{
+                    mView.loadFail(resultInfo.getMessage());
+                }
+            }
+        };
+        model.subSearch(observer);
+    }
+
+    public void getHotFans(final int pageNo,Map<String, String> map){
+        model.getHotFans(map);
+        Observer<ResultInfo<List<ItemStoreFans>>> observer = new Observer<ResultInfo<List<ItemStoreFans>>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResultInfo<List<ItemStoreFans>> listResultInfo) {
+                if(listResultInfo.getCode() == 0 && mView !=null){
+                    if(pageNo == 1){
+                        mView.refresh(listResultInfo);
+                    }else{
+                        mView.loadMore(listResultInfo);
+                    }
+                }else{
+                    mView.loadFail(listResultInfo.getMessage());
+                }
+            }
+        };
+        model.subHotFans(observer);
+    }
 }

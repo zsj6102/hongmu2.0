@@ -9,8 +9,6 @@ public abstract class Decomposers<Data> {
     private Data data;
     private int position;
     public Context mContext;
-
-
     public Decomposers(int position, Context context) {
         this.mContext = context;
         contentView = initView(position);
@@ -26,6 +24,9 @@ public abstract class Decomposers<Data> {
     public View getContentView() {
         return contentView;
     }
+
+
+
 
     /**
      * 必须调用此方法才会显示数据

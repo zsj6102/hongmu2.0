@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.bean.CardWallInfo;
@@ -13,6 +14,7 @@ import com.colpencil.redwood.bean.DynamicInfo;
 import com.colpencil.redwood.bean.FameInfo;
 import com.colpencil.redwood.bean.Info.RxClickMsg;
 import com.colpencil.redwood.bean.result.DynamicResult;
+import com.colpencil.redwood.function.utils.ListUtils;
 import com.colpencil.redwood.function.widgets.AttachUtil;
 import com.colpencil.redwood.present.mine.DynamicPresent;
 import com.colpencil.redwood.view.adapters.FameAdapter;
@@ -52,6 +54,9 @@ public class FameItemFragment extends ColpencilFragment implements IDynamicView 
     private DynamicPresent dynamicPresent;
     private int type;
     private int origin;
+    @Bind(R.id.refreshLayout2)
+    BGARefreshLayout refreshLayout2;
+    private BGARefreshLayout.BGARefreshLayoutDelegate delegate;
     private Observable<RxClickMsg> clickMsgObservable;
     public static FameItemFragment newInstance(int type,int origin){
         FameItemFragment fameItemFragment=new FameItemFragment();
@@ -66,7 +71,7 @@ public class FameItemFragment extends ColpencilFragment implements IDynamicView 
     protected void initViews(View view) {
         type=getArguments().getInt("type");
         origin = getArguments().getInt("origin");
-        refreshLayout.setDelegate(new BGARefreshLayoutDelegate() {
+        delegate = new BGARefreshLayoutDelegate() {
             @Override
             public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
                 pageNo = 1;
@@ -105,7 +110,13 @@ public class FameItemFragment extends ColpencilFragment implements IDynamicView 
                 }
                 return false;
             }
-        });
+        };
+        refreshLayout.setDelegate(delegate);
+        refreshLayout2.setDelegate(delegate);
+        refreshLayout2.setRefreshViewHolder(new BGANormalRefreshViewHolder(getActivity(), true));
+        refreshLayout2.setSnackStyle(getActivity().findViewById(android.R.id.content),
+                getResources().getColor(R.color.material_drawer_primary),
+                getResources().getColor(R.color.white));
         refreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getActivity(), true));
         refreshLayout.setSnackStyle(getActivity().findViewById(android.R.id.content),
                 getResources().getColor(R.color.material_drawer_primary),
@@ -194,7 +205,14 @@ public class FameItemFragment extends ColpencilFragment implements IDynamicView 
 
     @Override
     public void loadFail(String message) {
-
+        hideLoading();
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        refreshLayout2.endRefreshing(0);
+        refreshLayout.endRefreshing(0);
+        refreshLayout.endLoadingMore();
+        refreshLayout2.endLoadingMore();
+        refreshLayout2.setVisibility(View.VISIBLE);
+        refreshLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -202,6 +220,10 @@ public class FameItemFragment extends ColpencilFragment implements IDynamicView 
         isLoadMore(dynamicResult.getData());
         mlist.addAll(dynamicResult.getData());
         adapter.notifyDataSetChanged();
+        refreshLayout2.endRefreshing(0);
+        refreshLayout.endRefreshing(0);
+        refreshLayout.endLoadingMore();
+        refreshLayout2.endLoadingMore();
         hideLoading();
     }
 
@@ -211,6 +233,13 @@ public class FameItemFragment extends ColpencilFragment implements IDynamicView 
         mlist.clear();
         mlist.addAll(dynamicResult.getData());
         adapter.notifyDataSetChanged();
+        if (ListUtils.listIsNullOrEmpty(dynamicResult.getData())) {
+            refreshLayout2.setVisibility(View.VISIBLE);
+            refreshLayout.setVisibility(View.GONE);
+        } else {
+            refreshLayout2.setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.VISIBLE);
+        }
         hideLoading();
     }
 

@@ -131,10 +131,10 @@ public class PwdActivity extends ColpencilActivity implements IPwdView {
 
     @Override
     public void loginResult(LoginBean loginBean) {
-        SharedPreferencesUtil.getInstance(App.getInstance()).setString(StringConfig.MOBILEPHONE, etPwd_phone.getText().toString());
-        SharedPreferencesUtil.getInstance(App.getInstance()).setString(StringConfig.PASSWORD, etPwd_setPwd.getText().toString());
-        SharedPreferencesUtil.getInstance(App.getInstance()).setBoolean(StringConfig.ISLOGIN, true);
-        intentToHome(loginBean);
+//        SharedPreferencesUtil.getInstance(App.getInstance()).setString(StringConfig.MOBILEPHONE, etPwd_phone.getText().toString());
+//        SharedPreferencesUtil.getInstance(App.getInstance()).setString(StringConfig.PASSWORD, etPwd_setPwd.getText().toString());
+//        SharedPreferencesUtil.getInstance(App.getInstance()).setBoolean(StringConfig.ISLOGIN, true);
+//        intentToHome(loginBean);
     }
 
     @Override
@@ -152,7 +152,14 @@ public class PwdActivity extends ColpencilActivity implements IPwdView {
         hideLoading();
         ToastTools.showShort(this, bean.getMsg());
         if (bean.getCode() == 1) {
-            presenter.login(etPwd_phone.getText().toString(), Md5Utils.encode(etPwd_setPwd.getText().toString()));
+//           SharedPreferencesUtil.getInstance(App.getInstance()).setInt("member_id", bean.getMember_id());
+//             SharedPreferencesUtil.getInstance(App.getInstance()).setString("token", bean.getToken());
+//            presenter.login(etPwd_phone.getText().toString(), Md5Utils.encode(etPwd_setPwd.getText().toString()));
+            Intent intent = new Intent();
+            intent.putExtra("mobile",bean.getMobile());
+            intent.putExtra("pwd",bean.getPassword());
+            this.setResult(0,intent);
+            finish();
         }
     }
 
@@ -271,15 +278,13 @@ public class PwdActivity extends ColpencilActivity implements IPwdView {
      * 跳转到主界面
      */
 
-    private void intentToHome(LoginBean loginBean) {
-        RxBusMsg rxBusMsg = new RxBusMsg();
-        rxBusMsg.setType(63);
-        RxBus.get().post("rxBusMsg", rxBusMsg);
-        SharedPreferencesUtil.getInstance(App.getInstance()).setInt("member_id", loginBean.getMember_id());
-        SharedPreferencesUtil.getInstance(App.getInstance()).setString("token", loginBean.getToken());
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
-        finish();
-    }
+//    private void intentToHome(LoginBean loginBean) {
+//        RxBusMsg rxBusMsg = new RxBusMsg();
+//        rxBusMsg.setType(63);
+//        RxBus.get().post("rxBusMsg", rxBusMsg);
+//        Intent intent = new Intent(this, HomeActivity.class);
+//        startActivity(intent);
+//        finish();
+//    }
 
 }

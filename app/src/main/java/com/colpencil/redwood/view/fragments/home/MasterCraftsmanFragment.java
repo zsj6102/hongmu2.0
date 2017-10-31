@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.bean.AdInfo;
+import com.colpencil.redwood.bean.BannerVo;
 import com.colpencil.redwood.bean.result.AdResult;
 import com.colpencil.redwood.function.tools.MyImageLoader;
 import com.colpencil.redwood.present.SpeedPresent;
@@ -82,10 +83,10 @@ public class MasterCraftsmanFragment extends ColpencilFragment implements SpeedV
     }
     @Override
     public void getAd(AdResult adResult) {
-        List<AdInfo> adInfoList=adResult.getData();
+        List<BannerVo> adInfoList=adResult.getData();
         List<String> imgUrls = new ArrayList<>();
         for(int i=0;i<adInfoList.size();i++){
-            imgUrls.add(adInfoList.get(i).getAtturl());
+            imgUrls.add(adInfoList.get(i).getUrl());
         }
         banner.setImageLoader(new MyImageLoader());
         banner.setImages(imgUrls);

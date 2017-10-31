@@ -38,4 +38,12 @@ public interface IBrowsingHistoryModel extends ColpencilModel {
     void recordShare(int ote_id, String platform, int type);
 
     void subRecord(Observer<EntityResult<String>> observer);
+
+    void shareBaike(int ote_id,String article_id);
+
+    void subShareBike(Observer<CommonResult> observer);
+
+    void shareGoods( String goods_id);
+
+    void subShareGoods(Observer<CommonResult> observer);
 }

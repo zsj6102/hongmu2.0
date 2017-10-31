@@ -69,7 +69,7 @@
 
     </LinearLayout>
 
-    <android.support.v4.view.ViewPager
+    <com.property.colpencil.colpencilandroidlibrary.Ui.NoScrollViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -92,5 +92,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="159dp"
         android:layout_marginRight="15dp" />
+
+
 
 </RelativeLayout>

@@ -2,9 +2,13 @@ package com.colpencil.redwood.model.imples;
 
 import com.colpencil.redwood.bean.CyclopediaContent;
 import com.colpencil.redwood.bean.EntityResult;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.bean.result.AnnounceResult;
+import com.colpencil.redwood.bean.result.CommonResult;
 import com.colpencil.redwood.bean.result.PCommentResult;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilModel;
+
+import java.util.Map;
 
 import rx.Observer;
 
@@ -66,7 +70,7 @@ public interface ICycloDetailModel extends ColpencilModel {
      */
     void loadShare(int cat_id, String article_id);
 
-    void subShare(Observer<EntityResult<String>> observer);
+    void subShare(Observer<CommonResult> observer);
 
     /**
      * 记录分享
@@ -102,4 +106,8 @@ public interface ICycloDetailModel extends ColpencilModel {
     void loadContent(String id);
 
     void subContent(Observer<EntityResult<CyclopediaContent>> observer);
+
+
+    void addLike(Map<String,String> map);
+    void subLikeCom(Observer<ResultInfo<String>> observer);
 }

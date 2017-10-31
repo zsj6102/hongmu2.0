@@ -3,6 +3,8 @@ package com.colpencil.redwood.present.home;
 import android.content.Context;
 
 import com.colpencil.redwood.bean.EntityResult;
+import com.colpencil.redwood.bean.NodeReplyItem;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.bean.result.CommonResult;
 import com.colpencil.redwood.bean.result.PCommentResult;
 import com.colpencil.redwood.bean.result.PostsResult;
@@ -11,6 +13,9 @@ import com.colpencil.redwood.model.CommentDetailModel;
 import com.colpencil.redwood.model.imples.ICommentDetailModel;
 import com.colpencil.redwood.view.impl.ICommentDetailView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
+
+import java.util.List;
+import java.util.Map;
 
 import rx.Observable;
 import rx.Observer;
@@ -316,5 +321,49 @@ public class CommentDetailPresenter extends ColpencilPresenter<ICommentDetailVie
         };
         model.subAddup(observer);
     }
+    public void getLikeResult(Map<String,String> map){
+        model.addLike(map);
+        Observer<ResultInfo<String>> observer = new Observer<ResultInfo<String>>() {
+            @Override
+            public void onCompleted() {
 
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResultInfo<String> resultInfo) {
+                if(mView!=null && resultInfo!=null){
+                    mView.addLike(resultInfo);
+                }
+            }
+        };
+        model.subLikeCom(observer);
+    }
+    public void getNodeReply( Map<String,String> map){
+        model.getNodeReply(map);
+        Observer<ResultInfo<List<NodeReplyItem>>> observer = new Observer<ResultInfo<List<NodeReplyItem>>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResultInfo<List<NodeReplyItem>> listResultInfo) {
+                if(listResultInfo!=null && mView != null){
+                    mView.getNoteList(listResultInfo);
+                }
+            }
+
+        };
+        model.subReply(observer);
+    }
 }

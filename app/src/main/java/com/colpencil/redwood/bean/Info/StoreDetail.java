@@ -6,8 +6,8 @@ import java.io.Serializable;
 import java.util.List;
 
 public class StoreDetail implements Serializable {
-    private int member_id;//会员id
-    private int store_id;//商家id
+    private Integer member_id;//会员id
+    private Integer store_id;//商家id
     private int store_type;//商家类型
     private String store_name;//商家名称
     private String store_path;//商家头像
@@ -21,22 +21,58 @@ public class StoreDetail implements Serializable {
     private String member_photo;//会员等级图片
     private String store_type_name;//商家类型名称
     private String store_type_path;//商家类型图片
-    private int isfocus;//是否关注
+    private Integer isfocus;//是否关注
     private List<AllAuctionItem> biz_type;//主创类别
+    private String catname;
+    private String face;
+    private int store_count;
+    private int prize_count;
 
-    public int getMember_id() {
+    public String getFace() {
+        return face;
+    }
+
+    public void setFace(String face) {
+        this.face = face;
+    }
+
+    public int getStore_count() {
+        return store_count;
+    }
+
+    public void setStore_count(int store_count) {
+        this.store_count = store_count;
+    }
+
+    public int getPrize_count() {
+        return prize_count;
+    }
+
+    public void setPrize_count(int prize_count) {
+        this.prize_count = prize_count;
+    }
+
+    public String getCatname() {
+        return catname;
+    }
+
+    public void setCatname(String catname) {
+        this.catname = catname;
+    }
+
+    public Integer getMember_id() {
         return member_id;
     }
 
-    public void setMember_id(int member_id) {
+    public void setMember_id(Integer member_id) {
         this.member_id = member_id;
     }
 
-    public int getStore_id() {
+    public Integer getStore_id() {
         return store_id;
     }
 
-    public void setStore_id(int store_id) {
+    public void setStore_id(Integer store_id) {
         this.store_id = store_id;
     }
 
@@ -144,11 +180,11 @@ public class StoreDetail implements Serializable {
         this.store_type_path = store_type_path;
     }
 
-    public int getIsfocus() {
+    public Integer getIsfocus() {
         return isfocus;
     }
 
-    public void setIsfocus(int isfocus) {
+    public void setIsfocus(Integer isfocus) {
         this.isfocus = isfocus;
     }
 

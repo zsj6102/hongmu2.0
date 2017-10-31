@@ -1,5 +1,6 @@
 package com.colpencil.redwood.view.fragments.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import com.colpencil.redwood.bean.Info.StoreDetail;
 import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.bean.result.GoodsTypeResult;
 import com.colpencil.redwood.present.home.AllAuctionPresent;
+import com.colpencil.redwood.view.activity.home.SearchActivity;
 import com.colpencil.redwood.view.impl.AllAuctionView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilFragment;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
@@ -24,14 +26,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * 所有拍品
  */
 @ActivityFragmentInject(
-        contentViewId = R.layout.fragment_allauction
-)
-public class AllAuctionFragment extends ColpencilFragment  implements AllAuctionView {
+        contentViewId = R.layout.fragment_allauction)
+public class AllAuctionFragment extends ColpencilFragment implements AllAuctionView {
     @Bind(R.id.tab_layout)
     TabLayout tab_layout;
     @Bind(R.id.viewpager)
@@ -39,7 +41,8 @@ public class AllAuctionFragment extends ColpencilFragment  implements AllAuction
 
     private MyPageAdapter adapter;
     private AllAuctionPresent allAuctionPresent;
-    private List<GoodsTypeInfo> goodsTypeInfoList=new ArrayList<>();
+    private List<GoodsTypeInfo> goodsTypeInfoList = new ArrayList<>();
+
     @Override
     protected void initViews(View view) {
 
@@ -47,7 +50,7 @@ public class AllAuctionFragment extends ColpencilFragment  implements AllAuction
 
     @Override
     public ColpencilPresenter getPresenter() {
-        allAuctionPresent=new AllAuctionPresent();
+        allAuctionPresent = new AllAuctionPresent();
         return allAuctionPresent;
     }
 
@@ -55,11 +58,13 @@ public class AllAuctionFragment extends ColpencilFragment  implements AllAuction
     public void bindView(Bundle savedInstanceState) {
 
     }
+
     @Override
     public void loadData() {
         showLoading("加载中...");
         allAuctionPresent.getGoodsType();
     }
+
     @Override
     public void loadSuccess() {
         hideLoading();
@@ -72,11 +77,11 @@ public class AllAuctionFragment extends ColpencilFragment  implements AllAuction
 
     @Override
     public void getGoodsType(GoodsTypeResult goodsTypeResult) {
-        List<GoodsTypeInfo> list=goodsTypeResult.getData();
+        List<GoodsTypeInfo> list = goodsTypeResult.getData();
         goodsTypeInfoList.addAll(list);
-        adapter=new MyPageAdapter(getChildFragmentManager());
-        for(int i=0;i<goodsTypeInfoList.size();i++){
-            adapter.addFragment(AllAuctionItemFragment.newInstance(goodsTypeInfoList.get(i).getCat_id()),goodsTypeInfoList.get(i).getName());
+        adapter = new MyPageAdapter(getChildFragmentManager());
+        for (int i = 0; i < goodsTypeInfoList.size(); i++) {
+            adapter.addFragment(AllAuctionItemFragment.newInstance(goodsTypeInfoList.get(i).getCat_id()), goodsTypeInfoList.get(i).getName());
             tab_layout.addTab(tab_layout.newTab().setText(goodsTypeInfoList.get(i).getName()));
         }
         viewpager.setAdapter(adapter);
@@ -86,7 +91,13 @@ public class AllAuctionFragment extends ColpencilFragment  implements AllAuction
         hideLoading();
     }
 
+    @OnClick(R.id.iv_add)
+    void search() {
+        Intent intent = new Intent(getActivity(), SearchActivity.class);
+        intent.putExtra("from", "AllAuction");
+        getActivity().startActivity(intent);
 
+    }
 
     class MyPageAdapter extends FragmentPagerAdapter {
 

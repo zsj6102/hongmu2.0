@@ -15,9 +15,10 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class CardModel implements ICardModel {
-    private Observable<CardWallInfo> observableStore;
-    private Observable<CardWallInfo> observableMine;
-    private Observable<CardWallInfo> observableMR;
+    private Observable<CardWallInfo> observableStore;//商品区名片墙
+    private Observable<CardWallInfo> observableMine;//我的名片墙
+    private Observable<CardWallInfo> observableMR;//名人堂
+    private Observable<CardWallInfo> observableMy;//我的关注和粉丝列表
     private Observable<CareReturn> observable;
     @Override
     public void loadCardStore(HashMap<String, String> params) {
@@ -94,5 +95,24 @@ public class CardModel implements ICardModel {
     @Override
     public void subCardMR(Observer<CardWallInfo> observer) {
         observableMR.subscribe(observer);
+    }
+
+    @Override
+    public void loadCardMy(HashMap<String, String> params) {
+        observableMy = RetrofitManager.getInstance(1,App.getInstance(),UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .getMyFans(params)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<CardWallInfo, CardWallInfo>() {
+                    @Override
+                    public CardWallInfo call(CardWallInfo cardWallInfo) {
+                        return cardWallInfo;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void subCardMy(Observer<CardWallInfo> observer) {
+        observableMy.subscribe(observer);
     }
 }

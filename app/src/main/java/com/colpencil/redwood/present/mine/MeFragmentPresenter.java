@@ -98,12 +98,18 @@ public class MeFragmentPresenter extends ColpencilPresenter<IMeFragmentView> {
 
             @Override
             public void onError(Throwable e) {
-                mView.getStatusError(e.getMessage());
+                if(mView!=null){
+                    mView.getStatusError(e.getMessage());
+                }
+
             }
 
             @Override
             public void onNext(ApplyStatusReturn applyStatusReturn) {
-                mView.getStatusSucess(applyStatusReturn);
+                if(mView!=null){
+                    mView.getStatusSucess(applyStatusReturn);
+                }
+
             }
         };
         meFragmentModel.subStauts(subscriber);

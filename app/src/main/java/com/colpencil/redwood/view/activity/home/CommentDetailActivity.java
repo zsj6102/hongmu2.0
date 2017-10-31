@@ -23,9 +23,12 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.colpencil.redwood.R;
+import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.EntityResult;
+import com.colpencil.redwood.bean.NodeReplyItem;
 import com.colpencil.redwood.bean.PostsComment;
 import com.colpencil.redwood.bean.RefreshMsg;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.bean.RxBusMsg;
 import com.colpencil.redwood.bean.result.CommonResult;
 import com.colpencil.redwood.bean.result.PCommentResult;
@@ -39,7 +42,9 @@ import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.home.CommentDetailPresenter;
 import com.colpencil.redwood.view.activity.HomeActivity;
 import com.colpencil.redwood.view.activity.commons.GalleyActivity;
+import com.colpencil.redwood.view.activity.cyclopedia.CyclopediaDetailActivity;
 import com.colpencil.redwood.view.activity.login.LoginActivity;
+import com.colpencil.redwood.view.activity.mine.ReplyDetail;
 import com.colpencil.redwood.view.activity.mine.WebViewActivity;
 import com.colpencil.redwood.view.adapters.AnswerAdapter;
 import com.colpencil.redwood.view.adapters.ImageAdapter;
@@ -64,11 +69,17 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.Subscriber;
+
+import static com.property.colpencil.colpencilandroidlibrary.Function.Tools.TimeUtil.getTimeDiffDay;
 
 /**
  * @author 陈宝
@@ -112,7 +123,9 @@ public class CommentDetailActivity extends ColpencilActivity implements IComment
     private String content;
     private EditText et_content;
     private PostsResult mResult;
-
+    private int pos;
+    private Observable<RxBusMsg> observable;
+    private Subscriber subscriber;
     @Override
     protected void initViews(View view) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
@@ -125,6 +138,8 @@ public class CommentDetailActivity extends ColpencilActivity implements IComment
         imgAdapter = new ImageAdapter(this, imglist, R.layout.item_circle_image);
         holder.first_listview.setAdapter(imgAdapter);
         ansAdapter = new AnswerAdapter(this, posts, R.layout.item_comment_detail_answer, 0);
+        initAdapter();
+        initBus();
         holder.second_listview.setAdapter(ansAdapter);
         showLoading("");
         if (NetUtils.isConnected(this)) {
@@ -161,7 +176,73 @@ public class CommentDetailActivity extends ColpencilActivity implements IComment
         presenter = new CommentDetailPresenter();
         return presenter;
     }
+    private void initBus(){
+        observable = RxBus.get().register("rxBusMsg",RxBusMsg.class);
+        subscriber = new Subscriber<RxBusMsg>(){
+            @Override
+            public void onCompleted() {
 
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(RxBusMsg rxBusMsg) {
+                if(rxBusMsg.getType() == 123){
+                    presenter.loadComments(ote_id + "", page, pageSize);
+                }
+            }
+        };
+        observable.subscribe(subscriber);
+    }
+    private void initAdapter() {
+        ansAdapter.setListener(new AnswerAdapter.MyListener() {
+            @Override
+            public void commentClick(int position) {
+                Intent intent = new Intent(CommentDetailActivity.this, ReplyDetail.class);
+                NodeReplyItem item = new NodeReplyItem();
+                item.setRe_id(posts.get(position).getRe_id());
+                item.setRe_face(posts.get(position).getFace());
+                item.setRe_store_name(posts.get(position).getNickname());
+                item.setRe_member_photo(posts.get(position).getMember_photo());
+                item.setRe_content(posts.get(position).getRe_content());
+                String time;
+                if (posts.get(position).getCreatetime() == 0) {
+                    time = TimeUtil.getTimeDiffDay(posts.get(position).getTime(), System.currentTimeMillis());
+                } else {
+                    time = getTimeDiffDay(posts.get(position).getCreatetime(), System.currentTimeMillis());
+                }
+                item.setRe_create_time(time);
+                intent.putExtra("data", item);
+                intent.putExtra("type", 0);
+                startActivity(intent);
+            }
+
+            @Override
+            public void addLike(int position) {
+                pos = position;
+                if (SharedPreferencesUtil.getInstance(App.getInstance()).getBoolean(StringConfig.ISLOGIN, false)) {
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put("reply_id", posts.get(position).getRe_id() + "");
+                    map.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                    map.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+                    map.put("biaoshi", "5");
+                    presenter.getLikeResult(map);
+                } else {
+                    type = 50;
+                    showDialog();
+                }
+            }
+        });
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxBus.get().unregister("rxBusMsg",observable);
+    }
     @Override
     public void bindView(Bundle savedInstanceState) {
     }
@@ -412,8 +493,7 @@ public class CommentDetailActivity extends ColpencilActivity implements IComment
 
     private void showPopWindow(View view) {
         if (window == null) {
-            window = new PopupWindow(initPopWindow(),
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            window = new PopupWindow(initPopWindow(), ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         }
         window.setFocusable(true);
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -460,14 +540,34 @@ public class CommentDetailActivity extends ColpencilActivity implements IComment
 
     private void showShare(View view) {
         if (popshare == null) {
-            popshare = new PopupWindow(initSharepop(),
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            popshare = new PopupWindow(initSharepop(), ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         }
         popshare.setFocusable(true);
         popshare.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         popshare.setBackgroundDrawable(new BitmapDrawable());
         popshare.showAtLocation(view, Gravity.BOTTOM, 100, 0);
         popshare.showAsDropDown(view);
+    }
+
+    @Override
+    public void getNoteList(ResultInfo<List<NodeReplyItem>> result) {
+
+    }
+
+    @Override
+    public void addLike(ResultInfo<String> resultInfo) {
+        if (resultInfo.getCode() == 0) {
+            if (posts.get(pos).getIsfocus() == 0) {
+                posts.get(pos).setIsfocus(1);
+                posts.get(pos).setRe_like_count(posts.get(pos).getRe_like_count() + 1);
+                ansAdapter.notifyDataSetChanged();
+            } else {
+                posts.get(pos).setIsfocus(0);
+                posts.get(pos).setRe_like_count(posts.get(pos).getRe_like_count() - 1);
+                ansAdapter.notifyDataSetChanged();
+            }
+        }
+        ToastTools.showShort(this, resultInfo.getMessage());
     }
 
     private View initSharepop() {
@@ -514,28 +614,14 @@ public class CommentDetailActivity extends ColpencilActivity implements IComment
     private void share(SHARE_MEDIA platform) {
         if (mResult != null && mResult.getCode().equals("1")) {
             if (mResult.getOte_images() == null) {
-                image = new UMImage(CommentDetailActivity.this,
-                        BitmapFactory.decodeResource(getResources(), R.mipmap.logo));
+                image = new UMImage(CommentDetailActivity.this, BitmapFactory.decodeResource(getResources(), R.mipmap.logo));
             } else {
                 image = new UMImage(CommentDetailActivity.this, mResult.getOte_images().get(0));
             }
-            action.setPlatform(platform)
-                    .setCallback(umShareListener)
-                    .withTitle(mResult.getOte_title())
-                    .withText(mResult.getOte_content())
-                    .withTargetUrl(shareUrl)
-                    .withMedia(image)
-                    .share();
+            action.setPlatform(platform).setCallback(umShareListener).withTitle(mResult.getOte_title()).withText(mResult.getOte_content()).withTargetUrl(shareUrl).withMedia(image).share();
         } else {
-            image = new UMImage(CommentDetailActivity.this,
-                    BitmapFactory.decodeResource(getResources(), R.mipmap.logo));
-            action.setPlatform(platform)
-                    .setCallback(umShareListener)
-                    .withTitle("帖子分享")
-                    .withText("帖子分享")
-                    .withTargetUrl(shareUrl)
-                    .withMedia(image)
-                    .share();
+            image = new UMImage(CommentDetailActivity.this, BitmapFactory.decodeResource(getResources(), R.mipmap.logo));
+            action.setPlatform(platform).setCallback(umShareListener).withTitle("帖子分享").withText("帖子分享").withTargetUrl(shareUrl).withMedia(image).share();
         }
     }
 

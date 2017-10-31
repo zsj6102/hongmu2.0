@@ -21,7 +21,7 @@ public class ReplytToAdapter extends CommonAdapter<ReplyToItem> {
 
     @Override
     public void convert(CommonViewHolder helper, ReplyToItem item, final int position) {
-        ImageLoaderUtils.loadImage(mContext,item.getStore_path(), (ImageView)helper.getView(R.id.iv_meHead));
+        ImageLoaderUtils.loadImage(mContext,item.getFace(), (ImageView)helper.getView(R.id.iv_meHead));
         ImageLoaderUtils.loadImage(mContext,item.getMember_photo(), (ImageView)helper.getView(R.id.iv_level));
         helper.setText(R.id.tv_title1,item.getStore_name());
         if(item.getTo_member_name() == null){

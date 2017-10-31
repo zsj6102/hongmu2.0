@@ -21,17 +21,17 @@ import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPrefe
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ToastTools;
 
 import java.io.File;
+import java.net.ConnectException;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.HashMap;
-
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
-
-import static com.colpencil.redwood.R.id.price;
-
 public class PublishStoreService extends Service {
     @Nullable
     @Override
@@ -67,9 +67,17 @@ public class PublishStoreService extends Service {
         if(info.getPrice()!=null){
             params.put("price", OkhttpUtils.toRequestBody(info.getPrice()));
         }
-        params.put("cover\";filename=\"1.png", RequestBody.create(MediaType.parse("image/png"), info.getCover()));
+        if(info.getCover()!=null){
+            params.put("cover\";filename=\"1.png", RequestBody.create(MediaType.parse("image/png"), info.getCover()));
+        }
+        if(info.getSpe_section_id()!= null){
+            params.put("spe_section_id",OkhttpUtils.toRequestBody(info.getSpe_section_id()));
+        }
 //        if(type.equals("1")){
+        if(info.getIntro()!=null){
             params.put("intro", OkhttpUtils.toRequestBody(info.getIntro()));
+        }
+
 //        }
 //        if(!type.equals("1")){
             if(info.getMktprice()!=null){
@@ -96,7 +104,12 @@ public class PublishStoreService extends Service {
 
             @Override
             public void onError(Throwable e) {
-                ToastTools.showShort(PublishStoreService.this, "系统出错");
+                if(e instanceof ConnectException || e instanceof UnknownHostException || e instanceof SocketException || e instanceof  SocketTimeoutException ){
+                    ToastTools.showShort(PublishStoreService.this, "网络连接出错");
+                }else{
+                    ToastTools.showShort(PublishStoreService.this, "系统出错");
+                }
+
                 stopSelf();
             }
 

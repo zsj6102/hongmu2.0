@@ -13,6 +13,7 @@
         android:scrollbars="none">
 
         <LinearLayout
+            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -72,6 +73,7 @@
                     android:layout_marginRight="12dp"
                     android:background="@null"
                     android:hint="请输入实体店名称"
+                    android:maxLength="50"
                     android:textColor="@color/text_color_thirst"
                     android:textColorHint="@color/text_color_thirst"
                     android:textSize="15sp" />
@@ -103,6 +105,7 @@
                     android:layout_marginRight="12dp"
                     android:background="@null"
                     android:hint="请输入营业执照号"
+                    android:maxLength="50"
                     android:textColor="@color/text_color_thirst"
                     android:textColorHint="@color/text_color_thirst"
                     android:textSize="15sp" />

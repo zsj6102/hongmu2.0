@@ -61,6 +61,7 @@ import com.property.colpencil.colpencilandroidlibrary.Function.Rx.RxBus;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ColpenciSnackbarUtil;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.TextStringUtils;
+import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ToastTools;
 import com.property.colpencil.colpencilandroidlibrary.Ui.BaseListView;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGANormalRefreshViewHolder;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout;
@@ -142,7 +143,7 @@ public class MeFragment extends ColpencilFragment implements IMeFragmentView, Vi
     private boolean loginState = false;//登录状态
 
     private CommonDialog servicedialog;
-
+    private int disabled = -10;
 
     @Override
     protected void initViews(View view) {
@@ -513,12 +514,19 @@ public class MeFragment extends ColpencilFragment implements IMeFragmentView, Vi
                 startActivity(intentAbout);
                 break;
             case R.id.ll_wallet:
-                mIntent = new Intent(getActivity(), CommodityManageActivity.class);
-                mIntent.putExtra("type", "9");
-                startActivity(mIntent);
+                if(disabled!=1){
+                    ToastTools.showShort(getActivity(),"您还不是商家");
+                }else{
+                    mIntent = new Intent(getActivity(), CommodityManageActivity.class);
+                    mIntent.putExtra("type", "9");
+                    startActivity(mIntent);
+                }
+
                 break;
             case R.id.ll_vip:
-                mIntent = new Intent(getActivity(), AllSpecialActivity.class);
+                SharedPreferencesUtil.getInstance(App.getInstance()).setInt("session_type",1);
+                mIntent = new Intent(getActivity(), CommodityManageActivity.class);
+                mIntent.putExtra("type", "10");
                 startActivity(mIntent);
         }
     }
@@ -628,6 +636,7 @@ public class MeFragment extends ColpencilFragment implements IMeFragmentView, Vi
     public void getStatusSucess(ApplyStatusReturn applyStatusReturn) {
         hideLoading();
         if (applyStatusReturn.getCode() == 0) { //成功
+            disabled = applyStatusReturn.getData().getDisabled();
             if (applyStatusReturn.getData().getDisabled() == -2) {
                 tvCop.setText("商家合作");
             }  else {

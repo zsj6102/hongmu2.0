@@ -29,7 +29,8 @@ public class BrowsingHistoryModel implements IBrowsingHistoryModel {
     private Observable<Result> delete;
     private Observable<CommonResult> share;
     private Observable<EntityResult<String>> record;
-
+    private Observable<CommonResult> shareBaike;
+    private Observable<CommonResult> shareGoods;
     @Override
     public void delet(int type, int foot_type) {
         HashMap<String, String> params = new HashMap<>();
@@ -100,5 +101,47 @@ public class BrowsingHistoryModel implements IBrowsingHistoryModel {
     @Override
     public void subRecord(Observer<EntityResult<String>> observer) {
         record.subscribe(observer);
+    }
+
+    @Override
+    public void shareBaike(int ote_id, String article_id) {
+        shareBaike = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .cycloShare(ote_id,article_id,
+                        SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id"),
+                        SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"))
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<CommonResult, CommonResult>() {
+                    @Override
+                    public CommonResult call(CommonResult commonResult) {
+                        return commonResult;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void subShareBike(Observer<CommonResult> observer) {
+        shareBaike.subscribe(observer);
+    }
+
+    @Override
+    public void shareGoods(String goods_id) {
+        shareGoods = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .goodShare(goods_id,
+                        SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id"),
+                        SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"))
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<CommonResult, CommonResult>() {
+                    @Override
+                    public CommonResult call(CommonResult commonResult) {
+                        return commonResult;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void subShareGoods(Observer<CommonResult> observer) {
+         shareGoods.subscribe(observer);
     }
 }

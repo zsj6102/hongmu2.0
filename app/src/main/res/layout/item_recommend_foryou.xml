@@ -1,36 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_fffbfa"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/color_fffbfa"
+              android:orientation="vertical">
 
     <View
         android:id="@+id/divide_line"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/line_color_first" />
+        android:background="@color/line_color_first"/>
 
     <View
         android:id="@+id/line_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/padding_10dp"
         android:background="@color/main_background"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
-    <com.youth.banner.Banner
-        android:id="@+id/recom_banner"
+    <!--<com.youth.banner.Banner-->
+        <!--android:id="@+id/recom_banner"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="160dp"-->
+        <!--app:is_auto_play="false"/>-->
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        app:is_auto_play="false" />
-
-    <android.support.v7.widget.RecyclerView
+        android:layout_height="160dp" />
+    <com.colpencil.redwood.function.widgets.MosaicRecyclerView
         android:id="@+id/recom_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>

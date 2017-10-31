@@ -23,6 +23,7 @@ import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.Colpenci
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
+import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ToastTools;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGANormalRefreshViewHolder;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout;
 
@@ -36,7 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 粉丝和关注
+ * 商家粉丝和关注
  */
 @ActivityFragmentInject(contentViewId = R.layout.like_fans_layout)
 public class FansAndLikeActivity extends ColpencilActivity implements IFansAndLike {
@@ -57,6 +58,7 @@ public class FansAndLikeActivity extends ColpencilActivity implements IFansAndLi
     private String type;
     private int store_id;
     private int pos;
+    private String cat_id;
     Map<String, String> map = new HashMap<>();
 
     @Override
@@ -74,8 +76,11 @@ public class FansAndLikeActivity extends ColpencilActivity implements IFansAndLi
         }
         if (type.equals("0")) {
             tvMainTitle.setText("粉丝");
-        } else {
+        } else if(type.equals("1")) {
             tvMainTitle.setText("关注");
+        }else{
+            cat_id = getIntent().getStringExtra("cat_id");
+            tvMainTitle.setText("热门关注");
         }
         initData();
         mAdapter = new FansLikeAdapter(this, mdata, R.layout.item_card_wall);
@@ -86,16 +91,37 @@ public class FansAndLikeActivity extends ColpencilActivity implements IFansAndLi
             @Override
             public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
                 pageNo = 1;
-                map.put("page", pageNo + "");
-                presenter.getData(pageNo, map);
+                if(!type.equals("2")){
+
+                    map.put("page", pageNo + "");
+                    presenter.getData(pageNo, map);
+                }else{//热门关注
+                    Map<String, String> map2 = new HashMap<>();
+                    map2.put("cat_id", cat_id);
+                    map2.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                    map2.put("page", pageNo+"");
+                    map2.put("pageSize", pageSize+"");
+                    presenter.getHotFans(pageNo,map2);
+                }
+
             }
 
             @Override
             public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
                 if (isRefresh) {
                     pageNo++;
-                    map.put("page", pageNo + "");
-                    presenter.getData(pageNo, map);
+                    if(!type.equals("2")){
+                        map.put("page", pageNo + "");
+                        presenter.getData(pageNo, map);
+                    }else{  //热门关注
+                        Map<String, String> map2 = new HashMap<>();
+                        map2.put("cat_id", cat_id);
+                        map2.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                        map2.put("page", pageNo+"");
+                        map2.put("pageSize",  pageSize+"");
+                        presenter.getHotFans(pageNo,map2);
+                    }
+
                 }
                 return false;
             }
@@ -106,7 +132,17 @@ public class FansAndLikeActivity extends ColpencilActivity implements IFansAndLi
 
     private void initData() {
         showLoading("");
-        presenter.getData(1, map);
+        if(!type.equals("2")){
+            presenter.getData(1, map);
+        }else{
+            Map<String, String> map2 = new HashMap<>();
+            map2.put("cat_id", cat_id);
+            map2.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+            map2.put("page", "1");
+            map2.put("pageSize",  pageSize+"");
+            presenter.getHotFans(1,map2);
+        }
+
     }
 
     @Override
@@ -119,10 +155,15 @@ public class FansAndLikeActivity extends ColpencilActivity implements IFansAndLi
         mAdapter.setListener(new FansLikeAdapter.ComOnClickListener() {
             @Override
             public void contentClick(int position) {
-                Intent intent = new Intent(FansAndLikeActivity.this, StoreHomeActivity.class);
-                intent.putExtra("type", mdata.get(position).getStore_type() + "");
-                intent.putExtra("store_id", Integer.parseInt(mdata.get(position).getStore_id()));
-                startActivity(intent);
+                if (mdata.get(position).getStore_id() != null && mdata.get(position).getStore_type() != null) {
+                    Intent intent = new Intent(FansAndLikeActivity.this, StoreHomeActivity.class);
+                    intent.putExtra("type", mdata.get(position).getStore_type() + "");
+                    intent.putExtra("store_id",  mdata.get(position).getStore_id());
+                    startActivity(intent);
+                } else {
+                    ToastTools.showShort(FansAndLikeActivity.this,"他还不是商家");
+                }
+
             }
 
             @Override
@@ -203,6 +244,7 @@ public class FansAndLikeActivity extends ColpencilActivity implements IFansAndLi
             }
             mAdapter.notifyDataSetChanged();
         }
+        hideLoading();
     }
 
     @Override

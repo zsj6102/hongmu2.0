@@ -23,6 +23,7 @@ import com.jaeger.library.StatusBarUtil;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilActivity;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
+import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ToastTools;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGANormalRefreshViewHolder;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout.BGARefreshLayoutDelegate;
@@ -32,6 +33,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+
+import static com.colpencil.redwood.view.activity.HomeActivity.result;
 
 /**
  * @author 陈宝
@@ -57,7 +60,8 @@ public class CyclopediaResultActivity extends ColpencilActivity implements ISear
     private int page = 1;
     private int pageSize = 10;
     private boolean isRefresh = false;
-
+    @Bind(R.id.refreshLayout2)
+    BGARefreshLayout refreshLayout2;
     @Override
     protected void initViews(View view) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
@@ -70,11 +74,17 @@ public class CyclopediaResultActivity extends ColpencilActivity implements ISear
         adapter = new ItemSearchCycloAdapter(this, cylist, R.layout.item_second_cyclopedia);
         gridView.setAdapter(adapter);
         refreshLayout.setDelegate(this);
+        refreshLayout2.setDelegate(this);
+        refreshLayout2.setRefreshViewHolder(new BGANormalRefreshViewHolder(this, true));
+        refreshLayout2.setSnackStyle(findViewById(android.R.id.content),
+                getResources().getColor(R.color.material_drawer_primary),
+                getResources().getColor(R.color.white));
         refreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(this, true));
         refreshLayout.setSnackStyle(findViewById(android.R.id.content),
                 getResources().getColor(R.color.material_drawer_primary),
                 getResources().getColor(R.color.white));
         presenter.loadCycloList(3, keyword, page, pageSize);
+        showLoading(Constants.progressName);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -112,11 +122,26 @@ public class CyclopediaResultActivity extends ColpencilActivity implements ISear
         isLoadMore(cyclopediaInfoVos);
         refreshLayout.endRefreshing(cyclopediaInfoVos.size());
         cylist.addAll(cyclopediaInfoVos);
+        if (ListUtils.listIsNullOrEmpty(cyclopediaInfoVos)) {
+            refreshLayout2.setVisibility(View.VISIBLE);
+            refreshLayout.setVisibility(View.GONE);
+        } else {
+            refreshLayout2.setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.VISIBLE);
+        }
         adapter.notifyDataSetChanged();
     }
 
     @Override
-    public void loadError() {
+    public void loadError(String msg) {
+        hideLoading();
+        ToastTools.showShort(this,msg);
+        refreshLayout2.endRefreshing(0);
+        refreshLayout.endRefreshing(0);
+        refreshLayout.endLoadingMore();
+        refreshLayout2.endLoadingMore();
+        refreshLayout2.setVisibility(View.VISIBLE);
+        refreshLayout.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.iv_back)
@@ -170,5 +195,9 @@ public class CyclopediaResultActivity extends ColpencilActivity implements ISear
         } else {
             isRefresh = true;
         }
+        refreshLayout2.endRefreshing(0);
+        refreshLayout.endRefreshing(0);
+        refreshLayout.endLoadingMore();
+        refreshLayout2.endLoadingMore();
     }
 }

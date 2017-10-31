@@ -16,12 +16,19 @@ import com.colpencil.redwood.bean.FirstComment;
 import com.colpencil.redwood.bean.NodeReplyItem;
 
 import com.colpencil.redwood.bean.ResultInfo;
+import com.colpencil.redwood.bean.RxBusMsg;
+import com.colpencil.redwood.configs.Constants;
+import com.colpencil.redwood.configs.StringConfig;
+import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
+import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.NodeReplyPresenter;
+import com.colpencil.redwood.view.activity.login.LoginActivity;
 import com.colpencil.redwood.view.adapters.NodeReplyAdapter;
 import com.colpencil.redwood.view.impl.INodeReply;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilActivity;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
+import com.property.colpencil.colpencilandroidlibrary.Function.Rx.RxBus;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ToastTools;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGANormalRefreshViewHolder;
@@ -35,6 +42,10 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.Subscriber;
+
+import static com.colpencil.redwood.holder.HolderFactory.map;
 
 
 /**
@@ -61,39 +72,33 @@ public class NodeReplyActivity extends ColpencilActivity implements INodeReply {
     private int pageSize = 10;
     private boolean isRefresh = false;
     private List<NodeReplyItem> mdata = new ArrayList<>();
-    Map<String, String> map = new HashMap<>();
-
+    private int pos;
+    private Observable<RxBusMsg> observable;
+    private Subscriber subscriber;
     @Override
     protected void initViews(View view) {
         goods_id = getIntent().getExtras().getInt("goodsid");
-        Map<String,String> nummap = new HashMap<>();
-        nummap.put("h_id",goods_id+"");
-        nummap.put("type","1");
+        Map<String, String> nummap = new HashMap<>();
+        nummap.put("h_id", goods_id + "");
+        nummap.put("type", "1");
         presenter.loadCommentsNum(nummap);
         tvMainTitle.setText("评价");
-        map.put("h_id", goods_id + "");
-        map.put("type", 1 + "");
-        map.put("page", pageNo + "");
-        map.put("pageSize", pageSize + "");
-        presenter.getNodeReply(1, map);
+        loadPageOne(1);
         adapter = new NodeReplyAdapter(this, mdata, R.layout.node_reply_item);
         initAdapter();
         rightListview.setAdapter(adapter);
-
+      initBus();
         refreshLayout.setDelegate(new BGARefreshLayout.BGARefreshLayoutDelegate() {
             @Override
             public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-                pageNo = 1;
-                map.put("page", pageNo + "");
-                presenter.getNodeReply(pageNo, map);
+                loadPageOne(1);
             }
 
             @Override
             public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
                 if (isRefresh) {
                     pageNo++;
-                    map.put("page", pageNo + "");
-                    presenter.getNodeReply(pageNo, map);
+                    loadPageOne(pageNo);
                 }
                 return false;
             }
@@ -101,17 +106,96 @@ public class NodeReplyActivity extends ColpencilActivity implements INodeReply {
         refreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(this, true));
         refreshLayout.setSnackStyle(this.findViewById(android.R.id.content), getResources().getColor(R.color.material_drawer_primary), getResources().getColor(R.color.white));
     }
-    private void initAdapter(){
+
+    private void initBus(){
+        observable = RxBus.get().register("rxBusMsg",RxBusMsg.class);
+        subscriber = new Subscriber<RxBusMsg>(){
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(RxBusMsg rxBusMsg) {
+                if(rxBusMsg.getType() == 123){
+                    loadPageOne(1);
+                }
+            }
+        };
+        observable.subscribe(subscriber);
+    }
+    private void initAdapter() {
         adapter.setListener(new NodeReplyAdapter.MyListener() {
             @Override
+            public void addLike(int position) {
+                pos = position;
+                if (SharedPreferencesUtil.getInstance(App.getInstance()).getBoolean(StringConfig.ISLOGIN, false)) {
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put("reply_id", mdata.get(position).getRe_id() + "");
+                    map.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                    map.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+                    map.put("biaoshi", "1");
+                    presenter.getLikeResult(map);
+                } else {
+                    showDialog();
+                }
+            }
+
+            @Override
             public void commentClick(int position) {
-                Intent intent = new Intent(NodeReplyActivity.this,ReplyDetail.class);
-//                intent.putExtra("re_id",mdata.get(position).getRe_id());
-                intent.putExtra("data",mdata.get(position));
+                Intent intent = new Intent(NodeReplyActivity.this, ReplyDetail.class);
+                //                intent.putExtra("re_id",mdata.get(position).getRe_id());
+                intent.putExtra("data", mdata.get(position));
+                intent.putExtra("type",1);
                 startActivity(intent);
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        loadPageOne(1);
+    }
+
+    private void showDialog() {
+        final CommonDialog dialog = new CommonDialog(this, "你还没登录喔!", "去登录", "取消");
+        dialog.setListener(new DialogOnClickListener() {
+            @Override
+            public void sureOnClick() {
+                intent();
+                dialog.dismiss();
+            }
+
+            @Override
+            public void cancleOnClick() {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    private void intent() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra(StringConfig.REQUEST_CODE, 100);
+        startActivityForResult(intent, Constants.REQUEST_LOGIN);
+    }
+
+    private void loadPageOne(int pageNo) {
+        Map<String, String> map = new HashMap<>();
+        map.put("h_id", goods_id + "");
+        map.put("type", 1 + "");
+        map.put("page", pageNo + "");
+        map.put("pageSize", pageSize + "");
+        map.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+        presenter.getNodeReply(pageNo, map);
+    }
+
     @Override
     public ColpencilPresenter getPresenter() {
         presenter = new NodeReplyPresenter();
@@ -128,25 +212,30 @@ public class NodeReplyActivity extends ColpencilActivity implements INodeReply {
         isLoadMore(info.getData());
         mdata.clear();
         mdata.addAll(info.getData());
+        pageNo = 1;
+        rightListview.removeAllViewsInLayout();
         adapter.notifyDataSetChanged();
         hideLoading();
     }
 
+    @OnClick(R.id.iv_back)
+    void back() {
+        finish();
+    }
+
     @Override
     public void loadNums(FirstComment result) {
-        if(result.getCode() == 0){
-            commentCount.setText(result.getData()+"");
+        if (result.getCode() == 0) {
+            commentCount.setText(result.getData() + "");
         }
     }
 
     @Override
     public void addComment(AddResult result) {
         hideLoading();
-        ToastTools.showShort(this,result.getMessage());
-        if(result.getCode() == 0){
-            pageNo = 1;
-            map.put("page", pageNo + "");
-            presenter.getNodeReply(pageNo, map);
+        ToastTools.showShort(this, result.getMessage());
+        if (result.getCode() == 0) {
+            loadPageOne(1);
         }
     }
 
@@ -180,20 +269,49 @@ public class NodeReplyActivity extends ColpencilActivity implements INodeReply {
         refreshLayout.endRefreshing(0);
         refreshLayout.endLoadingMore();
     }
+
     @OnClick(R.id.tv_sure)
-    void commit(){
-        if(searchHeaderHint.getText().toString().trim()!=null){
-            showLoading("正在提交中...");
-            Map<String,String> map = new HashMap<String, String>();
-            map.put("h_id", goods_id+"");
-            map.put("type","1");
-            map.put("content",searchHeaderHint.getText().toString());
-            map.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id")+"");
-            map.put("token",SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
-            presenter.getAddCommentResult(map);
+    void commit() {
+        if(SharedPreferencesUtil.getInstance(App.getInstance()).getBoolean(StringConfig.ISLOGIN, false)){
+            if (searchHeaderHint.getText().toString().trim() != null ) {
+                showLoading("正在提交中...");
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("h_id", goods_id + "");
+                map.put("type", "1");
+                map.put("content", searchHeaderHint.getText().toString());
+                map.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                map.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+                presenter.getAddCommentResult(map);
+            } else {
+                ToastTools.showShort(NodeReplyActivity.this, "请输入评论内容");
+            }
         }else{
-            ToastTools.showShort(NodeReplyActivity.this,"请输入评论内容");
+            showDialog();
         }
 
+
+    }
+
+    @Override
+    public void addLike(ResultInfo<String> resultInfo) {
+        if (resultInfo.getCode() == 0) {
+            if (mdata.get(pos).getIsfocus() == 0) {
+                mdata.get(pos).setIsfocus(1);
+                mdata.get(pos).setRe_like_count(mdata.get(pos).getRe_like_count() + 1);
+                adapter.notifyDataSetChanged();
+            } else {
+                mdata.get(pos).setIsfocus(0);
+                mdata.get(pos).setRe_like_count(mdata.get(pos).getRe_like_count() - 1);
+                adapter.notifyDataSetChanged();
+            }
+        }
+        ToastTools.showShort(this, resultInfo.getMessage());
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxBus.get().unregister("rxBusMsg",observable);
     }
 }

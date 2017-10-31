@@ -1,6 +1,6 @@
 package com.colpencil.redwood.bean.result;
 
-import com.colpencil.redwood.bean.AdInfo;
+import com.colpencil.redwood.bean.BannerVo;
 
 import java.io.Serializable;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 public class AdResult implements Serializable {
     private int code;
     private String message;
-    private List<AdInfo> data;
+    private List<BannerVo> data;
 
     public int getCode() {
         return code;
@@ -26,11 +26,11 @@ public class AdResult implements Serializable {
         this.message = message;
     }
 
-    public List<AdInfo> getData() {
+    public List<BannerVo> getData() {
         return data;
     }
 
-    public void setData(List<AdInfo> data) {
+    public void setData(List<BannerVo> data) {
         this.data = data;
     }
 }

@@ -2,6 +2,7 @@ package com.colpencil.redwood.model.imples;
 
 import com.colpencil.redwood.bean.AddResult;
 import com.colpencil.redwood.bean.result.AllGoodsResult;
+import com.colpencil.redwood.bean.result.OrderPayInfo;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilModel;
 
 import java.util.HashMap;
@@ -15,7 +16,7 @@ public interface IAllAuctionItemModel extends ColpencilModel{
     /**
      * 获取所有拍品接口
      */
-    void getAllGoods(HashMap<String,RequestBody> strparams,HashMap<String,Integer> intparams);
+    void getAllGoods(Map<String,String> map);
 
     void subGetAllGoods(Observer<AllGoodsResult> observer);
 
@@ -29,4 +30,8 @@ public interface IAllAuctionItemModel extends ColpencilModel{
     void getLikeResult(Map<String,String> params);
 
     void subLike(Observer<AddResult> observer);
+
+    void loadDirectOrder(Map<String,String> map);
+
+    void subDirectOrder(Observer<OrderPayInfo> observer);
 }

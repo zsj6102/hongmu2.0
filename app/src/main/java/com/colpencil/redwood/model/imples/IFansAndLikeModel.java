@@ -20,4 +20,12 @@ public interface IFansAndLikeModel extends ColpencilModel {
     void getCareStatus(HashMap<String,String> params);
 
     void subCare(Observer<CareReturn> observer);
+
+    void loadSearch(Map<String,String> map);
+
+    void subSearch(Observer<ResultInfo<List<ItemStoreFans>>> observer);
+
+    void getHotFans(Map<String,String> map);
+
+    void subHotFans(Observer<ResultInfo<List<ItemStoreFans>>> observer);
 }

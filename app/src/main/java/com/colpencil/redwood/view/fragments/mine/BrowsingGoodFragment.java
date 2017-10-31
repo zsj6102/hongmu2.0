@@ -48,7 +48,7 @@ public class BrowsingGoodFragment extends ColpencilFragment implements IBrowsing
     /**
      * 分页请求页码
      */
-    private long pageNo = 1;
+    private long pageNo = 0;
     /**
      * 每页信息条数
      */
@@ -94,7 +94,7 @@ public class BrowsingGoodFragment extends ColpencilFragment implements IBrowsing
                     showLoading("正在删除该记录...");
                     presenter.delete(msg.getFoot_id());
                 } else if (msg.getType() == 40) {
-                    pageNo = 1;
+                    pageNo =0;
                     presenter.getContent(pageNo, pageSize);
                 }
             }
@@ -148,7 +148,7 @@ public class BrowsingGoodFragment extends ColpencilFragment implements IBrowsing
     public void delete(EntityResult<String> result) {
         hideLoading();
         if (result.getCode() == 0) {
-            pageNo = 1;
+            pageNo = 0;
             presenter.getContent(pageNo, pageSize);
         }
     }
@@ -181,14 +181,13 @@ public class BrowsingGoodFragment extends ColpencilFragment implements IBrowsing
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        pageNo = 1;
+        pageNo = 0;
         presenter.getContent(pageNo, pageSize);
     }
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         if (flag == true) {
-            pageNo++;
             presenter.getContent(pageNo, pageSize);
         }
         return false;

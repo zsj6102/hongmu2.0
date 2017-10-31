@@ -76,7 +76,7 @@
             android:layout_height="25dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
-            android:src="@mipmap/good_service_icon" />
+            android:src="@mipmap/chaticon" />
 
         <ImageView
             android:id="@+id/iv_car"

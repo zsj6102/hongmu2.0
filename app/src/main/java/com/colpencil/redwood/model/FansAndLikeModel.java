@@ -21,7 +21,9 @@ import rx.schedulers.Schedulers;
 
 public class FansAndLikeModel implements IFansAndLikeModel{
     private Observable<ResultInfo<List<ItemStoreFans>>> observablelike;
+    private Observable<ResultInfo<List<ItemStoreFans>>> observablesearch;
     private Observable<CareReturn> observable;
+    private Observable<ResultInfo<List<ItemStoreFans>>> hotfansObservable;
     @Override
     public void loadLikeAndFans(Map<String, String> map) {
         observablelike = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST).createApi(RedWoodApi.class).getStoreFans(map).subscribeOn(Schedulers.io()).map(new Func1<ResultInfo<List<ItemStoreFans>>, ResultInfo<List<ItemStoreFans>>>() {
@@ -54,5 +56,43 @@ public class FansAndLikeModel implements IFansAndLikeModel{
     @Override
     public void subCare(Observer<CareReturn> observer) {
         observable.subscribe(observer);
+    }
+
+    @Override
+    public void loadSearch(Map<String, String> map) {
+        observablesearch = RetrofitManager.getInstance(1,App.getInstance(),UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .getSearchStore(map)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<ResultInfo<List<ItemStoreFans>>, ResultInfo<List<ItemStoreFans>>>() {
+                    @Override
+                    public ResultInfo<List<ItemStoreFans>> call(ResultInfo<List<ItemStoreFans>> resultInfo) {
+                        return resultInfo;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
+
+    }
+
+    @Override
+    public void subSearch(Observer<ResultInfo<List<ItemStoreFans>>> observer) {
+        observablesearch.subscribe(observer);
+    }
+    @Override
+    public void getHotFans(Map<String, String> map) {
+        hotfansObservable =  RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .getHotFans(map)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<ResultInfo<List<ItemStoreFans>>, ResultInfo<List<ItemStoreFans>>>() {
+                    @Override
+                    public ResultInfo<List<ItemStoreFans>> call(ResultInfo<List<ItemStoreFans>> listResultInfo) {
+                        return listResultInfo;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void subHotFans(Observer<ResultInfo<List<ItemStoreFans>>> observer) {
+        hotfansObservable.subscribe(observer);
     }
 }

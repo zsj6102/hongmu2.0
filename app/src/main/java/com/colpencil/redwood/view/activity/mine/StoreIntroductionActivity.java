@@ -1,6 +1,7 @@
 package com.colpencil.redwood.view.activity.mine;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,7 +26,8 @@ public class StoreIntroductionActivity extends ColpencilActivity {
     @Override
     protected void initViews(View view) {
         detail = getIntent().getStringExtra("detail");
-        tvIntr.setText("\u3000\u3000"+detail);
+//        tvIntr.setText("\u3000\u3000"+detail);
+        tvIntr.setText("\u3000\u3000"+Html.fromHtml(detail));
         tvMainTitle.setText("商家介绍");
     }
 

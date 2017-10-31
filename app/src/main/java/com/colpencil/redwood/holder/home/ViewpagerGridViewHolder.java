@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.bean.FuncPointVo;
+import com.colpencil.redwood.function.widgets.MyViewPager;
 import com.colpencil.redwood.function.widgets.list.Decomposers;
 
 import com.colpencil.redwood.holder.adapter.GridAdapter;

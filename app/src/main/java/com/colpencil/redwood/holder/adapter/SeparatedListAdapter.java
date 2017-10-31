@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.bean.AllSpecialInfo;
+import com.colpencil.redwood.function.tools.ImageLoaderUtils;
+import com.colpencil.redwood.function.widgets.RoundImageView;
 import com.colpencil.redwood.holder.SpecialCategory;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ImgTool;
 
@@ -38,7 +40,6 @@ public class SeparatedListAdapter extends BaseAdapter {
         if (null != mlist) {
             for (SpecialCategory category : mlist) {
                 count += category.getItemCount();
-
             }
         }
         return count;
@@ -87,11 +88,15 @@ public class SeparatedListAdapter extends BaseAdapter {
                 break;
             case TYPE_ITEM:
 
-                ViewHolder holder = null;
+                ViewHolder holder;
                 if (null == view) {
                     view = mInflater.inflate(R.layout.item_special_past_child, null);
                     holder = new ViewHolder();
-                    holder.iv_special = (ImageView) view.findViewById(R.id.iv_special);
+                    holder.iv_special = (RoundImageView) view.findViewById(R.id.iv_special);
+                    holder.iv_special.setType(RoundImageView.TYPE_ROUND);
+                    holder.iv_special.setRoundRadius(10);
+                    holder.tv = (TextView)view.findViewById(R.id.tv_name);
+
                     view.setTag(holder);
                 } else {
                     holder = (ViewHolder) view.getTag();
@@ -102,7 +107,9 @@ public class SeparatedListAdapter extends BaseAdapter {
                         listener.click(((AllSpecialInfo) getItem(position)).getSpecial_id() + "", ((AllSpecialInfo) getItem(position)).getSpecial_name());
                     }
                 });
-                ImgTool.getImgToolInstance(mContext).loadImgByString(((AllSpecialInfo) getItem(position)).getSpe_picture(), holder.iv_special);
+                holder.tv.setText(((AllSpecialInfo) getItem(position)).getSpecial_name());
+                ImageLoaderUtils.loadImage(mContext,((AllSpecialInfo) getItem(position)).getSpe_picture(),holder.iv_special);
+//                ImgTool.getImgToolInstance(mContext).loadImgByString(((AllSpecialInfo) getItem(position)).getSpe_picture(), holder.iv_special);
                 break;
         }
 
@@ -132,7 +139,8 @@ public class SeparatedListAdapter extends BaseAdapter {
     }
 
       class ViewHolder {
-        ImageView iv_special;
+          RoundImageView iv_special;
+          TextView tv;
     }
 
     public interface comItemClickListener {

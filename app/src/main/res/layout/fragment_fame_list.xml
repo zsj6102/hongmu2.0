@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
@@ -12,5 +13,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:numColumns="2" />
+    </com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout>
+
+    <com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout
+        android:id="@+id/refreshLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <include
+            android:id="@+id/no_data_layout"
+            layout="@layout/layout_no_data"
+            />
     </com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout>
 </LinearLayout>

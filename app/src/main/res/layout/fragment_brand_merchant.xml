@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:ban="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/line_color_thirst"
@@ -17,25 +16,32 @@
         >
 
         <LinearLayout
+            android:orientation="vertical"
             android:id="@+id/top_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
             android:gravity="center"
-            android:orientation="vertical">
+            >
 
             <com.youth.banner.Banner
                 android:id="@+id/circle_banner"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:background="@color/color_fffbfa"
-                ban:indicator_drawable_selected="@drawable/point_select"
-                ban:indicator_drawable_unselected="@drawable/point_unselect"
-                ban:indicator_height="5dp"
-                ban:indicator_margin="2dp"
-                ban:indicator_width="5dp"
-                ban:is_auto_play="true"/>
-
+                app:indicator_drawable_selected="@drawable/point_select"
+                app:indicator_drawable_unselected="@drawable/point_unselect"
+                app:indicator_height="5dp"
+                app:indicator_margin="2dp"
+                app:indicator_width="5dp"
+                />
+            <ImageView
+                android:id="@+id/bannerImage"
+                android:visibility="gone"
+                android:background="@color/color_fffbfa"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="fitXY"
+                />
         </LinearLayout>
 
         <LinearLayout

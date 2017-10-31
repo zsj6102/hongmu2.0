@@ -51,6 +51,7 @@ public class PublishListActivity extends ColpencilActivity {
     void brandClick() {
         Intent intent = new Intent(this, PublishFamousActivity.class);
         intent.putExtra("type", type);
+        intent.putExtra("id",store_id);
         startActivity(intent);
 
     }
@@ -69,6 +70,7 @@ public class PublishListActivity extends ColpencilActivity {
     void zhuanClick() {
         Intent intent = new Intent(this, PublishZcActivity.class);
         intent.putExtra("type", type);
+        intent.putExtra("id",store_id);
         startActivity(intent);
 
     }

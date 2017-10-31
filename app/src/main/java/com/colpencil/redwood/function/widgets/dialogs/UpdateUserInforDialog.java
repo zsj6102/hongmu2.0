@@ -92,6 +92,7 @@ public class UpdateUserInforDialog extends Dialog {
      */
     public interface OnUpdateInforDialogClickListener {
         void onUpdateSure(String content);
+//        void cancelClick();
     }
 }
 

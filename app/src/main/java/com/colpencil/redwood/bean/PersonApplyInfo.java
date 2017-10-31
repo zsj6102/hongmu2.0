@@ -15,6 +15,24 @@ public class PersonApplyInfo implements Serializable {
     private String card;
     private String card_type;
     private String cardholder;
+    private File store_file;
+    private String store_name;
+
+    public File getStore_file() {
+        return store_file;
+    }
+
+    public void setStore_file(File store_file) {
+        this.store_file = store_file;
+    }
+
+    public String getStore_name() {
+        return store_name;
+    }
+
+    public void setStore_name(String store_name) {
+        this.store_name = store_name;
+    }
 
     public String getStore_type() {
         return store_type;

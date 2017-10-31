@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.CategoryVo;
@@ -36,9 +37,11 @@ import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.Colpenci
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ToastTools;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.Bind;
 import butterknife.OnClick;
 import me.shaohui.advancedluban.Luban;
@@ -52,8 +55,7 @@ import me.shaohui.advancedluban.OnMultiCompressListener;
  * @date 2016/8/22
  */
 @ActivityFragmentInject(contentViewId = R.layout.activity_post_cyclopedia)
-public class PostCyclopediaActivity extends ColpencilActivity
-        implements IPostNewsView, ImageSelectAdapter.OnRecyclerViewItemClickListener {
+public class PostCyclopediaActivity extends ColpencilActivity implements IPostNewsView, ImageSelectAdapter.OnRecyclerViewItemClickListener {
 
     @Bind(R.id.tv_main_title)
     TextView tv_title;
@@ -177,6 +179,7 @@ public class PostCyclopediaActivity extends ColpencilActivity
                 Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);
                 intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, defaultDataArray);
                 intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
+                intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
                 startActivityForResult(intentPreview, REQUEST_CODE_PREVIEW);
                 break;
         }
@@ -204,27 +207,25 @@ public class PostCyclopediaActivity extends ColpencilActivity
                     compress(files);
                 } else { // 手持身份证的
                     if (coverDataArray.size() != 0) {
-                        imagePicker.getImageLoader().displayImage(PostCyclopediaActivity.this,coverDataArray.get(0).path,iv_cover,0,0);
+                        imagePicker.getImageLoader().displayImage(PostCyclopediaActivity.this, coverDataArray.get(0).path, iv_cover, 0, 0);
                         File mfile = new File(coverDataArray.get(0).path);
                         //                        DialogTools.showLoding(this, "温馨提示", "获取中。。。");
-                        Luban.compress(this, mfile)
-                                .putGear(Luban.THIRD_GEAR)
-                                .launch(new OnCompressListener() {
-                                    @Override
-                                    public void onStart() {
-                                    }
+                        Luban.compress(this, mfile).putGear(Luban.THIRD_GEAR).launch(new OnCompressListener() {
+                            @Override
+                            public void onStart() {
+                            }
 
-                                    @Override
-                                    public void onSuccess(File file) {
-                                        mFile = file;
-                                        //                                        DialogTools.dissmiss();
-                                    }
+                            @Override
+                            public void onSuccess(File file) {
+                                mFile = file;
+                                //                                        DialogTools.dissmiss();
+                            }
 
-                                    @Override
-                                    public void onError(Throwable e) {
-                                        //                                        DialogTools.dissmiss();
-                                    }
-                                });
+                            @Override
+                            public void onError(Throwable e) {
+                                //                                        DialogTools.dissmiss();
+                            }
+                        });
                     } else {
                         mFile = null;
                         iv_cover.setImageResource(R.mipmap.add_photo);
@@ -252,27 +253,25 @@ public class PostCyclopediaActivity extends ColpencilActivity
                     compress(files);
                 } else {
                     if (coverDataArray.size() != 0) {
-                        imagePicker.getImageLoader().displayImage(PostCyclopediaActivity.this,coverDataArray.get(0).path,iv_cover,0,0);
+                        imagePicker.getImageLoader().displayImage(PostCyclopediaActivity.this, coverDataArray.get(0).path, iv_cover, 0, 0);
                         File mfile = new File(coverDataArray.get(0).path);
                         //                        DialogTools.showLoding(this, "温馨提示", "获取中。。。");
-                        Luban.compress(this, mfile)
-                                .putGear(Luban.THIRD_GEAR)
-                                .launch(new OnCompressListener() {
-                                    @Override
-                                    public void onStart() {
-                                    }
+                        Luban.compress(this, mfile).putGear(Luban.THIRD_GEAR).launch(new OnCompressListener() {
+                            @Override
+                            public void onStart() {
+                            }
 
-                                    @Override
-                                    public void onSuccess(File file) {
-                                        mFile = file;
-                                        //                                        DialogTools.dissmiss();
-                                    }
+                            @Override
+                            public void onSuccess(File file) {
+                                mFile = file;
+                                //                                        DialogTools.dissmiss();
+                            }
 
-                                    @Override
-                                    public void onError(Throwable e) {
-                                        //                                        DialogTools.dissmiss();
-                                    }
-                                });
+                            @Override
+                            public void onError(Throwable e) {
+                                //                                        DialogTools.dissmiss();
+                            }
+                        });
                     } else {
                         mFile = null;
                         iv_cover.setImageResource(R.mipmap.add_photo);
@@ -288,25 +287,23 @@ public class PostCyclopediaActivity extends ColpencilActivity
     public void compress(List<File> list) {
         if (list.size() > 0) {
             //            DialogTools.showLoding(this, "温馨提示", "获取中。。。");
-            Luban.compress(this, list)
-                    .putGear(Luban.THIRD_GEAR)
-                    .launch(new OnMultiCompressListener() {
-                        @Override
-                        public void onStart() {
+            Luban.compress(this, list).putGear(Luban.THIRD_GEAR).launch(new OnMultiCompressListener() {
+                @Override
+                public void onStart() {
 
-                        }
+                }
 
-                        @Override
-                        public void onSuccess(List<File> fileList) {
-                            //                            DialogTools.dissmiss();
-                            PostCyclopediaActivity.this.fileList.addAll(fileList);
-                        }
+                @Override
+                public void onSuccess(List<File> fileList) {
+                    //                            DialogTools.dissmiss();
+                    PostCyclopediaActivity.this.fileList.addAll(fileList);
+                }
 
-                        @Override
-                        public void onError(Throwable e) {
-                            //                            DialogTools.dissmiss();
-                        }
-                    });
+                @Override
+                public void onError(Throwable e) {
+                    //                            DialogTools.dissmiss();
+                }
+            });
         }
     }
 
@@ -324,6 +321,7 @@ public class PostCyclopediaActivity extends ColpencilActivity
             Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);
             intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, coverDataArray);
             intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, 0);
+            intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
             startActivityForResult(intentPreview, REQUEST_CODE_PREVIEW);
         } else {    //选择图片
             imagePicker.setSelectLimit(1);
@@ -353,13 +351,19 @@ public class PostCyclopediaActivity extends ColpencilActivity
             return;
         } else {
             CyclopediaInfo info = new CyclopediaInfo();
+            //            info.setTitle(title);
+            //            info.setContent(content);
+            //
+            //            info.setCoverFile(mFile);
+            //            info.setType(3);
+            //            info.setFileList(fileList);
+            //            info.setGame(game);
+            info.setType(3);
             info.setTitle(title);
             info.setContent(content);
-            info.setSec_id(sec_id);
             info.setCoverFile(mFile);
-            info.setType(3);
             info.setFileList(fileList);
-            info.setGame(game);
+            info.setSec_id(sec_id);
             Intent intent = new Intent(PostCyclopediaActivity.this, CyclopediaService.class);
             intent.putExtra("data", info);
             startService(intent);

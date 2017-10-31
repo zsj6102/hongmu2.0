@@ -34,9 +34,12 @@ import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
 import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.home.CircleLeftPresenter;
 import com.colpencil.redwood.view.activity.HomeActivity;
+import com.colpencil.redwood.view.activity.classification.CommoditySearchActivity;
 import com.colpencil.redwood.view.activity.discovery.CircleSortActivity;
+import com.colpencil.redwood.view.activity.home.GoodDetailActivity;
 import com.colpencil.redwood.view.activity.home.MyWebViewActivity;
 import com.colpencil.redwood.view.activity.home.PostsActivity;
+import com.colpencil.redwood.view.activity.home.ProductdetailsActivity;
 import com.colpencil.redwood.view.activity.login.LoginActivity;
 import com.colpencil.redwood.view.adapters.CircleLeftAdapter;
 import com.colpencil.redwood.view.impl.ICircleLeftView;
@@ -68,8 +71,7 @@ import rx.Subscriber;
  * @date 2016/7/11
  */
 @ActivityFragmentInject(
-        contentViewId = R.layout.fragment_circle
-)
+        contentViewId = R.layout.fragment_circle)
 public class CircleLeftFragment extends ColpencilFragment implements BGARefreshLayoutDelegate, ICircleLeftView {
 
     @Bind(R.id.refreshLayout)
@@ -104,9 +106,7 @@ public class CircleLeftFragment extends ColpencilFragment implements BGARefreshL
         mview = view;
         refreshLayout.setDelegate(this);
         refreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getActivity(), true));
-        refreshLayout.setSnackStyle(getActivity().findViewById(android.R.id.content),
-                getResources().getColor(R.color.material_drawer_primary),
-                getResources().getColor(R.color.white));
+        refreshLayout.setSnackStyle(getActivity().findViewById(android.R.id.content), getResources().getColor(R.color.material_drawer_primary), getResources().getColor(R.color.white));
 
         mAdapter = new CircleLeftAdapter(getActivity(), mList, R.layout.circle_left_item);
 
@@ -124,12 +124,26 @@ public class CircleLeftFragment extends ColpencilFragment implements BGARefreshL
             public void OnBannerClick(int position) {
                 if (!ListUtils.listIsNullOrEmpty(bannerVoList)) {
                     BannerVo vo = bannerVoList.get(position - 1);
-                    if ("link".equals(vo.getType())) {
+                    if ("good".equals(vo.getType())) {
                         Intent intent = new Intent();
-                        intent.setClass(getActivity(), MyWebViewActivity.class);
+                        intent.setClass(mContext, GoodDetailActivity.class);
+                        intent.putExtra("goodsId", Integer.valueOf(vo.getGoodsId()));
+                        mContext.startActivity(intent);
+                    } else if ("link".equals(vo.getType())) {
+                        Intent intent = new Intent();
+                        intent.setClass(mContext, MyWebViewActivity.class);
                         intent.putExtra("webviewurl", vo.getHtmlurl());
                         intent.putExtra("type", "banner");
-                        startActivity(intent);
+                        mContext.startActivity(intent);
+                    }else if("zhoupai".equals(vo.getType())){
+                        Intent intent = new Intent();
+                        intent.setClass(mContext, ProductdetailsActivity.class);
+                        intent.putExtra("goodsId",Integer.valueOf(vo.getGoodsId()));
+                        mContext.startActivity(intent);
+                    }else if("cat".equals(vo.getType())){
+                        Intent intent = new Intent(mContext, CommoditySearchActivity.class);
+                        intent.putExtra("child_cat_id", Integer.valueOf(vo.getGoodsId()));
+                        mContext.startActivity(intent);
                     }
                 }
             }
@@ -146,6 +160,7 @@ public class CircleLeftFragment extends ColpencilFragment implements BGARefreshL
 
         initBus();
     }
+
     @Override
     public void loadData() {
         if (SharedPreferencesUtil.getInstance(getActivity()).getBoolean(StringConfig.ISLOGIN, false)) {
@@ -156,6 +171,7 @@ public class CircleLeftFragment extends ColpencilFragment implements BGARefreshL
         presenter.loadImage("13");
         presenter.loadPost(mType, page, pageSize);
     }
+
     private void initBus() {
         observable = RxBus.get().register("refreshmsg", RefreshMsg.class);
         subscriber = new Subscriber<RefreshMsg>() {
@@ -253,7 +269,7 @@ public class CircleLeftFragment extends ColpencilFragment implements BGARefreshL
                     msg.setTitle(mList.get(pos).getOte_title());
                     msg.setContent(mList.get(pos).getOte_content());
                     msg.setId(mList.get(pos).getOte_id());
-                    if (mList.get(pos).getOriginal_img() != null) {
+                    if (!ListUtils.listIsNullOrEmpty(mList.get(pos).getOriginal_img())) {
                         msg.setImage(mList.get(pos).getOriginal_img().get(0));
                     } else {
                         msg.setImage("");
@@ -290,13 +306,10 @@ public class CircleLeftFragment extends ColpencilFragment implements BGARefreshL
 
     private void addView(String tagName, int position) {
         TextView tv = new TextView(getActivity());
-        LinearLayout.LayoutParams lp =
-                new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
         tv.setLayoutParams(lp);
         tv.setGravity(Gravity.CENTER);
-        tv.setPadding((int) (getResources().getDimension(R.dimen.padding_10dp)), 0,
-                (int) (getResources().getDimension(R.dimen.padding_10dp)), 0);
+        tv.setPadding((int) (getResources().getDimension(R.dimen.padding_10dp)), 0, (int) (getResources().getDimension(R.dimen.padding_10dp)), 0);
         tv.setBackgroundColor(getResources().getColor(R.color.transparent));
         tv.setTextSize(14);
         if (position == 0) {
@@ -426,8 +439,7 @@ public class CircleLeftFragment extends ColpencilFragment implements BGARefreshL
 
     private void showPopWindow() {
         if (window == null) {
-            window = new PopupWindow(initPopWindow(),
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            window = new PopupWindow(initPopWindow(), ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         }
         window.setFocusable(true);
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);

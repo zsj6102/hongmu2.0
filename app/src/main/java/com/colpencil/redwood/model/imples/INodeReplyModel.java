@@ -24,4 +24,9 @@ public interface INodeReplyModel extends ColpencilModel {
     void getAddCommentResult(Map<String,String> params);
 
     void subAddResult(Observer<AddResult> observer);
+
+
+    void addLike(Map<String,String> map);
+
+    void subLike(Observer<ResultInfo<String>> observer);
 }

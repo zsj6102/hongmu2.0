@@ -3,10 +3,13 @@ package com.colpencil.redwood.present;
 import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.result.CommonResult;
 import com.colpencil.redwood.bean.result.GoodInfoResult;
+import com.colpencil.redwood.bean.result.OrderPayInfo;
 import com.colpencil.redwood.model.GoodDetailModel;
 import com.colpencil.redwood.model.imples.IGoodDetailModel;
 import com.colpencil.redwood.view.impl.IGoodDetailView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
+
+import java.util.Map;
 
 import rx.Observer;
 
@@ -202,5 +205,32 @@ public class GoodDetailPresenter extends ColpencilPresenter<IGoodDetailView> {
             }
         };
         model.subAddup(observer);
+    }
+
+
+    public void getDirectOrder(Map<String,String> params){
+        model.loadDirectOrder(params);
+        Observer<OrderPayInfo> observer = new Observer<OrderPayInfo>(){
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(OrderPayInfo orderPayInfo) {
+                //                if(orderPayInfo!= null && orderPayInfo.getCode() == 0){
+                //                    mView.loadNewOrder(orderPayInfo.getData());
+                //                }else{
+                //                    mView.loadFail(orderPayInfo.getMessage());
+                //                }
+                mView.loadNewOrder(orderPayInfo);
+            }
+        };
+        model.subDirectOrder(observer);
     }
 }

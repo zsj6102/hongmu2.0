@@ -23,7 +23,6 @@ import com.colpencil.redwood.bean.PostTypeInfo;
 import com.colpencil.redwood.bean.RefreshMsg;
 import com.colpencil.redwood.bean.result.CommonResult;
 import com.colpencil.redwood.configs.Constants;
-import com.colpencil.redwood.function.tools.DialogTools;
 import com.colpencil.redwood.function.utils.ListUtils;
 import com.colpencil.redwood.function.widgets.dialogs.PostDialog;
 import com.colpencil.redwood.present.home.PostPresenter;
@@ -227,6 +226,7 @@ public class PostsActivity extends ColpencilActivity implements IPostView, OnRec
                 Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);
                 intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, (ArrayList<ImageItem>) adapter.getImages());
                 intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
+                intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
                 startActivityForResult(intentPreview, REQUEST_CODE_PREVIEW);
                 break;
         }

@@ -1,22 +1,25 @@
 package com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP;
 
 import android.content.Intent;
+
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.Slide;
-import android.transition.TransitionInflater;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
 import com.property.colpencil.colpencilandroidlibrary.Function.MianCore.ColpencilFrame;
+
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SettingPrefUtils;
+import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.StringUtil;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ToastTools;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.UITools;
-import com.property.colpencil.colpencilandroidlibrary.R;
 import com.property.colpencil.colpencilandroidlibrary.Ui.MyProgressDialog;
 import com.property.colpencil.colpencilandroidlibrary.Ui.SwipeBack.SwipeBackActivityBase;
 import com.property.colpencil.colpencilandroidlibrary.Ui.SwipeBack.SwipeBackActivityHelper;
@@ -24,7 +27,12 @@ import com.property.colpencil.colpencilandroidlibrary.Ui.SwipeBack.SwipeBackLayo
 import com.property.colpencil.colpencilandroidlibrary.Ui.SwipeBack.Utils;
 import com.zhy.autolayout.AutoLayoutActivity;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import butterknife.ButterKnife;
+import rx.Subscriber;
+import solid.ren.skinlibrary.base.SkinBaseActivity;
 
 /**
  * @author 汪 亮
@@ -32,10 +40,10 @@ import butterknife.ButterKnife;
  * @Email DramaScript@outlook.com
  * @date 16/6/23
  */
-public abstract class ColpencilActivity<T extends ColpencilPresenter<ColpencilBaseView>> extends AutoLayoutActivity
-        implements ColpencilBase, ColpencilBaseView, SwipeBackActivityBase {
+public abstract class ColpencilActivity<T extends ColpencilPresenter<ColpencilBaseView>> extends AutoLayoutActivity implements ColpencilBase, ColpencilBaseView, SwipeBackActivityBase {
 
-
+    private rx.Observable<RxBusLMsg> observable;
+    private Subscriber subscriber;
     /**
      * 主线程id
      */
@@ -78,14 +86,51 @@ public abstract class ColpencilActivity<T extends ColpencilPresenter<ColpencilBa
         mAm.addActivity(this);
         TAG = StringUtil.getClassName(this);
         mPresenter = getPresenter();
+        new MyBaseActivity();
         if (mPresenter != null && this instanceof ColpencilBaseView) {
             //绑定view的操作
             mPresenter.attach((ColpencilBaseView) this);
         }
         mRootView = createView(null, null, savedInstanceState);
+
+        changeScale();
+        //        ObserverUtils.getInstance().addObserver(this);
         setContentView(mRootView);
         //驱动更新view的操作
         bindView(savedInstanceState);
+        initBus();
+    }
+
+    private void initBus() {
+        observable = RxLBus.get().register("rxBusMsg", RxBusLMsg.class);
+        subscriber = new Subscriber<RxBusLMsg>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(RxBusLMsg msg) {
+                if (msg.getType() == 0) {
+                    changeScale();
+                    recreate();
+                }
+                if (msg.getType() == 10000) {
+                    if (SharedPreferencesUtil.getInstance(ColpencilActivity.this.getApplicationContext()).getBoolean("night", false)) {
+                        getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);//切换夜间模式
+                    } else {
+                        getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);//切换夜间模式
+                    }
+                    recreate();
+                }
+            }
+        };
+        observable.subscribe(subscriber);
     }
 
     @Override
@@ -118,10 +163,13 @@ public abstract class ColpencilActivity<T extends ColpencilPresenter<ColpencilBa
         getSwipeBackLayout().scrollToFinishActivity();
     }
 
-    @Override
-    public void finish() {
-        super.finish();
+    static class MyBaseActivity extends SkinBaseActivity {
+
     }
+    //    @Override
+    //    public void finish() {
+    //        super.finish();
+    //    }
 
     @Override
     public void onResume() {
@@ -130,6 +178,7 @@ public abstract class ColpencilActivity<T extends ColpencilPresenter<ColpencilBa
         SwipeBackLayout mSwipeBackLayout = mHelper.getSwipeBackLayout();
         switch (mode) {
             case 0:
+
                 mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
                 break;
             case 1:
@@ -147,12 +196,10 @@ public abstract class ColpencilActivity<T extends ColpencilPresenter<ColpencilBa
     @Override
     public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (getClass().isAnnotationPresent(ActivityFragmentInject.class)) {
-            ActivityFragmentInject annotation = getClass()
-                    .getAnnotation(ActivityFragmentInject.class);
+            ActivityFragmentInject annotation = getClass().getAnnotation(ActivityFragmentInject.class);
             mContentViewId = annotation.contentViewId();
         } else {
-            throw new RuntimeException(
-                    "Class must add annotations of ActivityFragmentInitParams.class");
+            throw new RuntimeException("Class must add annotations of ActivityFragmentInitParams.class");
         }
         View view = UITools.inflate(this, mContentViewId);
         ButterKnife.bind(this, view);
@@ -183,6 +230,18 @@ public abstract class ColpencilActivity<T extends ColpencilPresenter<ColpencilBa
     }
 
 
+    private void changeScale() {
+        Resources res = getResources();
+        Configuration config = res.getConfiguration();
+        if (SharedPreferencesUtil.getInstance(getApplicationContext()).getFloat("scale") == 0.0f) {
+            config.fontScale = 1.0f;
+        } else {
+            config.fontScale = SharedPreferencesUtil.getInstance(getApplicationContext()).getFloat("scale");
+        }
+
+        res.updateConfiguration(config, res.getDisplayMetrics());
+    }
+
     @Override
     protected void onDestroy() {
         ColpencilFrame.getInstance().finishActivity(this);
@@ -195,12 +254,13 @@ public abstract class ColpencilActivity<T extends ColpencilPresenter<ColpencilBa
         if (dialog != null) {
             dialog.dismiss();
         }
+        RxLBus.get().unregister("rxBusMsg", observable);
     }
 
     @Override
     public void showLoading(String msg) {
         if (dialog == null)
-            dialog = MyProgressDialog.createDialog(this,msg);
+            dialog = MyProgressDialog.createDialog(this, msg);
         dialog.show();
     }
 

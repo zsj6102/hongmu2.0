@@ -1,5 +1,6 @@
 package com.colpencil.redwood.present.mine;
 
+import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.MinePostItem;
 import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.model.MinePostModel;
@@ -28,7 +29,7 @@ public class MinePostPresenter extends ColpencilPresenter<IMinePostView> {
 
             @Override
             public void onError(Throwable e) {
-
+                mView.loadFail("服务器异常");
             }
 
             @Override
@@ -47,5 +48,52 @@ public class MinePostPresenter extends ColpencilPresenter<IMinePostView> {
             }
         };
         model.subData(observer);
+    }
+    /**
+     * 发表评论
+     *
+     * @param comContent
+     * @param ote_id
+     */
+    public void submitComments(String comContent, int ote_id) {
+        model.submitComments(comContent, ote_id);
+        Observer<EntityResult<String>> observer = new Observer<EntityResult<String>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mView.loadFail("服务器异常");
+            }
+
+            @Override
+            public void onNext(EntityResult<String> result) {
+                mView.operate(result, 1);
+            }
+        };
+        model.subSubmit(observer);
+    }
+
+    public void like(int ote_id) {
+        model.like(ote_id);
+        Observer<EntityResult<String>> observer = new Observer<EntityResult<String>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mView.loadFail("服务器异常");
+            }
+
+            @Override
+            public void onNext(EntityResult<String> result) {
+                mView.operate(result, 2);
+            }
+        };
+        model.subLike(observer);
     }
 }

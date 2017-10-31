@@ -1,8 +1,10 @@
 package com.colpencil.redwood.view.impl;
 
+import com.colpencil.redwood.bean.AddResult;
 import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.GoodComment;
 import com.colpencil.redwood.bean.NumReturn;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilBaseView;
 
 import java.util.List;
@@ -30,4 +32,8 @@ public interface IGoodRightView extends ColpencilBaseView {
      * @param result
      */
     void loadNums(NumReturn result);
+
+    void addComment(AddResult result);
+
+    void addLike(ResultInfo<String> resultInfo);
 }

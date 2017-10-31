@@ -4,7 +4,9 @@ import com.colpencil.redwood.api.RedWoodApi;
 import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.CyclopediaContent;
 import com.colpencil.redwood.bean.EntityResult;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.bean.result.AnnounceResult;
+import com.colpencil.redwood.bean.result.CommonResult;
 import com.colpencil.redwood.bean.result.PCommentResult;
 import com.colpencil.redwood.function.config.UrlConfig;
 import com.colpencil.redwood.model.imples.ICycloDetailModel;
@@ -21,6 +23,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
+
 /**
  * @author 陈宝
  * @Description:百科详情model
@@ -35,12 +38,12 @@ public class CycloDetailModel implements ICycloDetailModel {
     private Observable<EntityResult<String>> viewstate;
     private Observable<EntityResult<String>> keep;
     private Observable<EntityResult<String>> brower;
-    private Observable<EntityResult<String>> share;
+    private Observable<CommonResult> share;
     private Observable<EntityResult<String>> addup;
     private Observable<EntityResult<String>> like;
     private Observable<EntityResult<String>> likeState;
     private Observable<EntityResult<CyclopediaContent>> content;
-
+    private Observable<ResultInfo<String>> likeObservable;
     @Override
     public void loadUrl(String cat_id, String article_id) {
         announce = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
@@ -71,7 +74,7 @@ public class CycloDetailModel implements ICycloDetailModel {
     public void loadComments(String ote_id, int page, int pageSize, String type) {
         pcomment = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
                 .createApi(RedWoodApi.class)
-                .loadCycloComments(ote_id, page, pageSize, type)
+                .loadCycloComments(ote_id, page, pageSize, type, SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id"))
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<PCommentResult, PCommentResult>() {
                     @Override
@@ -85,7 +88,24 @@ public class CycloDetailModel implements ICycloDetailModel {
     public void subComments(Observer<PCommentResult> observer) {
         pcomment.subscribe(observer);
     }
+    @Override
+    public void addLike(Map<String, String> map) {
+        likeObservable = RetrofitManager.getInstance(1,App.getInstance(),UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .getNoteLike(map)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<ResultInfo<String>, ResultInfo<String>>() {
+                    @Override
+                    public ResultInfo<String> call(ResultInfo<String> resultInfo) {
+                        return resultInfo;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
+    }
 
+    @Override
+    public void subLikeCom(Observer<ResultInfo<String>> observer) {
+        likeObservable.subscribe(observer);
+    }
     @Override
     public void submitComments(String article_id, String acomment, String type) {
         Map<String, RequestBody> params = new HashMap<>();
@@ -188,16 +208,16 @@ public class CycloDetailModel implements ICycloDetailModel {
                         SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id"),
                         SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"))
                 .subscribeOn(Schedulers.io())
-                .map(new Func1<EntityResult<String>, EntityResult<String>>() {
+                .map(new Func1<CommonResult, CommonResult>() {
                     @Override
-                    public EntityResult<String> call(EntityResult<String> result) {
+                    public CommonResult call(CommonResult result) {
                         return result;
                     }
                 }).observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
-    public void subShare(Observer<EntityResult<String>> observer) {
+    public void subShare(Observer<CommonResult> observer) {
         share.subscribe(observer);
     }
 
@@ -293,4 +313,6 @@ public class CycloDetailModel implements ICycloDetailModel {
     public void subContent(Observer<EntityResult<CyclopediaContent>> observer) {
         content.subscribe(observer);
     }
+
+
 }

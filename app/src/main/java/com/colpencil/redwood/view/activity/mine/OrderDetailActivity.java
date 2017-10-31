@@ -144,21 +144,21 @@ public class OrderDetailActivity  extends ColpencilActivity implements IOrderDet
 
             @Override
             public void onNext(final RxBusMsg msg) {
-                if (msg.getType() == 45) {//支付宝支付成功
-                    ToastTools.showShort(OrderDetailActivity.this, "支付成功");
-                    finish();
-                } else if (msg.getType() == 46) {//支付宝支付失败
-                    ToastTools.showShort(OrderDetailActivity.this, "支付失败");
-                    finish();
-                } else if (msg.getType() == 47) {//微信支付成功
-                    ToastTools.showShort(OrderDetailActivity.this, "支付成功");
-                    finish();
-                } else if (msg.getType() == 48) {//微信支付失败
-                    ToastTools.showShort(OrderDetailActivity.this, "支付失败");
-                    finish();
-                } else if (msg.getType() == 35) {
-                    presenter.getOrderDetailReturn(order_id);
-                }
+//                if (msg.getType() == 45) {//支付宝支付成功
+//                    ToastTools.showShort(OrderDetailActivity.this, "支付成功");
+//                    finish();
+//                } else if (msg.getType() == 46) {//支付宝支付失败
+//                    ToastTools.showShort(OrderDetailActivity.this, "支付失败");
+//                    finish();
+//                } else if (msg.getType() == 47) {//微信支付成功
+//                    ToastTools.showShort(OrderDetailActivity.this, "支付成功");
+//                    finish();
+//                } else if (msg.getType() == 48) {//微信支付失败
+//                    ToastTools.showShort(OrderDetailActivity.this, "支付失败");
+//                    finish();
+//                } else if (msg.getType() == 35) {
+//                    presenter.getOrderDetailReturn(order_id);
+//                }
             }
         };
         observable.subscribe(subscriber);

@@ -36,18 +36,26 @@ public class HSearchPresent extends ColpencilPresenter<IHSearchView>{
 
             @Override
             public void onError(Throwable e) {
-                mView.fail("服务请求失败");
+                if(mView!=null){
+                    mView.fail("服务请求失败");
+                }
+
             }
 
             @Override
             public void onNext(CatReturnData catReturnData) {
                 if(catReturnData.getCode().equals("0")){//信息请求成功
-                    mView.loadListViewData(catReturnData.getResult());
-                    RxBusMsg rxBusMsg=new RxBusMsg();
-                    rxBusMsg.setMsg("CatReturnDataSuccess");
-                    RxBus.get().post("rxBusMsg",rxBusMsg);
+                    if(mView!=null){
+                        mView.loadListViewData(catReturnData.getResult());
+                        RxBusMsg rxBusMsg=new RxBusMsg();
+                        rxBusMsg.setMsg("CatReturnDataSuccess");
+                        RxBus.get().post("rxBusMsg",rxBusMsg);
+                    }
+
                 }else{
-                    mView.fail(catReturnData.getMessage());
+                    if(mView!=null) {
+                        mView.fail(catReturnData.getMessage());
+                    }
                 }
             }
         };

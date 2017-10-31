@@ -66,7 +66,7 @@ public class HomeRecommend implements Serializable {
     }
 
     public List<RemoduleVo> getRecModuleSet() {
-        return recModuleSet;
+            return recModuleSet;
     }
 
     public void setRecModuleSet(List<RemoduleVo> recModuleSet) {

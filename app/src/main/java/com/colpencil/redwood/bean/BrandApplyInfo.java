@@ -18,6 +18,24 @@ public class BrandApplyInfo implements Serializable {
     private String physical_store_name;
     private String license;
     private File license_img;
+    private File store_file;
+    private String store_name;
+
+    public File getStore_file() {
+        return store_file;
+    }
+
+    public void setStore_file(File store_file) {
+        this.store_file = store_file;
+    }
+
+    public String getStore_name() {
+        return store_name;
+    }
+
+    public void setStore_name(String store_name) {
+        this.store_name = store_name;
+    }
 
     public String getPhysical_store_name() {
         return physical_store_name;

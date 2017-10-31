@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.colpencil.redwood.bean.AddResult;
 import com.colpencil.redwood.bean.result.AllGoodsResult;
+import com.colpencil.redwood.bean.result.OrderPayInfo;
 import com.colpencil.redwood.model.AllAuctionItemModel;
 import com.colpencil.redwood.model.imples.IAllAuctionItemModel;
 import com.colpencil.redwood.view.impl.AllAuctionItemView;
@@ -24,8 +25,8 @@ public class AllAuctionItemPresent extends ColpencilPresenter<AllAuctionItemView
     public AllAuctionItemPresent(){
         allAuctionItemModel=new AllAuctionItemModel();
     }
-    public void getAllGoods(final int page,HashMap<String, RequestBody> strparams, HashMap<String, Integer> intparams){
-        allAuctionItemModel.getAllGoods(strparams,intparams);
+    public void getAllGoods(final int page,Map<String,String> map){
+        allAuctionItemModel.getAllGoods(map);
         Observer<AllGoodsResult> observer=new Observer<AllGoodsResult>() {
             @Override
             public void onCompleted() {
@@ -98,5 +99,32 @@ public class AllAuctionItemPresent extends ColpencilPresenter<AllAuctionItemView
             }
         };
         allAuctionItemModel.subLike(observer);
+    }
+
+
+    public void getDirectOrder(Map<String,String> params){
+        allAuctionItemModel.loadDirectOrder(params);
+        Observer<OrderPayInfo> observer = new Observer<OrderPayInfo>(){
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(OrderPayInfo orderPayInfo) {
+//                if(orderPayInfo!= null && orderPayInfo.getCode() == 0){
+//                    mView.loadNewOrder(orderPayInfo.getData());
+//                }else{
+//                    mView.loadFail(orderPayInfo.getMessage());
+//                }
+                mView.loadNewOrder(orderPayInfo);
+            }
+        };
+        allAuctionItemModel.subDirectOrder(observer);
     }
 }

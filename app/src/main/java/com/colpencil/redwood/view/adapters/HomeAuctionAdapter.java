@@ -24,7 +24,7 @@ public class HomeAuctionAdapter extends RecyclerView.Adapter<HomeAuctionAdapter.
     private List<UrlString> mdata;
     private int width;
     private int height;
-
+    private  MyItemClickListener listener;
     public  HomeAuctionAdapter(Context context, List<UrlString> mdata){
         this.context=context;
         this.mdata=mdata;
@@ -36,7 +36,7 @@ public class HomeAuctionAdapter extends RecyclerView.Adapter<HomeAuctionAdapter.
     }
 
     @Override
-    public void onBindViewHolder(final HomeAuctionAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(final HomeAuctionAdapter.MyViewHolder holder, final int position) {
         ImageLoaderUtils.loadImage(context, mdata.get(position).getThumbnail(), holder.iv);
 
         width = SharedPreferencesUtil.getInstance(App.getInstance()).getInt("goodwidth", 0);
@@ -55,8 +55,19 @@ public class HomeAuctionAdapter extends RecyclerView.Adapter<HomeAuctionAdapter.
         } else {
             holder.iv.setLayoutParams(new LinearLayout.LayoutParams(width, height));
         }
+        holder.iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onItemClick(position);
+            }
+        });
     }
-
+    public void setListener( MyItemClickListener listener){
+        this.listener = listener;
+    }
+    public interface MyItemClickListener {
+        void onItemClick(int postion);
+    }
     @Override
     public int getItemCount() {
         return mdata.size();

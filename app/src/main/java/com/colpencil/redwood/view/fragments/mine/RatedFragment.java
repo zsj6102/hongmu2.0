@@ -19,6 +19,7 @@ import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.Colpenci
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
+import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ToastTools;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGANormalRefreshViewHolder;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout;
 
@@ -122,7 +123,8 @@ public class RatedFragment extends ColpencilFragment implements IRatedView {
 
     @Override
     public void loadFail(String msg) {
-
+        ToastTools.showShort(getActivity(),msg);
+        hideLoading();
     }
     private void isLoadMore(List<RatedItem> list) {
         if (list.size() < pageSize) {

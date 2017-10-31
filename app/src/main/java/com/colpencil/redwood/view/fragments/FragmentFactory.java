@@ -8,6 +8,7 @@ import com.colpencil.redwood.view.fragments.cyclopedia.CyclopediaFragment;
 import com.colpencil.redwood.view.fragments.discovery.DiscoveryFragment;
 import com.colpencil.redwood.view.fragments.home.HomeGoodsFragment;
 
+import com.colpencil.redwood.view.fragments.home.HomePageFragment;
 import com.colpencil.redwood.view.fragments.mine.MeFragment;
 
 import java.util.HashMap;

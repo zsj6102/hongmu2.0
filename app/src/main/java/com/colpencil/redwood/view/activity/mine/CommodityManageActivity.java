@@ -1,8 +1,11 @@
 package com.colpencil.redwood.view.activity.mine;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
@@ -19,11 +22,11 @@ import com.colpencil.redwood.function.config.UrlConfig;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilActivity;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
+import com.property.colpencil.colpencilandroidlibrary.Function.MianCore.RetrofitManager;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
 
 
 import butterknife.Bind;
-
 
 
 /**
@@ -42,6 +45,8 @@ public class CommodityManageActivity extends ColpencilActivity {
     LinearLayout layouthead;
     private String type;
     private String url;
+    private int goodid;
+    private int storeid;
     @Override
     protected void initViews(View view) {
         type = getIntent().getStringExtra("type");
@@ -96,22 +101,36 @@ public class CommodityManageActivity extends ColpencilActivity {
 
         if (type.equals("2")) {//商品管理
 //            url = "http://192.168.0.233:80/wwhm/appStoreGoods!index.do";
-            url = UrlConfig.PHILHARMONIC_HOST+"appStoreGoods!index.do";
+                        url = UrlConfig.PHILHARMONIC_HOST+"appStoreGoods!index.do";
         } else if (type.equals("3")) {
             url = UrlConfig.PHILHARMONIC_HOST + "orderCenter!orderCenter.do";//订单管理
-        }else if(type.equals("4")){
+        } else if (type.equals("4")) {
             url = UrlConfig.PHILHARMONIC_HOST + "appStoreRightsOrder!rights_order_list.do";//维权订单
-        }else if(type.equals("7")){
+        } else if (type.equals("7")) {
             url = UrlConfig.PHILHARMONIC_HOST + "appChat!chatList.do";//聊天列表
-        }else if(type.equals("8")){
+        } else if (type.equals("8")) {
             url = UrlConfig.PHILHARMONIC_HOST + "appevaluate!evaluate.do";//评价管理
-        }else if(type.equals("9")){
+        } else if (type.equals("9")) {
             url = UrlConfig.PHILHARMONIC_HOST + "appWallet!indexWallet.do";//我的钱包
+        }else if(type.equals("10")){
+            url = UrlConfig.PHILHARMONIC_HOST + "appChat!chatList.do";//我的聊天列表
+        }else if(type.equals("11")){
+            url = UrlConfig.PHILHARMONIC_HOST+"appChat!chatGoodsDetail.do";
+            goodid = getIntent().getExtras().getInt("goodid");
+            storeid = getIntent().getExtras().getInt("storeid");
         }
         webView.loadUrl(url);
 
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+            webView.goBack();// 返回前一个页面
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
     @Override
     public ColpencilPresenter getPresenter() {
         return null;
@@ -139,12 +158,53 @@ public class CommodityManageActivity extends ColpencilActivity {
         }
 
         @JavascriptInterface
+        public int getGoodid(){
+            return goodid;
+        }
+        @JavascriptInterface
+        public int getStoreid(){
+            return storeid;
+        }
+        @JavascriptInterface
         public int getSessionType() {
             return SharedPreferencesUtil.getInstance(App.getInstance()).getInt("session_type");
         }
+
         @JavascriptInterface
         public void back() {
             finish();
+        }
+
+        /**
+         * id:商品id
+         * type:商品的类型(supai,pinpai,zhuanchang)
+         * @param id
+         * @param type
+         */
+        @JavascriptInterface
+        public void goToModify(int id, String type) {
+            Intent intent = new Intent();
+            if (type.equals("supai")) {
+                intent.setClass(CommodityManageActivity.this, ModifySpeedActivity.class);
+            } else if (type.equals("pinpai")) {
+                intent.setClass(CommodityManageActivity.this, ModifyBrandActivity.class);
+            } else if(type.equals("zhuanchang")) {
+                intent.setClass(CommodityManageActivity.this, ModifyZcActivity.class);
+            }
+            intent.putExtra("goodid", id);
+            startActivity(intent);
+        }
+        @JavascriptInterface
+        public void tel(String phone){
+            Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));//跳转到拨号界面，同时传递电话号码
+            startActivity(dialIntent);
+        }
+        @JavascriptInterface
+        public void toStoreDetail(int store_id,int store_type){
+            Intent detailIntent = new Intent(CommodityManageActivity.this,StoreHomeActivity.class);
+            detailIntent.putExtra("type",store_type);
+            detailIntent.putExtra("store_id",store_id);
+            startActivity(detailIntent);
         }
     }
 }

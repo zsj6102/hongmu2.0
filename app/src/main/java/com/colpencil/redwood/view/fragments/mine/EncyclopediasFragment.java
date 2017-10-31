@@ -1,16 +1,20 @@
 package com.colpencil.redwood.view.fragments.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.ArticalItem;
+import com.colpencil.redwood.bean.CycloParams;
 import com.colpencil.redwood.bean.EncyclopediasInfo;
 import com.colpencil.redwood.bean.MinePostItem;
 import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.present.mine.EncycloPresenter;
+import com.colpencil.redwood.view.activity.cyclopedia.CyclopediaDetailActivity;
 import com.colpencil.redwood.view.adapters.EncyclopediasAdapter;
 import com.colpencil.redwood.view.impl.IEncycloView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilFragment;
@@ -60,6 +64,39 @@ public class EncyclopediasFragment extends ColpencilFragment implements IEncyclo
         cat_id = getArguments().getInt("cat_id");
         adapter = new EncyclopediasAdapter(getActivity(),mdata,R.layout.item_encyclopedias);
         encyclopedias_listview.setAdapter(adapter);
+        if(cat_id == 3){
+            encyclopedias_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    CycloParams params = new CycloParams();
+                    Intent intent = new Intent(getActivity(), CyclopediaDetailActivity.class);
+                    params.article_id = mdata.get(position).getH_id() + "";
+                    params.type = "cyclopedia";
+                    params.title = mdata.get(position).getH_title();
+                    params.content = "";
+                    params.image = mdata.get(position).getH_img();
+                    params.time = mdata.get(position).getCreate_time();
+                    intent.putExtra("params", params);
+                    startActivity(intent);
+                }
+            });
+        }else if(cat_id == 8){
+            encyclopedias_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    CycloParams params = new CycloParams();
+                    Intent intent = new Intent(getActivity(), CyclopediaDetailActivity.class);
+                    params.article_id = mdata.get(position).getH_id() + "";
+                    params.type = "news";
+                    params.title = mdata.get(position).getH_title();
+                    params.content = "";
+                    params.image = mdata.get(position).getH_img();
+                    params.time = mdata.get(position).getCreate_time();
+                    intent.putExtra("params", params);
+                    startActivity(intent);
+                }
+            });
+        }
         refreshLayout.setDelegate(new BGARefreshLayout.BGARefreshLayoutDelegate() {
             @Override
             public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {

@@ -63,9 +63,9 @@
                 android:id="@+id/right_listview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/color_fffbfa"
-                android:divider="@color/transparent"
-                android:dividerHeight="@dimen/padding_0.5dp"/>
+                android:listSelector="@android:color/transparent"
+                android:divider="@color/main_background"
+                android:dividerHeight="8dp"/>
         </com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout>
 
     </LinearLayout>

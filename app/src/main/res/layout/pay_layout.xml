@@ -113,6 +113,8 @@
             android:background="@color/line_color_first"/>
 
         <LinearLayout
+            android:id="@+id/pay_layout"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="80px"
             android:background="#fffbfa"

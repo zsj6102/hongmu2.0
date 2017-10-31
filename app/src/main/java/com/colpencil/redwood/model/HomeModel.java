@@ -167,4 +167,46 @@ public class HomeModel implements IHomeModel {
     public void subSearch(Observer<CyclopediaResult> observer) {
         search.subscribe(observer);
     }
+    Observable<ListResult<CategoryVo>> allGoodsTag;
+    Observable<ListResult<CategoryVo>> myGoodsTag;
+    @Override
+    public void loadGoodsAllTag() {
+        allGoodsTag = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .loadGoodsAllTag()
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<ListResult<CategoryVo>, ListResult<CategoryVo>>() {
+                    @Override
+                    public ListResult<CategoryVo> call(ListResult<CategoryVo> homeTagResult) {
+                        return homeTagResult;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void subAllGoodsTag(Observer<ListResult<CategoryVo>> observer) {
+        allGoodsTag.subscribe(observer);
+    }
+
+    @Override
+    public void loadMyGoodSTag() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+        params.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+        myGoodsTag = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .loadMyGoodsTag(params)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<ListResult<CategoryVo>, ListResult<CategoryVo>>() {
+                    @Override
+                    public ListResult<CategoryVo> call(ListResult<CategoryVo> homeTagResult) {
+                        return homeTagResult;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void subMyGoodsTag(Observer<ListResult<CategoryVo>> observer) {
+        myGoodsTag.subscribe(observer);
+    }
 }

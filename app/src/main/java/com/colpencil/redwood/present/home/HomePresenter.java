@@ -137,4 +137,56 @@ public class HomePresenter extends ColpencilPresenter<IHomePageView> {
         };
         model.subGood(observer);
     }
+    /**
+     * 二期获取所有标签
+     */
+    public void loadAllGoodsTag(){
+        model.loadGoodsAllTag();
+        Observer<ListResult<CategoryVo>> observer = new Observer<ListResult<CategoryVo>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ListResult<CategoryVo> homeTagResult) {
+                if (homeTagResult.getCode() == 0) {
+                    mView.loadTag(homeTagResult.getCatListResult());
+                } else {
+                    mView.loadError(homeTagResult.getMessage());
+                }
+            }
+        };
+        model.subAllGoodsTag(observer);
+    }
+    /**
+     * 获取我的商品标签
+     */
+    public void loadMyGoodsTag() {
+        model.loadMyGoodSTag();
+        Observer<ListResult<CategoryVo>> observer = new Observer<ListResult<CategoryVo>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ListResult<CategoryVo> result) {
+                if (result.getCode() == 0) {
+                    mView.loadTag(result.getMemberCatListResult());
+                }
+            }
+        };
+        model.subMyGoodsTag(observer);
+    }
 }

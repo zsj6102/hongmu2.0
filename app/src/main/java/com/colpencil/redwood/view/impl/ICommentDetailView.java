@@ -1,10 +1,14 @@
 package com.colpencil.redwood.view.impl;
 
 import com.colpencil.redwood.bean.EntityResult;
+import com.colpencil.redwood.bean.NodeReplyItem;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.bean.result.CommonResult;
 import com.colpencil.redwood.bean.result.PCommentResult;
 import com.colpencil.redwood.bean.result.PostsResult;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilBaseView;
+
+import java.util.List;
 
 /**
  * @author 陈宝
@@ -13,7 +17,7 @@ import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.Colpenci
  * @date 2016/7/29
  */
 public interface ICommentDetailView extends ColpencilBaseView {
-
+    void getNoteList(ResultInfo<List<NodeReplyItem>> result);
     /**
      * 获取帖子详情
      *
@@ -59,4 +63,7 @@ public interface ICommentDetailView extends ColpencilBaseView {
      * 获取点赞状态
      */
     void likeState(EntityResult<String> result);
+
+    void addLike(ResultInfo<String> resultInfo);
+
 }

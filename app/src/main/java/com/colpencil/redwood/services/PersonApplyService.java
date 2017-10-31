@@ -53,6 +53,8 @@ public class PersonApplyService extends Service {
         params.put("card", OkhttpUtils.toRequestBody(info.getCard()));
         params.put("card_type", OkhttpUtils.toRequestBody(info.getCard_type()));
         params.put("cardholder", OkhttpUtils.toRequestBody(info.getCardholder()));
+        params.put("store_name", OkhttpUtils.toRequestBody(info.getStore_name()));
+        params.put("store_logo\";filename=\"3.png", RequestBody.create(MediaType.parse("image/png"), info.getStore_file()));
         RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
                 .createApi(RedWoodApi.class)
                 .getApplyResult(params)

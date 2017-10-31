@@ -53,7 +53,7 @@ public class SearchPostsPresenter extends ColpencilPresenter<ISearchPostsView> {
                         mView.loadMore(result.getResult());
                     }
                 } else {
-                    mView.loadError();
+                    mView.loadError(result.getMsg());
                 }
             }
         };

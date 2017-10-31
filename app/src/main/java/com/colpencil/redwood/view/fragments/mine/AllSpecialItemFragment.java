@@ -5,14 +5,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.bean.AllSpecialInfo;
 import com.colpencil.redwood.bean.result.AllSpecialResult;
+import com.colpencil.redwood.function.utils.ListUtils;
 import com.colpencil.redwood.holder.SpecialCategory;
 import com.colpencil.redwood.holder.adapter.SeparatedListAdapter;
 import com.colpencil.redwood.present.mine.AllSpecialItemPresent;
 import com.colpencil.redwood.view.activity.mine.SpecialActivity;
+import com.colpencil.redwood.view.adapters.ZcListAdapter;
 import com.colpencil.redwood.view.impl.AllSpecialItemView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilFragment;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
@@ -32,20 +35,25 @@ import java.util.Set;
 import butterknife.Bind;
 import okhttp3.RequestBody;
 
+import static com.colpencil.redwood.view.activity.HomeActivity.result;
+
 
 @ActivityFragmentInject(
         contentViewId = R.layout.fragment_allspecial)
 public class AllSpecialItemFragment extends ColpencilFragment implements AllSpecialItemView {
     @Bind(R.id.refreshLayout)
     BGARefreshLayout refreshLayout;
+    @Bind(R.id.refreshLayout2)
+    BGARefreshLayout refreshLayout2;
+    private BGARefreshLayout.BGARefreshLayoutDelegate delegate;
     @Bind(R.id.listview)
     ListView listView;
     private int type;
     private int pageNo = 1, pageSize = 10;
     private boolean isRefresh = false;
     private AllSpecialItemPresent allSpecialItemPresent;
-    private List<SpecialCategory> cateList = new ArrayList<>();
-    private SeparatedListAdapter mAdapter;
+    private List<AllSpecialInfo> cateList = new ArrayList<>();
+    private ZcListAdapter mAdapter;
 
     public static AllSpecialItemFragment newInstance(int type) {
         AllSpecialItemFragment allSpecialItemFragment = new AllSpecialItemFragment();
@@ -65,9 +73,9 @@ public class AllSpecialItemFragment extends ColpencilFragment implements AllSpec
         intparams.put("page", pageNo);
         intparams.put("pageSize", pageSize);
         final HashMap<String, RequestBody> strparams = new HashMap<>();
-        mAdapter = new SeparatedListAdapter(getActivity(), cateList);
+        mAdapter = new ZcListAdapter(getActivity(), cateList,R.layout.item_special_past_child);
         listView.setAdapter(mAdapter);
-        refreshLayout.setDelegate(new BGARefreshLayout.BGARefreshLayoutDelegate() {
+        delegate = new BGARefreshLayout.BGARefreshLayoutDelegate() {
             @Override
             public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
                 pageNo = 1;
@@ -82,16 +90,21 @@ public class AllSpecialItemFragment extends ColpencilFragment implements AllSpec
                 }
                 return false;
             }
-        });
+        };
+        refreshLayout.setDelegate(delegate);
+        refreshLayout2.setDelegate(delegate);
+        refreshLayout2.setRefreshViewHolder(new BGANormalRefreshViewHolder(getActivity(), true));
+        refreshLayout2.setSnackStyle(getActivity().findViewById(android.R.id.content), getResources().getColor(R.color.material_drawer_primary), getResources().getColor(R.color.white));
         refreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getActivity(), true));
         refreshLayout.setSnackStyle(getActivity().findViewById(android.R.id.content), getResources().getColor(R.color.material_drawer_primary), getResources().getColor(R.color.white));
 
-        mAdapter.setComListener(new SeparatedListAdapter.comItemClickListener() {
+        mAdapter.setComListener(new  ZcListAdapter.comItemClickListener() {
             @Override
-            public void click(String id, String name) {
+            public void click(String id, String name,Integer cat_id) {
                 Intent intent = new Intent(getActivity(), SpecialActivity.class);
                 intent.putExtra("special_id", id);
                 intent.putExtra("special_name", name);
+                intent.putExtra("cat_id",cat_id);
                 startActivity(intent);
             }
         });
@@ -126,70 +139,77 @@ public class AllSpecialItemFragment extends ColpencilFragment implements AllSpec
         } else {
             isRefresh = true;
         }
+        refreshLayout2.endRefreshing(0);
         refreshLayout.endRefreshing(0);
         refreshLayout.endLoadingMore();
+        refreshLayout2.endLoadingMore();
     }
 
     @Override
     public void loadMore(AllSpecialResult allSpecialResult) {
         isLoadMore(allSpecialResult.getData());
-        List<AllSpecialInfo> mlist = allSpecialResult.getData();
-        List<String> longlist = new ArrayList<>();
-        out(mlist, longlist);
+        cateList.addAll(allSpecialResult.getData()) ;
         mAdapter.notifyDataSetChanged();
         hideLoading();
     }
 
     //去除重复的元素并保持原顺序
-    private void removeDuplicateWithOrder(List list) {
-        Set set = new HashSet();
-        List newList = new ArrayList();
-        for (Iterator iter = list.iterator(); iter.hasNext(); ) {
-            Object element = iter.next();
-            if (set.add(element))
-                newList.add(element);
-        }
-        list.clear();
-        list.addAll(newList);
-    }
-
-    private void out(List<AllSpecialInfo> mlist, List<String> longlist) {
-        for (int m = 0; m < mlist.size(); m++) {
-            //冒泡排序之后
-            for (int j = m + 1; j < mlist.size(); j++) {
-                if (mlist.get(j).getCreate_time() > mlist.get(m).getCreate_time()) {
-                    AllSpecialInfo temp = mlist.get(m);
-                    mlist.set(m, mlist.get(j));
-                    mlist.set(j, temp);
-                }
-            }
-        }
-        for (int m = 0; m < mlist.size(); m++) {
-            longlist.add(TimeUtil.longToStringYear(mlist.get(m).getCreate_time()));
-        }
-        if (longlist.size() != 0) {
-            removeDuplicateWithOrder(longlist);
-        }
-        for (int j = 0; j < longlist.size(); j++) {
-            SpecialCategory sp = null;
-            sp = new SpecialCategory(longlist.get(j));
-            for (int m = 0; m < mlist.size(); m++) {
-                if (TimeUtil.longToStringYear(mlist.get(m).getCreate_time()).equals(longlist.get(j))) {
-                    sp.addItem(mlist.get(m));
-                }
-            }
-            cateList.add(sp);
-        }
-    }
+//    private void removeDuplicateWithOrder(List list) {
+//        Set set = new HashSet();
+//        List newList = new ArrayList();
+//        for (Iterator iter = list.iterator(); iter.hasNext(); ) {
+//            Object element = iter.next();
+//            if (set.add(element))
+//                newList.add(element);
+//        }
+//        list.clear();
+//        list.addAll(newList);
+//    }
+//
+//    private List<SpecialCategory> out(List<AllSpecialInfo> mlist, List<String> longlist) {
+//         List<SpecialCategory> mylist = new ArrayList<>();
+//        for (int m = 0; m < mlist.size(); m++) {
+//            //冒泡排序之后
+//            for (int j = m + 1; j < mlist.size(); j++) {
+//                if (mlist.get(j).getCreate_time() > mlist.get(m).getCreate_time()) {
+//                    AllSpecialInfo temp = mlist.get(m);
+//                    mlist.set(m, mlist.get(j));
+//                    mlist.set(j, temp);
+//                }
+//            }
+//        }
+//        for (int m = 0; m < mlist.size(); m++) {
+//            longlist.add(TimeUtil.longToStringYear(mlist.get(m).getCreate_time()));
+//        }
+//        if (longlist.size() != 0) {
+//            removeDuplicateWithOrder(longlist);
+//        }
+//        for (int j = 0; j < longlist.size(); j++) {
+//            SpecialCategory sp;
+//            sp = new SpecialCategory(longlist.get(j));
+//            for (int m = 0; m < mlist.size(); m++) {
+//                if (TimeUtil.longToStringYear(mlist.get(m).getCreate_time()).equals(longlist.get(j))) {
+//                    sp.addItem(mlist.get(m));
+//                }
+//            }
+//            mylist.add(sp);
+//        }
+//        return mylist;
+//    }
 
     @Override
     public void refresh(AllSpecialResult allSpecialResult) {
         isLoadMore(allSpecialResult.getData());
         cateList.clear();
-        List<AllSpecialInfo> mlist = allSpecialResult.getData();
-        List<String> longlist = new ArrayList<>();
-        out(mlist, longlist);
+        cateList.addAll(allSpecialResult.getData());
         mAdapter.notifyDataSetChanged();
+        if (ListUtils.listIsNullOrEmpty(allSpecialResult.getData())) {
+            refreshLayout2.setVisibility(View.VISIBLE);
+            refreshLayout.setVisibility(View.GONE);
+        } else {
+            refreshLayout2.setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.VISIBLE);
+        }
         hideLoading();
     }
 
@@ -201,6 +221,13 @@ public class AllSpecialItemFragment extends ColpencilFragment implements AllSpec
     @Override
     public void loadFail(String message) {
         hideLoading();
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        refreshLayout2.endRefreshing(0);
+        refreshLayout.endRefreshing(0);
+        refreshLayout.endLoadingMore();
+        refreshLayout2.endLoadingMore();
+        refreshLayout2.setVisibility(View.VISIBLE);
+        refreshLayout.setVisibility(View.GONE);
     }
 
 }

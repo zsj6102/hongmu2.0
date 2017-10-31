@@ -12,6 +12,8 @@ import com.colpencil.redwood.view.base.CommonViewHolder;
 
 import java.util.List;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
+
 
 public class NodeReplyAdapter extends CommonAdapter<NodeReplyItem> {
     public MyListener listener;
@@ -34,11 +36,24 @@ public class NodeReplyAdapter extends CommonAdapter<NodeReplyItem> {
                 listener.commentClick(position);
             }
         });
+        if (item.getIsfocus() == 1) {
+            helper.setImageById(R.id.iv_like, R.mipmap.iv_like_icon);
+        } else {
+            helper.setImageById(R.id.iv_like, R.mipmap.iv_unlike_icon);
+        }
+        helper.getView(R.id.iv_like).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.addLike(position);
+            }
+        });
     }
     public void setListener(MyListener listener){
         this.listener = listener;
     }
    public interface MyListener{
         void commentClick(int position);
+
+        void addLike(int position);
     }
 }

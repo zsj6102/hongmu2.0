@@ -54,7 +54,8 @@
         </activity>
 
         <!--登录-->
-        <activity android:name=".view.activity.login.LoginActivity"></activity>
+        <activity android:name=".view.activity.login.LoginActivity"
+            android:windowSoftInputMode="adjustNothing"></activity>
         <!--修改密码-->
         <activity android:name=".view.activity.login.PwdActivity"></activity>
 
@@ -78,6 +79,7 @@
         <activity android:name=".view.activity.home.WeekShootActivity">
 
         </activity>
+        <activity android:name=".view.activity.ShoppingCartActivitys.OrderCenterToPay"/>
         <activity android:name=".view.activity.classification.CommoditySearchActivity"/>
         <!--筛选-->
         <!--支付-->
@@ -123,11 +125,14 @@
         <!--订单详情-->
         <activity android:name=".view.activity.mine.OrderDetailsActivity"></activity>
         <!--速拍-->
-        <activity android:name=".view.activity.mine.SpeedShotActivity"
-                  android:windowSoftInputMode="adjustResize"></activity>
+        <activity
+            android:name=".view.activity.mine.SpeedShotActivity"
+            android:windowSoftInputMode="adjustResize"></activity>
         <!--禅音-->
         <activity android:name=".view.activity.discovery.MusicCenterActivity"></activity>
         <activity android:name=".view.activity.mine.MyNewsActivity"/>
+        <activity android:name=".view.activity.mine.GoodNoteActivity"
+                  android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.cyclopedia.CyclopediaDetailActivity"
             android:screenOrientation="portrait"
@@ -135,9 +140,13 @@
         <activity
             android:name=".view.activity.home.SearchActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.mine.GoodReplyDetail"/>
         <activity
             android:name=".view.activity.home.CollectionCircleActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.mine.SettledOrderActivity"/>
+        <activity android:name=".view.activity.mine.MyFansAndLike"
+                  android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.home.PostsActivity"
             android:screenOrientation="portrait"
@@ -171,6 +180,7 @@
             android:windowSoftInputMode="adjustPan">
 
         </activity>
+        <activity android:name=".view.activity.mine.MarginOrderActivity"/>
         <activity
             android:name=".view.activity.mine.WebViewActivity"
             android:screenOrientation="portrait">
@@ -251,6 +261,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.home.CodeActivity"
+            android:theme="@style/mytheme"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.mine.CustomDetailActivity"
@@ -294,40 +305,81 @@
         </activity>
         <activity
             android:name=".view.activity.mine.PublishFamousActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".view.activity.mine.PublishZcActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.mine.PublishStoreActivity"
-                  android:screenOrientation="portrait"/>
-
-        <activity android:name=".view.activity.mine.FamousStoreActivity"
+        <activity
+            android:name=".view.activity.mine.PublishStoreActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".view.activity.mine.HallofFameActivity"
-                  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.mine.FamousStoreActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.mine.ModifySpeedActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.mine.ModifyBrandActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.mine.ModifyZcActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.mine.HallofFameActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.ShoppingCartActivitys.NewShopingCartActivity"
-                   />
-        <activity android:name=".view.activity.ShoppingCartActivitys.OrderActivity"
+            />
+        <activity
+            android:name=".view.activity.ShoppingCartActivitys.OrderActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.mine.ModifyAddressActivity"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.ShoppingCartActivitys.PayActivity"
+        <activity
+            android:name=".view.activity.ShoppingCartActivitys.PayActivity"
             android:screenOrientation="portrait"/>
         <!--二期 订单详情页-->
-        <activity android:name=".view.activity.mine.OrderDetailActivity"
+        <activity
+            android:name=".view.activity.mine.OrderDetailActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.mine.StoreIntroductionActivity"
+        <activity
+            android:name=".view.activity.mine.StoreIntroductionActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.mine.FansAndLikeActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.mine.NodeReplyActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.mine.ReplyDetail"
-                  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.mine.FansAndLikeActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.mine.NodeReplyActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.mine.ReplyDetail"
+            android:screenOrientation="portrait"/>
         <!-- 商品管理 h5-->
-        <activity android:name=".view.activity.mine.CommodityManageActivity"
-                  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.mine.CommodityManageActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.home.SearchStoreActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".view.activity.home.ZcSearchActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".view.activity.home.WeekSearchActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".view.activity.home.SupaiSearchActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            />
+         <activity android:name=".view.activity.mine.ModifyStoreActivity"
+                   android:screenOrientation="portrait"/>
         <service android:name=".view.PlayerService"/>
         <service android:name=".view.DownLoadService"/>
         <service android:name=".services.PostsService"/>
@@ -336,7 +388,7 @@
         <service android:name=".services.PersonApplyService"/>
         <service android:name=".services.BrandApplyService"/>
         <service android:name=".services.PublishStoreService"/>
-
+        <service android:name=".services.ModifiyStoreService"/>
         <!--预览已经选择的图片-->
         <activity
             android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"
@@ -359,10 +411,15 @@
             android:name="com.sina.weibo.sdk.net.DownloadService"
             android:exported="false"></service>
         <!--微信平台-->
-        <meta-data android:name="design_width" android:value="750">
+        <meta-data
+            android:name="design_width"
+            android:value="750">
         </meta-data>
-        <meta-data android:name="design_height" android:value="1295">
+        <meta-data
+            android:name="design_height"
+            android:value="1295">
         </meta-data>
+
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -429,7 +486,7 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
+            android:windowSoftInputMode="adjustResize|stateHidden">
         </activity>
         <!--银联支付-->
         <activity

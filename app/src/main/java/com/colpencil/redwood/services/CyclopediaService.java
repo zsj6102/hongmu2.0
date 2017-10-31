@@ -62,8 +62,13 @@ public class CyclopediaService extends Service {
         params.put("cat_id", RequestBody.create(null, info.getType() + ""));
         params.put("title", RequestBody.create(null, info.getTitle()));
         params.put("content", RequestBody.create(null, info.getContent()));
-        params.put("child_cat_id", RequestBody.create(null, info.getSec_id() + ""));
-        params.put("game", RequestBody.create(null, info.getGame() + ""));
+        if(info.getSec_id()!=null){
+            params.put("child_cat_id", RequestBody.create(null, info.getSec_id() + ""));
+        }
+        if(info.getGame()!=null){
+            params.put("game", RequestBody.create(null, info.getGame() + ""));
+        }
+
         params.put("member_id", RequestBody.create(null, SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + ""));
         params.put("token", RequestBody.create(null, SharedPreferencesUtil.getInstance(App.getInstance()).getString("token")));
         RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
@@ -84,7 +89,7 @@ public class CyclopediaService extends Service {
 
                     @Override
                     public void onError(Throwable e) {
-
+                     show(e.getMessage());
                     }
 
                     @Override
@@ -97,5 +102,8 @@ public class CyclopediaService extends Service {
                         }
                     }
                 });
+    }
+    private void show(String msg){
+
     }
 }

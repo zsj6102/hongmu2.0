@@ -1,4 +1,5 @@
 package com.colpencil.redwood.bean;
+import com.colpencil.redwood.bean.Info.StoreDetail;
 
 import java.io.Serializable;
 import java.util.List;
@@ -21,6 +22,15 @@ public class GoodInfo implements Serializable {
     private List<PromotionVo> promotions;
     private List<Goodspec> goodspec;
     private List<Product> productList;
+    private StoreDetail store_info;
+
+    public StoreDetail getStore_info() {
+        return store_info;
+    }
+
+    public void setStore_info(StoreDetail store_info) {
+        this.store_info = store_info;
+    }
 
     @Override
     public String toString() {

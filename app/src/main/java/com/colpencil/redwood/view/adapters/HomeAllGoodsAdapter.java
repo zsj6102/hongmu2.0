@@ -21,13 +21,15 @@ import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPrefe
 
 import java.util.List;
 
+import static com.colpencil.redwood.R.id.today_good_iv;
+
 public class HomeAllGoodsAdapter extends RecyclerView.Adapter<HomeAllGoodsAdapter.MyViewHolder> {
 
     private Context context;
     private List<AllGoodsImgInfo> mDatas;
     private int width;
     private int height;
-
+    private MyItemClickListener listener;
     public HomeAllGoodsAdapter(Context context, List<AllGoodsImgInfo> mDatas) {
         this.context = context;
         this.mDatas = mDatas;
@@ -58,6 +60,12 @@ public class HomeAllGoodsAdapter extends RecyclerView.Adapter<HomeAllGoodsAdapte
         } else {
             holder.iv.setLayoutParams(new LinearLayout.LayoutParams(width, height));
         }
+        holder.iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onItemClick(position);
+            }
+        });
     }
 
     @Override
@@ -65,13 +73,22 @@ public class HomeAllGoodsAdapter extends RecyclerView.Adapter<HomeAllGoodsAdapte
         return mDatas.size();
     }
 
+    public void setListener(MyItemClickListener listener){
+        this.listener = listener;
+    }
+    public interface MyItemClickListener {
+         void onItemClick(int postion);
+    }
+
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView iv;
-
+//        private View leftView;
+//        private View rightView;
         public MyViewHolder(View itemView) {
             super(itemView);
             iv = (ImageView) itemView.findViewById(R.id.today_good_iv);
+//            leftView = (View)itemView.findViewById()
         }
     }
 }

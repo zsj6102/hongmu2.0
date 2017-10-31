@@ -11,4 +11,8 @@ public interface IOrderModel extends ColpencilModel {
     void loadNewOrder(Map<String,String> map);
 
     void subOrder(Observer<OrderPayInfo> observer);
+
+    void loadDirectOrder(Map<String,String> map);
+
+    void subDirectOrder(Observer<OrderPayInfo> observer);
 }

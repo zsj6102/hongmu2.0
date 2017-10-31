@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
 import okhttp3.CacheControl;
@@ -69,7 +70,7 @@ public class RetrofitManager {
             if (NetUtils.isConnected(context)) {
                 //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
                 String cacheControl = request.cacheControl().toString();
-                return originalResponse.newBuilder().header("Cache-Control", cacheControl)
+                return originalResponse.newBuilder().header("Cache-Control", cacheControl).addHeader("Connection","close")
                         .removeHeader("Pragma").build();
             } else {
                 return originalResponse.newBuilder()
@@ -80,41 +81,41 @@ public class RetrofitManager {
     };
 
     // 打印返回的json数据拦截器
-    private Interceptor mLoggingInterceptor = new Interceptor() {
-        @Override
-        public Response intercept(Chain chain) throws IOException {
-
-            final Request request = chain.request();
-            final Response response = chain.proceed(request);
-
-            final ResponseBody responseBody = response.body();
-            final long contentLength = responseBody.contentLength();
-
-            BufferedSource source = responseBody.source();
-            source.request(Long.MAX_VALUE); // Buffer the entire body.
-            Buffer buffer = source.buffer();
-
-            Charset charset = Charset.forName("UTF-8");
-            MediaType contentType = responseBody.contentType();
-            if (contentType != null) {
-                try {
-                    charset = contentType.charset(charset);
-                } catch (UnsupportedCharsetException e) {
-                    ColpencilLogger.e("");
-                    ColpencilLogger.e("Couldn't decode the response body; charset is likely malformed.");
-                    return response;
-                }
-            }
-
-            if (contentLength != 0) {
-                ColpencilLogger.v("--------------------------------------------开始打印返回数据----------------------------------------------------");
-                ColpencilLogger.json(buffer.clone().readString(charset));
-                ColpencilLogger.v("--------------------------------------------结束打印返回数据----------------------------------------------------");
-            }
-
-            return response;
-        }
-    };
+//    private Interceptor mLoggingInterceptor = new Interceptor() {
+//        @Override
+//        public Response intercept(Chain chain) throws IOException {
+//
+//            final Request request = chain.request();
+//            final Response response = chain.proceed(request);
+//
+//            final ResponseBody responseBody = response.body();
+//            final long contentLength = responseBody.contentLength();
+//
+//            BufferedSource source = responseBody.source();
+//            source.request(Long.MAX_VALUE); // Buffer the entire body.
+//            Buffer buffer = source.buffer();
+//
+//            Charset charset = Charset.forName("UTF-8");
+//            MediaType contentType = responseBody.contentType();
+//            if (contentType != null) {
+//                try {
+//                    charset = contentType.charset(charset);
+//                } catch (UnsupportedCharsetException e) {
+//                    ColpencilLogger.e("");
+//                    ColpencilLogger.e("Couldn't decode the response body; charset is likely malformed.");
+//                    return response;
+//                }
+//            }
+//
+//            if (contentLength != 0) {
+//                ColpencilLogger.v("--------------------------------------------开始打印返回数据----------------------------------------------------");
+//                ColpencilLogger.json(buffer.clone().readString(charset));
+//                ColpencilLogger.v("--------------------------------------------结束打印返回数据----------------------------------------------------");
+//            }
+//
+//            return response;
+//        }
+//    };
     private static RetrofitManager instance;
 
 
@@ -141,6 +142,7 @@ public class RetrofitManager {
         retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .client(getOkHttpClient())
+
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
@@ -163,11 +165,12 @@ public class RetrofitManager {
                     sOkHttpClient = new OkHttpClient
                             .Builder()
 //                            .cache(cache)
-                            .addNetworkInterceptor(mRewriteCacheControlInterceptor)
-                            .addInterceptor(mRewriteCacheControlInterceptor)
-                            .addInterceptor(mLoggingInterceptor)
+//                            .addNetworkInterceptor(mRewriteCacheControlInterceptor)
+//                            .addInterceptor(mRewriteCacheControlInterceptor)
+//                            .addInterceptor(mLoggingInterceptor)
                             .retryOnConnectionFailure(true)
-//                            .connectTimeout(30, TimeUnit.SECONDS)
+
+//                            .connectTimeout(15, TimeUnit.SECONDS)
                             .addInterceptor(logging)
                             .cookieJar(persistentCookieJar)
                             .build();

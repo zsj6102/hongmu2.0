@@ -21,6 +21,8 @@ public class Comment implements Serializable {
      * 评论图片list
      */
     private List<String> imgList;
+
+    private List<String> ori_imgList;
     /**
      * 成交价
      */
@@ -56,6 +58,14 @@ public class Comment implements Serializable {
                 ", good_id=" + good_id +
                 ", specs='" + specs + '\'' +
                 '}';
+    }
+
+    public List<String> getOri_imgList() {
+        return ori_imgList;
+    }
+
+    public void setOri_imgList(List<String> ori_imgList) {
+        this.ori_imgList = ori_imgList;
     }
 
     public String getContent() {

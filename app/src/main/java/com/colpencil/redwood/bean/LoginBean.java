@@ -19,7 +19,8 @@ public class LoginBean implements Serializable {
     private UserInfor data;//个人信息
     private String facePath;
     private int sex;
-
+    private String mobile;
+    private String password;
     @Override
     public String toString() {
         return "LoginBean{" +
@@ -31,6 +32,22 @@ public class LoginBean implements Serializable {
                 ", token='" + token + '\'' +
                 ", data=" + data +
                 '}';
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public boolean isFlag() {

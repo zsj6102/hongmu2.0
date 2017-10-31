@@ -4,18 +4,37 @@ import java.io.Serializable;
 
 public class ZcCardInfo implements Serializable {
     private int member_id;
-    private int store_id;
-    private int store_type;
+    private Integer store_id;
+    private Integer store_type;
     private String store_type_name;
     private String store_type_path;
     private String store_name;
     private String store_path;
     private String praise_rate;
+    private String face;
+
     private int store_count;
     private int isfocus;
     private int prize_count;
     private String lv_name;
     private String member_photo;
+    private int store_recommend;
+
+    public String getFace() {
+        return face;
+    }
+
+    public void setFace(String face) {
+        this.face = face;
+    }
+
+    public int getStore_recommend() {
+        return store_recommend;
+    }
+
+    public void setStore_recommend(int store_recommend) {
+        this.store_recommend = store_recommend;
+    }
 
     public int getMember_id() {
         return member_id;
@@ -25,19 +44,19 @@ public class ZcCardInfo implements Serializable {
         this.member_id = member_id;
     }
 
-    public int getStore_id() {
+    public Integer getStore_id() {
         return store_id;
     }
 
-    public void setStore_id(int store_id) {
+    public void setStore_id(Integer store_id) {
         this.store_id = store_id;
     }
 
-    public int getStore_type() {
+    public Integer getStore_type() {
         return store_type;
     }
 
-    public void setStore_type(int store_type) {
+    public void setStore_type(Integer store_type) {
         this.store_type = store_type;
     }
 

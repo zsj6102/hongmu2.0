@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.colpencil.redwood.R;
+import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.RefreshMsg;
 import com.colpencil.redwood.bean.result.CommonResult;
 import com.colpencil.redwood.configs.Constants;
@@ -52,6 +53,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscriber;
 
@@ -62,8 +64,7 @@ import rx.Subscriber;
  * 日期：2016/7/27 18 07
  */
 @ActivityFragmentInject(
-        contentViewId = R.layout.activity_browsinghistory
-)
+        contentViewId = R.layout.activity_browsinghistory)
 public class BrowsingHistoryActivity extends ColpencilActivity implements View.OnClickListener, IBrowsingHistoryView {
 
     @Bind(R.id.browsingHistory_header)
@@ -139,13 +140,17 @@ public class BrowsingHistoryActivity extends ColpencilActivity implements View.O
 
             @Override
             public void onNext(RefreshMsg msg) {
+                title = msg.getTitle();
+                content = msg.getContent();
+                imageUrl = msg.getImage();
+                ote_id = msg.getId();
+                type = msg.getSort();
                 if (msg.getType() == 11) {
-                    title = msg.getTitle();
-                    content = msg.getContent();
-                    ote_id = msg.getId();
-                    type = msg.getSort();
-                    imageUrl = msg.getImage();
+                    presenter.baikeShare(msg.getCat_id(),ote_id+"");
+                }else if(msg.getType() == 10){
                     presenter.share(ote_id);
+                }else if(msg.getType() == 12){
+                    presenter.goodsShare(ote_id+"");
                 }
             }
         };
@@ -215,6 +220,11 @@ public class BrowsingHistoryActivity extends ColpencilActivity implements View.O
 
     }
 
+    @OnClick(R.id.browsingHistory_header_back)
+    void back() {
+        finish();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -251,6 +261,24 @@ public class BrowsingHistoryActivity extends ColpencilActivity implements View.O
         }
     }
 
+    @Override
+    public void shareBaike(CommonResult result) {
+        if (result.getCode().equals("3")) {
+            showDialog();
+        } else if (result.getCode().equals("1")) {
+            showPopupWindow(result.getUrl());
+        }
+    }
+
+    @Override
+    public void shareGoods(CommonResult result) {
+        if (result.getCode().equals("3")) {
+            showDialog();
+        } else if (result.getCode().equals("1")) {
+            showPopupWindow(result.getUrl());
+        }
+    }
+
     private void showDialog() {
         final CommonDialog dialog = new CommonDialog(this, "你还没登录喔!", "去登录", "取消");
         dialog.setListener(new DialogOnClickListener() {
@@ -272,8 +300,7 @@ public class BrowsingHistoryActivity extends ColpencilActivity implements View.O
 
     private void showPopupWindow(String shareUrl) {
         if (window == null) {
-            window = new PopupWindow(initPop(shareUrl),
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            window = new PopupWindow(initPop(shareUrl), ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         }
         window.setFocusable(true);
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -331,18 +358,11 @@ public class BrowsingHistoryActivity extends ColpencilActivity implements View.O
 
     private void share(SHARE_MEDIA platform, String shareUrl) {
         if (TextUtils.isEmpty(imageUrl)) {
-            image = new UMImage(this,
-                    BitmapFactory.decodeResource(getResources(), R.mipmap.logo));
+            image = new UMImage(this, BitmapFactory.decodeResource(getResources(), R.mipmap.logo));
         } else {
             image = new UMImage(this, imageUrl);
         }
-        action.setPlatform(platform)
-                .setCallback(umShareListener)
-                .withTitle(title)
-                .withText(content)
-                .withTargetUrl(shareUrl)
-                .withMedia(image)
-                .share();
+        action.setPlatform(platform).setCallback(umShareListener).withTitle(title).withText(content).withTargetUrl(shareUrl).withMedia(image).share();
         dismissSharePop();
     }
 

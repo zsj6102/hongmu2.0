@@ -1,5 +1,6 @@
 package com.colpencil.redwood.view.impl;
 
+import com.colpencil.redwood.bean.ApplyStatusReturn;
 import com.colpencil.redwood.bean.NewsInfoVo;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilBaseView;
 
@@ -24,4 +25,6 @@ public interface INewsListView extends ColpencilBaseView {
 
     void loadError(String msg);
 
+    void getStatusSucess(ApplyStatusReturn applyStatusReturn);
+    void getStatusError(String message);
 }

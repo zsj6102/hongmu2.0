@@ -16,6 +16,7 @@ import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.Colpenci
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
 import com.property.colpencil.colpencilandroidlibrary.Function.Rx.RxBus;
+import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ToastTools;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGANormalRefreshViewHolder;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout.BGARefreshLayoutDelegate;
@@ -163,7 +164,9 @@ public class WeekShootFragment extends ColpencilFragment implements IWeekShootVi
     }
 
     @Override
-    public void loadError() {
+    public void loadError(String msg) {
+        hideLoading();
+        ToastTools.showShort(getActivity(),msg);
         bga_weekShoot.endRefreshing(0);
     }
 

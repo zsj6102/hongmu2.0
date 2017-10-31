@@ -51,7 +51,7 @@ public class MyEvaluationAdapter extends BGARecyclerViewAdapter<Comment> {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(mContext, GalleyActivity.class);
                 intent.putExtra("position", position);
-                intent.putStringArrayListExtra("data", (ArrayList<String>) comment.getImgList());
+                intent.putStringArrayListExtra("data", (ArrayList<String>) comment.getOri_imgList());
                 mContext.startActivity(intent);
             }
         });

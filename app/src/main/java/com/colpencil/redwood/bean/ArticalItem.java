@@ -11,8 +11,8 @@ public class ArticalItem implements Serializable {
     private int is_top;//是否置顶 0:不置顶 1：置顶   以下相似
     private int is_digest;//是否加精
     private int is_commend;//是否推荐
-    private String create_time;
-    private String now_time;
+    private long create_time;
+    private long now_time;
     private String h_img;//百科新闻显示图片
 
     public int getH_id() {
@@ -79,19 +79,19 @@ public class ArticalItem implements Serializable {
         this.is_commend = is_commend;
     }
 
-    public String getCreate_time() {
+    public long getCreate_time() {
         return create_time;
     }
 
-    public void setCreate_time(String create_time) {
+    public void setCreate_time(long create_time) {
         this.create_time = create_time;
     }
 
-    public String getNow_time() {
+    public long getNow_time() {
         return now_time;
     }
 
-    public void setNow_time(String now_time) {
+    public void setNow_time(long now_time) {
         this.now_time = now_time;
     }
 

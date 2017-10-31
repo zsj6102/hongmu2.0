@@ -1,18 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="match_parent">
 
         <ListView
             android:id="@+id/allauctionitem_listview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:divider="@color/main_background"
+            android:dividerHeight="8dp"
+            android:layout_height="match_parent">
 
         </ListView>
+
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/allauctionitem_listview"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+        <!--</android.support.v7.widget.RecyclerView>-->
+    </com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout>
+    <com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout
+        android:id="@+id/refreshLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <include
+            android:id="@+id/no_data_layout"
+            layout="@layout/layout_no_data"
+            />
     </com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout>
 </LinearLayout>

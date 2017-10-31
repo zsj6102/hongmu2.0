@@ -26,7 +26,7 @@ public class AnswerAdapter extends CommonAdapter<PostsComment> {
 
     private int fromwhere;  //0表示帖子，1表示百科
     private Context context;
-
+    public  MyListener listener;
     public AnswerAdapter(Context context, List<PostsComment> mDatas, int itemLayoutId, int fromwhere) {
         super(context, mDatas, itemLayoutId);
         this.context = context;
@@ -34,7 +34,7 @@ public class AnswerAdapter extends CommonAdapter<PostsComment> {
     }
 
     @Override
-    public void convert(CommonViewHolder holder, PostsComment item, int position) {
+    public void convert(CommonViewHolder holder, PostsComment item, final int position) {
         if (fromwhere == 0) {
             holder.getView(R.id.ll_content).setBackgroundColor(context.getResources().getColor(R.color.color_fffbfa));
         } else {
@@ -47,6 +47,14 @@ public class AnswerAdapter extends CommonAdapter<PostsComment> {
         } else {
             holder.setText(R.id.answer_time, TimeUtil.getTimeDiffDay(item.getCreatetime(), System.currentTimeMillis()));
         }
+        holder.setText(R.id.tv_collect,item.getRe_like_count()+"");
+        holder.setText(R.id.tv_comment,item.getRe_con_count()+"");
+        if (item.getIsfocus() == 1) {
+            holder.setImageById(R.id.iv_like, R.mipmap.iv_like_icon);
+        } else {
+            holder.setImageById(R.id.iv_like, R.mipmap.iv_unlike_icon);
+        }
+
         ImageLoaderUtils.loadImage(mContext, item.getFace(), (SelectableRoundedImageView) holder.getView(R.id.answer_header));
         ImageLoaderUtils.loadImage(mContext, item.getMember_photo(), (ImageView) holder.getView(R.id.answer_level));
         holder.getView(R.id.ll_condition).setOnClickListener(new View.OnClickListener() {
@@ -57,5 +65,25 @@ public class AnswerAdapter extends CommonAdapter<PostsComment> {
                 mContext.startActivity(intent);
             }
         });
+        holder.getView(R.id.iv_like).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.addLike(position);
+            }
+        });
+        holder.getView(R.id.reply_layout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.commentClick(position);
+            }
+        });
+
+    }
+    public void setListener(MyListener listener){
+        this.listener = listener;
+    }
+    public interface MyListener{
+        void commentClick(int position);
+        void addLike(int position);
     }
 }

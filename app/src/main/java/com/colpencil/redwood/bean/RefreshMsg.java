@@ -19,6 +19,15 @@ public class RefreshMsg {
     private String content;
     private int sort;
     private String image;
+    private int cat_id;
+
+    public int getCat_id() {
+        return cat_id;
+    }
+
+    public void setCat_id(int cat_id) {
+        this.cat_id = cat_id;
+    }
 
     public int getType() {
         return type;

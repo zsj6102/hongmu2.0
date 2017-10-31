@@ -17,7 +17,7 @@ public class AllGoodsInfo implements Serializable {
     private String intro;//商品介绍
     private double price;//商品价格
     private String create_time;//发布时间
-
+    private int product_id;
     private int store;//库存
     private int comment_count;//评论数
     private List<AllGoodsImgInfo> list_view_gallery;//商品图片
@@ -28,6 +28,14 @@ public class AllGoodsInfo implements Serializable {
     private String store_type_name;//商家类型
     private float cover_proportion;//广告图宽高比
     private int have_collection;//是否收藏 0没收藏 1相反
+
+    public int getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
+    }
 
     public int getHave_collection() {
         return have_collection;

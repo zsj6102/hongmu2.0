@@ -1,5 +1,6 @@
 package com.colpencil.redwood.view.impl;
 
+import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.result.CommonResult;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilBaseView;
 
@@ -14,4 +15,9 @@ public interface IBrowsingHistoryView extends ColpencilBaseView{
     void resultInfor(String code, String msg);
 
     void shareResult(CommonResult result);
+
+
+    void shareBaike(CommonResult result);
+
+    void shareGoods(CommonResult result);
 }

@@ -29,6 +29,7 @@ import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ColpenciSna
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.Md5Utils;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.TextStringUtils;
+import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ToastTools;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -64,7 +65,7 @@ public class LoginActivity extends ColpencilActivity implements ILoginView {
     EditText et_loginPwd;
     @Bind(R.id.iv_removePhoneLogin)
     ImageView iv_removePhoneLogin;
-
+    private final static int TOBIND=2222;
     private LoginPresent present;
     private Observable<RxBusMsg> observable;
     private Subscriber subscriber;
@@ -84,7 +85,8 @@ public class LoginActivity extends ColpencilActivity implements ILoginView {
     private void initData() {
         mShareAPI = UMShareAPI.get(this);
         typeFlag = getIntent().getStringExtra("key");
-        requestCode = getIntent().getIntExtra(StringConfig.REQUEST_CODE, 101);  //默认值为100，表示请求登录
+        requestCode = getIntent().getExtras().getInt(StringConfig.REQUEST_CODE);
+//        requestCode = getIntent().getIntExtra(StringConfig.REQUEST_CODE, 101);  //默认值为100，表示请求登录
         tv_main_title.setText("用户登录");
         leftTile.setText("注册");
         observable = RxBus.get().register("rxBusMsg", RxBusMsg.class);
@@ -172,15 +174,18 @@ public class LoginActivity extends ColpencilActivity implements ILoginView {
     public void thirstSuccess(LoginBean loginBean) {
         hideLoading();
         if (loginBean.getCode() == 1) {//直接进行登录
-            Intent intent = new Intent(LoginActivity.this, PwdActivity.class);
-            intent.putExtra("key", "bindPhone");
-            intent.putExtra("openId", openId);
-            startActivity(intent);
+//            Intent intent = new Intent(LoginActivity.this, PwdActivity.class);
+//            intent.putExtra("key", "bindPhone");
+//            intent.putExtra("openId", openId);
+//            startActivity(intent);
+            present.sumbitLogin(loginBean.getMobile(),
+                   loginBean.getPassword());
+            showLoading(Constants.progressName);
         } else if (loginBean.getCode() == 2) {//未使用登录，绑定手机号码
             Intent intent = new Intent(LoginActivity.this, PwdActivity.class);
             intent.putExtra("key", "bindPhone");
             intent.putExtra("openId", openId);
-            startActivity(intent);
+            startActivityForResult(intent,TOBIND);
         }
     }
 
@@ -259,6 +264,11 @@ public class LoginActivity extends ColpencilActivity implements ILoginView {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mShareAPI.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == TOBIND){
+            present.sumbitLogin(data.getStringExtra("mobile"),
+                   data.getStringExtra("pwd"));
+            showLoading(Constants.progressName);
+        }
     }
 
     @Override
@@ -354,5 +364,11 @@ public class LoginActivity extends ColpencilActivity implements ILoginView {
     void clearMobile() {
         et_loginPhone.setText("");
         et_loginPhone.requestFocus();
+    }
+
+    @Override
+    public void loginFail(String msg) {
+        hideLoading();
+        ColpenciSnackbarUtil.downShowing(this.findViewById(android.R.id.content), msg);
     }
 }

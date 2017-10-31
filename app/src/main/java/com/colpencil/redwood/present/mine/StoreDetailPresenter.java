@@ -11,11 +11,11 @@ import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.Colpenci
 
 import java.util.List;
 import java.util.Map;
+
 import rx.Observer;
 
 
-
-public class StoreDetailPresenter extends ColpencilPresenter<IAboutView>{
+public class StoreDetailPresenter extends ColpencilPresenter<IAboutView> {
     private IAboutModel model;
 
     public StoreDetailPresenter() {
@@ -32,13 +32,13 @@ public class StoreDetailPresenter extends ColpencilPresenter<IAboutView>{
 
             @Override
             public void onError(Throwable e) {
-                //                mView.resultError(e.getMessage());
+                mView.loadFail("服务器异常");
             }
 
             @Override
             public void onNext(ResultInfo<StoreDetail> storeDetailResultInfo) {
-                if (storeDetailResultInfo!=null) {
-                    if(mView!=null){
+                if (storeDetailResultInfo != null) {
+                    if (mView != null) {
                         mView.getStoreDetail(storeDetailResultInfo);
                     }
 
@@ -48,7 +48,7 @@ public class StoreDetailPresenter extends ColpencilPresenter<IAboutView>{
         model.subInfo(observer);
     }
 
-    public void getStoreLike(Map<String,String> params){
+    public void getStoreLike(Map<String, String> params) {
         model.lodaLike(params);
         Observer<ResultInfo<List<ItemStoreFans>>> observer = new Observer<ResultInfo<List<ItemStoreFans>>>() {
             @Override
@@ -58,20 +58,20 @@ public class StoreDetailPresenter extends ColpencilPresenter<IAboutView>{
 
             @Override
             public void onError(Throwable e) {
-
+                mView.loadFail("服务器异常");
             }
 
             @Override
             public void onNext(ResultInfo<List<ItemStoreFans>> listResultInfo) {
-                 if(listResultInfo != null && mView!=null){
-                     mView.getLike(listResultInfo);
-                 }
+                if (listResultInfo != null && mView != null) {
+                    mView.getLike(listResultInfo);
+                }
             }
         };
         model.subLike(observer);
     }
 
-    public void getStoreFans(Map<String,String> params){
+    public void getStoreFans(Map<String, String> params) {
         model.loadFans(params);
         Observer<ResultInfo<List<ItemStoreFans>>> observer = new Observer<ResultInfo<List<ItemStoreFans>>>() {
             @Override
@@ -81,12 +81,12 @@ public class StoreDetailPresenter extends ColpencilPresenter<IAboutView>{
 
             @Override
             public void onError(Throwable e) {
-
+                mView.loadFail("服务器异常");
             }
 
             @Override
             public void onNext(ResultInfo<List<ItemStoreFans>> listResultInfo) {
-                if(listResultInfo != null && mView != null){
+                if (listResultInfo != null && mView != null) {
                     mView.getFans(listResultInfo);
                 }
             }
@@ -94,7 +94,7 @@ public class StoreDetailPresenter extends ColpencilPresenter<IAboutView>{
         model.subFans(observer);
     }
 
-    public void getCareReturn(Map<String,String> params){
+    public void getCareReturn(Map<String, String> params) {
         model.care(params);
         Observer<CareReturn> observer = new Observer<CareReturn>() {
             @Override
@@ -104,20 +104,20 @@ public class StoreDetailPresenter extends ColpencilPresenter<IAboutView>{
 
             @Override
             public void onError(Throwable e) {
-
+                mView.loadFail("服务器异常");
             }
 
             @Override
             public void onNext(CareReturn careReturn) {
-               if(careReturn!=null && mView!=null){
-                   mView.care(careReturn);
-               }
+                if (careReturn != null && mView != null) {
+                    mView.care(careReturn);
+                }
             }
         };
         model.subCare(observer);
     }
 
-    public void getUncareReturn(Map<String,String> params){
+    public void getUncareReturn(Map<String, String> params) {
         model.unCare(params);
         Observer<CareReturn> observer = new Observer<CareReturn>() {
             @Override
@@ -127,12 +127,12 @@ public class StoreDetailPresenter extends ColpencilPresenter<IAboutView>{
 
             @Override
             public void onError(Throwable e) {
-
+                mView.loadFail("服务器异常");
             }
 
             @Override
             public void onNext(CareReturn careReturn) {
-                if(careReturn!=null && mView!=null){
+                if (careReturn != null && mView != null) {
                     mView.uncare(careReturn);
                 }
             }
@@ -140,7 +140,7 @@ public class StoreDetailPresenter extends ColpencilPresenter<IAboutView>{
         model.subUnCare(observer);
     }
 
-    public void getOperate(Map<String,String> params){
+    public void getOperate(Map<String, String> params) {
         model.storeCare(params);
         Observer<CareReturn> observer = new Observer<CareReturn>() {
             @Override
@@ -150,12 +150,15 @@ public class StoreDetailPresenter extends ColpencilPresenter<IAboutView>{
 
             @Override
             public void onError(Throwable e) {
+                if(mView!=null){
+                    mView.loadFail("服务器异常");
+                }
 
             }
 
             @Override
             public void onNext(CareReturn careReturn) {
-                if(careReturn!=null && mView!=null){
+                if (careReturn != null && mView != null) {
                     mView.operate(careReturn);
                 }
             }

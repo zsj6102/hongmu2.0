@@ -49,7 +49,7 @@ public class BrowsingCyclopediaFragment extends ColpencilFragment implements IBr
     /**
      * 分页请求页码
      */
-    private long pageNo = 1;
+    private long pageNo = 0;
     /**
      * 每页信息条数
      */
@@ -96,7 +96,7 @@ public class BrowsingCyclopediaFragment extends ColpencilFragment implements IBr
                     showLoading("正在删除...");
                     presenter.delete(msg.getFoot_id());
                 } else if (msg.getType() == 40) {
-                    pageNo = 1;
+                    pageNo = 0;
                     presenter.getContent(pageNo, pageSize);
                 }
             }
@@ -150,7 +150,7 @@ public class BrowsingCyclopediaFragment extends ColpencilFragment implements IBr
     public void delete(EntityResult<String> result) {
         hideLoading();
         if (result.getCode() == 0) {
-            pageNo = 1;
+            pageNo = 0;
             presenter.getContent(pageNo, pageSize);
         }
         ToastTools.showShort(getActivity(), result.getMessage());
@@ -188,7 +188,7 @@ public class BrowsingCyclopediaFragment extends ColpencilFragment implements IBr
         showLoading(Constants.progressName);
         mdatas.clear();
         mAdapter.notifyDataSetChanged();
-        pageNo = 1;
+        pageNo = 0;
         presenter.getContent(pageNo, pageSize);
     }
 
@@ -196,7 +196,7 @@ public class BrowsingCyclopediaFragment extends ColpencilFragment implements IBr
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         if (flag == true) {
             showLoading(Constants.progressName);
-            pageNo++;
+//            pageNo++;
             presenter.getContent(pageNo, pageSize);
         }
         return false;

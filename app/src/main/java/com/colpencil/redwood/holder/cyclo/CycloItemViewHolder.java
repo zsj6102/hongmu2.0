@@ -79,8 +79,11 @@ public class CycloItemViewHolder extends Decomposers<CyclopediaInfoVo> {
             @Override
             public void run() {
                 int width = ScreenUtil.getInstance().getScreenWidth(mContext);
-                int height = (int) (width / infoVo.getImage_scale());
-                iv_cyclopedia.setLayoutParams(new LinearLayout.LayoutParams(width, height));
+                if (infoVo.getImage_scale() != 0) {
+                    int height = (int) (width / infoVo.getImage_scale());
+                    iv_cyclopedia.setLayoutParams(new LinearLayout.LayoutParams(width, height));
+                }
+
             }
         });
     }

@@ -5,6 +5,7 @@ import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.result.CommonResult;
 import com.colpencil.redwood.bean.result.GoodInfoResult;
+import com.colpencil.redwood.bean.result.OrderPayInfo;
 import com.colpencil.redwood.configs.Constants;
 import com.colpencil.redwood.function.config.UrlConfig;
 import com.colpencil.redwood.model.imples.IGoodDetailModel;
@@ -12,6 +13,7 @@ import com.property.colpencil.colpencilandroidlibrary.Function.MianCore.Retrofit
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import rx.Observable;
 import rx.Observer;
@@ -34,7 +36,7 @@ public class GoodDetailModel implements IGoodDetailModel {
     private Observable<CommonResult> share;
     private Observable<GoodInfoResult> obGood;
     private Observable<EntityResult<String>> addup;
-
+    private Observable<OrderPayInfo> directObservable;
     /**
      * 加入购物车
      *
@@ -176,7 +178,7 @@ public class GoodDetailModel implements IGoodDetailModel {
     public void loadGoodInfo(int goodid) {
         obGood = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
                 .createApi(RedWoodApi.class)
-                .loadGoodInfo(goodid + "")
+                .loadGoodInfo(goodid + "",SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id"))
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<GoodInfoResult, GoodInfoResult>() {
                     @Override
@@ -215,5 +217,23 @@ public class GoodDetailModel implements IGoodDetailModel {
     @Override
     public void subAddup(Observer<EntityResult<String>> observer) {
         addup.subscribe(observer);
+    }
+    @Override
+    public void subDirectOrder(Observer<OrderPayInfo> observer) {
+        directObservable.subscribe(observer);
+    }
+
+    @Override
+    public void loadDirectOrder(Map<String, String> map) {
+        directObservable = RetrofitManager.getInstance(1,App.getInstance(),UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .getDirectOrder(map)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<OrderPayInfo, OrderPayInfo>() {
+                    @Override
+                    public OrderPayInfo call(OrderPayInfo orderPayInfo) {
+                        return orderPayInfo;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
     }
 }

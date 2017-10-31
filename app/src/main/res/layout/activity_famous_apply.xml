@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <include layout="@layout/base_header" />
+    <include layout="@layout/base_header"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -13,6 +13,7 @@
         android:scrollbars="none">
 
         <LinearLayout
+            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -25,14 +26,14 @@
                 android:paddingLeft="12dp"
                 android:text="个人信息"
                 android:textColor="@color/main_red"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/line_color_second" />
+                android:background="@color/line_color_second"/>
 
-            <include layout="@layout/apply_common" />
+            <include layout="@layout/apply_common"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -43,12 +44,12 @@
                 android:paddingLeft="12dp"
                 android:text="其他信息"
                 android:textColor="@color/main_red"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/line_color_second" />
+                android:background="@color/line_color_second"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -63,7 +64,7 @@
                     android:layout_marginLeft="12dp"
                     android:text="推荐人："
                     android:textColor="@color/text_color_first"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
                 <EditText
                     android:id="@+id/edt_refername"
@@ -72,16 +73,17 @@
                     android:layout_marginRight="12dp"
                     android:background="@null"
                     android:hint="推荐人名字"
+                    android:maxLength="20"
                     android:textColor="@color/text_color_thirst"
                     android:textColorHint="@color/text_color_thirst"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/line_color_second" />
+                android:background="@color/line_color_second"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -96,25 +98,26 @@
                     android:layout_marginLeft="12dp"
                     android:text="工作室名称："
                     android:textColor="@color/text_color_first"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
                 <EditText
                     android:id="@+id/edt_workroom"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="12dp"
+                    android:maxLength="50"
                     android:background="@null"
                     android:hint="请输入工作室名称"
                     android:textColor="@color/text_color_thirst"
                     android:textColorHint="@color/text_color_thirst"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/line_color_second" />
+                android:background="@color/line_color_second"/>
 
             <LinearLayout
                 android:id="@+id/layout_work_room"
@@ -130,7 +133,7 @@
                     android:layout_marginLeft="12dp"
                     android:text="工作室地址："
                     android:textColor="@color/text_color_first"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
                 <TextView
                     android:id="@+id/tv_workroom_region"
@@ -142,20 +145,20 @@
                     android:text="请点击选择工作室区域"
                     android:textColor="@color/text_color_thirst"
                     android:textColorHint="@color/text_color_thirst"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="12dp"
-                    android:src="@mipmap/right_icon" />
+                    android:src="@mipmap/right_icon"/>
 
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/line_color_second" />
+                android:background="@color/line_color_second"/>
 
             <EditText
                 android:id="@+id/edt_workroom_address"
@@ -165,14 +168,16 @@
                 android:hint="请点击填写详细地址"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
+                android:maxLength="50"
                 android:textColor="@color/text_color_thirst"
                 android:textColorHint="@color/text_color_thirst"
-                android:textSize="15sp" />
+                android:textSize="15sp"/>
 
-                <View
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/line_color_second" />
+                android:background="@color/line_color_second"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
@@ -186,25 +191,27 @@
                     android:layout_marginLeft="12dp"
                     android:text="常驻店铺名称："
                     android:textColor="@color/text_color_first"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
                 <EditText
                     android:id="@+id/edt_shopstore"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="12dp"
+                    android:maxLength="50"
                     android:background="@null"
                     android:hint="您常驻的店铺名称"
                     android:textColor="@color/text_color_thirst"
                     android:textColorHint="@color/text_color_thirst"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/line_color_second" />
+                android:background="@color/line_color_second"/>
+
             <LinearLayout
                 android:id="@+id/layout_shop_store"
                 android:layout_width="match_parent"
@@ -219,7 +226,7 @@
                     android:layout_marginLeft="12dp"
                     android:text="常驻店铺地址："
                     android:textColor="@color/text_color_first"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
                 <TextView
                     android:id="@+id/tv_shopstore_region"
@@ -231,19 +238,20 @@
                     android:text="请点击选择常驻店铺区域"
                     android:textColor="@color/text_color_thirst"
                     android:textColorHint="@color/text_color_thirst"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="12dp"
-                    android:src="@mipmap/right_icon" />
+                    android:src="@mipmap/right_icon"/>
 
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/line_color_second" />
+                android:background="@color/line_color_second"/>
 
             <EditText
                 android:id="@+id/edt_shopstore_address"
@@ -253,13 +261,15 @@
                 android:hint="请点击填写详细地址"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
+                android:maxLength="50"
                 android:textColor="@color/text_color_thirst"
                 android:textColorHint="@color/text_color_thirst"
-                android:textSize="15sp" />
+                android:textSize="15sp"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/line_color_second" />
+                android:background="@color/line_color_second"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -267,30 +277,53 @@
                 android:background="@color/main_LinearLayout_background"
                 android:gravity="center_vertical"
                 android:paddingLeft="12dp"
-                android:textColor="@color/text_color_first"
-                android:text="获奖作品" />
+                android:text="获奖作品："
+                android:textColor="@color/text_color_first"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/line_color_second" />
+                android:background="@color/line_color_second"/>
 
-            <!--<com.property.colpencil.colpencilandroidlibrary.Ui.AdapterView.MosaicGridView-->
-            <!--android:id="@+id/gridview"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent" />-->
+
+            <LinearLayout
+                android:id="@+id/add_img_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_7.5dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/item_grida_image"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/imgselect"/>
+
+                <TextView
+                    android:id="@+id/add_text"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="最多添加3张"/>
+            </LinearLayout>
+
             <android.support.v7.widget.RecyclerView
+
                 android:id="@+id/detail_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:visibility="visible" />
-            <!--</LinearLayout>-->
+                android:visibility="gone"/>
+
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/line_color_second" />
+                android:background="@color/line_color_second"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -298,13 +331,13 @@
                 android:background="@color/main_LinearLayout_background"
                 android:gravity="center_vertical"
                 android:paddingLeft="12dp"
-                android:textColor="@color/text_color_first"
-                android:text="获奖资格证书" />
+                android:text="获奖资格证书："
+                android:textColor="@color/text_color_first"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/line_color_second" />
+                android:background="@color/line_color_second"/>
             <!--<TextView-->
             <!--android:layout_width="0dp"-->
             <!--android:layout_height="wrap_content"-->
@@ -321,12 +354,34 @@
             <!--android:layout_marginLeft="12dp"-->
             <!--android:layout_marginRight="12dp"-->
             <!--android:src="@mipmap/add_photo" />-->
+            <LinearLayout
+                android:id="@+id/award_img_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_7.5dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="visible">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/imgselect"/>
+
+                <TextView
+                    android:id="@+id/award_text"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="最多添加3张"/>
+            </LinearLayout>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/detail_award_winning"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:visibility="visible" />
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tv_commit"
@@ -340,7 +395,7 @@
                 android:gravity="center"
                 android:text="提交"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
         </LinearLayout>
 

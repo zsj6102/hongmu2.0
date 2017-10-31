@@ -23,6 +23,7 @@ import com.colpencil.redwood.bean.result.CommonResult;
 import com.colpencil.redwood.configs.Constants;
 import com.colpencil.redwood.configs.StringConfig;
 import com.colpencil.redwood.dao.DaoUtils;
+import com.colpencil.redwood.function.utils.ListUtils;
 import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
 import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.home.SearchPostsPresenter;
@@ -49,6 +50,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+
+import static com.colpencil.redwood.view.activity.HomeActivity.result;
 
 /**
  * @author 陈宝
@@ -83,7 +86,8 @@ public class PostsResultActivity extends ColpencilActivity implements ISearchPos
     private UMImage image;
     private PopupWindow popshare;
     private String shareUrl;
-
+    @Bind(R.id.refreshLayout2)
+    BGARefreshLayout refreshLayout2;
     @Override
     protected void initViews(View view) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
@@ -94,6 +98,11 @@ public class PostsResultActivity extends ColpencilActivity implements ISearchPos
         action = new ShareAction(this);
         editText.setHint("搜索帖子");
         refreshLayout.setDelegate(this);
+        refreshLayout2.setDelegate(this);
+        refreshLayout2.setRefreshViewHolder(new BGANormalRefreshViewHolder(this, true));
+        refreshLayout2.setSnackStyle(findViewById(android.R.id.content),
+                getResources().getColor(R.color.material_drawer_primary),
+                getResources().getColor(R.color.white));
         refreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(this, true));
         refreshLayout.setSnackStyle(findViewById(android.R.id.content),
                 getResources().getColor(R.color.material_drawer_primary),
@@ -103,6 +112,7 @@ public class PostsResultActivity extends ColpencilActivity implements ISearchPos
         keyword = getIntent().getStringExtra("keyword");
         editText.setText(keyword);
         presenter.loadPosts(keyword, page, pageSize);
+        showLoading(Constants.progressName);
         adapter.setListener(new CircleLeftAdapter.ComOnClickListener() {
             @Override
             public void itemClicks(int position) {
@@ -147,10 +157,19 @@ public class PostsResultActivity extends ColpencilActivity implements ISearchPos
 
     @Override
     public void refresh(List<CommentVo> commentVos) {
+
         isLoadMore(commentVos);
         list.clear();
         list.addAll(commentVos);
         adapter.notifyDataSetChanged();
+        if (ListUtils.listIsNullOrEmpty(commentVos)) {
+            refreshLayout2.setVisibility(View.VISIBLE);
+            refreshLayout.setVisibility(View.GONE);
+        } else {
+            refreshLayout2.setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.VISIBLE);
+        }
+        hideLoading();
     }
 
     @Override
@@ -161,7 +180,9 @@ public class PostsResultActivity extends ColpencilActivity implements ISearchPos
     }
 
     @Override
-    public void loadError() {
+    public void loadError(String msg) {
+        hideLoading();
+        ToastTools.showShort(this,msg);
     }
 
     @Override
@@ -223,13 +244,18 @@ public class PostsResultActivity extends ColpencilActivity implements ISearchPos
         } else {
             isRefresh = true;
         }
+
+        refreshLayout2.endRefreshing(0);
         refreshLayout.endRefreshing(0);
         refreshLayout.endLoadingMore();
+        refreshLayout2.endLoadingMore();
     }
 
     private void loadData() {
         page = 1;
         keyword = editText.getText().toString();
+
+        showLoading(Constants.progressName);
         presenter.loadPosts(keyword, page, pageSize);
         //保存搜索结果
         new Thread(new Runnable() {

@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="84dp"
         android:gravity="center"
-        android:text="0592-888999"
+        android:lines="4"
+        android:text="我大号的骄傲发额迪欧挖潜我饿啊哦放假哦天气而大飞哥爱我染发"
         android:textColor="@color/text_color_first"
         android:textSize="@dimen/text_size_16sp" />
 

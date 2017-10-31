@@ -48,7 +48,9 @@ import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscriber;
 
-
+/**
+ * 订单界面
+ */
 @ActivityFragmentInject(contentViewId = R.layout.activity_order)
 public class OrderActivity extends ColpencilActivity implements IOrderView {
 
@@ -72,6 +74,9 @@ public class OrderActivity extends ColpencilActivity implements IOrderView {
     private OrderItemAdapter adapter;
     private List<PayType> pays = new ArrayList<>();
     Map<String, String> params = new HashMap<>();
+    private  int goodsid;
+    private int productid;
+    private int num;
     @Override
     protected void initViews(View view) {
         initParams();
@@ -81,18 +86,29 @@ public class OrderActivity extends ColpencilActivity implements IOrderView {
 
     private void initParams() {
         mTypeFlag = getIntent().getStringExtra("key");
+        tv_main_title.setText(mTypeFlag);
+        params.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+        params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
         goFrom = getIntent().getStringExtra("goFrom");
-        cart_ids = getIntent().getStringExtra("cartIds");
+        if(goFrom.equals("ShoppingCartActivity")){//转订单购买
+            cart_ids = getIntent().getStringExtra("cartIds");
+            params.put("cart_ids", cart_ids);
+            presenter.getOrderPay(params);
+        }else{//直接购买
+            goodsid = getIntent().getExtras().getInt("goods_id");
+            productid = getIntent().getExtras().getInt("product_id");
+            num = getIntent().getExtras().getInt("num");
+            params.put("goods_id", goodsid+"");
+            params.put("product_id",productid+"");
+            params.put("num",num+"");
+            presenter.getDirectOrder(params);
+        }
+
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
             StatusBarUtil.setColor(this, getResources().getColor(R.color.line_color_thirst));
         }
-        tv_main_title.setText(mTypeFlag);
 
-        params.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
-        params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
-        params.put("cart_ids", cart_ids);
 
-        presenter.getOrderPay(params);
     }
 
     private void initHolder() {
@@ -327,6 +343,7 @@ public class OrderActivity extends ColpencilActivity implements IOrderView {
             intent.putExtra("payinfo",payinfo);
             intent.putExtra("goFrom","OrderActivity");
             startActivity(intent);
+            finish();
         }
     }
     private void initBus() {
@@ -361,9 +378,9 @@ public class OrderActivity extends ColpencilActivity implements IOrderView {
                     }
                     bt_buyPrice.setText("¥" + price + "");
                 }
-                if(msg.getType() == 57){
-                    presenter.getOrderPay(params);
-                }
+//                if(msg.getType() == 57){
+//                    presenter.getOrderPay(params);
+//                }
             }
         };
         observable.subscribe(subscriber);
@@ -423,6 +440,12 @@ public class OrderActivity extends ColpencilActivity implements IOrderView {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    @Override
     public void loadError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
@@ -472,7 +495,7 @@ public class OrderActivity extends ColpencilActivity implements IOrderView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //        RxBus.get().unregister("rxBusMsg", observable);
+        RxBus.get().unregister("rxBusMsg", observable);
         addressHolder.unbind();
     }
 }

@@ -63,6 +63,7 @@ import rx.Observable;
 import rx.Subscriber;
 
 /**
+ * 废弃
  * 描述：支付界面
  * 作者：曾 凤
  * 邮箱：20000263@qq.com
@@ -117,13 +118,13 @@ public class PaymentActivity extends ColpencilActivity implements IPaymentView {
         initParams();
         initContent();
         initBody();
-        initBus();
-        loadData();
+//        initBus();
+//        loadData();
     }
 
     private void initParams() {
-        mTypeFlag = getIntent().getStringExtra("key");
-        goFrom = getIntent().getStringExtra("goFrom");
+//        mTypeFlag = getIntent().getStringExtra("key");
+//        goFrom = getIntent().getStringExtra("goFrom");
 //        cart_ids = getIntent().getStringExtra("cartIds");
 //        Map<String,String> params = new HashMap<>();
 //        params.put("member_id",SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id")+"");
@@ -140,83 +141,83 @@ public class PaymentActivity extends ColpencilActivity implements IPaymentView {
     }
 
     private void initBody() {
-        View view = View.inflate(PaymentActivity.this, R.layout.activity_payment_body, null);
-        holder = new BodyHolder(view);
-        listView.addHeaderView(view);
-        listView.setAdapter(new NullAdapter(this, new ArrayList<String>(), R.layout.item_null));
+//        View view = View.inflate(PaymentActivity.this, R.layout.activity_payment_body, null);
+//        holder = new BodyHolder(view);
+//        listView.addHeaderView(view);
+//        listView.setAdapter(new NullAdapter(this, new ArrayList<String>(), R.layout.item_null));
     }
 
-    private void initBus() {
-        observable = RxBus.get().register("rxBusMsg", RxBusMsg.class);
-        subscriber = new Subscriber<RxBusMsg>() {
-            @Override
-            public void onCompleted() {
-            }
-
-            @Override
-            public void onError(Throwable e) {
-            }
-
-            @Override
-            public void onNext(RxBusMsg msg) {
-                if (msg.getType() == 41) {//更新选中的邮寄方式
-                    selectPostages = msg.getPosition();
-                    for (int i = 0; i < postagesList.size(); i++) {
-                        if (i == msg.getPosition()) {
-                            postagesList.get(i).setChooseState(true);
-                            postagePrice = postagesList.get(i).getPostagePrice();
-                        } else {
-                            postagesList.get(i).setChooseState(false);
-                        }
-                    }
-                    postagesAdapter.notifyDataSetChanged();
-                    bt_buyPrice.setText("¥" + FormatUtils.formatDouble(mKind.getGoodsPrice() + postagePrice - couponsPrice - voucherPrice));
-                } else if (msg.getType() == 42) {//更新选中的支付方式
-                    selectPay = msg.getPosition();
-                    for (int i = 0; i < payTypeList.size(); i++) {
-                        if (i == msg.getPosition()) {
-                            payTypeList.get(i).setChooseState(true);
-                        } else {
-                            payTypeList.get(i).setChooseState(false);
-                        }
-                    }
-                    payTypeAdapter.notifyDataSetChanged();
-                } else if (msg.getType() == 44) {//地址选择
-                    holder.rl_haveAdress.setVisibility(View.VISIBLE);
-                    holder.rl_noAdress.setVisibility(View.GONE);
-                    mAddress = new Gson().fromJson(msg.getMsg(), new TypeToken<Address>() {
-                    }.getType());
-                    holder.tv_recipient.setText(mAddress.getName());
-                    holder.tv_recipient_phone.setText(mAddress.getMobile());
-                    holder.tv_receiptent_address.setText(mAddress.getAddress());
-                } else if (msg.getType() == 45) {//支付宝支付成功
-                    showMsg("支付成功");
-                    sendBus();
-                    freshBus();
-                    intent();
-                } else if (msg.getType() == 46) {//支付宝支付失败
-                    showMsg("支付失败");
-                    sendBus();
-                    freshBus();
-                    intent();
-                } else if (msg.getType() == 47) {//微信支付成功
-                    showMsg("支付成功");
-                    sendBus();
-                    freshBus();
-                    intent();
-                } else if (msg.getType() == 48) {//微信支付失败
-                    showMsg("支付失败");
-                    sendBus();
-                    freshBus();
-                    intent();
-                } else if (msg.getType() == 49) {
-                    showMsg("微信支付取消");
-                    intent();
-                }
-            }
-        };
-        observable.subscribe(subscriber);
-    }
+//    private void initBus() {
+//        observable = RxBus.get().register("rxBusMsg", RxBusMsg.class);
+//        subscriber = new Subscriber<RxBusMsg>() {
+//            @Override
+//            public void onCompleted() {
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//            }
+//
+//            @Override
+//            public void onNext(RxBusMsg msg) {
+////                if (msg.getType() == 41) {//更新选中的邮寄方式
+//                    selectPostages = msg.getPosition();
+//                    for (int i = 0; i < postagesList.size(); i++) {
+//                        if (i == msg.getPosition()) {
+//                            postagesList.get(i).setChooseState(true);
+//                            postagePrice = postagesList.get(i).getPostagePrice();
+//                        } else {
+//                            postagesList.get(i).setChooseState(false);
+//                        }
+//                    }
+//                    postagesAdapter.notifyDataSetChanged();
+//                    bt_buyPrice.setText("¥" + FormatUtils.formatDouble(mKind.getGoodsPrice() + postagePrice - couponsPrice - voucherPrice));
+//                } else if (msg.getType() == 42) {//更新选中的支付方式
+//                    selectPay = msg.getPosition();
+//                    for (int i = 0; i < payTypeList.size(); i++) {
+//                        if (i == msg.getPosition()) {
+//                            payTypeList.get(i).setChooseState(true);
+//                        } else {
+//                            payTypeList.get(i).setChooseState(false);
+//                        }
+//                    }
+//                    payTypeAdapter.notifyDataSetChanged();
+//                } else if (msg.getType() == 44) {//地址选择
+//                    holder.rl_haveAdress.setVisibility(View.VISIBLE);
+//                    holder.rl_noAdress.setVisibility(View.GONE);
+//                    mAddress = new Gson().fromJson(msg.getMsg(), new TypeToken<Address>() {
+//                    }.getType());
+//                    holder.tv_recipient.setText(mAddress.getName());
+//                    holder.tv_recipient_phone.setText(mAddress.getMobile());
+//                    holder.tv_receiptent_address.setText(mAddress.getAddress());
+//                } else if (msg.getType() == 45) {//支付宝支付成功
+//                    showMsg("支付成功");
+//                    sendBus();
+//                    freshBus();
+//                    intent();
+//                } else if (msg.getType() == 46) {//支付宝支付失败
+//                    showMsg("支付失败");
+//                    sendBus();
+//                    freshBus();
+//                    intent();
+//                } else if (msg.getType() == 47) {//微信支付成功
+//                    showMsg("支付成功");
+//                    sendBus();
+//                    freshBus();
+//                    intent();
+//                } else if (msg.getType() == 48) {//微信支付失败
+//                    showMsg("支付失败");
+//                    sendBus();
+//                    freshBus();
+//                    intent();
+//                } else if (msg.getType() == 49) {
+//                    showMsg("微信支付取消");
+//                    intent();
+//                }
+//            }
+//        };
+//        observable.subscribe(subscriber);
+//    }
 
     @Override
     public ColpencilPresenter getPresenter() {
@@ -249,34 +250,34 @@ public class PaymentActivity extends ColpencilActivity implements IPaymentView {
 
     @Override
     public void payByWeChat(Map<String, String> map) {
-        hideLoading();
-        new WeChatPayForUtil(PaymentActivity.this, map);
+//        hideLoading();
+//        new WeChatPayForUtil(PaymentActivity.this, map);
     }
 
     @Override
     public void payByAlipay(String reStr) {
-        hideLoading();
-        LhjalipayUtils.getInstance(PaymentActivity.this).pay(reStr);
+//        hideLoading();
+//        LhjalipayUtils.getInstance(PaymentActivity.this).pay(reStr);
     }
 
     @Override
     public void payByUnion(String tn, String mode) {
-        hideLoading();
-        UPPayAssistEx.startPay(this, null, null, tn, mode);
+//        hideLoading();
+//        UPPayAssistEx.startPay(this, null, null, tn, mode);
     }
 
     @Override
     public void loadOrdersInfo(PayForReturn result) {
-        hideLoading();
-        if (result.getCode() == 1) {
-            cartIds = result.getData().getCart_ids();
-            presenter.loadCoupon(cartIds);
-            loadGoodInfor(result.getData().getGoodsItem(), result.getData().getOrderPrice(), result.getData().getAddress());
-            loadPostInfor(result.getData().getPostages());
-            loadPayTypeInfor(result.getData().getPays());
-        } else {
-            fail(result.getCode(), result.getMsg());
-        }
+//        hideLoading();
+//        if (result.getCode() == 1) {
+//            cartIds = result.getData().getCart_ids();
+//            presenter.loadCoupon(cartIds);
+//            loadGoodInfor(result.getData().getGoodsItem(), result.getData().getOrderPrice(), result.getData().getAddress());
+//            loadPostInfor(result.getData().getPostages());
+//            loadPayTypeInfor(result.getData().getPays());
+//        } else {
+//            fail(result.getCode(), result.getMsg());
+//        }
     }
 
     @Override
@@ -379,34 +380,34 @@ public class PaymentActivity extends ColpencilActivity implements IPaymentView {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Constants.REQUEST_LOGIN) {       //处理登录结果
-            if (resultCode == Constants.REQUEST_LOGIN) {
-                loadData();
-            } else {
-                finish();
-            }
-        } else {
-            if (data == null) {
-                return;
-            }
-            String str = data.getExtras().getString("pay_result");
-            if (str.equalsIgnoreCase("success")) {
-                ToastTools.showShort(this, "支付成功");
-                freshBus();
-            } else {
-                ToastTools.showShort(this, "支付失败");
-            }
-            intent();
-        }
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == Constants.REQUEST_LOGIN) {       //处理登录结果
+//            if (resultCode == Constants.REQUEST_LOGIN) {
+//                loadData();
+//            } else {
+//                finish();
+//            }
+//        } else {
+//            if (data == null) {
+//                return;
+//            }
+//            String str = data.getExtras().getString("pay_result");
+//            if (str.equalsIgnoreCase("success")) {
+//                ToastTools.showShort(this, "支付成功");
+//                freshBus();
+//            } else {
+//                ToastTools.showShort(this, "支付失败");
+//            }
+//            intent();
+//        }
     }
 
-    private void intent() {
-        Intent intent = new Intent(this, OrderCenterActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
+//    private void intent() {
+//        Intent intent = new Intent(this, OrderCenterActivity.class);
+//        startActivity(intent);
+//        finish();
+//    }
+//
     private void freshBus() {
         if (goFrom.equalsIgnoreCase("MyCustomFragment")) {
             RxBusMsg msg = new RxBusMsg();
@@ -424,7 +425,7 @@ public class PaymentActivity extends ColpencilActivity implements IPaymentView {
 
     @OnClick(R.id.sumbit_pay)
     void submitClick() {
-        sumbitApply();
+//        sumbitApply();
     }
 
     @OnClick(R.id.iv_back)

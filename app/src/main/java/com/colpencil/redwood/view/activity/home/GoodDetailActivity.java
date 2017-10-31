@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 
 import com.colpencil.redwood.R;
+import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.GoodBusMsg;
 import com.colpencil.redwood.bean.GoodInfo;
@@ -27,6 +28,7 @@ import com.colpencil.redwood.bean.Goodspec;
 import com.colpencil.redwood.bean.Product;
 import com.colpencil.redwood.bean.RxBusMsg;
 import com.colpencil.redwood.bean.result.CommonResult;
+import com.colpencil.redwood.bean.result.OrderPayInfo;
 import com.colpencil.redwood.configs.Constants;
 import com.colpencil.redwood.configs.StringConfig;
 import com.colpencil.redwood.function.config.UrlConfig;
@@ -35,11 +37,11 @@ import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
 import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.GoodDetailPresenter;
 import com.colpencil.redwood.view.activity.HomeActivity;
+
 import com.colpencil.redwood.view.activity.ShoppingCartActivitys.NewShopingCartActivity;
 import com.colpencil.redwood.view.activity.ShoppingCartActivitys.OrderActivity;
-import com.colpencil.redwood.view.activity.ShoppingCartActivitys.PaymentActivity;
-import com.colpencil.redwood.view.activity.ShoppingCartActivitys.ShoppingCartActivity;
 import com.colpencil.redwood.view.activity.login.LoginActivity;
+import com.colpencil.redwood.view.activity.mine.CommodityManageActivity;
 import com.colpencil.redwood.view.fragments.home.GoodLeftFragment;
 import com.colpencil.redwood.view.fragments.home.GoodMiddleFragment;
 import com.colpencil.redwood.view.fragments.home.GoodRightFragment;
@@ -103,14 +105,14 @@ public class GoodDetailActivity extends ColpencilActivity implements IGoodDetail
     private List<Goodspec> goodspecs = new ArrayList<>();
     private double type;
     private GoodInfo mResult;
-
+    private Integer storeid;
     @Override
     protected void initViews(View view) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
             StatusBarUtil.setColor(this, getResources().getColor(R.color.line_color_thirst));
         }
         this.view = view;
-        goodid = getIntent().getIntExtra("goodsId", 1);
+        goodid = getIntent().getExtras().getInt("goodsId");
         initvp();
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tv_good)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tv_detail)));
@@ -197,6 +199,24 @@ public class GoodDetailActivity extends ColpencilActivity implements IGoodDetail
         }
     }
 
+    @Override
+    public void loadNewOrder(OrderPayInfo result) {
+
+        if(result.getCode() == 0){
+            Intent intent = new Intent();
+            intent.setClass(this, OrderActivity.class);
+            intent.putExtra("key", "订单确定");
+            intent.putExtra("goFrom", "GoodDetailActivity");
+            intent.putExtra("product_id", productId);    //int类型
+            intent.putExtra("goods_id", goodid);     //int类型
+            intent.putExtra("num", goodnum);    //int类型
+            startActivity(intent);
+        }else{
+            ToastTools.showShort(this,result.getMessage());
+        }
+
+    }
+
     @OnClick(R.id.iv_share)
     void shareOnClick() {
         if (!TextUtils.isEmpty(shareUrl)) {
@@ -209,11 +229,32 @@ public class GoodDetailActivity extends ColpencilActivity implements IGoodDetail
 
     @OnClick(R.id.iv_service)
     void serviceClick() {
-        Intent intent = new Intent();
-        intent.setClass(this, MyWebViewActivity.class);
-        intent.putExtra("webviewurl", UrlConfig.SERVICE_URL);
-        intent.putExtra("type", "server");
-        startActivity(intent);
+        if(mResult!=null){
+            storeid = mResult.getStore_info().getStore_id();
+            if(storeid!=null){
+                if(storeid==0){
+                    Intent intent = new Intent();
+                    intent.setClass(this, MyWebViewActivity.class);
+                    intent.putExtra("webviewurl", UrlConfig.SERVICE_URL);
+                    intent.putExtra("type", "server");
+                    startActivity(intent);
+                }else{
+                    if(SharedPreferencesUtil.getInstance(this).getBoolean(StringConfig.ISLOGIN, false)){
+                        Intent intent = new Intent();
+                        intent.setClass(this, CommodityManageActivity.class);
+                        intent.putExtra("type","11");
+                        intent.putExtra("storeid",storeid);
+                        intent.putExtra("goodid",goodid);
+                        startActivity(intent);
+                    }else{
+                        type = 6;
+                        showDialog();
+                    }
+
+                }
+            }
+        }
+
     }
 
     @OnClick(R.id.iv_home)
@@ -381,14 +422,13 @@ public class GoodDetailActivity extends ColpencilActivity implements IGoodDetail
                 showDialog("来晚啦，没货啦！", "知道了", "", View.GONE);
                 return;
             } else {
-                Intent intent = new Intent();
-                intent.setClass(this, OrderActivity.class);
-                intent.putExtra("key", "订单确定");
-                intent.putExtra("goFrom", "GoodDetailActivity");
-                intent.putExtra("product_id", productId);    //int类型
-                intent.putExtra("goods_id", goodid);     //int类型
-                intent.putExtra("num", goodnum);    //int类型
-                startActivity(intent);
+                Map<String, String> params = new HashMap<>();
+                params.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+                params.put("goods_id",goodid+"");
+                params.put("product_id",productId+"");
+                params.put("num",goodnum+"");
+                presenter.getDirectOrder(params);
             }
         } else {
             type = 3;

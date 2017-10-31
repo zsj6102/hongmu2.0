@@ -1,93 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <!--<include-->
-        <!--android:id="@+id/myhead"-->
-        <!--layout="@layout/search_header" />-->
-
-    <!--<LinearLayout-->
-        <!--android:id="@+id/tab_layout_header"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="40dp"-->
-        <!--android:layout_below="@id/myhead"-->
-        <!--android:orientation="horizontal">-->
-
-        <!--&lt;!&ndash;<HorizontalScrollView&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_width="0dp"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_marginLeft="15dp"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:scrollbars="none">&ndash;&gt;-->
-
-            <!--&lt;!&ndash;<LinearLayout&ndash;&gt;-->
-                <!--&lt;!&ndash;android:id="@+id/ll_tablayout"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:orientation="horizontal">&ndash;&gt;-->
-
-                <!--&lt;!&ndash;<RelativeLayout&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:id="@+id/ll_recommends"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_height="match_parent">&ndash;&gt;-->
-
-                    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:id="@+id/tv_commment"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:layout_centerInParent="true"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:layout_marginLeft="10dp"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:layout_marginRight="10dp"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:text="推荐"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:textColor="@color/main_red"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:textSize="15sp" />&ndash;&gt;-->
-
-                    <!--&lt;!&ndash;<View&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:layout_width="60dp"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:layout_height="2dp"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:layout_alignParentBottom="true"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:background="@color/main_red" />&ndash;&gt;-->
-
-                <!--&lt;!&ndash;</RelativeLayout>&ndash;&gt;-->
-
-            <!--&lt;!&ndash;</LinearLayout>&ndash;&gt;-->
-
-        <!--&lt;!&ndash;</HorizontalScrollView>&ndash;&gt;-->
-
-        <!--<View-->
-            <!--android:layout_width="@dimen/padding_0.5dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_marginBottom="@dimen/margin_5dp"-->
-            <!--android:layout_marginTop="@dimen/margin_5dp"-->
-            <!--android:background="@color/color_ecdad6" />-->
-
-        <!--<LinearLayout-->
-            <!--android:id="@+id/ll_iv"-->
-            <!--android:layout_width="@dimen/width_50dp"-->
-            <!--android:layout_height="@dimen/width_32dp"-->
-            <!--android:gravity="center">-->
-
-            <!--<ImageView-->
-                <!--android:id="@+id/tab_layout_header_addiv"-->
-                <!--android:layout_width="@dimen/width_20dp"-->
-                <!--android:layout_height="@dimen/width_20dp"-->
-                <!--android:src="@mipmap/home_add_icon" />-->
-        <!--</LinearLayout>-->
-    <!--</LinearLayout>-->
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/main_background"
+    >
 
     <com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tab_layout_header">
+        >
+
 
         <ListView
-            android:id="@+id/home_listview"
+            android:id="@+id/home_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none" />
+            android:scrollbars="none"/>
+
     </com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout>
 
     <ImageView
@@ -98,7 +28,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="159dp"
         android:layout_marginRight="15dp"
-        android:src="@mipmap/home_float_service" />
+        android:src="@mipmap/home_float_service"/>
 
     <ImageView
         android:id="@+id/totop_iv"
@@ -108,6 +38,6 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="100dp"
         android:layout_marginRight="15dp"
-        android:src="@mipmap/totop_icon" />
+        android:src="@mipmap/totop_icon"/>
 
 </RelativeLayout>

@@ -1,0 +1,230 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+    >
+
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/base_header"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/ll"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffffff"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:paddingBottom="2.0dip">
+
+                <LinearLayout
+                    android:id="@+id/ll_txteditor_style_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="80.0dip"
+                    android:background="@drawable/shape_fontoption_border"
+                    android:gravity="left"
+                    android:orientation="horizontal"
+                    android:padding="5.0dip"
+                    android:visibility="gone">
+
+                    <com.colpencil.redwood.function.MyCheckBox 
+                        android:id="@+id/mcb_font_option_border"
+                        style="@style/fontchange"
+                        app:checkedResId="@mipmap/font_border_selectedn"
+                        app:unCheckedResId="@mipmap/font_border"/>
+
+                    <com.colpencil.redwood.function.MyCheckBox
+                        android:id="@+id/mcb_font_option_inter"
+                        style="@style/fontchange"
+                        app:checkedResId="@mipmap/font_inter_selected"
+                        app:unCheckedResId="@mipmap/font_inter"/>
+
+                    <com.colpencil.redwood.function.MyCheckBox
+                        android:id="@+id/mcb_font_option_line"
+                        style="@style/fontchange"
+                        app:checkedResId="@mipmap/font_line_selected"
+                        app:unCheckedResId="@mipmap/font_line"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_font_option_a"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="40.0dip"
+                    android:background="@drawable/shape_fontoption_border"
+                    android:gravity="left"
+                    android:orientation="horizontal"
+                    android:padding="5.0dip"
+                    android:visibility="gone">
+
+                    <RadioGroup
+                        android:id="@+id/rg_font_option_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.colpencil.redwood.function.widgets.MyRadioButton
+                            android:id="@+id/mrb_font_option_add"
+                            style="@style/fontchange"
+                            app:checkedResId="@mipmap/font_add_selected"
+                            app:unCheckedResId="@mipmap/font_add"/>
+
+                        <com.colpencil.redwood.function.widgets.MyRadioButton
+                            android:id="@+id/mrb_font_option_normal"
+                            style="@style/fontchange"
+                            app:checkedResId="@mipmap/font_selected"
+                            app:unCheckedResId="@mipmap/font_unselected"/>
+
+                        <com.colpencil.redwood.function.widgets.MyRadioButton
+                            android:id="@+id/mrb_font_option_sub"
+                            style="@style/fontchange"
+                                app:checkedResId="@mipmap/font_sub_selected"
+                            app:unCheckedResId="@mipmap/font_sub"/>
+                    </RadioGroup>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_font_option_color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_fontoption_border"
+                    android:gravity="left"
+                    android:orientation="horizontal"
+                    android:padding="5.0dip"
+                    android:visibility="gone">
+
+                    <RadioGroup
+                        android:id="@+id/rg_font_option_color"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.colpencil.redwood.function.widgets.MyRadioButton 
+                            android:id="@+id/mrb_font_option_black"
+                            style="@style/fontcolor"
+                            app:checkedResId="@mipmap/font_color_black_selected"
+                            app:unCheckedResId="@mipmap/font_color_black"/>
+
+                        <com.colpencil.redwood.function.widgets.MyRadioButton
+                            android:id="@+id/mrb_font_option_gray"
+                            style="@style/fontcolor"
+                            app:checkedResId="@mipmap/font_color_gray_selected"
+                            app:unCheckedResId="@mipmap/font_color_gray"/>
+
+                        <com.colpencil.redwood.function.widgets.MyRadioButton
+                            android:id="@+id/mrb_font_option_white"
+                            style="@style/fontcolor"
+                            app:checkedResId="@mipmap/font_color_whete_selected"
+                            app:unCheckedResId="@mipmap/font_color_whete"/>
+
+                        <com.colpencil.redwood.function.widgets.MyRadioButton
+                            android:id="@+id/mrb_font_option_blackgray"
+                            style="@style/fontcolor"
+                            app:checkedResId="@mipmap/font_color_blackgray_selected"
+                            app:unCheckedResId="@mipmap/font_color_blackgray"/>
+
+                        <com.colpencil.redwood.function.widgets.MyRadioButton
+                            android:id="@+id/mrb_font_option_blue"
+                            style="@style/fontcolor"
+                            app:checkedResId="@mipmap/font_color_blue_selected"
+                            app:unCheckedResId="@mipmap/font_color_blue"/>
+
+                        <com.colpencil.redwood.function.widgets.MyRadioButton
+                            android:id="@+id/mrb_font_option_green"
+                            style="@style/fontcolor"
+                            app:checkedResId="@mipmap/font_color_green_selected"
+                            app:unCheckedResId="@mipmap/font_color_green"/>
+
+                        <com.colpencil.redwood.function.widgets.MyRadioButton
+                            android:id="@+id/mrb_font_option_red"
+                            style="@style/fontcolor"
+                            app:checkedResId="@mipmap/font_color_red_selected"
+                            app:unCheckedResId="@mipmap/font_color_red"/>
+
+                        <com.colpencil.redwood.function.widgets.MyRadioButton
+                            android:id="@+id/mrb_font_option_violet"
+                            style="@style/fontcolor"
+                            app:checkedResId="@mipmap/font_color_violet_selected"
+                            app:unCheckedResId="@mipmap/font_color_violet"/>
+
+                        <com.colpencil.redwood.function.widgets.MyRadioButton
+                            android:id="@+id/mrb_font_option_yellow"
+                            style="@style/fontcolor"
+                            app:checkedResId="@mipmap/font_color_yellow_selected"
+                            app:unCheckedResId="@mipmap/font_color_yellow"/>
+                    </RadioGroup>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1.0dip"
+                android:background="#11000000"/>
+
+            <LinearLayout
+                android:id="@+id/ll_font_option_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff1efef"
+                android:orientation="horizontal"
+                android:paddingBottom="10.0dip"
+                android:paddingTop="10.0dip">
+
+                <RadioGroup
+                    android:id="@+id/rg_font_option_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:orientation="horizontal">
+
+                    <com.colpencil.redwood.function.widgets.MyRadioButton
+                        android:id="@+id/iv_font_option_b"
+                        style="@style/fontoption"
+                        app:checkedResId="@mipmap/font_border_selectedn"
+                        app:unCheckedResId="@mipmap/font_border"/>
+
+                    <com.colpencil.redwood.function.widgets.MyRadioButton
+                        android:id="@+id/iv_font_option_color"
+                        style="@style/fontoption"
+                        app:checkedResId="@mipmap/font_color_selected"
+                        app:unCheckedResId="@mipmap/font_color"/>
+
+                    <com.colpencil.redwood.function.widgets.MyRadioButton
+                        android:id="@+id/iv_font_option_a"
+                        style="@style/fontoption"
+                        app:checkedResId="@mipmap/font_selected"
+                        app:unCheckedResId="@mipmap/font_unselected"/>
+
+                    <com.colpencil.redwood.function.widgets.MyRadioButton
+                        android:id="@+id/iv_font_option_picture"
+                        style="@style/fontoption"
+                        app:checkedResId="@mipmap/font_color_selected"
+                        app:unCheckedResId="@mipmap/font_color"/>
+                </RadioGroup>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <zsj.com.richlibrary.RichEditor
+            android:id="@+id/editor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/ll"
+            />
+
+    </RelativeLayout>
+</LinearLayout>

@@ -5,8 +5,8 @@ import com.colpencil.redwood.model.WeekShootModel;
 import com.colpencil.redwood.model.imples.IWeekShootModel;
 import com.colpencil.redwood.view.impl.IWeekShootView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
-
 import rx.Observer;
+
 
 /**
  * 作者：曾 凤
@@ -43,11 +43,39 @@ public class WeekShootPresenter extends ColpencilPresenter<IWeekShootView> {
                         mView.loadMore(result.getResult());
                     }
                 } else {
-                    mView.loadError();
+                    mView.loadError(result.getMsg());
                 }
             }
         };
         weekShootModel.sub(observer);
     }
 
+    public void getSearch(String keyword, final int pageNo, int pageSize){
+        weekShootModel.loadSearch(keyword,pageNo,pageSize);
+        Observer<WeekAuctionListResult> observer = new Observer<WeekAuctionListResult>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(WeekAuctionListResult result) {
+                if (result.getCode().equals("1")) {
+                    if (pageNo == 1) {
+                        mView.refresh(result.getResult());
+                    } else {
+                        mView.loadMore(result.getResult());
+                    }
+                } else {
+                    mView.loadError(result.getMsg());
+                }
+            }
+        };
+        weekShootModel.subSearch(observer);
+    }
 }

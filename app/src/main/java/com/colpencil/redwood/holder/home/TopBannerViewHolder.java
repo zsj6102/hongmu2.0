@@ -11,8 +11,10 @@ import com.colpencil.redwood.bean.BannerVo;
 import com.colpencil.redwood.function.tools.MyImageLoader;
 import com.colpencil.redwood.function.utils.ListUtils;
 import com.colpencil.redwood.function.widgets.list.Decomposers;
+import com.colpencil.redwood.view.activity.classification.CommoditySearchActivity;
 import com.colpencil.redwood.view.activity.home.GoodDetailActivity;
 import com.colpencil.redwood.view.activity.home.MyWebViewActivity;
+import com.colpencil.redwood.view.activity.home.ProductdetailsActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerClickListener;
@@ -60,11 +62,8 @@ public class TopBannerViewHolder extends Decomposers<List<BannerVo>> {
                     int height;
                     if((int)bannerVos.get(0).getImage_scale()!=0){
                         height  = (int) (width / bannerVos.get(0).getImage_scale());
-                    }else{
-                        height = width/2;
+                        banner.setLayoutParams(new LinearLayout.LayoutParams(width, height));
                     }
-
-                    banner.setLayoutParams(new LinearLayout.LayoutParams(width, height));
                 }
             });
         } else {
@@ -84,6 +83,15 @@ public class TopBannerViewHolder extends Decomposers<List<BannerVo>> {
                     intent.setClass(mContext, MyWebViewActivity.class);
                     intent.putExtra("webviewurl", vo.getHtmlurl());
                     intent.putExtra("type", "banner");
+                    mContext.startActivity(intent);
+                }else if("zhoupai".equals(vo.getType())){
+                    Intent intent = new Intent();
+                    intent.setClass(mContext, ProductdetailsActivity.class);
+                    intent.putExtra("goodsId",Integer.valueOf(vo.getGoodsId()));
+                    mContext.startActivity(intent);
+                }else if("cat".equals(vo.getType())){
+                    Intent intent = new Intent(mContext, CommoditySearchActivity.class);
+                    intent.putExtra("child_cat_id", Integer.valueOf(vo.getGoodsId()));
                     mContext.startActivity(intent);
                 }
             }

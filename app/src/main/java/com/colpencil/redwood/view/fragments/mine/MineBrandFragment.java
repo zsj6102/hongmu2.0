@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.colpencil.redwood.R;
+import com.colpencil.redwood.bean.RefreshMsg;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilFragment;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import rx.Observable;
+import rx.Subscriber;
 
 /**
  * 商家我的界面
@@ -33,6 +36,8 @@ public class MineBrandFragment extends ColpencilFragment {
     ViewPager vp;
 
     private MyPageAdapter madapter;
+
+
     private int type;
     public static MineBrandFragment newInstance(int type) {
         MineBrandFragment fragment = new MineBrandFragment();
@@ -120,4 +125,6 @@ public class MineBrandFragment extends ColpencilFragment {
             return titles.get(position);
         }
     }
+
+
 }

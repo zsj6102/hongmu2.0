@@ -20,3 +20,4 @@ public class MiddleItemAdapter extends BasicAdapterSuper<RecommendVo> {
         return new MiddleItemsViewHolder(position,mContext);
     }
 }
+

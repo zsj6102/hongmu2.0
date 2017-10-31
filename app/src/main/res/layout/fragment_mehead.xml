@@ -803,15 +803,15 @@
             android:paddingTop="21dp">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@mipmap/vip_member" />
+                android:src="@mipmap/chat" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:text="VIP会员"
+                android:text="聊天列表"
                 android:textColor="@color/text_color_first"
                 android:textSize="13sp" />
         </LinearLayout>

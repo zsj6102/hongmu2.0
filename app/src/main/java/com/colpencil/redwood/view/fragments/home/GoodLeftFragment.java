@@ -5,26 +5,39 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.colpencil.redwood.R;
+import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.GoodBusMsg;
 import com.colpencil.redwood.bean.GoodInfo;
 import com.colpencil.redwood.bean.Goodspec;
 import com.colpencil.redwood.bean.HomeGoodInfo;
+import com.colpencil.redwood.bean.Info.StoreDetail;
 import com.colpencil.redwood.bean.Product;
 import com.colpencil.redwood.bean.PromotionVo;
+import com.colpencil.redwood.bean.RxBusMsg;
 import com.colpencil.redwood.bean.result.AnnounceResult;
+import com.colpencil.redwood.bean.result.CareReturn;
+import com.colpencil.redwood.configs.Constants;
 import com.colpencil.redwood.configs.StringConfig;
+import com.colpencil.redwood.function.tools.ImageLoaderUtils;
 import com.colpencil.redwood.function.tools.MyImageLoader;
 import com.colpencil.redwood.function.utils.ListUtils;
+import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
 import com.colpencil.redwood.function.widgets.dialogs.PromoDialog;
-import com.colpencil.redwood.function.widgets.scroll.PageTwoWebView;
+import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.home.GoodLeftPresenter;
 import com.colpencil.redwood.view.activity.commons.GalleyActivity;
 import com.colpencil.redwood.view.activity.home.GoodDetailActivity;
+import com.colpencil.redwood.view.activity.login.LoginActivity;
+import com.colpencil.redwood.view.activity.mine.StoreHomeActivity;
 import com.colpencil.redwood.view.adapters.GoodTypeAdapter;
 import com.colpencil.redwood.view.adapters.PromotionAdapter;
 import com.colpencil.redwood.view.adapters.RecommendAdapter;
@@ -34,10 +47,10 @@ import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.Colpenci
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
 import com.property.colpencil.colpencilandroidlibrary.Function.Rx.RxBus;
+import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
+import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ToastTools;
 import com.property.colpencil.colpencilandroidlibrary.Ui.AdapterView.MosaicListView;
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
+import com.property.colpencil.colpencilandroidlibrary.Ui.SelectableRoundedImageView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerClickListener;
@@ -48,9 +61,12 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscriber;
+
+
 
 /**
  * @author 陈宝
@@ -59,8 +75,7 @@ import rx.Subscriber;
  * @date 2016/7/29
  */
 @ActivityFragmentInject(
-        contentViewId = R.layout.fragment_good_left
-)
+        contentViewId = R.layout.fragment_good_left)
 public class GoodLeftFragment extends ColpencilFragment implements IGoodLeftView {
 
     @Bind(R.id.good_banner)
@@ -83,8 +98,33 @@ public class GoodLeftFragment extends ColpencilFragment implements IGoodLeftView
     TextView tv_num;
     @Bind(R.id.good_type)
     RecyclerView re_type;
-    @Bind(R.id.webview)
-    PageTwoWebView webview;
+    @Bind(R.id.iv_head)
+    SelectableRoundedImageView ivHead;
+    @Bind(R.id.tv_name)
+    TextView tvName;
+    @Bind(R.id.iv_lv)
+    ImageView ivLv;
+    @Bind(R.id.tv_lv)
+    TextView tvLv;
+    @Bind(R.id.iv_store_type)
+    ImageView ivStoreType;
+    @Bind(R.id.tv_store_type)
+    TextView tvStoreType;
+    @Bind(R.id.tv_prize_count)
+    TextView tvPrizeCount;
+    @Bind(R.id.tv_fans_count)
+    TextView tvFansCount;
+    @Bind(R.id.unfocus_layout)
+    LinearLayout unfocusLayout;
+    @Bind(R.id.befocus_layout)
+    LinearLayout befocusLayout;
+    @Bind(R.id.tv_address)
+    TextView tvAddress;
+    @Bind(R.id.store_layout)
+    LinearLayout storeLayout;
+    private int store_id;
+    //    @Bind(R.id.webview)
+    //    PageTwoWebView webview;
 
     private int goodid;     //商品id
     private GoodLeftPresenter presenter;
@@ -99,8 +139,12 @@ public class GoodLeftFragment extends ColpencilFragment implements IGoodLeftView
     private PromoDialog dialog;
     private Observable<GoodBusMsg> observable;
     private Subscriber subscriber;
+    private Observable<RxBusMsg> rxObservable;
+    private Subscriber rxSubcriber;
     private Map<String, String> chooseSpec = new HashMap<>();     //选中的商品
     private GoodInfo goodInfo;
+    private StoreDetail storeDetail;
+    private int type;
 
     public static GoodLeftFragment getInstance(int goodid) {
         Bundle bundle = new Bundle();
@@ -153,16 +197,41 @@ public class GoodLeftFragment extends ColpencilFragment implements IGoodLeftView
         });
     }
 
-//    private void loadData() {
-//
-//    }
-@Override
-public void loadData() {
-    presenter.loadGoodInfo(goodid + "");
-            presenter.loadRecommend(8, 1, 3);
-            presenter.loadGoodDetail(goodid);
-}
+    //    private void loadData() {
+    //
+    //    }
+    @Override
+    public void loadData() {
+        presenter.loadGoodInfo(goodid + "");
+        presenter.loadRecommend(8, 1, 3);
+        presenter.loadGoodDetail(goodid);
+    }
+
     private void initBus() {
+        rxObservable = RxBus.get().register("rxBusMsg",RxBusMsg.class);
+        rxSubcriber = new Subscriber<RxBusMsg>(){
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(RxBusMsg rxBusMsg) {
+               if(rxBusMsg.getType()==510){
+                   unfocusLayout.setVisibility(View.GONE);
+                   befocusLayout.setVisibility(View.VISIBLE);
+               }else if(rxBusMsg.getType() == 511){
+                   unfocusLayout.setVisibility(View.VISIBLE);
+                   befocusLayout.setVisibility(View.GONE);
+               }
+            }
+        };
+        rxObservable.subscribe(rxSubcriber);
         observable = RxBus.get().register(StringConfig.GOODSBUS, GoodBusMsg.class);
         subscriber = new Subscriber<GoodBusMsg>() {
 
@@ -191,16 +260,16 @@ public void loadData() {
     }
 
     private void initWebView() {
-        WebSettings settings = webview.getSettings();
-        settings.setJavaScriptEnabled(true);
-        settings.setDomStorageEnabled(true);
-        webview.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return super.shouldOverrideUrlLoading(view, url);
-            }
-        });
+        //        WebSettings settings = webview.getSettings();
+        //        settings.setJavaScriptEnabled(true);
+        //        settings.setDomStorageEnabled(true);
+        //        webview.setWebViewClient(new WebViewClient() {
+        //            @Override
+        //            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        //                view.loadUrl(url);
+        //                return super.shouldOverrideUrlLoading(view, url);
+        //            }
+        //        });
     }
 
     @Override
@@ -219,6 +288,103 @@ public void loadData() {
         goodInfo = info;
         initBanner(info.getImglist());
         initGood(info);
+        storeDetail = info.getStore_info();
+        if(storeDetail!=null){
+            if(storeDetail.getStore_id()!=null){
+                store_id = storeDetail.getStore_id();
+            }
+
+            type = storeDetail.getStore_type();
+        }
+        if (storeDetail == null || store_id == 0) {
+            storeLayout.setVisibility(View.GONE);
+        } else {
+            storeLayout.setVisibility(View.VISIBLE);
+            tvName.setText(storeDetail.getStore_name());
+            ImageLoaderUtils.loadImage(getActivity(), storeDetail.getFace(), ivHead);
+            ImageLoaderUtils.loadImage(getActivity(), storeDetail.getMember_photo(), ivLv);
+            tvLv.setText(storeDetail.getLv_name());
+            ImageLoaderUtils.loadImage(getActivity(), storeDetail.getStore_type_path(), ivStoreType);
+            tvStoreType.setText(storeDetail.getStore_type_name());
+            tvAddress.setText(storeDetail.getStore_city());
+            tvPrizeCount.setText(storeDetail.getPrize_count() + "");
+            tvFansCount.setText(storeDetail.getStore_count() + "");
+            if (storeDetail.getIsfocus() == 1) {
+                unfocusLayout.setVisibility(View.VISIBLE);
+                befocusLayout.setVisibility(View.GONE);
+            } else {
+                unfocusLayout.setVisibility(View.GONE);
+                befocusLayout.setVisibility(View.VISIBLE);
+            }
+        }
+
+
+    }
+
+    @OnClick(R.id.store_layout)
+    void toStore() {
+        Intent intent = new Intent(getActivity(), StoreHomeActivity.class);
+        intent.putExtra("type", type);
+        intent.putExtra("store_id", store_id);
+        getActivity().startActivity(intent);
+    }
+
+    @OnClick(R.id.unfocus_layout)
+    void care() {
+        //关注
+        if (SharedPreferencesUtil.getInstance(getActivity()).getBoolean(StringConfig.ISLOGIN, false)) {
+            HashMap<String, String> params = new HashMap<String, String>();
+            params.put("fans_type", 5 + "");//关注
+            params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+            params.put("fans_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+            if (storeDetail.getMember_id() != null) {
+                params.put("concern_id", storeDetail.getMember_id() + "");
+                presenter.getCareReturn(params);
+            }
+        } else {
+            showLogin();
+        }
+
+    }
+
+    private void showLogin() {
+        final CommonDialog dialog = new CommonDialog(getActivity(), "你还没登录喔!", "去登录", "取消");
+        dialog.setListener(new DialogOnClickListener() {
+            @Override
+            public void sureOnClick() {
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                intent.putExtra(StringConfig.REQUEST_CODE, 100);
+                startActivityForResult(intent, Constants.REQUEST_LOGIN);
+                dialog.dismiss();
+            }
+
+            @Override
+            public void cancleOnClick() {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.REQUEST_LOGIN) {
+            presenter.loadGoodInfo(goodid + "");
+        }
+    }
+
+    @OnClick(R.id.befocus_layout)
+    void quitCare() {
+        //取消关注
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("fans_type", 6 + "");//关注
+        params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+        params.put("fans_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+        if (storeDetail.getMember_id() != null) {
+            params.put("concern_id", storeDetail.getMember_id() + "");
+            presenter.getUncareReturn(params);
+        }
     }
 
     @Override
@@ -237,15 +403,22 @@ public void loadData() {
 
     @Override
     public void loadDetail(AnnounceResult result) {
-        if (result.getCode().equals("1")) {
-            webview.loadUrl(result.getUrl());
-        }
+        //        if (result.getCode().equals("1")) {
+        //            webview.loadUrl(result.getUrl());
+        //        }
     }
 
     @Override
     public void loadRecommendError() {
         hideLoading();
         recommend_recycler.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RxBus.get().unregister("rxBusMsg",rxObservable);
+        RxBus.get().unregister(StringConfig.GOODSBUS,observable);
     }
 
     /**
@@ -281,7 +454,7 @@ public void loadData() {
         tv_price.setText("￥" + info.getSaleprice()); //促销价
         tv_list.setText("￥" + info.getCostprice()); //原价
         tv_list.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);    //添加下划线
-        tv_salenum.setText(String.format(getString(info.getGoodsales())));  //月销量
+        tv_salenum.setText( "月销量："+info.getGoodsales());  //月销量
         sAdapter.notifys(info.getGoodservice());
         gtAdapter.notifys(info.getGoodspec());
         pAdapter.notifys(info.getPromotions());
@@ -342,60 +515,100 @@ public void loadData() {
         RxBus.get().post(StringConfig.GOODSBUS, busMsg);
     }
 
-//    class HeaderViewHolder {
-//
-//        @Bind(R.id.good_banner)
-//        Banner banner;
-//        @Bind(R.id.good_left_goodname)
-//        TextView tv_goodname;
-//        @Bind(R.id.good_left_price)
-//        TextView tv_price;  //促销价
-//        @Bind(R.id.good_left_list)
-//        TextView tv_list;   //原价
-//        @Bind(R.id.good_introduce_recycler)
-//        RecyclerView reserver;//服务
-//        @Bind(R.id.good_recommend_recycler)
-//        RecyclerView recommend_recycler;    //商品推荐
-//        @Bind(R.id.good_left_salenum)
-//        TextView tv_salenum;
-//        @Bind(R.id.promotion_listview)
-//        MosaicListView plistView;   //促销方式
-//        @Bind(R.id.tv_good_num)
-//        TextView tv_num;
-//        @Bind(R.id.good_type)
-//        RecyclerView re_type;
-//
-//        public HeaderViewHolder(View view) {
-//            ButterKnife.bind(this, view);
-//        }
-//
-//        public void unbind() {
-//            ButterKnife.unbind(this);
-//        }
-//
-//        @OnClick(R.id.btn_reduce)
-//        void reduceOnClick() {
-//            int num = Integer.valueOf(tv_num.getText().toString());
-//            if (num <= 0) {
-//                return;
-//            }
-//            num--;
-//            tv_num.setText(num + "");
-//            GoodBusMsg busMsg = new GoodBusMsg();
-//            busMsg.setGoodsNum(num);
-//            busMsg.setType(StringConfig.CHANGENUM);
-//            RxBus.get().post(StringConfig.GOODSBUS, busMsg);
-//        }
-//
-//        @OnClick(R.id.btn_increase)
-//        void increaseOnClick() {
-//            int num = Integer.valueOf(tv_num.getText().toString());
-//            num++;
-//            tv_num.setText(num + "");
-//            GoodBusMsg busMsg = new GoodBusMsg();
-//            busMsg.setGoodsNum(num);
-//            busMsg.setType(StringConfig.CHANGENUM);
-//            RxBus.get().post(StringConfig.GOODSBUS, busMsg);
-//        }
-//    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+
+    @Override
+    public void care(CareReturn result) {
+        hideLoading();
+        ToastTools.showShort(getActivity(), result.getMessage());
+        if (storeDetail != null && result.getCode() == 0) {
+            unfocusLayout.setVisibility(View.GONE);
+            befocusLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void uncare(CareReturn result) {
+        hideLoading();
+        ToastTools.showShort(getActivity(), result.getMessage());
+        if (storeDetail != null && result.getCode() == 0) {
+            unfocusLayout.setVisibility(View.VISIBLE);
+            befocusLayout.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void loadFail(String msg) {
+        ToastTools.showShort(getActivity(), msg);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
+    //    class HeaderViewHolder {
+    //
+    //        @Bind(R.id.good_banner)
+    //        Banner banner;
+    //        @Bind(R.id.good_left_goodname)
+    //        TextView tv_goodname;
+    //        @Bind(R.id.good_left_price)
+    //        TextView tv_price;  //促销价
+    //        @Bind(R.id.good_left_list)
+    //        TextView tv_list;   //原价
+    //        @Bind(R.id.good_introduce_recycler)
+    //        RecyclerView reserver;//服务
+    //        @Bind(R.id.good_recommend_recycler)
+    //        RecyclerView recommend_recycler;    //商品推荐
+    //        @Bind(R.id.good_left_salenum)
+    //        TextView tv_salenum;
+    //        @Bind(R.id.promotion_listview)
+    //        MosaicListView plistView;   //促销方式
+    //        @Bind(R.id.tv_good_num)
+    //        TextView tv_num;
+    //        @Bind(R.id.good_type)
+    //        RecyclerView re_type;
+    //
+    //        public HeaderViewHolder(View view) {
+    //            ButterKnife.bind(this, view);
+    //        }
+    //
+    //        public void unbind() {
+    //            ButterKnife.unbind(this);
+    //        }
+    //
+    //        @OnClick(R.id.btn_reduce)
+    //        void reduceOnClick() {
+    //            int num = Integer.valueOf(tv_num.getText().toString());
+    //            if (num <= 0) {
+    //                return;
+    //            }
+    //            num--;
+    //            tv_num.setText(num + "");
+    //            GoodBusMsg busMsg = new GoodBusMsg();
+    //            busMsg.setGoodsNum(num);
+    //            busMsg.setType(StringConfig.CHANGENUM);
+    //            RxBus.get().post(StringConfig.GOODSBUS, busMsg);
+    //        }
+    //
+    //        @OnClick(R.id.btn_increase)
+    //        void increaseOnClick() {
+    //            int num = Integer.valueOf(tv_num.getText().toString());
+    //            num++;
+    //            tv_num.setText(num + "");
+    //            GoodBusMsg busMsg = new GoodBusMsg();
+    //            busMsg.setGoodsNum(num);
+    //            busMsg.setType(StringConfig.CHANGENUM);
+    //            RxBus.get().post(StringConfig.GOODSBUS, busMsg);
+    //        }
+    //    }
 }

@@ -148,6 +148,7 @@ public class GridAdapter extends BaseAdapter {
                 }else if(code.equals(StringConfig.MODULE_SUPAI)){ //速拍商区
                     Intent intent = new Intent();
                     intent.setClass(context, SpeedShotActivity.class);
+                    intent.putExtra("goFrom","gridAdapter");
                     context.startActivity(intent);
                 }else if(code.equals(StringConfig.MODULE_MINSHI)){ //名师名匠
                     Intent intent = new Intent();

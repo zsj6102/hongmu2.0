@@ -25,8 +25,10 @@ import com.colpencil.redwood.function.utils.ListUtils;
 import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
 import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.CustomActionPresenter;
+import com.colpencil.redwood.view.activity.classification.CommoditySearchActivity;
 import com.colpencil.redwood.view.activity.home.GoodDetailActivity;
 import com.colpencil.redwood.view.activity.home.MyWebViewActivity;
+import com.colpencil.redwood.view.activity.home.ProductdetailsActivity;
 import com.colpencil.redwood.view.activity.login.LoginActivity;
 import com.colpencil.redwood.view.activity.mine.MyCustomActivity;
 import com.colpencil.redwood.view.adapters.ImageSelectAdapter;
@@ -126,10 +128,19 @@ public class CustomActionActivity extends ColpencilActivity
                         Intent intent = new Intent(CustomActionActivity.this, GoodDetailActivity.class);
                         intent.putExtra("goodsId", vo.getGoodsId());
                         startActivity(intent);
-                    } else {    //这个是html
+                    } else if("link".equals(vo.getType())) {    //这个是html
                         Intent intent = new Intent(CustomActionActivity.this, MyWebViewActivity.class);
                         intent.putExtra("type", "banner");
                         intent.putExtra("webviewurl", vo.getHtmlurl());
+                        startActivity(intent);
+                    }else if("zhoupai".equals(vo.getType())){
+                        Intent intent = new Intent();
+                        intent.setClass(CustomActionActivity.this, ProductdetailsActivity.class);
+                        intent.putExtra("goodsId",Integer.valueOf(vo.getGoodsId()));
+                        startActivity(intent);
+                    }else if("cat".equals(vo.getType())){
+                        Intent intent = new Intent(CustomActionActivity.this, CommoditySearchActivity.class);
+                        intent.putExtra("child_cat_id", Integer.valueOf(vo.getGoodsId()));
                         startActivity(intent);
                     }
                 }
@@ -355,6 +366,7 @@ public class CustomActionActivity extends ColpencilActivity
                 Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);
                 intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, (ArrayList<ImageItem>) adapter.getImages());
                 intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
+                intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
                 startActivityForResult(intentPreview, REQUEST_CODE_PREVIEW);
                 break;
         }

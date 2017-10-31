@@ -18,6 +18,7 @@
     <string name="write_comment">写评论...</string>
     <string name="cyclopedia_detail_title">百科详情</string>
 
+    <string name="prb_default_symbolic_string">$</string>
     <string name="applyCustom">申请定制</string>
     <string name="sumbitCustomApply">提交申请定制</string>
     <string name="customActivityTitle">官方推荐定制</string>

@@ -2,6 +2,7 @@ package com.colpencil.redwood.present.home;
 
 import android.util.Log;
 
+import com.colpencil.redwood.bean.ApplyStatusReturn;
 import com.colpencil.redwood.bean.ListResult;
 import com.colpencil.redwood.bean.NewsInfoVo;
 import com.colpencil.redwood.model.NewsListModel;
@@ -9,7 +10,10 @@ import com.colpencil.redwood.model.imples.INewsListModel;
 import com.colpencil.redwood.view.impl.INewsListView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 
+import java.util.HashMap;
+
 import rx.Observer;
+import rx.Subscriber;
 
 /**
  * @author 陈宝
@@ -61,4 +65,30 @@ public class NewsListPresenter extends ColpencilPresenter<INewsListView> {
         model.sub(observer);
     }
 
+    public void getApplyStatus(HashMap<String,String> params){
+        model.applyStatus(params);
+        Subscriber<ApplyStatusReturn> subscriber = new Subscriber<ApplyStatusReturn>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if(mView!=null){
+                    mView.getStatusError(e.getMessage());
+                }
+
+            }
+
+            @Override
+            public void onNext(ApplyStatusReturn applyStatusReturn) {
+                if(mView!=null){
+                    mView.getStatusSucess(applyStatusReturn);
+                }
+
+            }
+        };
+        model.subStauts(subscriber);
+    }
 }

@@ -2,9 +2,7 @@ package com.colpencil.redwood.base;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,16 +22,18 @@ import com.jph.takephoto.model.TakePhotoOptions;
 import com.jph.takephoto.permission.InvokeListener;
 import com.jph.takephoto.permission.PermissionManager;
 import com.jph.takephoto.permission.TakePhotoInvocationHandler;
+import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilActivity;
 
-import java.io.File;
 
 
 public abstract class PhotoBaseActivity extends ColpencilActivity implements TakePhoto.TakeResultListener, InvokeListener {
 
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
-
+    public static final int REQUEST_CODE_SELECT = 100;
+    public static final int REQUEST_CODE_PREVIEW = 101;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getTakePhoto().onCreate(savedInstanceState);
@@ -93,16 +93,16 @@ public abstract class PhotoBaseActivity extends ColpencilActivity implements Tak
     /**
      * 相册选择相关
      *
-     * @param isCrop
-     * @param limit
+//     * @param isCrop
+//     * @param limit
      */
-    public void openSelect(final boolean isCrop, final int limit) {
-        File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
-        if (!file.getParentFile().exists()) file.getParentFile().mkdirs();
-        final Uri imageUri = Uri.fromFile(file);
-
-        configCompress(takePhoto);
-        configTakePhotoOption(takePhoto);
+    public void openSelect( ) {
+//        File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
+//        if (!file.getParentFile().exists()) file.getParentFile().mkdirs();
+//        final Uri imageUri = Uri.fromFile(file);
+//
+//        configCompress(takePhoto);
+//        configTakePhotoOption(takePhoto);
         View view = getLayoutInflater().inflate(R.layout.photo_choose_dialog,
                 null);
         final Dialog dialog = new Dialog(this, R.style.transparentFrameWindowStyle);
@@ -128,27 +128,18 @@ public abstract class PhotoBaseActivity extends ColpencilActivity implements Tak
         btn_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (limit == 1) {
-                    if (isCrop) {
-                        takePhoto.onPickFromGalleryWithCrop(imageUri, getCropOptions());
-                    } else {
-                        takePhoto.onPickFromGallery();
-                    }
-
-                } else {
-                    takePhoto.onPickMultiple(limit);
-                }
-                dialog.dismiss();
+                ImagePicker.getInstance().setSelectLimit(1);
+                Intent intent = new Intent(PhotoBaseActivity.this, ImageGridActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_SELECT);
             }
         });
         btn_carmer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isCrop) {
-                    takePhoto.onPickFromCaptureWithCrop(imageUri, getCropOptions());
-                } else {
-                    takePhoto.onPickFromCapture(imageUri);
-                }
+                ImagePicker.getInstance().setSelectLimit(1);
+                Intent intent = new Intent(PhotoBaseActivity.this, ImageGridActivity.class);
+                intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
+                startActivityForResult(intent, REQUEST_CODE_SELECT);
                 dialog.dismiss();
             }
         });

@@ -1,5 +1,6 @@
 package com.colpencil.redwood.view.fragments.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import com.colpencil.redwood.bean.Info.StoreDetail;
 import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.bean.result.GoodsTypeResult;
 import com.colpencil.redwood.present.home.AllAuctionPresent;
+import com.colpencil.redwood.view.activity.home.SearchActivity;
 import com.colpencil.redwood.view.impl.AllAuctionView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilFragment;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 @ActivityFragmentInject(
         contentViewId = R.layout.fragment_new_product
@@ -60,7 +63,13 @@ public class AllCardWallFragment  extends ColpencilFragment implements AllAuctio
        hideLoading();
     }
 
+    @OnClick(R.id.iv_add)
+    void search() {
+        Intent intent = new Intent(getActivity(), SearchActivity.class);
+        intent.putExtra("from", "AllAuctionCard");
+        getActivity().startActivity(intent);
 
+    }
 
     @Override
     public void getGoodsType(GoodsTypeResult goodsTypeResult) {

@@ -20,5 +20,5 @@ public interface ILoginView extends ColpencilBaseView{
 //    /**
 //     * 登录失败
 //     */
-//    void  loginFail(LoginBean loginBean);
+    void  loginFail(String msg);
 }

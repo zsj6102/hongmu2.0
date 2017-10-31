@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/color_fffbfa"
+              android:orientation="vertical">
+    <View
+        android:id="@+id/line_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/padding_10dp"
+        android:background="@color/main_background"
+        android:visibility="gone"/>
+
+    <!--<com.youth.banner.Banner-->
+    <!--android:id="@+id/recom_banner"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="160dp"-->
+    <!--app:is_auto_play="false"/>-->
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"/>
+
+    <com.property.colpencil.colpencilandroidlibrary.Ui.AdapterView.MosaicGridView
+         android:visibility="gone"
+        android:id="@+id/home_good_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_background"
+        android:numColumns="2"
+        android:paddingLeft="7.5dp"
+        android:paddingRight="7.5dp"/>
+
+</LinearLayout>

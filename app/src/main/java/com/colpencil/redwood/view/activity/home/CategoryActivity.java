@@ -64,7 +64,7 @@ public class CategoryActivity extends ColpencilActivity implements ICategoryView
     private CategoryPresenter presenter;
     private List<String> stringList = new ArrayList<>();
     private List<String> mine = new ArrayList<>();
-
+    private String from;
     @Override
     protected void initViews(View view) {
         tv_title.setText("添加分类");
@@ -75,8 +75,15 @@ public class CategoryActivity extends ColpencilActivity implements ICategoryView
         listView.setAdapter(new NullAdapter(this, new ArrayList<String>(), R.layout.item_null));
         initHeader();
         showLoading("");
-        presenter.loadMyGoodsTag();
-        presenter.loadAllGoodsTag();
+        from = getIntent().getStringExtra("from");
+        if(from.equals("HomeGoodsFragment")){
+            presenter.loadMyGoodsTag();
+            presenter.loadAllGoodsTag();
+        }else{
+            presenter.loadAllTag();
+            presenter.loadMyTag();
+        }
+
     }
 
     private void initHeader() {
@@ -134,7 +141,12 @@ public class CategoryActivity extends ColpencilActivity implements ICategoryView
             if (stringList.size() <= 0) {
                 ToastTools.showShort(this, "至少选择一个分类");
             } else {
-                presenter.addMyTag(4, stringList);
+                if(from.equals("HomeGoodsFragment")){
+                    presenter.addMyTag(4, stringList);
+                }else{
+                    presenter.addToServer(2,stringList);
+                }
+
             }
         } else {
             showDialog();

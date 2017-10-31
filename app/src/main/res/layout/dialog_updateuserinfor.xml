@@ -23,12 +23,13 @@
         android:background="@null"
         android:paddingBottom="15dp"
         android:hint="提示语"
-        android:maxLines="1"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:textSize="@dimen/main_text_size"
         android:singleLine="false"
+        android:inputType="textMultiLine"
         android:textCursorDrawable="@null"
+        android:gravity="left|center_vertical"
         android:textColor="@color/text_color_thirst"
         android:textColorHint="@color/text_color_thirst" />
 

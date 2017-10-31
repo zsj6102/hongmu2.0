@@ -3,7 +3,9 @@ package com.colpencil.redwood.present.cyclopedia;
 import com.colpencil.redwood.bean.CyclopediaContent;
 import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.GoodBusMsg;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.bean.result.AnnounceResult;
+import com.colpencil.redwood.bean.result.CommonResult;
 import com.colpencil.redwood.bean.result.PCommentResult;
 import com.colpencil.redwood.configs.StringConfig;
 import com.colpencil.redwood.model.CycloDetailModel;
@@ -11,6 +13,9 @@ import com.colpencil.redwood.model.imples.ICycloDetailModel;
 import com.colpencil.redwood.view.impl.ICycloDetailView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Rx.RxBus;
+
+
+import java.util.Map;
 
 import rx.Observer;
 
@@ -182,7 +187,7 @@ public class CycloDetailPresenter extends ColpencilPresenter<ICycloDetailView> {
      */
     public void loadShareUrl(int ote_id, String article_id) {
         model.loadShare(ote_id, article_id);
-        Observer<EntityResult<String>> observer = new Observer<EntityResult<String>>() {
+        Observer<CommonResult> observer = new Observer<CommonResult>() {
             @Override
             public void onCompleted() {
 
@@ -194,7 +199,7 @@ public class CycloDetailPresenter extends ColpencilPresenter<ICycloDetailView> {
             }
 
             @Override
-            public void onNext(EntityResult<String> result) {
+            public void onNext(CommonResult result) {
                 mView.shareResult(result);
             }
         };
@@ -302,4 +307,27 @@ public class CycloDetailPresenter extends ColpencilPresenter<ICycloDetailView> {
         };
         model.subContent(observer);
     }
+    public void getLikeResult(Map<String,String> map){
+        model.addLike(map);
+        Observer<ResultInfo<String>> observer = new Observer<ResultInfo<String>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResultInfo<String> resultInfo) {
+                if(mView!=null && resultInfo!=null){
+                    mView.addLike(resultInfo);
+                }
+            }
+        };
+        model.subLikeCom(observer);
+    }
+
 }

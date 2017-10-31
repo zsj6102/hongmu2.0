@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:id="@+id/item_minepost"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,72 +15,77 @@
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/padding_10dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_10dp"
+            android:text="红木家具上档次"
             android:textColor="@color/main_brown"
             android:textSize="18sp"
-            android:text="红木家具上档次"
             />
+
         <TextView
 
             android:id="@+id/tv_content"
-            android:layout_marginTop="@dimen/margin_5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="@dimen/margin_5dp"
             android:lineSpacingExtra="3dp"
             android:text="为什么越来越多的人喜欢红木家具呢！中国红木协会经过20年的调研，惊奇的发现：家中使用了红木家具后，"
-            android:textSize="15dp"
             android:textColor="@color/main_brown"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:textSize="15dp"/>
 
     </LinearLayout>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/minepost_recycler"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="10dp"
+
+    <com.property.colpencil.colpencilandroidlibrary.Ui.AdapterView.MosaicGridView
+        android:id="@+id/circle_left_item_gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
+        android:numColumns="3"
+        android:paddingLeft="7.5dp"
+        android:paddingRight="7.5dp"/>
+
     <TextView
         android:id="@+id/tv_timedif"
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/padding_10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_15dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:layout_marginBottom="@dimen/margin_15dp"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_10dp"
+        android:text="5小时前"
         android:textColor="@color/text_gray_color"
         android:textSize="14sp"
-        android:text="5小时前"
         />
+
     <View
         android:layout_width="match_parent"
+        android:layout_height="0.5dp"
         android:layout_marginLeft="@dimen/padding_10dp"
         android:layout_marginRight="@dimen/padding_10dp"
-        android:layout_height="0.5dp"
-        android:background="@color/line_color_first" />
+        android:background="@color/line_color_first"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <LinearLayout
             android:id="@+id/search_header_ll"
             android:layout_width="@dimen/width_0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginBottom="@dimen/padding_10dp"
             android:layout_marginLeft="@dimen/padding_10dp"
             android:layout_marginRight="@dimen/padding_10dp"
             android:layout_marginTop="@dimen/padding_10dp"
+            android:layout_weight="1"
             android:background="@drawable/search_header_shape"
             android:orientation="horizontal">
 
-
-            <EditText
+            <TextView
                 android:id="@+id/search_header_hint"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/width_40dp"
@@ -91,7 +98,22 @@
                 android:textColor="@color/color_cfb2ac"
                 android:textSize="@dimen/text_size_14sp" />
 
+            <!--<EditText-->
+                <!--android:id="@+id/search_header_hint"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/width_40dp"-->
+                <!--android:layout_marginLeft="@dimen/padding_10dp"-->
+                <!--android:background="@null"-->
+                <!--android:gravity="left|center_vertical"-->
+                <!--android:hint="点击评论一下"-->
+                <!--android:imeOptions="actionSearch"-->
+                <!--android:singleLine="true"-->
+                <!--android:textColor="@color/color_cfb2ac"-->
+                <!--android:textSize="@dimen/text_size_14sp"/>-->
+
+
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="@dimen/width_0dp"
             android:layout_height="match_parent"
@@ -100,6 +122,7 @@
             android:layout_marginTop="@dimen/padding_10dp"
             android:layout_weight="1"
             android:orientation="horizontal">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -110,57 +133,67 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
+
                     <ImageView
-                        android:layout_gravity="center"
+                        android:id="@+id/iv_like"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:src="@mipmap/iv_unlike_icon"/>
+
                     <TextView
                         android:id="@+id/tv_like_num"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
                         android:text="30"/>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:orientation="horizontal">
+
                     <ImageView
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:src="@mipmap/detail_comment_icon"/>
+
                     <TextView
                         android:id="@+id/tv_comment_count"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
                         android:text="30"/>
                 </LinearLayout>
+
                 <LinearLayout
+                    android:id="@+id/share_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:orientation="horizontal">
+
                     <ImageView
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:src="@mipmap/detail_share_icon"/>
+
                     <TextView
                         android:id="@+id/tv_share_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="2dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:text="30"/>
                 </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 </LinearLayout>

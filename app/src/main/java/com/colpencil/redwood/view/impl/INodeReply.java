@@ -25,4 +25,6 @@ public interface INodeReply extends ColpencilBaseView{
 
 
     void addComment(AddResult result);
+
+    void addLike(ResultInfo<String> resultInfo);
 }

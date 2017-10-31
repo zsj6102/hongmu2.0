@@ -1,10 +1,15 @@
 package com.colpencil.redwood.model.imples;
 
 import com.colpencil.redwood.bean.EntityResult;
+import com.colpencil.redwood.bean.NodeReplyItem;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.bean.result.CommonResult;
 import com.colpencil.redwood.bean.result.PCommentResult;
 import com.colpencil.redwood.bean.result.PostsResult;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilModel;
+
+import java.util.List;
+import java.util.Map;
 
 import rx.Observer;
 
@@ -106,4 +111,12 @@ public interface ICommentDetailModel extends ColpencilModel {
     void loadLikeState(int ote_id);
 
     void subLikeState(Observer<EntityResult<String>> observer);
+
+
+    void addLike(Map<String,String> map);
+    void subLikeCom(Observer<ResultInfo<String>> observer);
+
+    void getNodeReply(Map<String,String>map);
+
+    void subReply(Observer<ResultInfo<List<NodeReplyItem>>> observer);
 }

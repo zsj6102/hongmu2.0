@@ -13,6 +13,7 @@ import com.colpencil.redwood.R;
 import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.ApplyStatusReturn;
 import com.colpencil.redwood.bean.RefreshMsg;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.present.mine.ApplyStatusPresenter;
 import com.colpencil.redwood.view.impl.IBuisnessView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilActivity;
@@ -79,6 +80,8 @@ public class BusinessActivity extends ColpencilActivity implements View.OnClickL
     LinearLayout layoutStore7;
     @Bind(R.id.layout_store8)
     LinearLayout layoutStore8;
+    @Bind(R.id.tv_mainco)
+    TextView tv_mainco;
 
     private Observable<RefreshMsg> observable;
     private ApplyStatusPresenter presenter;
@@ -86,9 +89,9 @@ public class BusinessActivity extends ColpencilActivity implements View.OnClickL
     private int store_id;
     private String storename;
     private int store_type;
-
     @Override
     protected void initViews(View view) {
+
         SharedPreferencesUtil.getInstance(App.getInstance()).setInt("session_type",2);
         tv_title.setText("商家合作");
         ll_person.setOnClickListener(this);
@@ -104,12 +107,13 @@ public class BusinessActivity extends ColpencilActivity implements View.OnClickL
         layoutStore6.setOnClickListener(this);
         layoutStore7.setOnClickListener(this);
         layoutStore8.setOnClickListener(this);
-        tvCorperate.setText("<" + "合作热线：13888999899" + ">");
+
         HashMap<String, String> params = new HashMap<>();
         //去获取申请状态
         params.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
         params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
         presenter.getApplyStatus(params);
+        presenter.getHotLine();
         showLoading("");
         initBus();
 
@@ -157,6 +161,12 @@ public class BusinessActivity extends ColpencilActivity implements View.OnClickL
     }
 
     @Override
+    public void getHotLine(ResultInfo<String> resultInfo) {
+        tvCorperate.setText("<" + "合作热线："+resultInfo.getData() + ">");
+        tv_mainco.setText("<" + "合作热线："+resultInfo.getData() + ">");
+    }
+
+    @Override
     public void onClick(View view) {
         Intent intent;
 
@@ -185,7 +195,7 @@ public class BusinessActivity extends ColpencilActivity implements View.OnClickL
             case R.id.layout_store1:
                 if (store_type == 1) {
                     intent = new Intent(this, PublishStoreActivity.class);
-                    intent.putExtra("type", store_type);
+                    intent.putExtra("type", store_type+"");
                     intent.putExtra("id", store_id + "");
                     startActivity(intent);
                 } else {
@@ -214,6 +224,16 @@ public class BusinessActivity extends ColpencilActivity implements View.OnClickL
                 intent.putExtra("type","4");//维权订单
                 startActivity(intent);
                 break;
+            case R.id.layout_store5:
+                //店铺设置
+                intent = new Intent(this,ModifyStoreActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.layout_store6:
+                intent = new Intent(this,MyFansAndLike.class);
+                intent.putExtra("type","4");//我的圈子
+                startActivity(intent);
+                break;
             case R.id.layout_store7:
                 intent = new Intent(this,CommodityManageActivity.class);
                 intent.putExtra("type","7");//聊天列表
@@ -221,7 +241,7 @@ public class BusinessActivity extends ColpencilActivity implements View.OnClickL
                 break;
             case R.id.layout_store8:
                 intent = new Intent(this,CommodityManageActivity.class);
-                intent.putExtra("type","8");//聊天列表
+                intent.putExtra("type","8");//评价管理
                 startActivity(intent);
                 break;
         }
@@ -239,6 +259,14 @@ public class BusinessActivity extends ColpencilActivity implements View.OnClickL
     public void getStatusError(String message) {
         Toast.makeText(this, "网络出错", Toast.LENGTH_SHORT).show();
         setApplyVisible();
+    }
+
+    @Override
+    public void onBackPressed() {
+        RefreshMsg msg = new RefreshMsg();
+        msg.setType(0);//个人 二期
+        RxBus.get().post("refreshmsg", msg);
+        super.onBackPressed();
     }
 
     @Override

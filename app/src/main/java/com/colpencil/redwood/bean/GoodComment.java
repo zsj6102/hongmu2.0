@@ -19,7 +19,43 @@ public class GoodComment implements Serializable {
     private String goodsname;
     private String specs;
     private List<String> imglist;
+    private List<String> imgsori_img;
     private String member_photo;
+    private int isfocus;
+    private int re_like_count;
+    private int  discuss_total;
+
+    public List<String> getImgsori_img() {
+        return imgsori_img;
+    }
+
+    public void setImgsori_img(List<String> imgsori_img) {
+        this.imgsori_img = imgsori_img;
+    }
+
+    public int getIsfocus() {
+        return isfocus;
+    }
+
+    public void setIsfocus(int isfocus) {
+        this.isfocus = isfocus;
+    }
+
+    public int getRe_like_count() {
+        return re_like_count;
+    }
+
+    public void setRe_like_count(int re_like_count) {
+        this.re_like_count = re_like_count;
+    }
+
+    public int getDiscuss_total() {
+        return discuss_total;
+    }
+
+    public void setDiscuss_total(int discuss_total) {
+        this.discuss_total = discuss_total;
+    }
 
     public String getContent() {
         return content;

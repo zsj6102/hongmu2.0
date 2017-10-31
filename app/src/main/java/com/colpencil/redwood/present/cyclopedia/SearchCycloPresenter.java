@@ -42,7 +42,7 @@ public class SearchCycloPresenter extends ColpencilPresenter<ISearchCycloView> {
                 if (result.getSuccess() == 0) {
                     mView.loadSuccess(result.getArticleListResult());
                 } else {
-                    mView.loadError();
+                    mView.loadError(result.getMessage());
                 }
             }
         };

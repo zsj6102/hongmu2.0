@@ -34,7 +34,7 @@ public class ItemBrowsingPostAdapter extends CommonAdapter<PostItem> {
             @Override
             public void onClick(View v) {
                 RefreshMsg msg = new RefreshMsg();
-                msg.setType(11);
+                msg.setType(10);//帖子
                 msg.setTitle(postItem.getOte_title());
                 msg.setContent(postItem.getOte_content());
                 msg.setId(postItem.getOte_id());

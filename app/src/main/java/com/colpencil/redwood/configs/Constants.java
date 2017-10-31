@@ -33,6 +33,7 @@ public class Constants {
 
     public static final int IMAGE_ITEM_ADD = -1;
 
+    public static final int THREE_ADD = -3;
     //请求登录
     public static final int REQUEST_LOGIN = 100;
 

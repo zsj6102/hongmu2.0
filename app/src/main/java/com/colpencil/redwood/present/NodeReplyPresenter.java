@@ -8,6 +8,7 @@ import com.colpencil.redwood.bean.NumReturn;
 import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.model.NodeReplyModel;
 import com.colpencil.redwood.model.imples.INodeReplyModel;
+import com.colpencil.redwood.view.activity.home.SearchStoreActivity;
 import com.colpencil.redwood.view.impl.INodeReply;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 
@@ -92,6 +93,29 @@ public class NodeReplyPresenter extends ColpencilPresenter<INodeReply> {
             }
         };
         model.subAddResult(observer);
+    }
+
+    public void getLikeResult(Map<String,String> map){
+        model.addLike(map);
+        Observer<ResultInfo<String>> observer = new Observer<ResultInfo<String>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResultInfo<String> resultInfo) {
+                 if(mView!=null && resultInfo!=null){
+                     mView.addLike(resultInfo);
+                 }
+            }
+        };
+        model.subLike(observer);
     }
 
 }

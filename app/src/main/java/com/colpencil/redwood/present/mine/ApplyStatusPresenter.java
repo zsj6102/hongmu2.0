@@ -1,6 +1,8 @@
 package com.colpencil.redwood.present.mine;
 
 import com.colpencil.redwood.bean.ApplyStatusReturn;
+import com.colpencil.redwood.bean.ResultInfo;
+import com.colpencil.redwood.function.utils.StringFormatUtil;
 import com.colpencil.redwood.model.ApplyModel;
 import com.colpencil.redwood.model.ApplyStatusModel;
 import com.colpencil.redwood.model.imples.IApplyModel;
@@ -28,14 +30,41 @@ public class ApplyStatusPresenter extends ColpencilPresenter<IBuisnessView> {
 
             @Override
             public void onError(Throwable e) {
-                mView.getStatusError(e.getMessage());
+                if(mView!=null){
+                    mView.getStatusError(e.getMessage());
+                }
+
             }
 
             @Override
             public void onNext(ApplyStatusReturn applyStatusReturn) {
-                mView.getStatusSucess(applyStatusReturn);
+                if(mView!=null){
+                    mView.getStatusSucess(applyStatusReturn);
+                }
+
             }
         };
         applyModel.subStauts(subscriber);
+    }
+
+    public void getHotLine(){
+        applyModel.getHotLine();
+        Subscriber<ResultInfo<String>> subscriber = new Subscriber<ResultInfo<String>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResultInfo<String> stringResultInfo) {
+                mView.getHotLine(stringResultInfo);
+            }
+        };
+        applyModel.subHotLine(subscriber);
     }
 }

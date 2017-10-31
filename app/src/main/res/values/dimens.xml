@@ -4,6 +4,9 @@
 
     <!-- Default screen margins, per the Android Design guidelines. -->
 
+    <dimen name="prb_symbolic_tick_default_text_size">15sp</dimen>
+
+    <dimen name="prb_drawable_tick_default_spacing">1dp</dimen>
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
 
@@ -165,7 +168,10 @@
 
     <!--左边距布局-->
 
-
+    <dimen name="sample_caption_text_size">18sp</dimen>
+    <dimen name="sample_symbolic_tick_text_size">20sp</dimen>
+    <dimen name="sample_default_margin">16dp</dimen>
+    <dimen name="sample_prb_tick_spacing">5dp</dimen>
     <dimen name="paddingLeft">15dp</dimen>
 
     <!--右边距布局-->

@@ -29,9 +29,8 @@ public class FameAdapter extends CommonAdapter<DynamicInfo> {
         Glide.with(mContext).load(item.getThumbnail()).into((ImageView) (helper.getView(R.id.iv_good)));
         helper.setText(R.id.tv_address,item.getStore_city());
         helper.setText(R.id.tv_name,item.getName());
-
+        helper.setText(R.id.tv_price,"￥"+item.getPrice());
         helper.setText(R.id.tv_shop,item.getStore_name());
-        helper.setText(R.id.tv_price,item.getPrice()+"");
         ImageView tv_istop=helper.getView(R.id.tv_istop);
         ImageLoaderUtils.loadImage(mContext,item.getLevel_pic(),tv_istop);
         helper.getView(R.id.goods_layout).setOnClickListener(new View.OnClickListener() {
@@ -42,5 +41,6 @@ public class FameAdapter extends CommonAdapter<DynamicInfo> {
                 mContext.startActivity(intent);
             }
         });
+        Glide.with(mContext).load(item.getLevel_pic()).into((ImageView) (helper.getView(R.id.tv_istop)));
     }
 }

@@ -24,7 +24,7 @@ public class GoodsItem implements Serializable {
     /**
      * 商品id
      */
-    private String goods_id;
+    private int goods_id;
     /**
      * 商品图片
      */
@@ -83,11 +83,11 @@ public class GoodsItem implements Serializable {
         this.name = name;
     }
 
-    public String getGoods_id() {
+    public int getGoods_id() {
         return goods_id;
     }
 
-    public void setGoods_id(String goods_id) {
+    public void setGoods_id(int goods_id) {
         this.goods_id = goods_id;
     }
 

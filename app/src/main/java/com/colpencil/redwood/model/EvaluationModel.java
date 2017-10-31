@@ -27,10 +27,11 @@ public class EvaluationModel implements IEvaluationModel {
     private Observable<ResultCodeInt> submit;
 
     @Override
-    public void submitComment(int order_id, String goods_id, String content, List<File> files, int type) {
+    public void submitComment(int rate,int order_id, String goods_id, String content, List<File> files, int type) {
         Map<String, RequestBody> params = new HashMap<>();
         params.put("order_id", RequestBody.create(null, order_id + ""));
         params.put("goods_id", RequestBody.create(null, goods_id));
+        params.put("grade",RequestBody.create(null,rate+""));
         params.put("content", RequestBody.create(null, content));
         params.put("type", RequestBody.create(null, type + ""));
         params.put("member_id", RequestBody.create(null, SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + ""));

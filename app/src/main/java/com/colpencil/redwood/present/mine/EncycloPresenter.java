@@ -27,7 +27,7 @@ public class EncycloPresenter extends ColpencilPresenter<IEncycloView> {
 
             @Override
             public void onError(Throwable e) {
-               mView.loadFail(e.getMessage());
+               mView.loadFail("服务器异常");
             }
 
             @Override

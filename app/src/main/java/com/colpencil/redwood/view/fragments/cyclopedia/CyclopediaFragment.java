@@ -43,7 +43,6 @@ import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPrefe
 
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.Bind;
 import butterknife.OnClick;
 import rx.Observable;
@@ -247,6 +246,7 @@ public class CyclopediaFragment extends ColpencilFragment implements ITagView {
     @OnClick(R.id.ll_iv)
     void cateOnClick() {
         Intent intent = new Intent(getActivity(), CategoryActivity.class);
+        intent.putExtra("from","CyclopediaFragment");
         startActivity(intent);
     }
 

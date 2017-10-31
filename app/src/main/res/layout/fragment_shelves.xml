@@ -45,8 +45,6 @@
     <com.property.colpencil.colpencilandroidlibrary.Ui.NoScrollViewPager
         android:id="@+id/viewpager"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginLeft="12dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

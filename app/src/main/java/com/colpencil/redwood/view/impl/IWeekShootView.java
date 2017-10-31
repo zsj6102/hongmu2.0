@@ -25,5 +25,5 @@ public interface IWeekShootView extends ColpencilBaseView{
 
     void loadMore(List<WeekAuctionList> data);
 
-    void loadError();
+    void loadError(String message);
 }

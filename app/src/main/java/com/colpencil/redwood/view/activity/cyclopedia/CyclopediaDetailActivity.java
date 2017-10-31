@@ -20,11 +20,15 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.colpencil.redwood.R;
+import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.CycloParams;
 import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.GoodBusMsg;
+import com.colpencil.redwood.bean.NodeReplyItem;
 import com.colpencil.redwood.bean.PostsComment;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.bean.RxBusMsg;
+import com.colpencil.redwood.bean.result.CommonResult;
 import com.colpencil.redwood.bean.result.PCommentResult;
 import com.colpencil.redwood.configs.Constants;
 import com.colpencil.redwood.configs.StringConfig;
@@ -33,6 +37,8 @@ import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.cyclopedia.CycloDetailPresenter;
 import com.colpencil.redwood.view.activity.HomeActivity;
 import com.colpencil.redwood.view.activity.login.LoginActivity;
+
+import com.colpencil.redwood.view.activity.mine.ReplyDetail;
 import com.colpencil.redwood.view.activity.mine.WebViewActivity;
 import com.colpencil.redwood.view.adapters.AnswerAdapter;
 import com.colpencil.redwood.view.impl.ICycloDetailView;
@@ -54,11 +60,17 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.Subscriber;
+
+import static com.property.colpencil.colpencilandroidlibrary.Function.Tools.TimeUtil.getTimeDiffDay;
 
 /**
  * @author 陈宝
@@ -111,7 +123,9 @@ public class CyclopediaDetailActivity extends ColpencilActivity implements ICycl
     private EditText et_content;
     private CycloParams params;
     private boolean isFinish = false;
-
+    private int pos;
+    private Observable<RxBusMsg> observable;
+    private Subscriber subscriber;
     @Override
     protected void initViews(View view) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
@@ -142,9 +156,35 @@ public class CyclopediaDetailActivity extends ColpencilActivity implements ICycl
             presenter.viewState(params.article_id, 4);
         }
         presenter.loadContent(params.article_id);
-        holder.tv_time.setText(TimeUtil.getTimeDiffDay(params.time, System.currentTimeMillis()));
+        holder.tv_time.setText(getTimeDiffDay(params.time, System.currentTimeMillis()));
+        initBus();
     }
+   private void initBus(){
+       observable = RxBus.get().register("rxBusMsg",RxBusMsg.class);
+       subscriber = new Subscriber<RxBusMsg>(){
+           @Override
+           public void onCompleted() {
 
+           }
+
+           @Override
+           public void onError(Throwable e) {
+
+           }
+
+           @Override
+           public void onNext(RxBusMsg rxBusMsg) {
+               if(rxBusMsg.getType() == 123){
+                   if (type == Constants.KEEP_CYCLOPEDIA) {
+                       presenter.loadComments(params.article_id, page, pageSize, "2");
+                   } else {
+                       presenter.loadComments(params.article_id, page, pageSize, "3");
+                   }
+               }
+           }
+       };
+       observable.subscribe(subscriber);
+   }
     private void initWebView() {
         WebSettings settings = holder.webView.getSettings();
         settings.setJavaScriptEnabled(true);
@@ -191,10 +231,61 @@ public class CyclopediaDetailActivity extends ColpencilActivity implements ICycl
         listView.addFooterView(bottomView);
 
         adapter = new AnswerAdapter(this, comments, R.layout.item_comment_detail_answer, 1);
+        initAdapter();
         listView.setAdapter(adapter);
 
-    }
 
+    }
+    private void initAdapter(){
+        adapter.setListener(new AnswerAdapter.MyListener() {
+            @Override
+            public void commentClick(int position) {
+                Intent intent = new Intent(CyclopediaDetailActivity.this, ReplyDetail.class);
+                NodeReplyItem item = new NodeReplyItem();
+                item.setRe_id(comments.get(position).getComment_id());
+                item.setRe_face(comments.get(position).getFace());
+                item.setRe_store_name(comments.get(position).getNickname());
+                item.setRe_member_photo(comments.get(position).getMember_photo());
+                item.setRe_content(comments.get(position).getRe_content());
+                String time;
+                if (comments.get(position).getCreatetime() == 0) {
+                    time = TimeUtil.getTimeDiffDay(comments.get(position).getTime(), System.currentTimeMillis());
+                } else {
+                    time =  getTimeDiffDay(comments.get(position).getCreatetime(), System.currentTimeMillis());
+                }
+                item.setRe_create_time(time);
+                intent.putExtra("data", item);
+                if(params.type.equals("cyclopedia")){
+                    intent.putExtra("type",2);
+                }else{
+                    intent.putExtra("type",3);
+                }
+
+                startActivity(intent);
+            }
+
+            @Override
+            public void addLike(int position) {
+                pos = position;
+                if (SharedPreferencesUtil.getInstance(App.getInstance()).getBoolean(StringConfig.ISLOGIN, false)){
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put("reply_id", comments.get(position).getComment_id() + "");
+                    map.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                    map.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+                    if(params.type.equals("cyclopedia")){
+                        map.put("biaoshi", "2");
+                    }else{
+                        map.put("biaoshi","3");
+                    }
+
+                    presenter.getLikeResult(map);
+                }else{
+                    type = 50;
+                    showDialog();
+                }
+            }
+        });
+    }
     @Override
     public ColpencilPresenter getPresenter() {
         presenter = new CycloDetailPresenter();
@@ -289,9 +380,9 @@ public class CyclopediaDetailActivity extends ColpencilActivity implements ICycl
     }
 
     @Override
-    public void shareResult(EntityResult<String> result) {
+    public void shareResult(CommonResult result) {
         Log.e("result", result.toString());
-        if (result.getCode() == 1) {
+        if (result.getCode().equals("1")) {
             shareUrl = result.getUrl();
         }
     }
@@ -542,11 +633,19 @@ public class CyclopediaDetailActivity extends ColpencilActivity implements ICycl
                 presenter.likeState(4, params.article_id);
                 presenter.viewState(params.article_id, 4);
             }
-
+            if(type == 50){
+                if(params.type.equals("cyclopedia")){
+                    presenter.loadComments(params.article_id, page, pageSize, "2");
+                }else{
+                    presenter.loadComments(params.article_id, page, pageSize, "3");
+                }
+            }
             if (resultType == 0) {
                 if (TextUtils.isEmpty(content)) {
-                    ToastTools.showShort(this, "请输入评论内容");
-                    return;
+                    if(type != 50){
+                        ToastTools.showShort(this, "请输入评论内容");
+                        return;
+                    }
                 }
                 if (type == Constants.KEEP_CYCLOPEDIA) {
                     presenter.submitComment(params.article_id, content, "2");
@@ -586,6 +685,7 @@ public class CyclopediaDetailActivity extends ColpencilActivity implements ICycl
         super.onDestroy();
         holder.unbind();
         footer.unbind();
+        RxBus.get().unregister("rxBusMsg",observable);
     }
 
     @OnClick(R.id.iv_collection_state)
@@ -614,6 +714,23 @@ public class CyclopediaDetailActivity extends ColpencilActivity implements ICycl
             resultType = 2;
             showDialog();
         }
+    }
+
+    @Override
+    public void addLike(ResultInfo<String> resultInfo) {
+        if(resultInfo.getCode()==0){
+            if(comments.get(pos).getIsfocus() == 0){
+                comments.get(pos).setIsfocus(1);
+                comments.get(pos).setRe_like_count(comments.get(pos).getRe_like_count()+1);
+
+            }else{
+                comments.get(pos).setIsfocus(0);
+                comments.get(pos).setRe_like_count(comments.get(pos).getRe_like_count()-1);
+            }
+            adapter.notifyDataSetChanged();
+        }
+        ToastTools.showShort(this,resultInfo.getMessage());
+
     }
 
     private void showDialog() {

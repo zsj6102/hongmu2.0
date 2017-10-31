@@ -40,7 +40,7 @@ public class SharedPreferencesUtil {
 
 	/**
 	 * @param key 键名
-	 * @param 	默认返回值
+	 * @param
 	 * @return boolean值
 	 */
 	public boolean getBoolean(String key,boolean defult){
@@ -74,6 +74,13 @@ public class SharedPreferencesUtil {
 		sp.edit().putInt(key, i).commit();
 	}
 
+	public void setFloat(String key,float i){sp.edit().putFloat(key,i).commit();}
+    public float getFloat(String key,float defult){
+		return sp.getFloat(key,defult);
+	}
+	public float getFloat(String key){
+		return sp.getFloat(key,1.0f);
+	}
 	/**
 	 * @param key 键名
 	 * @param defult	默认返回int值

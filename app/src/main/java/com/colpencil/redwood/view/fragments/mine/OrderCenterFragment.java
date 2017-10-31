@@ -17,9 +17,11 @@ import com.colpencil.redwood.function.utils.SpaceItemDecoration;
 import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
 import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.mine.OrderCenterFragmentPresenter;
+import com.colpencil.redwood.view.activity.ShoppingCartActivitys.OrderCenterToPay;
 import com.colpencil.redwood.view.activity.mine.AfterSalesActivity;
 import com.colpencil.redwood.view.activity.mine.EvaluationActivity;
-import com.colpencil.redwood.view.activity.mine.OrderDetailActivity;
+
+import com.colpencil.redwood.view.activity.mine.OrderCenterActivity;
 import com.colpencil.redwood.view.activity.mine.OrderDetailsActivity;
 import com.colpencil.redwood.view.activity.mine.RefundMoneyActivity;
 import com.colpencil.redwood.view.activity.mine.WebViewActivity;
@@ -41,6 +43,8 @@ import java.util.Map;
 import butterknife.Bind;
 import rx.Observable;
 import rx.Subscriber;
+
+import static com.unionpay.mobile.android.global.a.I;
 
 /**
  * 描述：订单中心
@@ -154,8 +158,12 @@ public class OrderCenterFragment extends ColpencilFragment implements IOrderCent
                     });
                     serviceDialog.show();
                 } else if (msg.getType() == 8 && msg.getMsg().equals(mTypeFlag)) {//立即支付
-                    showLoading(Constants.progressName);
-                    presenter.payKeyInfor(Integer.valueOf(msg.getOrderNum()));
+//                    showLoading(Constants.progressName);
+//                    presenter.payKeyInfor(Integer.valueOf(msg.getOrderNum()));
+                    Intent intent = new Intent(getActivity(), OrderCenterToPay.class);
+                    intent.putExtra("orderId",msg.getOrderNum());
+                    intent.putExtra("from","orderCenter");
+                    startActivity(intent);
                 } else if (msg.getType() == 9 && msg.getMsg().equals(mTypeFlag)) {//申请退款
                     Intent intent = new Intent(getActivity(), RefundMoneyActivity.class);
                     intent.putExtra("order_id", Integer.valueOf(msg.getOrderNum()));

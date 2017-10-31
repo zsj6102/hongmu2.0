@@ -2,12 +2,12 @@ package com.colpencil.redwood.view.fragments.mine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.colpencil.redwood.R;
@@ -15,6 +15,7 @@ import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.Info.StoreDetail;
 import com.colpencil.redwood.bean.ItemStoreFans;
 import com.colpencil.redwood.bean.ResultInfo;
+import com.colpencil.redwood.bean.RxBusMsg;
 import com.colpencil.redwood.bean.result.CareReturn;
 import com.colpencil.redwood.configs.Constants;
 import com.colpencil.redwood.configs.StringConfig;
@@ -24,13 +25,17 @@ import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.mine.StoreDetailPresenter;
 import com.colpencil.redwood.view.activity.login.LoginActivity;
 import com.colpencil.redwood.view.activity.mine.FansAndLikeActivity;
+import com.colpencil.redwood.view.activity.mine.StoreHomeActivity;
 import com.colpencil.redwood.view.activity.mine.StoreIntroductionActivity;
 import com.colpencil.redwood.view.adapters.FansItemAdapter;
 import com.colpencil.redwood.view.impl.IAboutView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilFragment;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
+import com.property.colpencil.colpencilandroidlibrary.Function.Rx.RxBus;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
+import com.property.colpencil.colpencilandroidlibrary.Function.Tools.TextUtil;
+import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ToastTools;
 import com.property.colpencil.colpencilandroidlibrary.Ui.AdapterView.MosaicGridView;
 import com.property.colpencil.colpencilandroidlibrary.Ui.SelectableRoundedImageView;
 
@@ -42,6 +47,9 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.R.attr.type;
+
 
 /**
  * @author QFZ
@@ -75,13 +83,21 @@ public class AboutHimFragment extends ColpencilFragment implements IAboutView {
     MosaicGridView likeGridview;
     @Bind(R.id.fans_gridview)
     MosaicGridView fansGridview;
-
+    @Bind(R.id.notice)
+    TextView tvNotice;
     private int storeid;
     @Bind(R.id.unfocus_layout)
     LinearLayout unfocus;     //未关注
     @Bind(R.id.befocus_layout)
     LinearLayout befocus;
-
+    @Bind(R.id.layout_refer)
+    LinearLayout referLayout;
+    @Bind(R.id.layout_cat)
+    LinearLayout catLayout;
+    @Bind(R.id.tv_reffer)
+    TextView tvRefer;
+    @Bind(R.id.tv_cat)
+    TextView tvCat;
     private StoreDetailPresenter presenter;
     private FansItemAdapter adapterFans;
     private FansItemAdapter adapterLike;
@@ -95,10 +111,13 @@ public class AboutHimFragment extends ColpencilFragment implements IAboutView {
     private int fanspos;
     private boolean isFans = false;//判断是商家粉丝列表还是商家关注
     private String detail;
-    public static AboutHimFragment newInstance(int store_id) {
+    private int type;
+
+    public static AboutHimFragment newInstance(int store_id, int type) {
         AboutHimFragment fragment = new AboutHimFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("store_id", store_id);
+        bundle.putInt("type", type);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -106,6 +125,8 @@ public class AboutHimFragment extends ColpencilFragment implements IAboutView {
     @Override
     protected void initViews(View view) {
         storeid = getArguments().getInt("store_id");
+        type = getArguments().getInt("type");
+
         initAdapter();
     }
 
@@ -133,10 +154,32 @@ public class AboutHimFragment extends ColpencilFragment implements IAboutView {
                 }
             }
 
-
+            @Override
+            public void toClick(int position) {
+                if (dataFans.get(position).getStore_id() != null && dataFans.get(position).getStore_type() != null) {
+                    Intent intent = new Intent(getActivity(), StoreHomeActivity.class);
+                    intent.putExtra("type", dataFans.get(position).getStore_type() + "");
+                    intent.putExtra("store_id", dataFans.get(position).getStore_id());
+                    getActivity().startActivity(intent);
+                } else {
+                    showMsg("他还不是商家");
+                }
+            }
         });
         adapterLike = new FansItemAdapter(getActivity(), dataLike, R.layout.item_laytou_fans);
         adapterLike.setListener(new FansItemAdapter.CareClick() {
+            @Override
+            public void toClick(int position) {
+                if (dataLike.get(position).getStore_id() != null && dataLike.get(position).getStore_type() != null) {
+                    Intent intent = new Intent(getActivity(), StoreHomeActivity.class);
+                    intent.putExtra("type", dataLike.get(position).getStore_type() + "");
+                    intent.putExtra("store_id", dataLike.get(position).getStore_id());
+                    getActivity().startActivity(intent);
+                } else {
+                    showMsg("他还不是商家");
+                }
+            }
+
             @Override
             public void careClick(int position) {
                 isFans = true;
@@ -156,10 +199,15 @@ public class AboutHimFragment extends ColpencilFragment implements IAboutView {
                 } else {
                     showLogin();
                 }
+
             }
         });
         likeGridview.setAdapter(adapterLike);
         fansGridview.setAdapter(adapterFans);
+    }
+
+    private void showMsg(String msg) {
+        ToastTools.showShort(getActivity(), msg);
     }
 
     @Override
@@ -170,25 +218,28 @@ public class AboutHimFragment extends ColpencilFragment implements IAboutView {
     }
 
     @OnClick(R.id.main_introduction)
-    void toIntro(){
+    void toIntro() {
         Intent intent = new Intent(getActivity(), StoreIntroductionActivity.class);
-        intent.putExtra("detail",detail);
+        intent.putExtra("detail", detail);
         startActivity(intent);
     }
+
     @OnClick(R.id.main_follow)
-    void toFollow(){
+    void toFollow() {
         Intent intent = new Intent(getActivity(), FansAndLikeActivity.class);
-        intent.putExtra("store_id",storeid);
-        intent.putExtra("type",1+"");
+        intent.putExtra("store_id", storeid);
+        intent.putExtra("type", 1 + "");
         startActivity(intent);
     }
+
     @OnClick(R.id.main_fans)
-    void toFans(){
+    void toFans() {
         Intent intent = new Intent(getActivity(), FansAndLikeActivity.class);
-        intent.putExtra("store_id",storeid);
-        intent.putExtra("type",0+"");
+        intent.putExtra("store_id", storeid);
+        intent.putExtra("type", 0 + "");
         startActivity(intent);
     }
+
     @Override
     public void bindView(Bundle savedInstanceState) {
 
@@ -234,6 +285,7 @@ public class AboutHimFragment extends ColpencilFragment implements IAboutView {
     @Override
     public void operate(CareReturn result) {
         hideLoading();
+        ToastTools.showShort(getActivity(), result.getMessage());
         if (result.getCode() == 0) {
             if (!isFans) {
 
@@ -243,6 +295,16 @@ public class AboutHimFragment extends ColpencilFragment implements IAboutView {
                 } else {
                     dataFans.get(fanspos).setIsfocus(0);
                 }
+                for (int i = 0; i < dataLike.size(); i++) {
+                    if (dataLike.get(i).getStore_id() == dataFans.get(fanspos).getStore_id()) {
+                        if (dataLike.get(i).getIsfocus() == 0) {
+                            dataLike.get(i).setIsfocus(1);
+                        } else {
+                            dataLike.get(i).setIsfocus(0);
+                        }
+                    }
+                }
+                adapterLike.notifyDataSetChanged();
                 adapterFans.notifyDataSetChanged();
             } else {
                 //                presenter.getStoreLike(maps);
@@ -251,6 +313,16 @@ public class AboutHimFragment extends ColpencilFragment implements IAboutView {
                 } else {
                     dataLike.get(likepos).setIsfocus(0);
                 }
+                for (int i = 0; i < dataFans.size(); i++) {
+                    if (dataFans.get(i).getStore_id() == dataLike.get(likepos).getStore_id()) {
+                        if (dataFans.get(i).getIsfocus() == 0) {
+                            dataFans.get(i).setIsfocus(1);
+                        } else {
+                            dataFans.get(i).setIsfocus(0);
+                        }
+                    }
+                }
+                adapterFans.notifyDataSetChanged();
                 adapterLike.notifyDataSetChanged();
             }
         }
@@ -264,7 +336,6 @@ public class AboutHimFragment extends ColpencilFragment implements IAboutView {
             public void sureOnClick() {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 intent.putExtra(StringConfig.REQUEST_CODE, 100);
-
                 startActivityForResult(intent, Constants.REQUEST_LOGIN);
                 dialog.dismiss();
             }
@@ -292,7 +363,8 @@ public class AboutHimFragment extends ColpencilFragment implements IAboutView {
 
     @Override
     public void loadFail(String message) {
-
+        ToastTools.showShort(getActivity(), message);
+        hideLoading();
     }
 
     @Override
@@ -303,19 +375,38 @@ public class AboutHimFragment extends ColpencilFragment implements IAboutView {
                 tvName.setText(data.getData().getStore_name());
                 ImageLoaderUtils.loadImage(getActivity(), data.getData().getMember_photo(), ivLv);
                 tvLv.setText(data.getData().getLv_name());
+
+                if(type == 3){
+                    if(!TextUtils.isEmpty(data.getData().getReferrer())){
+                        referLayout.setVisibility(View.VISIBLE);
+                        tvRefer.setText(data.getData().getReferrer());
+                    }
+                    if(data.getData().getCatname()!=null){
+                        catLayout.setVisibility(View.VISIBLE);
+                        tvCat.setText(data.getData().getCatname());
+                    }
+
+                }else{
+                    referLayout.setVisibility(View.GONE);
+                    catLayout.setVisibility(View.GONE);
+                }
                 ImageLoaderUtils.loadImage(getActivity(), data.getData().getStore_type_path(), ivStoreType);
                 tvStoreType.setText(data.getData().getStore_type_name());
                 tvPraiseRate.setText(data.getData().getPraise_rate());
                 tvAddress.setText(data.getData().getStore_city());
                 tvStoreSign.setText(data.getData().getSign());
                 member_id = data.getData().getMember_id();
-                detail =data.getData().getDescription();
+                detail = data.getData().getDescription();
                 if (data.getData().getIsfocus() == 0) {
                     unfocus.setVisibility(View.GONE);
                     befocus.setVisibility(View.VISIBLE);
                 } else {
                     unfocus.setVisibility(View.VISIBLE);
                     befocus.setVisibility(View.GONE);
+                }
+                if (data.getData().getStore_banner() != null && !TextUtils.isEmpty(data.getData().getStore_banner())) {
+                    tvNotice.setVisibility(View.VISIBLE);
+                    tvNotice.setText(data.getData().getStore_banner());
                 }
             }
         }
@@ -363,7 +454,12 @@ public class AboutHimFragment extends ColpencilFragment implements IAboutView {
         if (result.getCode() == 0) {
             unfocus.setVisibility(View.GONE);
             befocus.setVisibility(View.VISIBLE);
+            RxBusMsg msg = new RxBusMsg();
+            msg.setType(510);
+            RxBus.get().post("rxBusMsg", msg);
         }
+            ToastTools.showShort(getActivity(), result.getMessage());
+
     }
 
     @Override
@@ -371,7 +467,12 @@ public class AboutHimFragment extends ColpencilFragment implements IAboutView {
         if (reult.getCode() == 0) {
             unfocus.setVisibility(View.VISIBLE);
             befocus.setVisibility(View.GONE);
+            RxBusMsg msg = new RxBusMsg();
+            msg.setType(511);
+            RxBus.get().post("rxBusMsg", msg);
         }
+        ToastTools.showShort(getActivity(), reult.getMessage());
+
     }
 
     @Override

@@ -142,6 +142,7 @@ public class ReCyclopediaActivity extends ColpencilActivity implements ITagView 
     @OnClick(R.id.ll_iv)
     void cateClick() {
         Intent intent = new Intent(this, CategoryActivity.class);
+        intent.putExtra("from","ReCyclopediaActivity");
         startActivity(intent);
     }
 

@@ -13,6 +13,15 @@ public class NodeReplyItem implements Serializable {
     private String re_create_time;//评论时间
     private int re_con_count;//该评论被评论的数量
     private int re_like_count;//该评论被点赞的数量
+    private int isfocus;
+
+    public int getIsfocus() {
+        return isfocus;
+    }
+
+    public void setIsfocus(int isfocus) {
+        this.isfocus = isfocus;
+    }
 
     public int getRe_member_id() {
         return re_member_id;

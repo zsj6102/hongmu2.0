@@ -36,6 +36,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.view.View.Z;
+import static com.colpencil.redwood.R.id.select_supai;
+import static com.unionpay.mobile.android.global.a.r;
+
 /**
  * @author 陈宝
  * @Description: 搜索文章的Activity
@@ -63,12 +67,14 @@ public class SearchActivity extends ColpencilActivity implements ISearchView {
     private HotSearchAdapter hotadapter;
 
     private HotSearchPresenter presenter;
-
+    private String from;
     @Override
     protected void initViews(View view) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
             StatusBarUtil.setColor(this, getResources().getColor(R.color.line_color_thirst));
         }
+        from = getIntent().getStringExtra("from");
+
         all_header.setBackgroundColor(getResources().getColor(R.color.line_color_thirst));
         edit.setHint("搜索商品");
         initAdapter();
@@ -79,6 +85,7 @@ public class SearchActivity extends ColpencilActivity implements ISearchView {
         ll_header = LayoutInflater.from(this).inflate(R.layout.activity_search_header, null);
         holder = new HeaderViewHolder(ll_header);
         listView.addHeaderView(ll_header);
+
         listView.setAdapter(new NullAdapter(this, new ArrayList<String>(), R.layout.item_null));
         hisadapter = new SearchHistoryAdapter(this, historylist, R.layout.item_search_history_noborder);
         holder.history_gridview.setAdapter(hisadapter);
@@ -90,6 +97,15 @@ public class SearchActivity extends ColpencilActivity implements ISearchView {
                 intent(0, position);
             }
         });
+        if(from.equals("AllAuction")){
+            holder.tv_supai.performClick();
+        }else if(from.equals("Brand")){
+            holder.tv_good.performClick();
+        }else if(from.equals("AllAuctionCard") || from.equals("MRT")){
+            holder.tv_store.performClick();
+        }else if(from.equals("Zc")){
+            holder.tv_zc.performClick();
+        }
         holder.hot_gridview.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -170,8 +186,16 @@ public class SearchActivity extends ColpencilActivity implements ISearchView {
             intent.setClass(this, CyclopediaResultActivity.class);
         } else if (cat_id == 7) {
             intent.setClass(this, GoodResultActivity.class);
-        } else {
+        } else if(cat_id == 8){
             intent.setClass(this, PostsResultActivity.class);
+        }else if(cat_id == 9){
+            intent.setClass(this, SearchStoreActivity.class);
+        }else  if(cat_id == 10){
+            intent.setClass(this, ZcSearchActivity.class);
+        }else if(cat_id == 11){
+            intent.setClass(this,WeekSearchActivity.class);
+        }else if(cat_id == 12){
+            intent.setClass(this,SupaiSearchActivity.class);
         }
         startActivity(intent);
         if (type == 2) {
@@ -208,7 +232,14 @@ public class SearchActivity extends ColpencilActivity implements ISearchView {
         LinearLayout ll_type;
         @Bind(R.id.tv_hot)
         TextView tv_hot;
-
+        @Bind(R.id.select_store)
+        TextView tv_store;
+        @Bind(R.id.select_zc)
+        TextView tv_zc;
+        @Bind(R.id.select_week)
+        TextView tv_week;
+        @Bind(select_supai)
+        TextView tv_supai;
 
         public HeaderViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -223,9 +254,17 @@ public class SearchActivity extends ColpencilActivity implements ISearchView {
             tv_good.setBackgroundResource(R.drawable.cyclopedia_circle_shape);
             tv_cyclopedia.setBackgroundResource(R.drawable.good_circle_shape);
             tv_posts.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_store.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_zc.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_week.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_week.setTextColor(getResources().getColor(R.color.text_color_thirst));
             tv_good.setTextColor(getResources().getColor(R.color.white));
             tv_cyclopedia.setTextColor(getResources().getColor(R.color.text_color_thirst));
             tv_posts.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_store.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_zc.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_supai.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_supai.setBackgroundResource(R.drawable.good_circle_shape);
             cat_id = 7;
             presenter.loadHot(cat_id);
             presenter.loadHistory(cat_id, SearchActivity.this);
@@ -238,9 +277,17 @@ public class SearchActivity extends ColpencilActivity implements ISearchView {
             tv_good.setBackgroundResource(R.drawable.good_circle_shape);
             tv_cyclopedia.setBackgroundResource(R.drawable.cyclopedia_circle_shape);
             tv_posts.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_store.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_zc.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_week.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_week.setTextColor(getResources().getColor(R.color.text_color_thirst));
             tv_good.setTextColor(getResources().getColor(R.color.text_color_thirst));
             tv_cyclopedia.setTextColor(getResources().getColor(R.color.white));
             tv_posts.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_store.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_zc.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_supai.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_supai.setBackgroundResource(R.drawable.good_circle_shape);
             cat_id = 6;
             presenter.loadHot(cat_id);
             presenter.loadHistory(cat_id, SearchActivity.this);
@@ -248,19 +295,121 @@ public class SearchActivity extends ColpencilActivity implements ISearchView {
             tv_hot.setVisibility(View.VISIBLE);
         }
 
+        @OnClick(R.id.select_week)
+        void weekClick(){
+            tv_good.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_cyclopedia.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_week.setBackgroundResource(R.drawable.cyclopedia_circle_shape);
+            tv_week.setTextColor(getResources().getColor(R.color.white));
+            tv_posts.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_store.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_zc.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_good.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_cyclopedia.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_store.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_zc.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_posts.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_supai.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_supai.setBackgroundResource(R.drawable.good_circle_shape);
+            cat_id = 11;
+            hotlist.clear();
+            hotadapter.notifyDataSetChanged();
+            presenter.loadHistory(cat_id, SearchActivity.this);
+            edit.setHint("搜索周拍");
+            tv_hot.setVisibility(View.GONE);
+        }
         @OnClick(R.id.select_posts)
         void postsClick() {
+            tv_week.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_week.setTextColor(getResources().getColor(R.color.text_color_thirst));
             tv_good.setBackgroundResource(R.drawable.good_circle_shape);
             tv_cyclopedia.setBackgroundResource(R.drawable.good_circle_shape);
             tv_posts.setBackgroundResource(R.drawable.cyclopedia_circle_shape);
+            tv_store.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_zc.setBackgroundResource(R.drawable.good_circle_shape);
             tv_good.setTextColor(getResources().getColor(R.color.text_color_thirst));
             tv_cyclopedia.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_store.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_zc.setTextColor(getResources().getColor(R.color.text_color_thirst));
             tv_posts.setTextColor(getResources().getColor(R.color.white));
+            tv_supai.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_supai.setBackgroundResource(R.drawable.good_circle_shape);
             cat_id = 8;
             hotlist.clear();
             hotadapter.notifyDataSetChanged();
             presenter.loadHistory(cat_id, SearchActivity.this);
             edit.setHint("搜索帖子");
+            tv_hot.setVisibility(View.GONE);
+        }
+
+        @OnClick(R.id.select_store)
+        void storeClick(){
+            tv_week.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_week.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_good.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_cyclopedia.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_posts.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_store.setBackgroundResource(R.drawable.cyclopedia_circle_shape);
+            tv_zc.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_good.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_cyclopedia.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_store.setTextColor(getResources().getColor(R.color.white));
+            tv_zc.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_posts.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_supai.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_supai.setBackgroundResource(R.drawable.good_circle_shape);
+            cat_id = 9;
+            hotlist.clear();
+            hotadapter.notifyDataSetChanged();
+            presenter.loadHistory(cat_id, SearchActivity.this);
+            edit.setHint("搜索商家");
+            tv_hot.setVisibility(View.GONE);
+        }
+
+        @OnClick(R.id.select_zc)
+        void zcClick(){
+            tv_week.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_week.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_good.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_cyclopedia.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_posts.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_store.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_zc.setBackgroundResource(R.drawable.cyclopedia_circle_shape);
+            tv_good.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_cyclopedia.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_store.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_zc.setTextColor(getResources().getColor(R.color.white));
+            tv_posts.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_supai.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_supai.setBackgroundResource(R.drawable.good_circle_shape);
+            cat_id = 10;
+            hotlist.clear();
+            hotadapter.notifyDataSetChanged();
+            presenter.loadHistory(cat_id, SearchActivity.this);
+            edit.setHint("搜索专场");
+            tv_hot.setVisibility(View.GONE);
+        }
+        @OnClick(select_supai)
+        void supaiClick(){
+            tv_supai.setTextColor(getResources().getColor(R.color.white));
+            tv_supai.setBackgroundResource(R.drawable.cyclopedia_circle_shape);
+            tv_week.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_week.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_good.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_cyclopedia.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_posts.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_store.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_zc.setBackgroundResource(R.drawable.good_circle_shape);
+            tv_good.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_cyclopedia.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_store.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_zc.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            tv_posts.setTextColor(getResources().getColor(R.color.text_color_thirst));
+            cat_id = 12;
+            hotlist.clear();
+            hotadapter.notifyDataSetChanged();
+            presenter.loadHistory(cat_id, SearchActivity.this);
+            edit.setHint("搜索速拍");
             tv_hot.setVisibility(View.GONE);
         }
 
@@ -270,6 +419,7 @@ public class SearchActivity extends ColpencilActivity implements ISearchView {
             hisadapter.notifyDataSetChanged();
             DaoUtils.deleteHistory(cat_id, SearchActivity.this);
         }
+
     }
 
 }

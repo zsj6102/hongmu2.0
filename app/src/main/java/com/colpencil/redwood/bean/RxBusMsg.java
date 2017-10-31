@@ -25,6 +25,19 @@ public class RxBusMsg {
      * 56:跳转到百科     57:刷新购物车的数据   58:刷新标签
      * 60:删除百科浏览记录      61:删除帖子浏览记录     62:删除商品浏览记录     63:我的周拍跳转到周拍详情
      * 64:删除订单   65:我的周拍立即付款
+     *70:商家修改地址
+     * 71:商家修改退货地址
+     * 80:个人名片夹操作后   81:商品名片夹操作后
+     *
+     * 90：速拍收藏之后
+     *
+     * 95:速拍获取申请状态判断是不是商家
+     * 96:品牌判断是不是商家
+     * 97:名师
+     * 98:专场
+     *100:添加商品详情
+     * 510:商家主页  关注成功
+     * 511：商家主页 取消关注成功
      */
     private int type = -1;
 
@@ -76,6 +89,16 @@ public class RxBusMsg {
     private String sn;
 
     private int status;//订单状态
+
+    private float scale;
+
+    public float getScale() {
+        return scale;
+    }
+
+    public void setScale(float scale) {
+        this.scale = scale;
+    }
 
     public HashMap<String, String> getMap() {
         return map;

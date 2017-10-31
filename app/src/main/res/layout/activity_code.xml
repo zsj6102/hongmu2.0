@@ -1,36 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              xmlns:skin="http://schemas.android.com/android/skin"
+              android:layout_width="match_parent"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_height="match_parent"
+              skin:enable="true"
+              tools:ignore="MissingPrefix"
+              android:orientation="vertical">
 
-    <include layout="@layout/base_header" />
+    <include layout="@layout/base_header"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
+            skin:enable="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/main_background"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingBottom="50dp">
+            android:paddingBottom="50dp"
+            >
+
+            <WebView
+                android:id="@+id/webview"
+                skin:enable="true"
+                android:background="@color/main_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
             <ImageView
                 android:id="@+id/android_iv"
                 android:layout_width="115dp"
                 android:layout_height="115dp"
-                android:layout_marginTop="20dp" />
+                android:layout_marginTop="20dp"/>
 
             <TextView
+                skin:enable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="安卓端"
                 android:textColor="@color/text_color_first"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -38,52 +52,81 @@
                 android:layout_marginTop="7dp"
                 android:text="(扫描二维码下载)"
                 android:textColor="@color/text_color_second"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
 
             <ImageView
                 android:id="@+id/ios_iv"
                 android:layout_width="115dp"
                 android:layout_height="115dp"
-                android:layout_marginTop="22dp" />
+                android:layout_marginTop="22dp"/>
 
             <TextView
+                skin:enable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="苹果端"
                 android:textColor="@color/text_color_first"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
 
             <TextView
+                skin:enable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
                 android:text="(扫描二维码下载)"
                 android:textColor="@color/text_color_second"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
 
             <ImageView
                 android:id="@+id/wechat_iv"
                 android:layout_width="115dp"
                 android:layout_height="115dp"
-                android:layout_marginTop="22dp" />
+                android:layout_marginTop="22dp"/>
 
             <TextView
+                skin:enable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="微信端"
                 android:textColor="@color/text_color_first"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
 
             <TextView
+                skin:enable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
                 android:text="(请用微信扫描识别二维码)"
                 android:textColor="@color/text_color_second"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
+            <ImageView
+                android:id="@+id/night_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/night"
+                android:layout_marginTop="22dp"/>
+            <ImageView
+                android:id="@+id/small_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/night"
+                android:layout_marginTop="22dp"/>
 
+            <ImageView
+                android:id="@+id/middle_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/night"
+                android:layout_marginTop="22dp"/>
+
+            <ImageView
+                android:id="@+id/large_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/night"
+                android:layout_marginTop="22dp"/>
         </LinearLayout>
 
     </ScrollView>

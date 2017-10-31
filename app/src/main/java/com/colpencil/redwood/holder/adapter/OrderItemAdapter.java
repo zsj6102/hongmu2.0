@@ -14,9 +14,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.colpencil.redwood.R;
+import com.colpencil.redwood.bean.CartItem;
 import com.colpencil.redwood.bean.RxBusMsg;
 import com.colpencil.redwood.bean.result.OrderArray;
 import com.colpencil.redwood.bean.result.OrderGoodsItem;
+import com.colpencil.redwood.function.tools.ImageLoaderUtils;
 import com.colpencil.redwood.view.activity.ShoppingCartActivitys.OrderActivity;
 import com.property.colpencil.colpencilandroidlibrary.Function.Rx.RxBus;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ImgTool;
@@ -214,7 +216,7 @@ public class OrderItemAdapter extends BaseAdapter {
                 holder.price_payForGood.setText("¥" + ((OrderGoodsItem) getItem(position)).getSalePrice() + "");
                 holder.type_payForGood.setText(((OrderGoodsItem) getItem(position)).getSpecs());
                 holder.cout_payForGood.setText("X" + ((OrderGoodsItem) getItem(position)).getNum() + "");
-                ImgTool.getImgToolInstance(mContext).loadImgByString(((OrderGoodsItem) getItem(position)).getImg(), holder.iv_payForGood);
+                ImageLoaderUtils.loadImage(mContext,((OrderGoodsItem) getItem(position)).getImg(),holder.iv_payForGood);
                 break;
         }
 

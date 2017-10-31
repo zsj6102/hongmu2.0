@@ -2,13 +2,18 @@ package com.colpencil.redwood.model;
 
 import com.colpencil.redwood.api.RedWoodApi;
 import com.colpencil.redwood.base.App;
+import com.colpencil.redwood.bean.AddResult;
 import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.GoodComment;
 import com.colpencil.redwood.bean.ListResult;
 import com.colpencil.redwood.bean.NumReturn;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.function.config.UrlConfig;
 import com.colpencil.redwood.model.imples.IGoodRightModel;
 import com.property.colpencil.colpencilandroidlibrary.Function.MianCore.RetrofitManager;
+import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
+
+import java.util.Map;
 
 import rx.Observable;
 import rx.Observer;
@@ -26,12 +31,13 @@ public class GoodRightModel implements IGoodRightModel {
 
     Observable<ListResult<GoodComment>> observable;
     Observable<NumReturn> goodNums;
-
+    private Observable<AddResult> addResultObservable;
+    private Observable<ResultInfo<String>> likeObservable;
     @Override
     public void loadComment(String goodId, int page, int pageSize) {
         observable = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
                 .createApi(RedWoodApi.class)
-                .loadGoodComment(goodId, page, pageSize)
+                .loadGoodComment(goodId, page, pageSize, SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id"))
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<ListResult<GoodComment>, ListResult<GoodComment>>() {
                     @Override
@@ -64,6 +70,42 @@ public class GoodRightModel implements IGoodRightModel {
     public void subCommentsNum(Observer<NumReturn> observer) {
         goodNums.subscribe(observer);
     }
+    @Override
+    public void getAddCommentResult(Map<String, String> params) {
+        addResultObservable = RetrofitManager.getInstance(1, App.getInstance(),UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .getAdd(params)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<AddResult, AddResult>() {
+                    @Override
+                    public AddResult call(AddResult result) {
+                        return result;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
+    }
 
+    @Override
+    public void subAddResult(Observer<AddResult> observer) {
+        addResultObservable.subscribe(observer);
+    }
+
+    @Override
+    public void addLike(Map<String, String> map) {
+        likeObservable = RetrofitManager.getInstance(1,App.getInstance(),UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .getNoteLike(map)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<ResultInfo<String>, ResultInfo<String>>() {
+                    @Override
+                    public ResultInfo<String> call(ResultInfo<String> resultInfo) {
+                        return resultInfo;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void subLike(Observer<ResultInfo<String>> observer) {
+        likeObservable.subscribe(observer);
+    }
 
 }

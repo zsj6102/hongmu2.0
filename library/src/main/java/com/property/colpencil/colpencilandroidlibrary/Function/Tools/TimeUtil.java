@@ -14,7 +14,7 @@ public class TimeUtil {
 
     public static String longToStringYear(long time) {
         Date date = new Date(time);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String result = sdf.format(date);  //现在的时间
         return result;
     }

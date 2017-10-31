@@ -19,6 +19,25 @@ public class JiashangItem implements Serializable {
     private int comment_count;//评论数
     private String cover;//商品广告图
     private List<UrlString> list_view_gallery;//商品图片
+    private int have_collection;//是否收藏 0没收藏 1相反
+    private int product_id;
+    private float cover_proportion;//广告图宽高比
+
+    public float getCover_proportion() {
+        return cover_proportion;
+    }
+
+    public void setCover_proportion(float cover_proportion) {
+        this.cover_proportion = cover_proportion;
+    }
+
+    public int getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
+    }
 
     public int getCollectmember() {
         return collectmember;
@@ -26,6 +45,14 @@ public class JiashangItem implements Serializable {
 
     public void setCollectmember(int collectmember) {
         this.collectmember = collectmember;
+    }
+
+    public int getHave_collection() {
+        return have_collection;
+    }
+
+    public void setHave_collection(int have_collection) {
+        this.have_collection = have_collection;
     }
 
     public String getName() {

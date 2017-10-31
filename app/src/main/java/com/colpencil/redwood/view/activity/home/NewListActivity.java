@@ -9,23 +9,32 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.colpencil.redwood.R;
+import com.colpencil.redwood.base.App;
+import com.colpencil.redwood.bean.ApplyStatusReturn;
 import com.colpencil.redwood.bean.CycloParams;
 import com.colpencil.redwood.bean.GoodBusMsg;
 import com.colpencil.redwood.bean.NewsInfoVo;
+import com.colpencil.redwood.configs.Constants;
 import com.colpencil.redwood.configs.StringConfig;
+import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
+import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.home.NewsListPresenter;
 import com.colpencil.redwood.view.activity.cyclopedia.CyclopediaDetailActivity;
+import com.colpencil.redwood.view.activity.login.LoginActivity;
+import com.colpencil.redwood.view.activity.mine.PublishFamousActivity;
 import com.colpencil.redwood.view.adapters.NewsListAdapter;
 import com.colpencil.redwood.view.impl.INewsListView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilActivity;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
 import com.property.colpencil.colpencilandroidlibrary.Function.Rx.RxBus;
+import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ToastTools;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGANormalRefreshViewHolder;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -58,7 +67,9 @@ public class NewListActivity extends ColpencilActivity implements INewsListView,
     private boolean isRefresh = false;
     private Observable<GoodBusMsg> observable;
     private Subscriber subscriber;
-
+//    private int disabled;
+//    private int store_type;
+//    private int store_id;
     @Override
     protected void initViews(View view) {
         ll_header.setBackgroundColor(getResources().getColor(R.color.main_background));
@@ -131,10 +142,61 @@ public class NewListActivity extends ColpencilActivity implements INewsListView,
 
     @OnClick(R.id.common_float)
     void postOnClick() {
-        Intent intent = new Intent();
-        intent.setClass(this, PostNewsActivity.class);
-        intent.putExtra("type", "news");
-        startActivity(intent);
+        if (SharedPreferencesUtil.getInstance(App.getInstance()).getBoolean(StringConfig.ISLOGIN, false)) {
+            Intent intent = new Intent();
+            intent.setClass(this, PostNewsActivity.class);
+            intent.putExtra("type", "news");
+            startActivity(intent);
+
+        }else{
+            showDialog();
+        }
+
+    }
+    private void showDialog() {
+        final CommonDialog dialog = new CommonDialog(NewListActivity.this, "你还没登录喔!", "去登录", "取消");
+        dialog.setListener(new DialogOnClickListener() {
+            @Override
+            public void sureOnClick() {
+                intent();
+                dialog.dismiss();
+            }
+
+            @Override
+            public void cancleOnClick() {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+    private void intent() {
+        Intent intent = new Intent(NewListActivity.this, LoginActivity.class);
+        intent.putExtra(StringConfig.REQUEST_CODE, 100);
+        startActivityForResult(intent, Constants.REQUEST_LOGIN);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+//        HashMap<String, String> params = new HashMap<>();
+//        params.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+//        params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+//        presenter.getApplyStatus(params);
+
+    }
+
+    @Override
+    public void getStatusSucess(ApplyStatusReturn applyStatusReturn) {
+//        if (applyStatusReturn.getCode() == 0) {
+//            store_type = applyStatusReturn.getData().getStore_type();
+//            store_id = applyStatusReturn.getData().getStore_id();
+//            disabled = applyStatusReturn.getData().getDisabled();
+//        }
+    }
+
+    @Override
+    public void getStatusError(String message) {
+
     }
 
     @OnClick(R.id.iv_totop)

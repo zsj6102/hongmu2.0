@@ -25,7 +25,7 @@ public class SearchHistoryDao extends AbstractDao<SearchHistory, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property History = new Property(1, String.class, "history", false, "HISTORY");
         public final static Property Cat_id = new Property(2, Integer.class, "cat_id", false, "CAT_ID");
-    };
+    }
 
 
     public SearchHistoryDao(DaoConfig config) {

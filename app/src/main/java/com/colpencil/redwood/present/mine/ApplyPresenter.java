@@ -1,10 +1,13 @@
 package com.colpencil.redwood.present.mine;
 import com.colpencil.redwood.bean.AddresBean;
 import com.colpencil.redwood.bean.CatListBean;
+import com.colpencil.redwood.bean.ResultInfo;
 import com.colpencil.redwood.model.ApplyModel;
 import com.colpencil.redwood.model.imples.IApplyModel;
 import com.colpencil.redwood.view.impl.ApplayView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
+
+import java.util.Map;
 
 import rx.Subscriber;
 
@@ -25,7 +28,7 @@ public class ApplyPresenter extends ColpencilPresenter<ApplayView> {
             @Override
             public void onError(Throwable e) {
                 if(mView!=null){
-                    mView.applyError(e.getMessage());
+                    mView.applyError("服务器异常");
                 }
 
             }
@@ -51,7 +54,7 @@ public class ApplyPresenter extends ColpencilPresenter<ApplayView> {
             @Override
             public void onError(Throwable e) {
                 if(mView!=null){
-                    mView.applyError(e.getMessage());
+                    mView.applyError("服务器异常");
                 }
 
             }
@@ -66,5 +69,27 @@ public class ApplyPresenter extends ColpencilPresenter<ApplayView> {
         applyModel.sub(subscriber);
     }
 
+    public void loadPro(Map<String,String> map){
+        applyModel.loadPro(map);
+        Subscriber<ResultInfo<String>> subscriber = new Subscriber<ResultInfo<String>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResultInfo<String> stringResultInfo) {
+                if(mView!=null){
+                    mView.loadPro(stringResultInfo);
+                }
+            }
+        };
+        applyModel.subPro(subscriber);
+    }
 
 }

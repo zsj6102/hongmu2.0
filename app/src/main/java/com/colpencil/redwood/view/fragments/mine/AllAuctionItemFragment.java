@@ -15,19 +15,24 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
+
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.AddResult;
 import com.colpencil.redwood.bean.AllGoodsInfo;
 import com.colpencil.redwood.bean.Info.RxClickMsg;
+import com.colpencil.redwood.bean.RxBusMsg;
 import com.colpencil.redwood.bean.result.AllGoodsResult;
+import com.colpencil.redwood.bean.result.OrderPayInfo;
 import com.colpencil.redwood.configs.Constants;
 import com.colpencil.redwood.configs.StringConfig;
+import com.colpencil.redwood.function.utils.ListUtils;
 import com.colpencil.redwood.function.widgets.AttachUtil;
 import com.colpencil.redwood.function.widgets.dialogs.CommonDialog;
 import com.colpencil.redwood.listener.DialogOnClickListener;
 import com.colpencil.redwood.present.home.AllAuctionItemPresent;
 
+import com.colpencil.redwood.view.activity.ShoppingCartActivitys.OrderActivity;
 import com.colpencil.redwood.view.activity.login.LoginActivity;
 import com.colpencil.redwood.view.activity.mine.NodeReplyActivity;
 import com.colpencil.redwood.view.adapters.ItemAllAuctionAdapter;
@@ -49,14 +54,11 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
-
-import okhttp3.RequestBody;
 import rx.Observable;
 import rx.Subscriber;
 
 /**
  * 所有拍品子页
- *
  */
 @ActivityFragmentInject(
         contentViewId = R.layout.fragment_allauctionitem)
@@ -66,6 +68,8 @@ public class AllAuctionItemFragment extends ColpencilFragment implements AllAuct
     ListView allauctionitem;
     @Bind(R.id.refreshLayout)
     BGARefreshLayout refreshLayout;
+    @Bind(R.id.refreshLayout2)
+    BGARefreshLayout refreshLayout2;
     private boolean isRefresh = false;
     private ItemAllAuctionAdapter adapter;
     private List<AllGoodsInfo> allGoodsInfoList = new ArrayList<>();
@@ -79,6 +83,11 @@ public class AllAuctionItemFragment extends ColpencilFragment implements AllAuct
     private String content;
     private EditText et_content;
     private Observable<RxClickMsg> clickMsgObservable;
+    private Observable<RxBusMsg> observable;
+    private Subscriber subscriber;
+    private int intenttype;
+
+    private BGARefreshLayout.BGARefreshLayoutDelegate delegate;
     public static AllAuctionItemFragment newInstance(int type) {
         Bundle bundle = new Bundle();
         AllAuctionItemFragment fragment = new AllAuctionItemFragment();
@@ -91,44 +100,44 @@ public class AllAuctionItemFragment extends ColpencilFragment implements AllAuct
     protected void initViews(View view) {
         this.view = view;
         type = getArguments().getInt("type");
-        refreshLayout.setDelegate(new BGARefreshLayout.BGARefreshLayoutDelegate() {
+        delegate = new BGARefreshLayout.BGARefreshLayoutDelegate() {
             @Override
             public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
                 page = 1;
-                HashMap<String, RequestBody> strparams = new HashMap<>();
-                strparams.put("type", RequestBody.create(null, "supai"));
-                strparams.put("member_id", RequestBody.create(null,SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id")+""));
-                HashMap<String, Integer> intparams = new HashMap<>();
-                intparams.put("page", page);
-                intparams.put("pageSize", pageSize);
-                intparams.put("cat_id", type);
+                HashMap<String, String> intparams = new HashMap<>();
+                intparams.put("type", "supai");
+                intparams.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                intparams.put("page", page + "");
+                intparams.put("pageSize", pageSize + "");
+                intparams.put("cat_id", type + "");
                 Log.d("pretty", type + "");
                 showLoading("加载中...");
-                allAuctionItemPresent.getAllGoods(page,strparams, intparams);
+                allAuctionItemPresent.getAllGoods(page, intparams);
             }
 
             @Override
             public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-                if(isRefresh){
+                if (isRefresh && refreshLayout2.getVisibility() == View.GONE) {
                     page++;
-                    HashMap<String, RequestBody> strparams = new HashMap<>();
-                    strparams.put("type", RequestBody.create(null, "supai"));
-                    strparams.put("member_id", RequestBody.create(null, SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id")+""));
-                    HashMap<String, Integer> intparams = new HashMap<>();
-                    intparams.put("page", page);
-                    intparams.put("pageSize", pageSize);
-                    intparams.put("cat_id", type);
+                    HashMap<String, String> intparams = new HashMap<>();
+                    intparams.put("type", "supai");
+                    intparams.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                    intparams.put("page", page + "");
+                    intparams.put("pageSize", pageSize + "");
+                    intparams.put("cat_id", type + "");
                     Log.d("pretty", type + "");
                     showLoading("加载中...");
-                    allAuctionItemPresent.getAllGoods(page,strparams, intparams);
+                    allAuctionItemPresent.getAllGoods(page, intparams);
                 }
                 return false;
             }
-        });
+        };
+        refreshLayout.setDelegate(delegate);
+        refreshLayout2.setDelegate(delegate);
+        refreshLayout2.setRefreshViewHolder(new BGANormalRefreshViewHolder(getActivity(), true));
+        refreshLayout2.setSnackStyle(getActivity().findViewById(android.R.id.content), getResources().getColor(R.color.material_drawer_primary), getResources().getColor(R.color.white));
         refreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getActivity(), true));
-        refreshLayout.setSnackStyle(getActivity().findViewById(android.R.id.content),
-                getResources().getColor(R.color.material_drawer_primary),
-                getResources().getColor(R.color.white));
+        refreshLayout.setSnackStyle(getActivity().findViewById(android.R.id.content), getResources().getColor(R.color.material_drawer_primary), getResources().getColor(R.color.white));
         adapter = new ItemAllAuctionAdapter(getActivity(), allGoodsInfoList, R.layout.item_allauctionitem);
         initAdapter();
         allauctionitem.setAdapter(adapter);
@@ -146,33 +155,66 @@ public class AllAuctionItemFragment extends ColpencilFragment implements AllAuct
 
         initBus();
     }
-    private void initAdapter(){
+
+    /**
+     * 初始化适配器
+     */
+    private void initAdapter() {
         adapter.setListener(new ItemAllAuctionAdapter.MyListener() {
             @Override
             public void click(int position) {
+
                 pos = position;
-                showPopWindow(view);
+                intenttype = 1;
+                if(SharedPreferencesUtil.getInstance(getActivity()).getBoolean(StringConfig.ISLOGIN, false)){
+                    showPopWindow(view);
+                }else{
+                    showDialog();
+                }
+
+            }
+
+            @Override
+            public void buy(int position) {
+                pos = position;
+                intenttype = 2;
+                if (SharedPreferencesUtil.getInstance(getActivity()).getBoolean(StringConfig.ISLOGIN, false)) {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                    params.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+                    params.put("goods_id", allGoodsInfoList.get(pos).getGoods_id()+"");
+                    params.put("product_id",allGoodsInfoList.get(pos).getProduct_id()+"");
+                    params.put("num",1+"");
+                    allAuctionItemPresent.getDirectOrder(params);
+                } else {
+                    showDialog();
+                }
             }
 
             @Override
             public void reply(int position) {
                 Intent intent = new Intent(getActivity(), NodeReplyActivity.class);
-                intent.putExtra("goodsid",allGoodsInfoList.get(position).getGoods_id());
+                intent.putExtra("goodsid", allGoodsInfoList.get(position).getGoods_id());
                 startActivity(intent);
             }
 
             @Override
             public void like(int position) {
                 pos = position;
-                Map<String,String> map = new HashMap<String, String>();
-                map.put("goods_id",allGoodsInfoList.get(position).getGoods_id()+"");
-                map.put("member_id",SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id")+"");
-                map.put("token",SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
-              allAuctionItemPresent.getLike(map);
-
+                intenttype = 3;
+                if (SharedPreferencesUtil.getInstance(getActivity()).getBoolean(StringConfig.ISLOGIN, false)) {
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put("goods_id", allGoodsInfoList.get(position).getGoods_id() + "");
+                    map.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                    map.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+                    allAuctionItemPresent.getLike(map);
+                } else {
+                    showDialog();
+                }
             }
         });
     }
+
     private void initBus() {
         clickMsgObservable = RxBus.get().register("totop", RxClickMsg.class);
         Subscriber<RxClickMsg> observer = new Subscriber<RxClickMsg>() {
@@ -196,40 +238,69 @@ public class AllAuctionItemFragment extends ColpencilFragment implements AllAuct
 
         };
         clickMsgObservable.subscribe(observer);
+        observable = RxBus.get().register("rxBusMsg", RxBusMsg.class);
+        subscriber = new Subscriber<RxBusMsg>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onNext(RxBusMsg tagMsg) {
+                if(tagMsg.getType() == 91){
+                    HashMap<String, String> intparams = new HashMap<>();
+                    page = 1;
+                    intparams.put("type", "supai");
+                    intparams.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                    intparams.put("page", page + "");
+                    intparams.put("pageSize", pageSize + "");
+                    intparams.put("cat_id", type + "");
+                    Log.d("pretty", type + "");
+                    showLoading("加载中...");
+                    allAuctionItemPresent.getAllGoods(page, intparams);
+                }
+            }
+        };
+        observable.subscribe(subscriber);
+
     }
 
     @Override
     public void addComment(AddResult result) {
         hideLoading();
-        ToastTools.showShort(getActivity(),result.getMessage());
-        if(result.getCode() == 0){
-            allGoodsInfoList.get(pos).setComment_count(allGoodsInfoList.get(pos).getComment_count()+1);
+        ToastTools.showShort(getActivity(), result.getMessage());
+        if (result.getCode() == 0) {
+            allGoodsInfoList.get(pos).setComment_count(allGoodsInfoList.get(pos).getComment_count() + 1);
             adapter.notifyDataSetChanged();
         }
     }
 
     @Override
     public void addLike(AddResult result) {
-        ToastTools.showShort(getActivity(),result.getMessage());
-        if(result.getCode() == 0){
-            if(allGoodsInfoList.get(pos).getHave_collection() == 0){
+        ToastTools.showShort(getActivity(), result.getMessage());
+        if (result.getCode() == 0) {
+            if (allGoodsInfoList.get(pos).getHave_collection() == 0) {
                 allGoodsInfoList.get(pos).setHave_collection(1);
-                allGoodsInfoList.get(pos).setCollectmember(allGoodsInfoList.get(pos).getCollectmember()+1);
+                allGoodsInfoList.get(pos).setCollectmember(allGoodsInfoList.get(pos).getCollectmember() + 1);
                 adapter.notifyDataSetChanged();
-            }else{
+            } else {
                 allGoodsInfoList.get(pos).setHave_collection(0);
-                allGoodsInfoList.get(pos).setCollectmember(allGoodsInfoList.get(pos).getCollectmember()-1);
+                allGoodsInfoList.get(pos).setCollectmember(allGoodsInfoList.get(pos).getCollectmember() - 1);
                 adapter.notifyDataSetChanged();
             }
-
+            RxBusMsg msg = new RxBusMsg();
+            msg.setType(90);
+            RxBus.get().post("rxBusMsg", msg);
         }
     }
 
 
     private void showPopWindow(View view) {
         if (window == null) {
-            window = new PopupWindow(initPopWindow(),
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            window = new PopupWindow(initPopWindow(), ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
         window.setFocusable(true);
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -237,6 +308,22 @@ public class AllAuctionItemFragment extends ColpencilFragment implements AllAuct
         window.setOutsideTouchable(true);
         window.showAtLocation(view, Gravity.BOTTOM, 100, 0);
         window.showAsDropDown(view);
+    }
+
+    @Override
+    public void loadNewOrder(OrderPayInfo result) {
+        if(result.getCode() == 0){
+            Intent intent = new Intent(getActivity(), OrderActivity.class);
+            intent.putExtra("key", "订单确定");
+            intent.putExtra("goFrom", "AllAuctionItemFragment");
+            intent.putExtra("product_id", allGoodsInfoList.get(pos).getProduct_id());    //int类型
+            intent.putExtra("goods_id", allGoodsInfoList.get(pos).getGoods_id());     //int类型
+            intent.putExtra("num", 1);    //int类型
+            startActivity(intent);
+        }else{
+            ToastTools.showShort(getActivity(),result.getMessage());
+        }
+
     }
 
     private View initPopWindow() {
@@ -258,12 +345,12 @@ public class AllAuctionItemFragment extends ColpencilFragment implements AllAuct
                         return;
                     }
                     showLoading("正在提交中...");
-                    Map<String,String> map = new HashMap<String, String>();
-                    map.put("h_id",allGoodsInfoList.get(pos).getGoods_id()+"");
-                    map.put("type","1");
-                    map.put("content",content);
-                    map.put("member_id",SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id")+"");
-                    map.put("token",SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put("h_id", allGoodsInfoList.get(pos).getGoods_id() + "");
+                    map.put("type", "1");
+                    map.put("content", content);
+                    map.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                    map.put("token", SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
                     allAuctionItemPresent.getAddCommentResult(map);
                 } else {
                     showDialog();
@@ -273,6 +360,7 @@ public class AllAuctionItemFragment extends ColpencilFragment implements AllAuct
         });
         return view;
     }
+
     private void showDialog() {
         final CommonDialog dialog = new CommonDialog(getActivity(), "你还没登录喔!", "去登录", "取消");
         dialog.setListener(new DialogOnClickListener() {
@@ -295,43 +383,53 @@ public class AllAuctionItemFragment extends ColpencilFragment implements AllAuct
         intent.putExtra(StringConfig.REQUEST_CODE, 100);
         startActivityForResult(intent, Constants.REQUEST_LOGIN);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Constants.REQUEST_LOGIN) {  //登录返回来的结果
+            if(intenttype == 1 || intenttype == 3){
+                page = 1;
 
-                if (!TextUtils.isEmpty(content)) {
-                    Map<String,String> map = new HashMap<String, String>();
-                    map.put("h_id",allGoodsInfoList.get(pos).getGoods_id()+"");
-                    map.put("type","1");
-                    map.put("content",content);
-                    map.put("member_id",SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id")+"");
-                    map.put("token",SharedPreferencesUtil.getInstance(App.getInstance()).getString("token"));
-                    allAuctionItemPresent.getAddCommentResult(map);
-                } else {
-                    ToastTools.showShort(getActivity(), "请输入评论的内容");
-                }
-
+                HashMap<String, String> intparams = new HashMap<>();
+                intparams.put("type", "supai");
+                intparams.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+                intparams.put("page", page + "");
+                intparams.put("pageSize", pageSize + "");
+                intparams.put("cat_id", type + "");
+                showLoading("加载中...");
+                allAuctionItemPresent.getAllGoods(page, intparams);
+            }else{
+                Intent intent = new Intent(getActivity(), OrderActivity.class);
+                intent.putExtra("key", "订单确定");
+                intent.putExtra("goFrom", "AllAuctionItemFragment");
+                intent.putExtra("product_id", allGoodsInfoList.get(pos).getProduct_id());    //int类型
+                intent.putExtra("goods_id", allGoodsInfoList.get(pos).getGoods_id());     //int类型
+                intent.putExtra("num", 1);    //int类型
+                startActivity(intent);
+            }
         }
     }
+
     private void dismissPop() {
         if (window != null) {
             window.dismiss();
         }
     }
+
     @Override
     public void loadData() {
-        HashMap<String, RequestBody> strparams = new HashMap<>();
-        strparams.put("type", RequestBody.create(null, "supai"));
-        strparams.put("member_id", RequestBody.create(null,SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id")+""));
-        HashMap<String, Integer> intparams = new HashMap<>();
-        intparams.put("page", page);
-        intparams.put("pageSize", pageSize);
-        intparams.put("cat_id", type);
-        Log.d("pretty", type + "");
+        HashMap<String, String> intparams = new HashMap<>();
+        page  = 1;
+        intparams.put("type", "supai");
+        intparams.put("member_id", SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id") + "");
+        intparams.put("page", page + "");
+        intparams.put("pageSize", pageSize + "");
+        intparams.put("cat_id", type + "");
         showLoading("加载中...");
-        allAuctionItemPresent.getAllGoods(page,strparams, intparams);
+        allAuctionItemPresent.getAllGoods(page, intparams);
     }
+
     @Override
     public ColpencilPresenter getPresenter() {
         allAuctionItemPresent = new AllAuctionItemPresent();
@@ -350,9 +448,18 @@ public class AllAuctionItemFragment extends ColpencilFragment implements AllAuct
 
     @Override
     public void loadFail(String message) {
-        Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
-    }
+        hideLoading();
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        refreshLayout2.endRefreshing(0);
+        refreshLayout.endRefreshing(0);
+        refreshLayout.endLoadingMore();
+        refreshLayout2.endLoadingMore();
+        if(page == 1){
+            refreshLayout2.setVisibility(View.VISIBLE);
+            refreshLayout.setVisibility(View.GONE);
+        }
 
+    }
 
 
     @Override
@@ -368,18 +475,30 @@ public class AllAuctionItemFragment extends ColpencilFragment implements AllAuct
         isLoadMore(result.getData());
         allGoodsInfoList.clear();
         allGoodsInfoList.addAll(result.getData());
+        allauctionitem.removeAllViewsInLayout();
         adapter.notifyDataSetChanged();
+        if (ListUtils.listIsNullOrEmpty(result.getData())) {
+            refreshLayout2.setVisibility(View.VISIBLE);
+            refreshLayout.setVisibility(View.GONE);
+        } else {
+            refreshLayout2.setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.VISIBLE);
+        }
         hideLoading();
     }
+
     private void isLoadMore(List<AllGoodsInfo> list) {
         if (list.size() < pageSize) {
             isRefresh = false;
         } else {
             isRefresh = true;
         }
+        refreshLayout2.endRefreshing(0);
         refreshLayout.endRefreshing(0);
         refreshLayout.endLoadingMore();
+        refreshLayout2.endLoadingMore();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view

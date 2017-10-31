@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.colpencil.redwood.R;
 import com.colpencil.redwood.bean.CartItem;
 import com.colpencil.redwood.bean.result.CartList;
+import com.colpencil.redwood.function.tools.ImageLoaderUtils;
 import com.colpencil.redwood.view.activity.home.GoodDetailActivity;
 
 import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ImgTool;
@@ -173,7 +174,9 @@ public class NewCartListAdapter extends BaseAdapter {
                 }
                 holder.item_shoppingcart_count.setText(((CartItem) getItem(position)).getNum() + "");
                 holder.iv_shoppingCartTitle.setText(((CartItem) getItem(position)).getName() + "");
-                holder.iv_shoppingCartExplain.setText(((CartItem) getItem(position)).getSpecs() + "");
+                if(((CartItem) getItem(position)).getSpecs()!=null){
+                    holder.iv_shoppingCartExplain.setText(((CartItem) getItem(position)).getSpecs() + "");
+                }
                 holder.iv_shoppingCartPrice.setText(("￥" + ((CartItem) getItem(position)).getPrice()));
                 if (((CartItem) getItem(position)).isChooseState()) {
                     holder.iv_shoppingCartSelect.setImageResource(R.mipmap.select_yes_red);
@@ -223,7 +226,7 @@ public class NewCartListAdapter extends BaseAdapter {
                         notifyDataSetChanged();
                     }
                 });
-                ImgTool.getImgToolInstance(mContext).loadImgByString(((CartItem) getItem(position)).getImage_default(), holder.iv_shoppingCartImg);
+                ImageLoaderUtils.loadImage(mContext,((CartItem) getItem(position)).getImage_default(),holder.iv_shoppingCartImg);
                 break;
         }
         return view;

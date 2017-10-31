@@ -4,6 +4,7 @@ import com.colpencil.redwood.bean.AddResult;
 import com.colpencil.redwood.bean.AddresBean;
 import com.colpencil.redwood.bean.AddressReturn;
 import com.colpencil.redwood.bean.AfterSalesCenterReturn;
+import com.colpencil.redwood.bean.AllSpecialInfo;
 import com.colpencil.redwood.bean.ApplyStatusReturn;
 import com.colpencil.redwood.bean.ArticalItem;
 import com.colpencil.redwood.bean.BannerVo;
@@ -17,6 +18,7 @@ import com.colpencil.redwood.bean.CategoryVo;
 import com.colpencil.redwood.bean.CodeBean;
 import com.colpencil.redwood.bean.CommentReturn;
 import com.colpencil.redwood.bean.CouponsResult;
+import com.colpencil.redwood.bean.CoverSpecialItem;
 import com.colpencil.redwood.bean.CustomReturn;
 import com.colpencil.redwood.bean.CyclopediaContent;
 import com.colpencil.redwood.bean.CyclopediaInfoVo;
@@ -26,15 +28,21 @@ import com.colpencil.redwood.bean.FirstComment;
 import com.colpencil.redwood.bean.FuncPointVo;
 import com.colpencil.redwood.bean.GoodComment;
 import com.colpencil.redwood.bean.GoodsItem;
+import com.colpencil.redwood.bean.Goods_list;
+import com.colpencil.redwood.bean.Goods_list_item;
 import com.colpencil.redwood.bean.HomeGoodInfo;
 import com.colpencil.redwood.bean.HomeRecommend;
+import com.colpencil.redwood.bean.ImageSpan;
+import com.colpencil.redwood.bean.Info.ApplyGoodInfo;
 import com.colpencil.redwood.bean.Info.StoreDetail;
+import com.colpencil.redwood.bean.Info.StoreInfo;
 import com.colpencil.redwood.bean.IntegralReturn;
 import com.colpencil.redwood.bean.ItemStoreFans;
 import com.colpencil.redwood.bean.JiashangItem;
 import com.colpencil.redwood.bean.ListResult;
 import com.colpencil.redwood.bean.LoginBean;
 import com.colpencil.redwood.bean.LogisTicsBean;
+import com.colpencil.redwood.bean.Margin;
 import com.colpencil.redwood.bean.MessageReturn;
 import com.colpencil.redwood.bean.MinePostItem;
 import com.colpencil.redwood.bean.MusicResourseReturn;
@@ -48,6 +56,7 @@ import com.colpencil.redwood.bean.OrderDetailsReturn;
 import com.colpencil.redwood.bean.PayForReturn;
 import com.colpencil.redwood.bean.PayKeyRetrun;
 import com.colpencil.redwood.bean.PayReturn;
+import com.colpencil.redwood.bean.PayType;
 import com.colpencil.redwood.bean.PlainRack;
 import com.colpencil.redwood.bean.PostCollectionReturn;
 import com.colpencil.redwood.bean.RatedItem;
@@ -56,9 +65,11 @@ import com.colpencil.redwood.bean.ReplyToItem;
 import com.colpencil.redwood.bean.Result;
 import com.colpencil.redwood.bean.ResultCodeInt;
 import com.colpencil.redwood.bean.ResultInfo;
+import com.colpencil.redwood.bean.Settled;
 import com.colpencil.redwood.bean.ShoppingCartReturn;
 import com.colpencil.redwood.bean.SizeColorInfo;
 import com.colpencil.redwood.bean.SortOptionsReturn;
+import com.colpencil.redwood.bean.WeekAuctionList;
 import com.colpencil.redwood.bean.WeekPersonList;
 import com.colpencil.redwood.bean.result.AdResult;
 import com.colpencil.redwood.bean.result.AllCartList;
@@ -76,6 +87,7 @@ import com.colpencil.redwood.bean.result.CustomResult;
 import com.colpencil.redwood.bean.result.CyclopediaResult;
 import com.colpencil.redwood.bean.result.DynamicResult;
 import com.colpencil.redwood.bean.result.GoodInfoResult;
+import com.colpencil.redwood.bean.result.GoodReply;
 import com.colpencil.redwood.bean.result.GoodsTypeResult;
 import com.colpencil.redwood.bean.result.HomeGoodResult;
 import com.colpencil.redwood.bean.result.HomeTagResult;
@@ -111,7 +123,10 @@ import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
+import rx.Observer;
 
+import static com.unionpay.mobile.android.global.a.A;
+import static com.unionpay.mobile.android.global.a.C;
 import static com.unionpay.mobile.android.global.a.F;
 
 /**
@@ -168,13 +183,13 @@ public interface RedWoodApi {
     Observable<PostsResult> loadPosts(@Query("ote_id") String ote_id);
 
     @GET("mobileNotes!getNotesReplys.do")
-    Observable<PCommentResult> loadCommentList(@Query("ote_id") String commentId, @Query("pageNo") int page, @Query("pageSize") int pageSize);
+    Observable<PCommentResult> loadCommentList(@Query("member_id") int member_id,@Query("ote_id") String commentId, @Query("pageNo") int page, @Query("pageSize") int pageSize);
 
     @GET("mobileGoodsDetail!goodsDetail.do")
-    Observable<GoodInfoResult> loadGoodInfo(@Query("goods_id") String goodid);
+    Observable<GoodInfoResult> loadGoodInfo(@Query("goods_id") String goodid,@Query("member_id") int member_id);
 
     @GET("mobileGoodsDetail!goodsComment.do")
-    Observable<ListResult<GoodComment>> loadGoodComment(@Query("goods_id") String goodsid, @Query("pageNo") int page, @Query("pageSize") int pageSize);
+    Observable<ListResult<GoodComment>> loadGoodComment(@Query("goods_id") String goodsid, @Query("pageNo") int page, @Query("pageSize") int pageSize,@Query("member_id") int memeber_id);
 
     @GET("mobileMemberCenter!personIndex.do")
     Observable<LoginBean> loadIntegral(@Query("member_id") int member_id, @Query("token") String token);
@@ -196,6 +211,14 @@ public interface RedWoodApi {
     @GET("mobileMember!getvalidateCode.do")
     Observable<LoginBean> getvalidateCode(@Query("mobile") String mobile);
 
+    /**
+     * 第三方登录过来获取验证码
+     * 分为注册过和没注册过
+     * @param mobile
+     * @return
+     */
+    @GET("mobileMember!getvalidateCode2.do")
+    Observable<LoginBean> getvalidateCode2(@Query("mobile") String mobile);
     /**
      * 用户进行注册
      */
@@ -415,7 +438,8 @@ public interface RedWoodApi {
     Observable<PCommentResult> loadCycloComments(@Query("article_id") String ote_id,
                                                  @Query("page") int page,
                                                  @Query("pageSize") int pageSize,
-                                                 @Query("commenttype") String commenttype);
+                                                 @Query("commenttype") String commenttype,
+                                                 @Query("member_id") int member_id);
 
     /**
      * 获取商品一级分类
@@ -688,6 +712,14 @@ public interface RedWoodApi {
     @POST("mobileStoreOrder!orderPay.do")
     @FormUrlEncoded
     Observable<OrderPayInfo> getOrderPay(@FieldMap Map<String,String> params);
+
+    /**
+     * 二期立即购买转订单支付
+     */
+    @POST("mobileStoreOrder!directBuy.do")
+    @FormUrlEncoded
+    Observable<OrderPayInfo> getDirectOrder(@FieldMap Map<String,String> params);
+
     /**
      * 修改购物车信息
      */
@@ -850,7 +882,8 @@ public interface RedWoodApi {
     @Multipart
     @POST("mobileArticle!memberPublish.do")
     Observable<EntityResult<String>> postCyclopedia(@PartMap Map<String, RequestBody> params);
-
+//    @GET("mobileArticle!memberPublish.do")
+//    Observable<EntityResult<String>> getNew( );
     /**
      * 我的订单中心
      */
@@ -990,7 +1023,7 @@ public interface RedWoodApi {
      * @return
      */
     @GET("mobileArticle!getBaikeLink.do")
-    Observable<EntityResult<String>> cycloShare(@Query("cat_id") int ote_id,
+    Observable<CommonResult> cycloShare(@Query("cat_id") int ote_id,
                                                 @Query("article_id") String article_id,
                                                 @Query("member_id") int member_id,
                                                 @Query("token") String token);
@@ -1199,7 +1232,7 @@ public interface RedWoodApi {
      *
      * @return
      */
-    @GET("mobileErWeiMa!getErWeiMa.do")
+    @GET("MobileErWeiMaAndContent2!getErWeiMaAndContent.do")
     Observable<EntityResult<CodeBean>> loadCodeUrl();
 
     /**
@@ -1209,6 +1242,11 @@ public interface RedWoodApi {
      */
     @GET("mobileHtml!getHuiYuanInfo.do")
     Observable<EntityResult<String>> loadMemberInfo();
+    /**
+     * 热线电话
+     */
+    @GET("mobileHotLine!getHotLine.do")
+    Observable<ResultInfo<String>> getHotLine();
 
     /**
      * 查看物流
@@ -1238,9 +1276,10 @@ public interface RedWoodApi {
     /**
      * 获取速拍所有拍品以及指定拍品
      */
-    @Multipart
+
     @POST("mobileGoodsList!getAllGoodsListSupai.do")
-    Observable<AllGoodsResult> getAllGoods(@PartMap Map<String, RequestBody> strparams,@PartMap Map<String, Integer> intparams);
+    @FormUrlEncoded
+    Observable<AllGoodsResult> getAllGoods(@FieldMap Map<String,String> map);
 
     /**
      * 速拍区我的拍品动态
@@ -1277,7 +1316,7 @@ public interface RedWoodApi {
     @FormUrlEncoded
     Observable<AllGoodsResult> getCollectionSupai(@FieldMap Map<String,String> map);
     /**
-     * 获取广告
+     * 二期获取广告 通用接口
      */
     @GET("mobileStoreAdv!advType.do")
     Observable<AdResult> getAd(@Query("type") String type);
@@ -1286,6 +1325,7 @@ public interface RedWoodApi {
     /**
      * 专场名人列表
      */
+
 
     /**
      * 获取品牌/名师名匠 /专场新品
@@ -1320,6 +1360,12 @@ public interface RedWoodApi {
     @Multipart
     @POST("mobileSpeSection!findSpecialList.do")
     Observable<AllSpecialResult> getSpecial(@PartMap Map<String, RequestBody> strparams, @PartMap Map<String, Integer> intparams);
+    /**
+     * 获取封面专场
+     */
+    @POST("mobileSpeSection!getSpeSectionCover.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<List<AllSpecialInfo>>> getCoverSpecial(@FieldMap Map<String,String> map);
 
     /**
      * 获取专场介绍
@@ -1402,9 +1448,7 @@ public interface RedWoodApi {
 
 //<!--------------------二期相关接口------------------------------->
 
-    /**
-     * 多商家下单接口
-     */
+
     @Multipart
     @POST("mobileStoreOrder!createOrder.do")
     Observable<PayReturn> getPayReturn(@PartMap HashMap<String,RequestBody> params);
@@ -1429,6 +1473,25 @@ public interface RedWoodApi {
     @FormUrlEncoded
     Observable<ResultInfo<List<ItemStoreFans>>> getStoreFans(@FieldMap Map<String,String> map);
 
+    /**
+     * 我的关注和粉丝列表
+     */
+    @POST("memberFans2!findMyFans.do")
+    @FormUrlEncoded
+    Observable<CardWallInfo> getMyFans(@FieldMap Map<String,String> map);
+    /**
+     * 搜索商家
+     */
+    @POST("mobileStore!findStoreList.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<List<ItemStoreFans>>> getSearchStore(@FieldMap Map<String,String> map);
+
+    /**
+     * 搜索周拍
+     */
+    @POST("mobileWeekpat!weekpatList.do")
+    @FormUrlEncoded
+    Observable<WeekAuctionListResult> getSearchAuction(@FieldMap Map<String,String> map);
     /**
      * 个人商家主页-架上拍品
      商家主页-藏品货架-速拍货架
@@ -1521,4 +1584,152 @@ public interface RedWoodApi {
     @FormUrlEncoded
     Observable<AddResult>  getReplyAdd(@FieldMap Map<String,String> map);
 
+    /**
+     * 首页热门关注列表
+     */
+    @POST("memberFans2!findHotFans.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<List<ItemStoreFans>>> getHotFans(@FieldMap Map<String,String> map);
+
+    /**
+     * 首页一级商品列表
+     */
+    @POST("mobileGoodsList!getTwoCat.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<List<Goods_list>>> getGoodsList(@FieldMap Map<String,String> map);
+
+    /**
+     * 首页二级商品列表
+     */
+    @POST("mobileGoodsList!getTwoBycatId.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<List<Goods_list_item>>> getSecondGoods(@FieldMap Map<String,String> map);
+
+    /**
+     * 获取速拍佣金比例
+     *
+     */
+
+    @POST("MobileGoods2!getProportion.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<String>> getProportion(@FieldMap Map<String,String> map);
+
+    /**
+     * 举报
+     * code :0举报成功 1系统异常 2举报失败
+     * message
+     */
+    @POST("mobileReport!add.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<String>> getReport(@FieldMap Map<String,String> map);
+    /**
+     * 发布专场 获取专场列表
+     *
+     * message
+     */
+    @POST("MobileGoods2!getZhuanChang.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<List<CoverSpecialItem>>> getPublishZc(@Field("cat_id") int id);
+    /**
+     * 根据商品id
+     * 查询发布商品信息
+     */
+    @POST("MobileGoods2!sel.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<ApplyGoodInfo>> getApplyGoodInfo(@Field("goods_id") int id);
+
+    /**
+     * 修改商品状态
+     * @param params
+     * @return
+     */
+    @Multipart
+    @POST("MobileGoods2!upd.do")
+    Observable<ApplyReturn> getModifyStataus(@PartMap HashMap<String,RequestBody> params);
+
+    /**
+     * 获取店铺信息
+     * 请求参数 member_id,token
+     */
+    @POST("mobileStore!sel.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<StoreInfo>> getStoreInfo(@FieldMap Map<String,String> map);
+
+    /**
+     * 修改店铺信息
+     */
+    @Multipart
+    @POST("mobileStore!upd.do")
+    Observable<ResultInfo<StoreInfo>> getModifyStore(@PartMap HashMap<String,RequestBody> params);
+
+    /**
+     * 获取支付方式
+     */
+    @GET("mobileStoreOrder!getPaymentList.do")
+    Observable<ResultInfo<List<PayType>>> loadPayType();
+
+    /**
+     * 订单中心 订单支付
+     */
+    @POST("mobileStoreOrder!choosePaymentType.do")
+    @FormUrlEncoded
+    Observable<PayReturn> getCenterPay(@FieldMap Map<String,String> params);
+    /**
+     * 获取保证金信息
+     */
+    @POST("mobileSettledMargin!getMarginInfo.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<Margin>> getMarginInfo(@FieldMap Map<String,String> params);
+
+    /**
+     * 缴纳保证金
+     */
+    @POST("mobileSettledMargin!payMargin.do")
+    @FormUrlEncoded
+    Observable<PayReturn> getMarginPay(@FieldMap Map<String,String> params);
+
+    /**
+     * 获取入驻费信息
+     */
+    @GET("mobileSettledMargin!getSettlecomboList.do")
+    Observable<ResultInfo<List<Settled>>> loadSettledList();
+
+    /**
+     * 缴纳入驻费
+     */
+
+    @POST("mobileSettledMargin!paySettled.do")
+    @FormUrlEncoded
+    Observable<PayReturn> getSettledPay(@FieldMap Map<String,String> params);
+
+
+    /**
+     * 编辑商品详情上传图片返回url
+     */
+    @Multipart
+    @POST("mobileGoods2!getGoodsInfo.do")
+    Observable<ResultInfo<ImageSpan>> getGoodUrl(@PartMap HashMap<String,RequestBody> params);
+
+    /**
+     * 新闻百科评论的点赞
+     */
+    @POST("noteReplyComment!addLike.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<String>> getNoteLike(@FieldMap Map<String,String> params);
+
+    /**
+     * 商品评论详情
+     * @param params
+     * @return
+     */
+    @POST("MobileStoreComment!view.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<GoodReply>> getGoodReplyDetail(@FieldMap Map<String,String> params);
+
+    /**
+     *
+     */
+    @POST("MobileStoreComment!addiscuss.do")
+    @FormUrlEncoded
+    Observable<ResultInfo<String>> getDisscuss(@FieldMap Map<String,String> params);
 }

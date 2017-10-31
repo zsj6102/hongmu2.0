@@ -13,6 +13,7 @@ import com.colpencil.redwood.view.impl.IShelfView;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilFragment;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilPresenter;
 import com.property.colpencil.colpencilandroidlibrary.Function.Annotation.ActivityFragmentInject;
+import com.property.colpencil.colpencilandroidlibrary.Function.Tools.ToastTools;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGANormalRefreshViewHolder;
 import com.property.colpencil.colpencilandroidlibrary.Ui.ColpenciListview.BGARefreshLayout;
 
@@ -123,7 +124,8 @@ public class WeekShelfFragment extends ColpencilFragment  implements IShelfView 
 
     @Override
     public void loadFail(String msg) {
-
+        ToastTools.showShort(getActivity(),msg);
+        hideLoading();
     }
     private void isLoadMore(List<PlainRack> list) {
         if (list.size() < pageSize) {

@@ -3,6 +3,7 @@ package com.colpencil.redwood.view.impl;
 import com.colpencil.redwood.bean.EntityResult;
 import com.colpencil.redwood.bean.GoodInfo;
 import com.colpencil.redwood.bean.result.CommonResult;
+import com.colpencil.redwood.bean.result.OrderPayInfo;
 import com.property.colpencil.colpencilandroidlibrary.ControlerBase.MVP.ColpencilBaseView;
 
 public interface IGoodDetailView extends ColpencilBaseView {
@@ -37,4 +38,7 @@ public interface IGoodDetailView extends ColpencilBaseView {
      * @param result
      */
     void loadGoods(GoodInfo result);
+
+
+    void loadNewOrder(OrderPayInfo result);
 }

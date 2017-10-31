@@ -5,12 +5,15 @@ import com.colpencil.redwood.base.App;
 import com.colpencil.redwood.bean.HomeGoodInfo;
 import com.colpencil.redwood.bean.ListResult;
 import com.colpencil.redwood.bean.result.AnnounceResult;
+import com.colpencil.redwood.bean.result.CareReturn;
 import com.colpencil.redwood.bean.result.GoodInfoResult;
 import com.colpencil.redwood.function.config.UrlConfig;
 import com.colpencil.redwood.model.imples.IGoodLeftModel;
 import com.property.colpencil.colpencilandroidlibrary.Function.MianCore.RetrofitManager;
+import com.property.colpencil.colpencilandroidlibrary.Function.Tools.SharedPreferencesUtil;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import rx.Observable;
 import rx.Observer;
@@ -29,12 +32,13 @@ public class GoodLeftModel implements IGoodLeftModel {
     private Observable<GoodInfoResult> obGood;
     private Observable<ListResult<HomeGoodInfo>> obGoodlist;
     private Observable<AnnounceResult> goodDetail;
-
+    private Observable<CareReturn> careReturnObservable;
+    private Observable<CareReturn>  uncareObservable;
     @Override
     public void loadGoodInfo(String goodid) {
         obGood = RetrofitManager.getInstance(1, App.getInstance(), UrlConfig.PHILHARMONIC_HOST)
                 .createApi(RedWoodApi.class)
-                .loadGoodInfo(goodid)
+                .loadGoodInfo(goodid, SharedPreferencesUtil.getInstance(App.getInstance()).getInt("member_id"))
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<GoodInfoResult, GoodInfoResult>() {
                     @Override
@@ -43,7 +47,43 @@ public class GoodLeftModel implements IGoodLeftModel {
                     }
                 }).observeOn(AndroidSchedulers.mainThread());
     }
+    @Override
+    public void care(Map<String, String> parms) {
+        careReturnObservable = RetrofitManager.getInstance(1,App.getInstance(),UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .getCareStatus(parms)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<CareReturn, CareReturn>() {
+                    @Override
+                    public CareReturn call(CareReturn careReturn) {
+                        return careReturn;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
+    }
 
+    @Override
+    public void subCare(Observer<CareReturn> observer) {
+        careReturnObservable.subscribe(observer);
+    }
+
+    @Override
+    public void unCare(Map<String, String> params) {
+        uncareObservable = RetrofitManager.getInstance(1,App.getInstance(),UrlConfig.PHILHARMONIC_HOST)
+                .createApi(RedWoodApi.class)
+                .getCareStatus(params)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<CareReturn, CareReturn>() {
+                    @Override
+                    public CareReturn call(CareReturn careReturn) {
+                        return careReturn;
+                    }
+                }).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void subUnCare(Observer<CareReturn> observer) {
+        uncareObservable.subscribe(observer);
+    }
     @Override
     public void subGoodInfo(Observer<GoodInfoResult> observer) {
         obGood.subscribe(observer);
@@ -90,4 +130,6 @@ public class GoodLeftModel implements IGoodLeftModel {
     public void subDetail(Observer<AnnounceResult> observer) {
         goodDetail.subscribe(observer);
     }
+
+
 }

@@ -83,6 +83,7 @@ public class PayActivity extends ColpencilActivity implements IPayView {
         payinfo = (IntenToPay) getIntent().getSerializableExtra("payinfo");
         goFrom = getIntent().getStringExtra("goFrom");
         tvMainTitle.setText("订单支付");
+
         initData();
         initAdapter();
         initBus();
@@ -185,11 +186,11 @@ public class PayActivity extends ColpencilActivity implements IPayView {
     }
 
     private void sendBus() {
-        if (goFrom.equals("OrderActivity")) {
-            RxBusMsg msg = new RxBusMsg();
-            msg.setType(57);
-            RxBus.get().post("rxBusMsg", msg);
-        }
+//        if (goFrom.equals("OrderActivity")) {
+//            RxBusMsg msg = new RxBusMsg();
+//            msg.setType(57);
+//            RxBus.get().post("rxBusMsg", msg);
+//        }
     }
 
     @Override
@@ -285,8 +286,10 @@ public class PayActivity extends ColpencilActivity implements IPayView {
         }
     };
 
+
     @OnClick(R.id.iv_back)
     void back(){
+
         finish();
     }
     @Override
@@ -366,7 +369,7 @@ public class PayActivity extends ColpencilActivity implements IPayView {
         }
         minute = -1;
         second = -1;
-//        RxBus.get().unregister("rxBusMsg", observable);
+        RxBus.get().unregister("rxBusMsg", observable);
     }
 
     @Override
@@ -374,5 +377,10 @@ public class PayActivity extends ColpencilActivity implements IPayView {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+    }
+
+    @Override
+    public void payType(List<PayType> pays) {
+
     }
 }
